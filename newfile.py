@@ -41,6 +41,16 @@ if menu == "Cuestionario: Potencial Genético":
             ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
             genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
 
+            # Guardar las respuestas en session_state
+            st.session_state.potencial_genetico = {
+                "height": height,
+                "weight": weight,
+                "body_fat": body_fat,
+                "ffmi": ffmi,
+                "lean_mass": lean_mass,
+                "genetic_potential": genetic_potential
+            }
+
             # Resultados
             st.subheader("Resultados")
             st.write(f"**Tu FFMI:** {ffmi:.2f}")
@@ -100,6 +110,11 @@ elif menu == "Cuestionario: Estrés Percibido":
     submit_estres = st.button("Enviar respuestas de Estrés Percibido")  # Botón de submit
 
     if submit_estres:
+        # Guardar las respuestas en session_state
+        st.session_state.estres_percibido = {
+            "total_score": total_score
+        }
+
         # Resultados del cuestionario
         st.subheader("Resultados")
         st.write(f"Tu puntaje total es: **{total_score}**")
@@ -134,16 +149,16 @@ if menu == "Inicio":
         # Resultados del Cuestionario de Potencial Genético
         if st.session_state.cuestionarios_completados["potencial_genetico"]:
             pdf.ln(10)
-            pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
-            pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
-            pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
+            pdf.cell(200, 10, txt=f"Tu FFMI: {st.session_state.potencial_genetico['ffmi']:.2f}", ln=True)
+            pdf.cell(200, 10, txt=f"Tu masa magra: {st.session_state.potencial_genetico['lean_mass']:.2f} kg", ln=True)
+            pdf.cell(200, 10, txt=f"Potencial genético estimado: {st.session_state.potencial_genetico['genetic_potential']:.2f} kg", ln=True)
 
         # Resultados del Cuestionario de Estrés Percibido
         if st.session_state.cuestionarios_completados["estres_percibido"]:
             pdf.ln(10)
-            if total_score <= 13:
+            if st.session_state.estres_percibido["total_score"] <= 13:
                 pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
-            elif 14 <= total_score <= 26:
+            elif 14 <= st.session_state.estres_percibido["total_score"] <= 26:
                 pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
             else:
                 pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
