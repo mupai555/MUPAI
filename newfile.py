@@ -6,15 +6,11 @@ st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu reposit
 st.title("MUPAI Digital Training Science")
 st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
-# Inicialización de variables en st.session_state
-if "ffmi" not in st.session_state:
-    st.session_state.ffmi = 0
-if "lean_mass" not in st.session_state:
-    st.session_state.lean_mass = 0
-if "genetic_potential" not in st.session_state:
-    st.session_state.genetic_potential = 0
-if "total_score" not in st.session_state:
-    st.session_state.total_score = 0
+# Inicializar las respuestas en session_state si no existen
+if 'potencial_genetico_completado' not in st.session_state:
+    st.session_state.potencial_genetico_completado = False
+if 'estres_completado' not in st.session_state:
+    st.session_state.estres_completado = False
 
 # Menú lateral para navegación
 menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
@@ -36,16 +32,14 @@ if menu == "Cuestionario: Potencial Genético":
         ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
         genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
 
-        # Guardar los resultados en el estado de sesión
-        st.session_state.ffmi = ffmi
-        st.session_state.lean_mass = lean_mass
-        st.session_state.genetic_potential = genetic_potential
-
         # Resultados
         st.subheader("Resultados")
         st.write(f"**Tu FFMI:** {ffmi:.2f}")
         st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
         st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
+
+        # Guardar en session_state
+        st.session_state.potencial_genetico_completado = True
 
         # Interpretación
         if ffmi < 20:
@@ -92,8 +86,8 @@ elif menu == "Cuestionario: Estrés Percibido":
     # Cálculo del puntaje total
     total_score = sum(responses)
 
-    # Guardar el puntaje total en el estado de sesión
-    st.session_state.total_score = total_score
+    # Guardar en session_state
+    st.session_state.estres_completado = True
 
     # Interpretación del puntaje
     st.subheader("Resultados")
@@ -109,12 +103,11 @@ elif menu == "Cuestionario: Estrés Percibido":
 
 # Generación del Perfil Completo y PDF
 if menu == "Inicio":
-    # Perfil Completo
-    st.header("Perfil Completo")
-    st.write("Para generar tu perfil completo, asegúrate de haber contestado los cuestionarios de 'Potencial Genético' y 'Estrés Percibido'.")
+    # Verificar si los cuestionarios están completos
+    if st.session_state.potencial_genetico_completado and st.session_state.estres_completado:
+        st.header("Perfil Completo")
 
-    # Crear el PDF
-    if st.session_state.ffmi > 0 and st.session_state.total_score > 0:
+        # Crear el PDF
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
@@ -123,16 +116,17 @@ if menu == "Inicio":
         pdf.set_font("Arial", size=12)
         pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
 
-        # Añadir los resultados
+        # Añadir los resultados del cuestionario de Potencial Genético
         pdf.ln(10)
-        pdf.cell(200, 10, txt=f"Tu FFMI: {st.session_state.ffmi:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Tu masa magra: {st.session_state.lean_mass:.2f} kg", ln=True)
-        pdf.cell(200, 10, txt=f"Potencial genético estimado: {st.session_state.genetic_potential:.2f} kg", ln=True)
-        
+        pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
+        pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
+        pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
+
+        # Añadir los resultados del cuestionario de Estrés Percibido
         pdf.ln(10)
-        if st.session_state.total_score <= 13:
+        if total_score <= 13:
             pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
-        elif 14 <= st.session_state.total_score <= 26:
+        elif 14 <= total_score <= 26:
             pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
         else:
             pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
@@ -143,4 +137,4 @@ if menu == "Inicio":
         # Ofrecer la descarga del PDF
         st.download_button("Descargar tu perfil completo", data=open("perfil_completo.pdf", "rb"), file_name="perfil_completo.pdf")
     else:
-        st.warning("Por favor, contesta todos los cuestionarios antes de generar tu perfil completo.")
+        st.warning("Para obtener tu perfil completo, por favor asegúrate de completar ambos cuestionarios.")
