@@ -49,13 +49,13 @@ if menu == "Cuestionario: Potencial Genético":
             st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
             st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
 
-            # Interpretación
+            # Interpretación con base en la literatura científica
             if ffmi < 20:
-                st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas.")
+                st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas. Es posible que tengas un buen potencial de desarrollo muscular, pero se requerirá un entrenamiento constante y una nutrición adecuada para alcanzar tu máximo potencial.")
             elif 20 <= ffmi < 24:
-                st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado.")
+                st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado. Estás cerca del máximo potencial que puede lograrse de manera natural. Continuar con entrenamientos progresivos y un enfoque nutricional adecuado es clave para seguir progresando.")
             else:
-                st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural.")
+                st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural. Es probable que hayas alcanzado el límite de lo que se puede lograr de manera natural sin el uso de sustancias. Si deseas seguir avanzando, podrías beneficiarte de consultar con un profesional para optimizar tu enfoque.")
 
 # Cuestionario de Estrés Percibido
 elif menu == "Cuestionario: Estrés Percibido":
@@ -91,7 +91,7 @@ elif menu == "Cuestionario: Estrés Percibido":
     for idx in reverse_indices:
         responses[idx] = 4 - responses[idx]
 
-    # Cálculo del puntaje total
+    # Botón de Submit para guardar las respuestas y calcular el puntaje
     if st.button("Enviar Respuestas"):
         total_score = sum(responses)
         
@@ -138,6 +138,13 @@ if menu == "Inicio":
             pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
         else:
             pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
+
+        # Recomendaciones personalizadas para el estrés percibido (con base en los documentos proporcionados)
+        st.write("**Recomendaciones basadas en el estrés percibido:**")
+        if st.session_state.total_score > 26:
+            st.write("Recomendamos técnicas como la meditación diaria, prácticas de respiración profunda, y programación de pausas para relajación.")
+        else:
+            st.write("Mantén prácticas de manejo de estrés como ejercicio físico regular y técnicas de mindfulness.")
 
         # Guardar el PDF
         pdf.output("perfil_completo.pdf")
