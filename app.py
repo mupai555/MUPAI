@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Logo y título
-st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en el repositorio
+st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
 st.title("MUPAI Digital Training Science")
 st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
@@ -18,9 +18,7 @@ if menu == "Inicio":
 elif menu == "Cuestionario: Potencial Genético":
     # Cuestionario de Potencial Genético
     st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
-    st.write("""
-    Ingresa tus datos a continuación para calcular tu potencial genético basado en modelos científicos.
-    """)
+    st.write("Ingresa tus datos a continuación para calcular tu potencial genético basado en modelos científicos.")
     height = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
     weight = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
     body_fat = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
@@ -47,10 +45,8 @@ elif menu == "Cuestionario: Potencial Genético":
 elif menu == "Cuestionario: Estrés Percibido":
     # Cuestionario PSS
     st.header("Cuestionario: Escala de Estrés Percibido (PSS)")
-    st.write("""
-    Este cuestionario mide tu percepción de estrés durante el último mes. 
-    Por favor, responde a cada pregunta seleccionando la opción que más represente tu experiencia.
-    """)
+    st.write("Este cuestionario mide tu percepción de estrés durante el último mes.")
+    st.write("Por favor, responde a cada pregunta seleccionando la opción que más represente tu experiencia.")
 
     # Opciones de respuesta
     options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
@@ -60,11 +56,11 @@ elif menu == "Cuestionario: Estrés Percibido":
         "1. En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?",
         "2. En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
         "3. En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
-        "4. En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",  # Invertida
-        "5. En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",  # Invertida
+        "4. En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
+        "5. En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
         "6. En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
-        "7. En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",  # Invertida
-        "8. En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",  # Invertida
+        "7. En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
+        "8. En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
         "9. En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
         "10. En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?"
     ]
@@ -93,7 +89,4 @@ elif menu == "Cuestionario: Estrés Percibido":
     else:
         st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
 
-    st.write("""
-    Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.
-    Si tienes preocupaciones sobre tu nivel de estrés, consulta con un especialista.
-    """)
+    st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
