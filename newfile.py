@@ -1,12 +1,11 @@
 import streamlit as st
 from fpdf import FPDF
 
-# Inicialización de session_state
+# Inicialización de session_state para guardar los datos de los cuestionarios
 if 'cuestionarios_completados' not in st.session_state:
     st.session_state.cuestionarios_completados = {
         "potencial_genetico": False,
         "estres_percibido": False,
-        "nuevo_cuestionario": False  # Puedes agregar nuevos cuestionarios aquí
     }
 
 # Logo y título
@@ -18,8 +17,7 @@ st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 menu = st.sidebar.selectbox("Selecciona una sección:", 
                             ["Inicio", 
                              "Cuestionario: Potencial Genético", 
-                             "Cuestionario: Estrés Percibido", 
-                             "Nuevo Cuestionario"])  # Agregar más cuestionarios aquí
+                             "Cuestionario: Estrés Percibido"])
 
 # Cuestionario de Potencial Genético
 if menu == "Cuestionario: Potencial Genético":
@@ -128,8 +126,6 @@ elif menu == "Cuestionario: Estrés Percibido":
         st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
         
         st.session_state.cuestionarios_completados["estres_percibido"] = True
-
-# Agregar más cuestionarios aquí si lo deseas, siguiendo el mismo formato
 
 # Perfil Completo y Generación del PDF
 if menu == "Inicio":
