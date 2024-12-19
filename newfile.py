@@ -1,19 +1,25 @@
 import streamlit as st
 from fpdf import FPDF
 
+# Inicialización de session_state
+if 'cuestionarios_completados' not in st.session_state:
+    st.session_state.cuestionarios_completados = {
+        "potencial_genetico": False,
+        "estres_percibido": False,
+        "nuevo_cuestionario": False  # Puedes agregar nuevos cuestionarios aquí
+    }
+
 # Logo y título
 st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
 st.title("MUPAI Digital Training Science")
 st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
-# Inicializar las respuestas en session_state si no existen
-if 'potencial_genetico_completado' not in st.session_state:
-    st.session_state.potencial_genetico_completado = False
-if 'estres_completado' not in st.session_state:
-    st.session_state.estres_completado = False
-
 # Menú lateral para navegación
-menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
+menu = st.sidebar.selectbox("Selecciona una sección:", 
+                            ["Inicio", 
+                             "Cuestionario: Potencial Genético", 
+                             "Cuestionario: Estrés Percibido", 
+                             "Nuevo Cuestionario"])  # Agregar más cuestionarios aquí
 
 # Cuestionario de Potencial Genético
 if menu == "Cuestionario: Potencial Genético":
@@ -38,9 +44,6 @@ if menu == "Cuestionario: Potencial Genético":
         st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
         st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
 
-        # Guardar en session_state
-        st.session_state.potencial_genetico_completado = True
-
         # Interpretación
         if ffmi < 20:
             st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas.")
@@ -48,6 +51,8 @@ if menu == "Cuestionario: Potencial Genético":
             st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado.")
         else:
             st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural.")
+        
+        st.session_state.cuestionarios_completados["potencial_genetico"] = True
 
 # Cuestionario de Estrés Percibido
 elif menu == "Cuestionario: Estrés Percibido":
@@ -86,9 +91,6 @@ elif menu == "Cuestionario: Estrés Percibido":
     # Cálculo del puntaje total
     total_score = sum(responses)
 
-    # Guardar en session_state
-    st.session_state.estres_completado = True
-
     # Interpretación del puntaje
     st.subheader("Resultados")
     st.write(f"Tu puntaje total es: **{total_score}**")
@@ -100,41 +102,47 @@ elif menu == "Cuestionario: Estrés Percibido":
         st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
     
     st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
+    
+    st.session_state.cuestionarios_completados["estres_percibido"] = True
 
-# Generación del Perfil Completo y PDF
+# Agregar más cuestionarios aquí si lo deseas, siguiendo el mismo formato
+
+# Perfil Completo y Generación del PDF
 if menu == "Inicio":
-    # Verificar si los cuestionarios están completos
-    if st.session_state.potencial_genetico_completado and st.session_state.estres_completado:
-        st.header("Perfil Completo")
-
-        # Crear el PDF
+    st.header("Perfil Completo")
+    
+    # Verifica si los cuestionarios han sido completados
+    if all(st.session_state.cuestionarios_completados.values()):
+        # Crea el PDF
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
 
-        # Añadir título
+        # Título del Perfil
         pdf.set_font("Arial", size=12)
         pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
 
-        # Añadir los resultados del cuestionario de Potencial Genético
-        pdf.ln(10)
-        pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
-        pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
+        # Resultados del Cuestionario de Potencial Genético
+        if st.session_state.cuestionarios_completados["potencial_genetico"]:
+            pdf.ln(10)
+            pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
+            pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
+            pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
 
-        # Añadir los resultados del cuestionario de Estrés Percibido
-        pdf.ln(10)
-        if total_score <= 13:
-            pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
-        elif 14 <= total_score <= 26:
-            pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
-        else:
-            pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
+        # Resultados del Cuestionario de Estrés Percibido
+        if st.session_state.cuestionarios_completados["estres_percibido"]:
+            pdf.ln(10)
+            if total_score <= 13:
+                pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
+            elif 14 <= total_score <= 26:
+                pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
+            else:
+                pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
 
-        # Guardar el PDF
+        # Guardar y generar el PDF
         pdf.output("perfil_completo.pdf")
-
-        # Ofrecer la descarga del PDF
+        
+        # Botón para descargar el perfil completo
         st.download_button("Descargar tu perfil completo", data=open("perfil_completo.pdf", "rb"), file_name="perfil_completo.pdf")
     else:
-        st.warning("Para obtener tu perfil completo, por favor asegúrate de completar ambos cuestionarios.")
+        st.warning("Para descargar tu perfil completo, por favor asegúrate de completar todos los cuestionarios.")
