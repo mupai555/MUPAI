@@ -90,3 +90,22 @@ elif menu == "Cuestionario: Estrés Percibido":
         st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
 
     st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
+    # Menú lateral para navegación
+menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
+
+if menu == "Inicio":
+    # Contenido de la sección "Inicio"
+    st.header("Funcionalidades")
+    st.write("- Calculadora de rendimiento físico")
+    st.write("- Entrenamiento personalizado basado en datos científicos")
+    st.write("- Análisis de progresos en tiempo real")
+
+elif menu == "Cuestionario: Potencial Genético":
+    # Contenido del cuestionario de Potencial Genético
+    st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
+    # (Código del cuestionario aquí)
+
+elif menu == "Cuestionario: Estrés Percibido":
+    # Contenido del cuestionario de Estrés Percibido
+    st.header("Cuestionario: Escala de Estrés Percibido (PSS)")
+    # (Código del cuestionario aquí)
