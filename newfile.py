@@ -6,6 +6,12 @@ st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu reposit
 st.title("MUPAI Digital Training Science")
 st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
+# Inicialización de variables
+ffmi = 0
+lean_mass = 0
+genetic_potential = 0
+total_score = 0
+
 # Menú lateral para navegación
 menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
 
@@ -94,9 +100,7 @@ if menu == "Inicio":
     # Perfil Completo
     st.header("Perfil Completo")
     
-    # Aquí, el código generará un perfil basado en el FFMI y estrés percibido
-
-    # Crea el PDF
+    # Crear el PDF
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)
     pdf.add_page()
