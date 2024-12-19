@@ -1,24 +1,29 @@
 import streamlit as st
 
-# Logo y título
-st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
+# Logo y título principal
+st.image("LOGO.png", width=300)  # Asegúrate de que el archivo LOGO.png esté en el repositorio
 st.title("MUPAI Digital Training Science")
 st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
 # Menú lateral para navegación
-menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
+menu = st.sidebar.selectbox(
+    "Selecciona una sección:", 
+    ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"]
+)
 
 if menu == "Inicio":
-    # Sección de bienvenida
+    # Contenido de la sección "Inicio"
     st.header("Funcionalidades")
     st.write("- Calculadora de rendimiento físico")
     st.write("- Entrenamiento personalizado basado en datos científicos")
     st.write("- Análisis de progresos en tiempo real")
 
 elif menu == "Cuestionario: Potencial Genético":
-    # Cuestionario de Potencial Genético
+    # Calculadora de Potencial Genético
     st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
     st.write("Ingresa tus datos a continuación para calcular tu potencial genético basado en modelos científicos.")
+
+    # Entradas del usuario
     height = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
     weight = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
     body_fat = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
@@ -30,13 +35,13 @@ elif menu == "Cuestionario: Potencial Genético":
         ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
         genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
 
-        # Resultados
+        # Mostrar resultados
         st.subheader("Resultados")
         st.write(f"**Tu FFMI:** {ffmi:.2f}")
         st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
         st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
 
-        # Interpretación
+        # Interpretación de los resultados
         if ffmi < 25:
             st.success("Estás dentro del rango natural para el desarrollo muscular.")
         else:
@@ -68,7 +73,8 @@ elif menu == "Cuestionario: Estrés Percibido":
     # Variables para las respuestas del usuario
     responses = []
     for i, question in enumerate(questions):
-        response = st.selectbox(question, options, key=f"q{i}")
+        # Clave única para evitar conflictos
+        response = st.selectbox(question, options, key=f"stress_q{i}")
         responses.append(int(response.split(" - ")[0]))
 
     # Ajuste para preguntas invertidas
@@ -90,22 +96,3 @@ elif menu == "Cuestionario: Estrés Percibido":
         st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
 
     st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
-    # Menú lateral para navegación
-menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
-
-if menu == "Inicio":
-    # Contenido de la sección "Inicio"
-    st.header("Funcionalidades")
-    st.write("- Calculadora de rendimiento físico")
-    st.write("- Entrenamiento personalizado basado en datos científicos")
-    st.write("- Análisis de progresos en tiempo real")
-
-elif menu == "Cuestionario: Potencial Genético":
-    # Contenido del cuestionario de Potencial Genético
-    st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
-    # (Código del cuestionario aquí)
-
-elif menu == "Cuestionario: Estrés Percibido":
-    # Contenido del cuestionario de Estrés Percibido
-    st.header("Cuestionario: Escala de Estrés Percibido (PSS)")
-    # (Código del cuestionario aquí)
