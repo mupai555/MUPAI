@@ -31,28 +31,34 @@ if menu == "Cuestionario: Potencial Genético":
     weight = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
     body_fat = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
 
-    if height > 0 and weight > 0 and body_fat > 0:
-        # Cálculos
-        height_m = height / 100  # Convertir altura a metros
-        lean_mass = weight * (1 - body_fat / 100)  # Masa magra
-        ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
-        genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
+    submit_potencial = st.button("Enviar respuestas de Potencial Genético")  # Botón de submit
 
-        # Resultados
-        st.subheader("Resultados")
-        st.write(f"**Tu FFMI:** {ffmi:.2f}")
-        st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
-        st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
+    if submit_potencial:
+        if height > 0 and weight > 0 and body_fat > 0:
+            # Cálculos
+            height_m = height / 100  # Convertir altura a metros
+            lean_mass = weight * (1 - body_fat / 100)  # Masa magra
+            ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
+            genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
 
-        # Interpretación
-        if ffmi < 20:
-            st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas.")
-        elif 20 <= ffmi < 24:
-            st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado.")
+            # Resultados
+            st.subheader("Resultados")
+            st.write(f"**Tu FFMI:** {ffmi:.2f}")
+            st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
+            st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
+
+            # Interpretación
+            if ffmi < 20:
+                st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas.")
+            elif 20 <= ffmi < 24:
+                st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado.")
+            else:
+                st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural.")
+            
+            st.session_state.cuestionarios_completados["potencial_genetico"] = True
+
         else:
-            st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural.")
-        
-        st.session_state.cuestionarios_completados["potencial_genetico"] = True
+            st.error("Por favor, ingresa todos los datos requeridos.")
 
 # Cuestionario de Estrés Percibido
 elif menu == "Cuestionario: Estrés Percibido":
@@ -91,19 +97,22 @@ elif menu == "Cuestionario: Estrés Percibido":
     # Cálculo del puntaje total
     total_score = sum(responses)
 
-    # Interpretación del puntaje
-    st.subheader("Resultados")
-    st.write(f"Tu puntaje total es: **{total_score}**")
-    if total_score <= 13:
-        st.success("Bajo nivel de estrés percibido. ¡Bien hecho!")
-    elif 14 <= total_score <= 26:
-        st.warning("Moderado nivel de estrés percibido. Considera prácticas de manejo del estrés.")
-    else:
-        st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
-    
-    st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
-    
-    st.session_state.cuestionarios_completados["estres_percibido"] = True
+    submit_estres = st.button("Enviar respuestas de Estrés Percibido")  # Botón de submit
+
+    if submit_estres:
+        # Resultados del cuestionario
+        st.subheader("Resultados")
+        st.write(f"Tu puntaje total es: **{total_score}**")
+        if total_score <= 13:
+            st.success("Bajo nivel de estrés percibido. ¡Bien hecho!")
+        elif 14 <= total_score <= 26:
+            st.warning("Moderado nivel de estrés percibido. Considera prácticas de manejo del estrés.")
+        else:
+            st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
+        
+        st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
+        
+        st.session_state.cuestionarios_completados["estres_percibido"] = True
 
 # Agregar más cuestionarios aquí si lo deseas, siguiendo el mismo formato
 
