@@ -19,6 +19,26 @@ if 'genetic_potential' not in st.session_state:
 if 'total_score' not in st.session_state:
     st.session_state.total_score = None
 
+# Función para IA adaptativa de recomendaciones
+def obtener_recomendaciones(puntaje_estrés, ffmi):
+    recomendaciones = []
+    
+    # Estrés
+    if puntaje_estrés > 26:
+        recomendaciones.append("Recomendamos implementar prácticas como la meditación diaria y pausas para relajación.")
+    elif puntaje_estrés >= 14:
+        recomendaciones.append("Se sugiere incluir técnicas de mindfulness y gestionar mejor el tiempo para reducir el estrés.")
+    
+    # Potencial Genético
+    if ffmi < 20:
+        recomendaciones.append("Tu FFMI sugiere que estás en el rango promedio para personas no entrenadas. Considera aumentar la intensidad de tu entrenamiento para mejorar.")
+    elif 20 <= ffmi < 24:
+        recomendaciones.append("Tu FFMI está en un rango avanzado, lo que indica que tienes un buen nivel de desarrollo muscular natural.")
+    else:
+        recomendaciones.append("Tu FFMI indica que has alcanzado el límite natural. Considera revisar tu programa de entrenamiento para seguir mejorando sin riesgo de lesiones.")
+    
+    return recomendaciones
+
 # Cuestionario de Potencial Genético
 if menu == "Cuestionario: Potencial Genético":
     st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
@@ -107,8 +127,6 @@ elif menu == "Cuestionario: Estrés Percibido":
             st.warning("Moderado nivel de estrés percibido. Considera incorporar actividades como meditación o respiración profunda en tu rutina.")
         else:
             st.error("Alto nivel de estrés percibido. Podrías beneficiarte de buscar apoyo profesional o implementar más estrategias de afrontamiento.")
-        
-        st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
 
 # Generación del Perfil Completo y PDF
 if menu == "Inicio":
