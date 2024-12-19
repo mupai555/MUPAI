@@ -9,6 +9,12 @@ st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 # Menú lateral para navegación
 menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
 
+# Variables para almacenar las respuestas del usuario
+ffmi = None
+lean_mass = None
+genetic_potential = None
+total_score = None
+
 # Cuestionario de Potencial Genético
 if menu == "Cuestionario: Potencial Genético":
     st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
@@ -94,33 +100,34 @@ if menu == "Inicio":
     # Perfil Completo
     st.header("Perfil Completo")
 
-    # Aquí, el código generará un perfil basado en el FFMI y estrés percibido
+    if ffmi and total_score:
+        # Crea el PDF
+        pdf = FPDF()
+        pdf.set_auto_page_break(auto=True, margin=15)
+        pdf.add_page()
 
-    # Crea el PDF
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
+        # Añadir título
+        pdf.set_font("Arial", size=12)
+        pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
 
-    # Añadir título
-    pdf.set_font("Arial", size=12)
-    pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
+        # Añadir los resultados
+        pdf.ln(10)
+        pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
+        pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
+        pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
+        
+        pdf.ln(10)
+        if total_score <= 13:
+            pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
+        elif 14 <= total_score <= 26:
+            pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
+        else:
+            pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
 
-    # Añadir los resultados
-    pdf.ln(10)
-    pdf.cell(200, 10, txt=f"Tu FFMI: {ffmi:.2f}", ln=True)
-    pdf.cell(200, 10, txt=f"Tu masa magra: {lean_mass:.2f} kg", ln=True)
-    pdf.cell(200, 10, txt=f"Potencial genético estimado: {genetic_potential:.2f} kg", ln=True)
-    
-    pdf.ln(10)
-    if total_score <= 13:
-        pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
-    elif 14 <= total_score <= 26:
-        pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
+        # Guardar el PDF
+        pdf.output("perfil_completo.pdf")
+
+        # Ofrecer la descarga del PDF
+        st.download_button("Descargar tu perfil completo", data=open("perfil_completo.pdf", "rb"), file_name="perfil_completo.pdf")
     else:
-        pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
-
-    # Guardar el PDF
-    pdf.output("perfil_completo.pdf")
-
-    # Ofrecer la descarga del PDF
-    st.download_button("Descargar tu perfil completo", data=open("perfil_completo.pdf", "rb"), file_name="perfil_completo.pdf")
+        st.error("Aún no has completado los cuestionarios. Por favor, asegúrate de llenar ambos cuestionarios para generar tu perfil completo.")
