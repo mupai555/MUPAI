@@ -1,39 +1,42 @@
 import streamlit as st
 
-# Logo y título principal
-st.image("LOGO.png", width=300)  # Asegúrate de que el archivo LOGO.png esté en el repositorio
+# Logo y título
+st.image("LOGO.png", width=300)
 st.title("MUPAI Digital Training Science")
-st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
+st.write("Bienvenido a tu plataforma personalizada.")
 
-# Menú lateral para navegación
-menu = st.sidebar.selectbox(
-    "Selecciona una sección:", 
-    ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"]
-)
+# Menú lateral
+menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido", "Perfil Completo"])
+
+# Diccionario para almacenar los datos del usuario
+user_data = {}
 
 if menu == "Inicio":
-    # Contenido de la sección "Inicio"
     st.header("Funcionalidades")
     st.write("- Calculadora de rendimiento físico")
     st.write("- Entrenamiento personalizado basado en datos científicos")
     st.write("- Análisis de progresos en tiempo real")
 
 elif menu == "Cuestionario: Potencial Genético":
-    # Calculadora de Potencial Genético
-    st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
-    st.write("Ingresa tus datos a continuación para calcular tu potencial genético basado en modelos científicos.")
+    st.header("Calculadora de Potencial Genético")
+    st.write("Ingresa tus datos para calcular tu potencial genético.")
+    
+    # Entradas
+    user_data["height"] = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
+    user_data["weight"] = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
+    user_data["body_fat"] = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
 
-    # Entradas del usuario
-    height = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
-    weight = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
-    body_fat = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
-
-    if height > 0 and weight > 0 and body_fat > 0:
+    if user_data.get("height") and user_data.get("weight") and user_data.get("body_fat"):
         # Cálculos
-        height_m = height / 100  # Convertir altura a metros
-        lean_mass = weight * (1 - body_fat / 100)  # Masa magra
-        ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
-        genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
+        height_m = user_data["height"] / 100
+        lean_mass = user_data["weight"] * (1 - user_data["body_fat"] / 100)
+        ffmi = lean_mass / (height_m ** 2)
+        genetic_potential = (user_data["height"] - 100) * 1.1
+
+        # Guardar resultados
+        user_data["ffmi"] = ffmi
+        user_data["lean_mass"] = lean_mass
+        user_data["genetic_potential"] = genetic_potential
 
         # Mostrar resultados
         st.subheader("Resultados")
@@ -41,58 +44,63 @@ elif menu == "Cuestionario: Potencial Genético":
         st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
         st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
 
-        # Interpretación de los resultados
-        if ffmi < 25:
-            st.success("Estás dentro del rango natural para el desarrollo muscular.")
-        else:
-            st.warning("Tu FFMI excede el rango natural, lo que podría indicar el uso de potenciadores.")
-
 elif menu == "Cuestionario: Estrés Percibido":
-    # Cuestionario PSS
-    st.header("Cuestionario: Escala de Estrés Percibido (PSS)")
-    st.write("Este cuestionario mide tu percepción de estrés durante el último mes.")
-    st.write("Por favor, responde a cada pregunta seleccionando la opción que más represente tu experiencia.")
-
-    # Opciones de respuesta
-    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
+    st.header("Cuestionario: Estrés Percibido")
+    st.write("Completa el cuestionario para medir tu nivel de estrés.")
 
     # Preguntas del cuestionario
     questions = [
-        "1. En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?",
-        "2. En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
-        "3. En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
-        "4. En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
-        "5. En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
-        "6. En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
-        "7. En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
-        "8. En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
-        "9. En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
-        "10. En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?"
+        "1. ¿Con qué frecuencia te has sentido molesto/a por algo inesperado?",
+        "2. ¿Con qué frecuencia sentiste que no podías controlar lo importante?",
+        # Agregar más preguntas aquí...
     ]
-
-    # Variables para las respuestas del usuario
+    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
     responses = []
-    for i, question in enumerate(questions):
-        # Clave única para evitar conflictos
-        response = st.selectbox(question, options, key=f"stress_q{i}")
-        responses.append(int(response.split(" - ")[0]))
 
-    # Ajuste para preguntas invertidas
-    reverse_indices = [3, 4, 6, 7]
-    for idx in reverse_indices:
-        responses[idx] = 4 - responses[idx]
+    for i, question in enumerate(questions):
+        response = st.selectbox(question, options, key=f"q{i}")
+        responses.append(int(response.split(" - ")[0]))
 
     # Cálculo del puntaje total
     total_score = sum(responses)
+    user_data["stress_score"] = total_score
 
-    # Interpretación del puntaje
+    # Interpretación
     st.subheader("Resultados")
-    st.write(f"Tu puntaje total es: **{total_score}**")
+    st.write(f"Tu puntaje total de estrés es: **{total_score}**")
     if total_score <= 13:
-        st.success("Bajo nivel de estrés percibido. ¡Bien hecho!")
+        st.success("Bajo nivel de estrés.")
     elif 14 <= total_score <= 26:
-        st.warning("Moderado nivel de estrés percibido. Considera prácticas de manejo del estrés.")
+        st.warning("Moderado nivel de estrés.")
     else:
-        st.error("Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.")
+        st.error("Alto nivel de estrés.")
 
-    st.write("Este cuestionario es únicamente informativo y no sustituye un diagnóstico profesional.")
+elif menu == "Perfil Completo":
+    st.header("Perfil Completo")
+    st.write("Aquí está tu perfil personalizado basado en las evaluaciones.")
+
+    if user_data:
+        # Mostrar datos básicos
+        st.subheader("Datos Básicos")
+        st.write(f"Altura: {user_data.get('height', 'N/A')} cm")
+        st.write(f"Peso: {user_data.get('weight', 'N/A')} kg")
+        st.write(f"Porcentaje de grasa corporal: {user_data.get('body_fat', 'N/A')}%")
+
+        # Resultados del potencial genético
+        st.subheader("Potencial Genético")
+        st.write(f"FFMI: {user_data.get('ffmi', 'N/A'):.2f}")
+        st.write(f"Masa magra: {user_data.get('lean_mass', 'N/A'):.2f} kg")
+        st.write(f"Potencial genético estimado: {user_data.get('genetic_potential', 'N/A'):.2f} kg")
+
+        # Resultados del estrés percibido
+        st.subheader("Estrés Percibido")
+        st.write(f"Puntaje total: {user_data.get('stress_score', 'N/A')}")
+
+        # Recomendaciones
+        st.subheader("Recomendaciones")
+        if user_data.get("stress_score", 0) > 26:
+            st.warning("Reduce el volumen de entrenamiento y prioriza la recuperación.")
+        else:
+            st.success("Puedes seguir con tu plan de entrenamiento actual.")
+    else:
+        st.write("Por favor, completa los cuestionarios primero.")
