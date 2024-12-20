@@ -55,7 +55,7 @@ elif menu == "Perceived Stress Questionnaire":
     responses = []
 
     for i, question in enumerate(questions):
-        response = st.selectbox(question, options, key=f"pss_{i}")
+        response = st.selectbox(question, options, key=f"pss_question_{i}")
         score = int(response.split(" - ")[0])
         if i in reversed_indices:
             score = 4 - score
@@ -76,31 +76,25 @@ elif menu == "Perceived Stress Questionnaire":
 # Sleep Quality Questionnaire (PSQI)
 elif menu == "Sleep Quality Questionnaire (PSQI)":
     st.header("Pittsburgh Sleep Quality Index (PSQI)")
-    psqi_sections = {
-        "Sleep Duration": [
-            "1. During the past month, what time have you usually gone to bed at night?",
-            "2. During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
-            "3. During the past month, what time have you usually gotten up in the morning?",
-            "4. During the past month, how many hours of actual sleep did you get at night?",
-        ],
-        "Sleep Disturbances": [
-            "5. How often have you had trouble sleeping because you cannot get to sleep within 30 minutes?",
-            "6. How often have you taken medicine to help you sleep?",
-            "7. How often have you had trouble staying awake while driving, eating, or engaging socially?",
-            "8. How much of a problem has it been to keep enough enthusiasm to get things done?",
-        ],
-        "Overall Quality": ["9. How would you rate your sleep quality overall?"],
-    }
+    psqi_questions = [
+        "1. During the past month, what time have you usually gone to bed at night?",
+        "2. During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
+        "3. During the past month, what time have you usually gotten up in the morning?",
+        "4. During the past month, how many hours of actual sleep did you get at night?",
+        "5. How often have you had trouble sleeping because you cannot get to sleep within 30 minutes?",
+        "6. How often have you taken medicine to help you sleep?",
+        "7. How often have you had trouble staying awake while driving, eating, or engaging socially?",
+        "8. How much of a problem has it been to keep enough enthusiasm to get things done?",
+        "9. How would you rate your sleep quality overall?",
+    ]
 
-    psqi_responses = []
-    for section, questions in psqi_sections.items():
-        st.subheader(section)
-        for i, question in enumerate(questions):
-            response = st.text_input(question, key=f"psqi_{section}_{i}")
-            psqi_responses.append(response)
+    responses = []
+    for i, question in enumerate(psqi_questions):
+        response = st.text_input(question, key=f"psqi_question_{i}")
+        responses.append(response)
 
     if st.button("Submit PSQI Responses"):
-        st.session_state['psqi_score'] = sum(len(resp) for resp in psqi_responses if resp)
+        st.session_state['psqi_score'] = len([resp for resp in responses if resp])
         st.subheader("Results")
         st.write(f"Your PSQI score is: **{st.session_state['psqi_score']}**")
 
