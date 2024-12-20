@@ -39,23 +39,23 @@ if menu == "Genetic Potential Questionnaire":
 elif menu == "Perceived Stress Questionnaire":
     st.header("Perceived Stress Scale (PSS)")
     questions = [
-        "1. In the last month, how often have you been upset because of something that happened unexpectedly?",
-        "2. In the last month, how often have you felt unable to control the important things in your life?",
-        "3. In the last month, how often have you felt nervous and stressed?",
-        "4. In the last month, how often have you felt confident about your ability to handle personal problems?",
-        "5. In the last month, how often have you felt things were going your way?",
-        "6. In the last month, how often have you found that you could not cope with all the things you had to do?",
-        "7. In the last month, how often have you been able to control irritations in your life?",
-        "8. In the last month, how often have you felt on top of things?",
-        "9. In the last month, how often have you been angered by things outside of your control?",
-        "10. In the last month, how often have you felt difficulties piling up so high you could not overcome them?",
+        "1. En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo inesperado?",
+        "2. En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
+        "3. En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
+        "4. En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
+        "5. En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
+        "6. En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
+        "7. En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
+        "8. En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
+        "9. En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
+        "10. En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?",
     ]
-    options = ["0 - Never", "1 - Almost never", "2 - Sometimes", "3 - Fairly often", "4 - Very often"]
+    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
     reversed_indices = [3, 4, 6, 7]
     responses = []
 
     for i, question in enumerate(questions):
-        response = st.selectbox(question, options, key=f"pss_question_{i}")
+        response = st.selectbox(question, options, key=f"pss_{i}")
         score = int(response.split(" - ")[0])
         if i in reversed_indices:
             score = 4 - score
@@ -76,25 +76,21 @@ elif menu == "Perceived Stress Questionnaire":
 # Sleep Quality Questionnaire (PSQI)
 elif menu == "Sleep Quality Questionnaire (PSQI)":
     st.header("Pittsburgh Sleep Quality Index (PSQI)")
-    psqi_questions = [
-        "1. During the past month, what time have you usually gone to bed at night?",
-        "2. During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
-        "3. During the past month, what time have you usually gotten up in the morning?",
-        "4. During the past month, how many hours of actual sleep did you get at night?",
-        "5. How often have you had trouble sleeping because you cannot get to sleep within 30 minutes?",
-        "6. How often have you taken medicine to help you sleep?",
-        "7. How often have you had trouble staying awake while driving, eating, or engaging socially?",
-        "8. How much of a problem has it been to keep enough enthusiasm to get things done?",
-        "9. How would you rate your sleep quality overall?",
+    questions = [
+        "1. ¿A qué hora usualmente te acuestas por la noche?",
+        "2. ¿Cuántos minutos te toma quedarte dormido/a cada noche?",
+        "3. ¿A qué hora usualmente te levantas por la mañana?",
+        "4. ¿Cuántas horas de sueño efectivo obtienes por noche?",
+        "5. ¿Con qué frecuencia tienes problemas para dormir porque no puedes conciliar el sueño en 30 minutos?",
+        "6. ¿Con qué frecuencia tomas medicamentos para dormir?",
+        "7. ¿Con qué frecuencia has tenido problemas para mantenerte despierto mientras conduces, comes o socializas?",
+        "8. ¿Qué tan problemático ha sido mantener suficiente entusiasmo para hacer las cosas?",
+        "9. ¿Cómo calificarías tu calidad general del sueño?",
     ]
-
-    responses = []
-    for i, question in enumerate(psqi_questions):
-        response = st.text_input(question, key=f"psqi_question_{i}")
-        responses.append(response)
+    responses = [st.text_input(q, key=f"psqi_{i}") for i, q in enumerate(questions)]
 
     if st.button("Submit PSQI Responses"):
-        st.session_state['psqi_score'] = len([resp for resp in responses if resp])
+        st.session_state['psqi_score'] = sum(len(resp) for resp in responses if resp)
         st.subheader("Results")
         st.write(f"Your PSQI score is: **{st.session_state['psqi_score']}**")
 
