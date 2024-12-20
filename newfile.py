@@ -1,129 +1,110 @@
 import streamlit as st
 from fpdf import FPDF
 
-# Logo and Title
+# Logo y título
 st.image("LOGO.png", width=300)
 st.title("MUPAI Digital Training Science")
-st.write("Welcome to your science-based training platform.")
+st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
 
-# Sidebar Menu
-menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire", "Sleep Quality Questionnaire (PSQI)"])
+# Menú lateral
+menu = st.sidebar.selectbox(
+    "Selecciona una sección:",
+    ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido", "Cuestionario: Calidad del Sueño (PSQI)"]
+)
 
-# Initialize session_state variables
-for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score', 'psqi_score']:
+# Inicializar variables de estado
+for var in ['ffmi', 'lean_mass', 'genetic_potential', 'stress_score', 'psqi_score']:
     if var not in st.session_state:
         st.session_state[var] = None
 
-# Function to fetch dynamic recommendations (Simulated for now)
-def get_chatgpt_recommendations(user_query):
-    response = f"Simulated response based on: {user_query}"  # Replace with actual API call if needed
-    return response
+# Función para calcular recomendaciones adaptativas
+def obtener_recomendaciones(user_query):
+    # Esto es un simulacro, conecta con un modelo o API real para respuestas personalizadas
+    return f"Simulando respuesta basada en: {user_query}"
 
-# PSQI Component Scoring Function
-def calculate_psqi_component_scores(responses):
-    components = {}
-    components["Component 1"] = int(responses["Q9"])
-    q2_score = responses["Q2"]
-    q5a_score = responses["Q5a"]
-    components["Component 2"] = 0 if q2_score + q5a_score <= 2 else 1 if q2_score + q5a_score <= 4 else 2 if q2_score + q5a_score <= 6 else 3
-    q4_hours = responses["Q4"]
-    components["Component 3"] = 0 if q4_hours > 7 else 1 if q4_hours > 6 else 2 if q4_hours > 5 else 3
-    total_bed_time = responses["Q3"] - responses["Q1"]  # Example calculation
-    efficiency = (q4_hours / total_bed_time) * 100 if total_bed_time > 0 else 0
-    components["Component 4"] = 0 if efficiency > 85 else 1 if efficiency > 75 else 2 if efficiency > 65 else 3
-    q5_disturbances = sum(responses[q] for q in ["Q5b", "Q5c", "Q5d", "Q5e", "Q5f", "Q5g", "Q5h", "Q5i", "Q5j"])
-    components["Component 5"] = 0 if q5_disturbances == 0 else 1 if q5_disturbances <= 9 else 2 if q5_disturbances <= 18 else 3
-    components["Component 6"] = int(responses["Q6"])
-    q7_score = responses["Q7"]
-    q8_score = responses["Q8"]
-    components["Component 7"] = 0 if q7_score + q8_score <= 2 else 1 if q7_score + q8_score <= 4 else 2 if q7_score + q8_score <= 6 else 3
-    global_score = sum(components.values())
-    return components, global_score
+# Cuestionario de Potencial Genético
+if menu == "Cuestionario: Potencial Genético":
+    st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
+    altura = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
+    peso = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
+    grasa_corporal = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
 
-# Genetic Potential Questionnaire
-if menu == "Genetic Potential Questionnaire":
-    st.header("Genetic Potential Calculator for Muscle Growth")
-    height = st.number_input("Height (cm):", min_value=100, max_value=250, step=1)
-    weight = st.number_input("Weight (kg):", min_value=30.0, max_value=200.0, step=0.1)
-    body_fat = st.number_input("Body Fat Percentage (%):", min_value=5.0, max_value=50.0, step=0.1)
-    if st.button("Calculate Genetic Potential"):
-        height_m = height / 100
-        lean_mass = weight * (1 - body_fat / 100)
-        ffmi = lean_mass / (height_m ** 2)
-        genetic_potential = (height - 100) * 1.1
-        st.session_state.update({'ffmi': ffmi, 'lean_mass': lean_mass, 'genetic_potential': genetic_potential})
-        st.subheader("Results")
-        st.write(f"**FFMI:** {ffmi:.2f}")
-        st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
-        st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
-        response = get_chatgpt_recommendations(f"My FFMI is {ffmi:.2f}, and my lean mass is {lean_mass:.2f} kg.")
-        st.write(f"AI Recommendations: {response}")
+    if st.button("Calcular Potencial Genético"):
+        if altura > 0 and peso > 0 and grasa_corporal > 0:
+            altura_m = altura / 100
+            masa_magra = peso * (1 - grasa_corporal / 100)
+            ffmi = masa_magra / (altura_m ** 2)
+            potencial_genetico = (altura - 100) * 1.1
 
-# Perceived Stress Questionnaire
-elif menu == "Perceived Stress Questionnaire":
-    st.header("Perceived Stress Scale (PSS)")
-    options = ["0 - Never", "1 - Almost never", "2 - Sometimes", "3 - Fairly often", "4 - Very often"]
-    questions = [
-        "1. How often have you felt upset because of something unexpected?",
-        "2. How often have you felt unable to control the important things in your life?",
-        "3. How often have you felt nervous and stressed?",
-        "4. How often have you felt confident about your ability to handle personal problems?",
-        "5. How often have you felt things were going your way?"
+            st.session_state.update({'ffmi': ffmi, 'lean_mass': masa_magra, 'genetic_potential': potencial_genetico})
+
+            st.subheader("Resultados")
+            st.write(f"**FFMI:** {ffmi:.2f}")
+            st.write(f"**Masa Magra:** {masa_magra:.2f} kg")
+            st.write(f"**Potencial Genético:** {potencial_genetico:.2f} kg")
+
+# Cuestionario: Escala de Estrés Percibido
+elif menu == "Cuestionario: Estrés Percibido":
+    st.header("Escala de Estrés Percibido (PSS)")
+    opciones = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
+    preguntas = [
+        "1. ¿Con qué frecuencia te has sentido molesto/a por algo inesperado?",
+        "2. ¿Con qué frecuencia has sentido que no puedes controlar las cosas importantes?",
+        "3. ¿Con qué frecuencia te has sentido nervioso/a y estresado/a?",
+        "4. ¿Con qué frecuencia te sentiste confiado/a para manejar tus problemas personales?",
+        "5. ¿Con qué frecuencia las cosas iban como querías?",
+        "6. ¿Con qué frecuencia te sentiste abrumado/a por lo que debías hacer?",
+        "7. ¿Con qué frecuencia controlaste las irritaciones?",
+        "8. ¿Con qué frecuencia sentiste que tenías todo bajo control?",
+        "9. ¿Con qué frecuencia te enfadaste por cosas fuera de tu control?",
+        "10. ¿Con qué frecuencia las dificultades parecían insuperables?"
     ]
-    responses = [st.selectbox(q, options, key=f"pss_{i}") for i, q in enumerate(questions)]
-    reversed_questions = [3, 4]
-    scores = [4 - int(r.split(" - ")[0]) if i in reversed_questions else int(r.split(" - ")[0]) for i, r in enumerate(responses)]
-    total_score = sum(scores)
-    if st.button("Submit Responses"):
-        st.session_state['total_score'] = total_score
-        st.subheader("Results")
-        st.write(f"Your total score is: **{total_score}**")
-        response = get_chatgpt_recommendations(f"My stress score is {total_score}.")
-        st.write(f"AI Recommendations: {response}")
+    respuestas = [st.selectbox(p, opciones, key=f"q{i}") for i, p in enumerate(preguntas)]
+    preguntas_invertidas = [3, 4, 6, 7]
+    puntuaciones = [4 - int(r.split(" - ")[0]) if i in preguntas_invertidas else int(r.split(" - ")[0]) for i, r in enumerate(respuestas)]
+    puntuacion_total = sum(puntuaciones)
 
-# Sleep Quality Questionnaire (PSQI)
-elif menu == "Sleep Quality Questionnaire (PSQI)":
-    st.header("Pittsburgh Sleep Quality Index (PSQI)")
-    psqi_questions = {
-        "Q1": "1. What time have you usually gone to bed?",
-        "Q2": "2. How long (in minutes) does it usually take to fall asleep?",
-        "Q3": "3. What time do you usually wake up?",
-        "Q4": "4. How many hours of actual sleep do you get?",
-        "Q5a": "5a. Trouble sleeping due to taking longer than 30 minutes?",
-        "Q5b": "5b. Waking up in the middle of the night?",
-        "Q5c": "5c. Waking up to use the bathroom?",
-        "Q5d": "5d. Feeling too hot?",
-        "Q5e": "5e. Having bad dreams?",
-        "Q6": "6. How often have you used medication to sleep?",
-        "Q7": "7. Trouble staying awake during activities?",
-        "Q8": "8. Trouble keeping enthusiasm?",
-        "Q9": "9. Rate your sleep quality overall."
-    }
-    responses = {key: st.number_input(label, min_value=0, max_value=3, step=1) for key, label in psqi_questions.items()}
-    if st.button("Submit PSQI Responses"):
-        components, global_score = calculate_psqi_component_scores(responses)
-        st.session_state['psqi_score'] = global_score
-        st.subheader("Results")
-        st.write(f"Your PSQI global score is: **{global_score}**")
-        for component, score in components.items():
-            st.write(f"{component}: {score}")
+    if st.button("Enviar Respuestas"):
+        st.session_state['stress_score'] = puntuacion_total
+        st.subheader("Resultados")
+        st.write(f"Tu puntuación total es: **{puntuacion_total}**")
 
-# Home and PDF Generation
-if menu == "Home":
-    st.header("Complete Profile")
-    if all(value is not None for value in [st.session_state.ffmi, st.session_state.total_score, st.session_state.psqi_score]):
+# Cuestionario: Calidad del Sueño (PSQI)
+elif menu == "Cuestionario: Calidad del Sueño (PSQI)":
+    st.header("Índice de Calidad del Sueño de Pittsburgh (PSQI)")
+    st.write("Este cuestionario evalúa tu calidad del sueño durante el último mes.")
+    
+    preguntas_psqi = [
+        "1. ¿A qué hora te acostaste generalmente?",
+        "2. ¿Cuántos minutos te tomó quedarte dormido?",
+        "3. ¿A qué hora te despertaste generalmente?",
+        "4. ¿Cuántas horas dormiste por noche?",
+        "5a. ¿Con qué frecuencia tuviste dificultad para dormir porque no podías quedarte dormido en 30 minutos?",
+        "6. ¿Con qué frecuencia tomaste medicamentos para dormir?",
+        "7. ¿Con qué frecuencia tuviste problemas para mantenerte despierto durante el día?",
+        "8. ¿Cómo calificarías tu calidad general del sueño?"
+    ]
+    respuestas_psqi = [st.text_input(p, key=f"psqi_{i}") for i, p in enumerate(preguntas_psqi)]
+
+    if st.button("Enviar Respuestas del PSQI"):
+        st.session_state['psqi_score'] = sum([len(r) for r in respuestas_psqi])  # Cambia esto según el método de puntuación
+        st.subheader("Resultados")
+        st.write(f"Tu puntuación PSQI es: **{st.session_state['psqi_score']}**")
+
+# Página de inicio y generación de PDF
+if menu == "Inicio":
+    st.header("Perfil Completo")
+    if all(value is not None for value in [st.session_state.ffmi, st.session_state.stress_score, st.session_state.psqi_score]):
         pdf = FPDF()
         pdf.add_page()
         pdf.set_font("Arial", size=12)
-        pdf.cell(200, 10, txt="Complete Profile", ln=True, align="C")
+        pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
         pdf.ln(10)
         pdf.cell(200, 10, txt=f"FFMI: {st.session_state.ffmi:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Lean Mass: {st.session_state.lean_mass:.2f} kg", ln=True)
-        pdf.cell(200, 10, txt=f"Genetic Potential: {st.session_state.genetic_potential:.2f} kg", ln=True)
-        pdf.cell(200, 10, txt=f"Stress Score: {st.session_state.total_score}", ln=True)
-        pdf.cell(200, 10, txt=f"PSQI Score: {st.session_state.psqi_score}", ln=True)
-        pdf.output("profile.pdf")
-        with open("profile.pdf", "rb") as f:
-            st.download_button("Download Your Profile", f, file_name="profile.pdf")
+        pdf.cell(200, 10, txt=f"Puntuación de Estrés: {st.session_state.stress_score}", ln=True)
+        pdf.cell(200, 10, txt=f"Puntuación PSQI: {st.session_state.psqi_score}", ln=True)
+        pdf.output("perfil.pdf")
+        with open("perfil.pdf", "rb") as f:
+            st.download_button("Descargar Perfil", f, file_name="perfil.pdf")
     else:
-        st.error("Complete all questionnaires to generate your profile.")
+        st.error("Completa todos los cuestionarios para generar tu perfil.")
