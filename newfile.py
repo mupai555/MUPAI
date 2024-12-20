@@ -1,25 +1,24 @@
 import streamlit as st
 from fpdf import FPDF
 
-# Logo y Título
+# Logo and Title
 st.image("LOGO.png", width=300)
 st.title("MUPAI Digital Training Science")
 st.write("Welcome to your science-based training platform.")
 
-# Menú Lateral
-menu = st.sidebar.selectbox(
-    "Select a section:", 
-    ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire"]
-)
+# Sidebar Menu
+menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire"])
 
-# Inicialización de variables en session_state
+# Initialize session_state variables
 for var in ['ffmi', 'lean_mass', 'genetic_potential', 'stress_score']:
     if var not in st.session_state:
         st.session_state[var] = None
 
-# Cuestionario de Potencial Genético
+# Genetic Potential Questionnaire
 if menu == "Genetic Potential Questionnaire":
     st.header("Genetic Potential Calculator for Muscle Growth")
+    st.write("Enter your details below to calculate your genetic potential based on scientific models.")
+
     height = st.number_input("Height (cm):", min_value=100, max_value=250, step=1)
     weight = st.number_input("Weight (kg):", min_value=30.0, max_value=200.0, step=0.1)
     body_fat = st.number_input("Body Fat Percentage (%):", min_value=5.0, max_value=50.0, step=0.1)
@@ -31,41 +30,37 @@ if menu == "Genetic Potential Questionnaire":
             ffmi = lean_mass / (height_m ** 2)
             genetic_potential = (height - 100) * 1.1
 
-            st.session_state.update({
-                'ffmi': ffmi,
-                'lean_mass': lean_mass,
-                'genetic_potential': genetic_potential
-            })
+            st.session_state.update({'ffmi': ffmi, 'lean_mass': lean_mass, 'genetic_potential': genetic_potential})
 
             st.subheader("Results")
             st.write(f"**FFMI:** {ffmi:.2f}")
             st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
             st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
 
-# Cuestionario de Estrés Percibido (PSS)
+# Perceived Stress Questionnaire (PSS)
 elif menu == "Perceived Stress Questionnaire":
     st.header("Perceived Stress Scale (PSS)")
     st.write("This questionnaire measures your perceived stress over the last month.")
 
     questions = [
-        "1. In the last month, how often have you been upset because of something that happened unexpectedly?",
-        "2. In the last month, how often have you felt unable to control the important things in your life?",
-        "3. In the last month, how often have you felt nervous and stressed?",
-        "4. In the last month, how often have you felt confident about your ability to handle personal problems?",
-        "5. In the last month, how often have you felt things were going your way?",
-        "6. In the last month, how often have you found that you could not cope with all the things you had to do?",
-        "7. In the last month, how often have you been able to control irritations in your life?",
-        "8. In the last month, how often have you felt on top of things?",
-        "9. In the last month, how often have you been angered by things outside of your control?",
-        "10. In the last month, how often have you felt difficulties piling up so high you could not overcome them?",
+        "En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo inesperado?",
+        "En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
+        "En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
+        "En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
+        "En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
+        "En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
+        "En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
+        "En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
+        "En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
+        "En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?",
     ]
-
-    options = ["0 - Never", "1 - Almost never", "2 - Sometimes", "3 - Fairly often", "4 - Very often"]
+    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
     reversed_indices = [3, 4, 6, 7]
     responses = []
 
-    for i, question in enumerate(questions):
-        response = st.selectbox(question, options, key=f"pss_{i}")
+    # Loop through the questions with numbering
+    for i, question in enumerate(questions, 1):
+        response = st.selectbox(f"{i}. {question}", options, key=f"pss_{i}")
         score = int(response.split(" - ")[0])
         if i in reversed_indices:
             score = 4 - score
@@ -73,8 +68,7 @@ elif menu == "Perceived Stress Questionnaire":
 
     if st.button("Submit PSS Responses"):
         total_score = sum(responses)
-        st.session_state["stress_score"] = total_score
-
+        st.session_state['stress_score'] = total_score
         st.subheader("Results")
         st.write(f"Your total PSS score is: **{total_score}**")
         if total_score <= 13:
@@ -84,7 +78,7 @@ elif menu == "Perceived Stress Questionnaire":
         else:
             st.error("High stress.")
 
-# Sección Inicio
+# Home Section
 if menu == "Home":
     st.header("Complete Profile")
     if all(value is not None for value in [st.session_state.ffmi, st.session_state.stress_score]):
