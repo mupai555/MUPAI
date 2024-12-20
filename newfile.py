@@ -9,10 +9,10 @@ st.title("MUPAI Digital Training Science")
 st.write("Welcome to your science-based training platform.")
 
 # Sidebar Menu
-menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire"])
+menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire", "Sleep Quality Questionnaire (PSQI)"])
 
 # Initialize session_state variables
-for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score']:
+for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score', 'psqi_score']:
     if var not in st.session_state:
         st.session_state[var] = None
 
@@ -49,13 +49,11 @@ if menu == "Genetic Potential Questionnaire":
 
             st.session_state.update({'ffmi': ffmi, 'lean_mass': lean_mass, 'genetic_potential': genetic_potential})
 
-            # Display Results
             st.subheader("Results")
             st.write(f"**FFMI:** {ffmi:.2f}")
             st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
             st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
 
-            # Get Recommendations
             user_query = f"My FFMI is {ffmi:.2f}, and my lean mass is {lean_mass:.2f} kg."
             response = get_chatgpt_recommendations(user_query)
             st.write(f"AI Recommendations: {response}")
@@ -75,7 +73,7 @@ elif menu == "Perceived Stress Questionnaire":
     ]
     
     responses = [st.selectbox(q, options, key=f"q{i}") for i, q in enumerate(questions)]
-    reversed_questions = [3, 4]  # Adjust for reversed scoring
+    reversed_questions = [3, 4]
     scores = [4 - int(r.split(" - ")[0]) if i in reversed_questions else int(r.split(" - ")[0]) for i, r in enumerate(responses)]
     total_score = sum(scores)
 
@@ -84,8 +82,32 @@ elif menu == "Perceived Stress Questionnaire":
         st.subheader("Results")
         st.write(f"Your total score is: **{total_score}**")
         
-        # Get AI Recommendations
         user_query = f"My stress score is {total_score}. What can I do to reduce stress?"
+        response = get_chatgpt_recommendations(user_query)
+        st.write(f"AI Recommendations: {response}")
+
+# Sleep Quality Questionnaire (PSQI)
+elif menu == "Sleep Quality Questionnaire (PSQI)":
+    st.header("Pittsburgh Sleep Quality Index (PSQI)")
+    st.write("This questionnaire measures your sleep quality over the last month.")
+    
+    bedtime = st.text_input("1. Usual bedtime (e.g., 22:30):", value="22:00")
+    sleep_latency = st.number_input("2. How many minutes to fall asleep:", min_value=0, max_value=120, step=1)
+    wake_time = st.text_input("3. Usual wake-up time (e.g., 06:30):", value="06:00")
+    sleep_duration = st.number_input("4. Actual sleep hours:", min_value=0.0, max_value=12.0, step=0.1)
+    
+    disturbances = ["Difficulty falling asleep", "Waking up during the night", "Bathroom trips", "Feeling too hot", "Feeling too cold"]
+    disturbance_responses = [st.selectbox(f"5.{i}. {d}", ["0 - Never", "1 - Less than once a week", "2 - Once or twice a week", "3 - Three or more times a week"]) for i, d in enumerate(disturbances, 1)]
+    
+    medication_use = st.selectbox("6. Frequency of sleeping medication use:", ["0 - Never", "1 - Less than once a week", "2 - Once or twice a week", "3 - Three or more times a week"])
+
+    if st.button("Calculate PSQI"):
+        psqi_score = sum([int(r.split(" - ")[0]) for r in disturbance_responses]) + int(medication_use.split(" - ")[0])
+        st.session_state['psqi_score'] = psqi_score
+        
+        st.subheader("Results")
+        st.write(f"Your total PSQI score is: **{psqi_score}**")
+        user_query = f"My PSQI score is {psqi_score}. What can I do to improve my sleep quality?"
         response = get_chatgpt_recommendations(user_query)
         st.write(f"AI Recommendations: {response}")
 
@@ -93,23 +115,22 @@ elif menu == "Perceived Stress Questionnaire":
 if menu == "Home":
     st.header("Complete Profile")
 
-    if st.session_state.ffmi and st.session_state.total_score:
+    if st.session_state.ffmi and st.session_state.total_score and st.session_state.psqi_score:
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
         pdf.set_font("Arial", size=12)
 
-        # Add title and results
         pdf.cell(200, 10, txt="User's Complete Profile", ln=True, align="C")
         pdf.ln(10)
         pdf.cell(200, 10, txt=f"FFMI: {st.session_state.ffmi:.2f}", ln=True)
         pdf.cell(200, 10, txt=f"Lean Mass: {st.session_state.lean_mass:.2f} kg", ln=True)
         pdf.cell(200, 10, txt=f"Genetic Potential: {st.session_state.genetic_potential:.2f} kg", ln=True)
         pdf.cell(200, 10, txt=f"Stress Score: {st.session_state.total_score}", ln=True)
+        pdf.cell(200, 10, txt=f"PSQI Score: {st.session_state.psqi_score}", ln=True)
 
-        # Save and provide download
         pdf.output("profile.pdf")
         with open("profile.pdf", "rb") as f:
             st.download_button("Download Your Profile", f, file_name="profile.pdf")
     else:
-        st.error("Complete both questionnaires to generate your profile.")
+        st.error("Complete all questionnaires to generate your profile.")
