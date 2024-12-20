@@ -1,7 +1,7 @@
 import streamlit as st
-from fpdf import FPDFimport streamlit as st
 from fpdf import FPDF
-
+import fitz  # PyMuPDF
+from transformers import pipeline
 
 # Logo y título
 st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
@@ -40,6 +40,21 @@ def obtener_recomendaciones(puntaje_estrés, ffmi):
         recomendaciones.append("Tu FFMI indica que has alcanzado el límite natural. Considera revisar tu programa de entrenamiento para seguir mejorando sin riesgo de lesiones.")
     
     return recomendaciones
+
+# Función para extraer texto de un PDF
+def extraer_texto(pdf_path):
+    doc = fitz.open(pdf_path)
+    texto = ""
+    for page in doc:
+        texto += page.get_text("text")
+    return texto
+
+# Usar Hugging Face para hacer preguntas sobre el contenido del PDF
+model = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
+
+def obtener_respuesta(pdf_text, pregunta):
+    result = model(question=pregunta, context=pdf_text)
+    return result['answer']
 
 # Cuestionario de Potencial Genético
 if menu == "Cuestionario: Potencial Genético":
@@ -155,21 +170,4 @@ if menu == "Inicio":
         if st.session_state.total_score <= 13:
             pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
         elif 14 <= st.session_state.total_score <= 26:
-            pdf.cell(200, 10, txt="Moderado nivel de estrés percibido.", ln=True)
-        else:
-            pdf.cell(200, 10, txt="Alto nivel de estrés percibido. Podrías beneficiarte de ayuda profesional.", ln=True)
-
-        # Recomendaciones personalizadas para el estrés percibido (con base en los documentos proporcionados)
-        st.write("**Recomendaciones basadas en el estrés percibido:**")
-        if st.session_state.total_score > 26:
-            st.write("Recomendamos técnicas como la meditación diaria, prácticas de respiración profunda, y programación de pausas para relajación.")
-        else:
-            st.write("Mantén prácticas de manejo de estrés como ejercicio físico regular y técnicas de mindfulness.")
-
-        # Guardar el PDF
-        pdf.output("perfil_completo.pdf")
-
-        # Ofrecer la descarga del PDF
-        st.download_button("Descargar tu perfil completo", data=open("perfil_completo.pdf", "rb"), file_name="perfil_completo.pdf")
-    else:
-        st.error("Aún no has completado los cuestionarios. Por favor, asegúrate de llenar ambos cuestionarios para generar tu perfil completo.")
+            pdf.cell(200, 10
