@@ -18,11 +18,8 @@ for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score', 'psqi_score
 
 # Function to fetch dynamic recommendations from ChatGPT
 def get_chatgpt_recommendations(user_query, pdf_context=""):
-    # Combine user query and PDF data
     input_text = f"{user_query}\nContext from document: {pdf_context}" if pdf_context else user_query
-
-    # Simulated response from ChatGPT (replace with an actual API call)
-    response = f"Simulated response based on: {input_text}"
+    response = f"Simulated response based on: {input_text}"  # Replace with actual API call
     return response
 
 # Function to extract text from PDFs
@@ -89,25 +86,22 @@ elif menu == "Perceived Stress Questionnaire":
 # Sleep Quality Questionnaire (PSQI)
 elif menu == "Sleep Quality Questionnaire (PSQI)":
     st.header("Pittsburgh Sleep Quality Index (PSQI)")
-    st.write("This questionnaire measures your sleep quality over the last month.")
-    
-    bedtime = st.text_input("1. Usual bedtime (e.g., 22:30):", value="22:00")
-    sleep_latency = st.number_input("2. How many minutes to fall asleep:", min_value=0, max_value=120, step=1)
-    wake_time = st.text_input("3. Usual wake-up time (e.g., 06:30):", value="06:00")
-    sleep_duration = st.number_input("4. Actual sleep hours:", min_value=0.0, max_value=12.0, step=0.1)
-    
-    disturbances = ["Difficulty falling asleep", "Waking up during the night", "Bathroom trips", "Feeling too hot", "Feeling too cold"]
-    disturbance_responses = [st.selectbox(f"5.{i}. {d}", ["0 - Never", "1 - Less than once a week", "2 - Once or twice a week", "3 - Three or more times a week"]) for i, d in enumerate(disturbances, 1)]
-    
-    medication_use = st.selectbox("6. Frequency of sleeping medication use:", ["0 - Never", "1 - Less than once a week", "2 - Once or twice a week", "3 - Three or more times a week"])
+    st.write("This questionnaire measures your sleep quality over the past month.")
 
-    if st.button("Calculate PSQI"):
-        psqi_score = sum([int(r.split(" - ")[0]) for r in disturbance_responses]) + int(medication_use.split(" - ")[0])
-        st.session_state['psqi_score'] = psqi_score
-        
+    psqi_questions = [
+        "1. During the past month, what time have you usually gone to bed at night?",
+        "2. During the past month, how long (in minutes) has it usually taken you to fall asleep each night?",
+        "3. During the past month, what time have you usually gotten up in the morning?",
+        "4. During the past month, how many hours of actual sleep did you get at night? (This may be different than the number of hours you spend in bed.)",
+        "5. During the past month, how often have you had trouble sleeping because you cannot get to sleep within 30 minutes?",
+    ]
+
+    psqi_responses = [st.text_input(q, key=f"psqi_{i}") for i, q in enumerate(psqi_questions)]
+    if st.button("Submit PSQI Responses"):
+        st.session_state['psqi_score'] = sum([len(r) for r in psqi_responses])  # Replace with actual scoring
         st.subheader("Results")
-        st.write(f"Your total PSQI score is: **{psqi_score}**")
-        user_query = f"My PSQI score is {psqi_score}. What can I do to improve my sleep quality?"
+        st.write(f"Your PSQI score is: **{st.session_state['psqi_score']}**")
+        user_query = f"My PSQI score is {st.session_state['psqi_score']}. What does this mean?"
         response = get_chatgpt_recommendations(user_query)
         st.write(f"AI Recommendations: {response}")
 
@@ -115,7 +109,7 @@ elif menu == "Sleep Quality Questionnaire (PSQI)":
 if menu == "Home":
     st.header("Complete Profile")
 
-    if st.session_state.ffmi and st.session_state.total_score and st.session_state.psqi_score:
+    if all(value is not None for value in [st.session_state.ffmi, st.session_state.total_score, st.session_state.psqi_score]):
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
