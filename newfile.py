@@ -3,171 +3,113 @@ from fpdf import FPDF
 import fitz  # PyMuPDF
 from transformers import pipeline
 
-# Logo y título
-st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
+# Logo and Title
+st.image("LOGO.png", width=300)
 st.title("MUPAI Digital Training Science")
-st.write("Bienvenido a tu plataforma de entrenamiento basada en ciencia.")
+st.write("Welcome to your science-based training platform.")
 
-# Menú lateral para navegación
-menu = st.sidebar.selectbox("Selecciona una sección:", ["Inicio", "Cuestionario: Potencial Genético", "Cuestionario: Estrés Percibido"])
+# Sidebar Menu
+menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire"])
 
-# Inicializar las variables en session_state para evitar que se pierdan los datos
-if 'ffmi' not in st.session_state:
-    st.session_state.ffmi = None
-if 'lean_mass' not in st.session_state:
-    st.session_state.lean_mass = None
-if 'genetic_potential' not in st.session_state:
-    st.session_state.genetic_potential = None
-if 'total_score' not in st.session_state:
-    st.session_state.total_score = None
+# Initialize session_state variables
+for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score']:
+    if var not in st.session_state:
+        st.session_state[var] = None
 
-# Función para IA adaptativa de recomendaciones
-def obtener_recomendaciones(puntaje_estrés, ffmi):
-    recomendaciones = []
-    
-    # Estrés
-    if puntaje_estrés > 26:
-        recomendaciones.append("Recomendamos implementar prácticas como la meditación diaria y pausas para relajación.")
-    elif puntaje_estrés >= 14:
-        recomendaciones.append("Se sugiere incluir técnicas de mindfulness y gestionar mejor el tiempo para reducir el estrés.")
-    
-    # Potencial Genético
-    if ffmi < 20:
-        recomendaciones.append("Tu FFMI sugiere que estás en el rango promedio para personas no entrenadas. Considera aumentar la intensidad de tu entrenamiento para mejorar.")
-    elif 20 <= ffmi < 24:
-        recomendaciones.append("Tu FFMI está en un rango avanzado, lo que indica que tienes un buen nivel de desarrollo muscular natural.")
-    else:
-        recomendaciones.append("Tu FFMI indica que has alcanzado el límite natural. Considera revisar tu programa de entrenamiento para seguir mejorando sin riesgo de lesiones.")
-    
-    return recomendaciones
+# Function to fetch dynamic recommendations from ChatGPT
+def get_chatgpt_recommendations(user_query, pdf_context=""):
+    # Combine user query and PDF data
+    input_text = f"{user_query}\nContext from document: {pdf_context}" if pdf_context else user_query
 
-# Función para extraer texto de un PDF
-def extraer_texto(pdf_path):
+    # Simulated response from ChatGPT (replace with an actual API call)
+    response = f"Simulated response based on: {input_text}"
+    return response
+
+# Function to extract text from PDFs
+def extract_text_from_pdf(pdf_path):
     doc = fitz.open(pdf_path)
-    texto = ""
-    for page in doc:
-        texto += page.get_text("text")
-    return texto
+    text = "".join(page.get_text("text") for page in doc)
+    return text
 
-# Usar Hugging Face para hacer preguntas sobre el contenido del PDF
-model = pipeline("question-answering", model="distilbert-base-uncased-distilled-squad")
-
-def obtener_respuesta(pdf_text, pregunta):
-    result = model(question=pregunta, context=pdf_text)
-    return result['answer']
-
-# Cuestionario de Potencial Genético
-if menu == "Cuestionario: Potencial Genético":
-    st.header("Calculadora de Potencial Genético para Crecimiento Muscular")
-    st.write("Ingresa tus datos a continuación para calcular tu potencial genético basado en modelos científicos.")
+# Genetic Potential Questionnaire
+if menu == "Genetic Potential Questionnaire":
+    st.header("Genetic Potential Calculator for Muscle Growth")
+    st.write("Enter your details below to calculate your genetic potential based on scientific models.")
     
-    # Datos de entrada
-    height = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
-    weight = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, step=0.1)
-    body_fat = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, step=0.1)
+    height = st.number_input("Height (cm):", min_value=100, max_value=250, step=1)
+    weight = st.number_input("Weight (kg):", min_value=30.0, max_value=200.0, step=0.1)
+    body_fat = st.number_input("Body Fat Percentage (%):", min_value=5.0, max_value=50.0, step=0.1)
 
-    # Botón de Submit para guardar las respuestas
-    if st.button("Calcular Potencial Genético"):
+    if st.button("Calculate Genetic Potential"):
         if height > 0 and weight > 0 and body_fat > 0:
-            # Cálculos
-            height_m = height / 100  # Convertir altura a metros
-            lean_mass = weight * (1 - body_fat / 100)  # Masa magra
-            ffmi = lean_mass / (height_m ** 2)  # Índice de masa libre de grasa
-            genetic_potential = (height - 100) * 1.1  # Potencial genético estimado
+            height_m = height / 100
+            lean_mass = weight * (1 - body_fat / 100)
+            ffmi = lean_mass / (height_m ** 2)
+            genetic_potential = (height - 100) * 1.1
 
-            # Guardar las respuestas en session_state
-            st.session_state.ffmi = ffmi
-            st.session_state.lean_mass = lean_mass
-            st.session_state.genetic_potential = genetic_potential
+            st.session_state.update({'ffmi': ffmi, 'lean_mass': lean_mass, 'genetic_potential': genetic_potential})
 
-            # Resultados
-            st.subheader("Resultados")
-            st.write(f"**Tu FFMI:** {ffmi:.2f}")
-            st.write(f"**Tu masa magra:** {lean_mass:.2f} kg")
-            st.write(f"**Potencial genético estimado:** {genetic_potential:.2f} kg")
+            # Display Results
+            st.subheader("Results")
+            st.write(f"**FFMI:** {ffmi:.2f}")
+            st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
+            st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
 
-            # Interpretación con base en la literatura científica
-            if ffmi < 20:
-                st.write("Tu FFMI indica que estás en el rango promedio para personas no entrenadas. Es posible que tengas un buen potencial de desarrollo muscular, pero se requerirá un entrenamiento constante y una nutrición adecuada para alcanzar tu máximo potencial.")
-            elif 20 <= ffmi < 24:
-                st.write("Tu FFMI indica que estás en el rango de un atleta natural bien entrenado. Estás cerca del máximo potencial que puede lograrse de manera natural. Continuar con entrenamientos progresivos y un enfoque nutricional adecuado es clave para seguir progresando.")
-            else:
-                st.write("Tu FFMI es superior a 24, lo que indica un desarrollo más allá del rango natural. Es probable que hayas alcanzado el límite de lo que se puede lograr de manera natural sin el uso de sustancias. Si deseas seguir avanzando, podrías beneficiarte de consultar con un profesional para optimizar tu enfoque.")
+            # Get Recommendations
+            user_query = f"My FFMI is {ffmi:.2f}, and my lean mass is {lean_mass:.2f} kg."
+            response = get_chatgpt_recommendations(user_query)
+            st.write(f"AI Recommendations: {response}")
 
-# Cuestionario de Estrés Percibido
-elif menu == "Cuestionario: Estrés Percibido":
-    st.header("Cuestionario: Escala de Estrés Percibido (PSS)")
-    st.write("Este cuestionario mide tu percepción de estrés durante el último mes.")
-    st.write("Por favor, responde a cada pregunta seleccionando la opción que más represente tu experiencia.")
+# Perceived Stress Questionnaire
+elif menu == "Perceived Stress Questionnaire":
+    st.header("Perceived Stress Scale (PSS)")
+    st.write("This questionnaire measures your perceived stress over the last month.")
     
-    # Opciones de respuesta
-    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
-
-    # Preguntas del cuestionario
+    options = ["0 - Never", "1 - Almost never", "2 - Sometimes", "3 - Fairly often", "4 - Very often"]
     questions = [
-        "1. En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?",
-        "2. En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
-        "3. En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
-        "4. En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
-        "5. En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
-        "6. En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
-        "7. En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
-        "8. En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
-        "9. En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
-        "10. En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?"
+        "1. In the last month, how often have you felt upset because of something unexpected?",
+        "2. In the last month, how often have you felt unable to control the important things in your life?",
+        "3. In the last month, how often have you felt nervous and stressed?",
+        "4. In the last month, how often have you felt confident about your ability to handle your personal problems?",
+        "5. In the last month, how often have you felt things were going your way?",
     ]
+    
+    responses = [st.selectbox(q, options, key=f"q{i}") for i, q in enumerate(questions)]
+    reversed_questions = [3, 4]  # Adjust for reversed scoring
+    scores = [4 - int(r.split(" - ")[0]) if i in reversed_questions else int(r.split(" - ")[0]) for i, r in enumerate(responses)]
+    total_score = sum(scores)
 
-    # Variables para las respuestas del usuario
-    responses = []
-    for i, question in enumerate(questions):
-        response = st.selectbox(question, options, key=f"q{i}")
-        responses.append(int(response.split(" - ")[0]))
-
-    # Ajuste para preguntas invertidas
-    reverse_indices = [3, 4, 6, 7]
-    for idx in reverse_indices:
-        responses[idx] = 4 - responses[idx]
-
-    # Botón de Submit para guardar las respuestas y calcular el puntaje
-    if st.button("Enviar Respuestas"):
-        total_score = sum(responses)
+    if st.button("Submit Responses"):
+        st.session_state['total_score'] = total_score
+        st.subheader("Results")
+        st.write(f"Your total score is: **{total_score}**")
         
-        # Guardar el puntaje total en session_state
-        st.session_state.total_score = total_score
+        # Get AI Recommendations
+        user_query = f"My stress score is {total_score}. What can I do to reduce stress?"
+        response = get_chatgpt_recommendations(user_query)
+        st.write(f"AI Recommendations: {response}")
 
-        # Interpretación del puntaje
-        st.subheader("Resultados")
-        st.write(f"Tu puntaje total es: **{total_score}**")
-        if total_score <= 13:
-            st.success("Bajo nivel de estrés percibido. ¡Bien hecho! Mantén prácticas saludables para manejar el estrés.")
-        elif 14 <= total_score <= 26:
-            st.warning("Moderado nivel de estrés percibido. Considera incorporar actividades como meditación o respiración profunda en tu rutina.")
-        else:
-            st.error("Alto nivel de estrés percibido. Podrías beneficiarte de buscar apoyo profesional o implementar más estrategias de afrontamiento.")
-
-# Generación del Perfil Completo y PDF
-if menu == "Inicio":
-    # Perfil Completo
-    st.header("Perfil Completo")
+# Home and PDF Generation
+if menu == "Home":
+    st.header("Complete Profile")
 
     if st.session_state.ffmi and st.session_state.total_score:
-        # Crea el PDF
         pdf = FPDF()
         pdf.set_auto_page_break(auto=True, margin=15)
         pdf.add_page()
-
-        # Añadir título
         pdf.set_font("Arial", size=12)
-        pdf.cell(200, 10, txt="Perfil Completo del Usuario", ln=True, align="C")
 
-        # Añadir los resultados
+        # Add title and results
+        pdf.cell(200, 10, txt="User's Complete Profile", ln=True, align="C")
         pdf.ln(10)
-        pdf.cell(200, 10, txt=f"Tu FFMI: {st.session_state.ffmi:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Tu masa magra: {st.session_state.lean_mass:.2f} kg", ln=True)
-        pdf.cell(200, 10, txt=f"Potencial genético estimado: {st.session_state.genetic_potential:.2f} kg", ln=True)
-        
-        pdf.ln(10)
-        if st.session_state.total_score <= 13:
-            pdf.cell(200, 10, txt="Bajo nivel de estrés percibido. ¡Bien hecho!", ln=True)
-        elif 14 <= st.session_state.total_score <= 26:
-            pdf.cell(200, 10
+        pdf.cell(200, 10, txt=f"FFMI: {st.session_state.ffmi:.2f}", ln=True)
+        pdf.cell(200, 10, txt=f"Lean Mass: {st.session_state.lean_mass:.2f} kg", ln=True)
+        pdf.cell(200, 10, txt=f"Genetic Potential: {st.session_state.genetic_potential:.2f} kg", ln=True)
+        pdf.cell(200, 10, txt=f"Stress Score: {st.session_state.total_score}", ln=True)
+
+        # Save and provide download
+        pdf.output("profile.pdf")
+        with open("profile.pdf", "rb") as f:
+            st.download_button("Download Your Profile", f, file_name="profile.pdf")
+    else:
+        st.error("Complete both questionnaires to generate your profile.")
