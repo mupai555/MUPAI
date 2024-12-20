@@ -120,4 +120,4 @@ if menu == "Home":
         with open("profile.pdf", "rb") as f:
             st.download_button("Download Your Profile", f, "profile.pdf")
     else:
-        st.warning("Complete all questionnaires to generate your profile.").
+        st.warning("Complete all questionnaires to generate your profile.")
