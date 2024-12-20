@@ -1,5 +1,7 @@
 import streamlit as st
+from fpdf import FPDFimport streamlit as st
 from fpdf import FPDF
+
 
 # Logo y título
 st.image("LOGO.png", width=300)  # Asegúrate de que el logo esté en tu repositorio
