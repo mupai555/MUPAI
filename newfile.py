@@ -9,7 +9,12 @@ st.title("MUPAI Digital Training Science")
 st.write("Welcome to your science-based training platform.")
 
 # Sidebar Menu
-menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire", "Sleep Quality Questionnaire (PSQI)"])
+menu = st.sidebar.selectbox("Select a section:", [
+    "Home", 
+    "Genetic Potential Questionnaire", 
+    "Perceived Stress Questionnaire", 
+    "Sleep Quality Questionnaire (PSQI)"
+])
 
 # Initialize session_state variables
 for var in ['ffmi', 'lean_mass', 'genetic_potential', 'total_score', 'psqi_score']:
@@ -97,11 +102,15 @@ elif menu == "Sleep Quality Questionnaire (PSQI)":
     ]
 
     psqi_responses = [st.text_input(q, key=f"psqi_{i}") for i, q in enumerate(psqi_questions)]
+    
     if st.button("Submit PSQI Responses"):
-        st.session_state['psqi_score'] = sum([len(r) for r in psqi_responses])  # Replace with actual scoring
+        psqi_score = sum([len(r) for r in psqi_responses if r])  # Placeholder scoring logic
+        st.session_state['psqi_score'] = psqi_score
+
         st.subheader("Results")
-        st.write(f"Your PSQI score is: **{st.session_state['psqi_score']}**")
-        user_query = f"My PSQI score is {st.session_state['psqi_score']}. What does this mean?"
+        st.write(f"Your PSQI score is: **{psqi_score}**")
+        
+        user_query = f"My PSQI score is {psqi_score}. What does this mean?"
         response = get_chatgpt_recommendations(user_query)
         st.write(f"AI Recommendations: {response}")
 
