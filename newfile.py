@@ -1,13 +1,13 @@
 import os
 import streamlit as st
 from huggingface_hub import login
-from transformers import pipeline
+import streamlit as st
 
 # Retrieve Hugging Face token securely
-HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_hf_xZjDEaqrDoHIZeWNVoVwpGSdbGmjbvLEaC"]
+HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_TOKEN"]
 
 # Authenticate with Hugging Face
-login(HUGGINGFACE_hf_xZjDEaqrDoHIZeWNVoVwpGSdbGmjbvLEaC)
+login(HUGGINGFACE_TOKEN)
 
 # Initialize Hugging Face pipeline
 @st.cache_resource
