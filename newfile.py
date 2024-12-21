@@ -8,6 +8,7 @@ st.set_page_config(
 )
 
 # Mostrar el logo
+# Cambia la ruta a la URL correcta del logotipo si ya está alojado públicamente
 st.image("https://muscleupgym.com.mx/wp-content/uploads/2023/12/logo-mupai.png", use_column_width=True)
 
 # Título principal
