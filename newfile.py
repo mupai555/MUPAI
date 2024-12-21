@@ -94,3 +94,19 @@ if menu == "Home":
             st.download_button("Download Your Profile", f, "profile.pdf")
     else:
         st.warning("Complete all questionnaires to generate your profile.")
+        from transformers import pipeline
+import streamlit as st
+
+# Initialize Hugging Face pipeline
+@st.cache_resource
+def load_pipeline():
+    return pipeline("text-generation", model="gpt2")
+
+model = load_pipeline()
+
+# Streamlit interface
+st.title("Chatbot App")
+user_input = st.text_input("Ask me anything:")
+if user_input:
+    response = model(user_input, max_length=50, num_return_sequences=1)
+    st.write(response[0]['generated_text'])
