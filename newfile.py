@@ -15,8 +15,48 @@ menu = st.sidebar.selectbox(
 
 # Content based on menu selection
 if menu == "Inicio":
+    # Add the logo
+    st.image("LOGO.png", use_column_width=True)
+
+    # Welcome title
     st.title("Bienvenido a MUPAI")
-    st.write("**MUPAI** es la plataforma de entrenamiento digital basada en ciencia.")
+
+    # Mission
+    st.header("Misión")
+    st.write(
+        """
+        Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
+        """
+    )
+
+    # Vision
+    st.header("Visión")
+    st.write(
+        """
+        Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
+        """
+    )
+
+    # Policy
+    st.header("Política")
+    st.write(
+        """
+        En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
+        """
+    )
+
+    # Service Policy
+    st.header("Política del Servicio")
+    st.write(
+        """
+        En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
+        - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
+        - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
+        - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
+        - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
+        - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
+        """
+    )
 
 elif menu == "Sobre Mí":
     st.title("Sobre Mí")
