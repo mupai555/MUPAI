@@ -1,28 +1,47 @@
-from huggingface_hub import login
-
-# Authenticate with Hugging Face
-login("your-hugging-face-token-here")  # Replace with your actual token
+import os
 import streamlit as st
+from huggingface_hub import login
+from transformers import pipeline
 from fpdf import FPDF
 
+# ----------------- Hugging Face Authentication -----------------
+HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")  # Fetch token from environment variable
+if not HUGGINGFACE_TOKEN:
+    st.warning("Hugging Face token not found. Please add it to your environment variables.")
+    st.stop()
+else:
+    login(HUGGINGFACE_TOKEN)
+
+# ----------------- Load Hugging Face Model -----------------
+@st.cache_resource  # Cache the pipeline to avoid reloading
+def load_pipeline():
+    try:
+        # Load a pre-trained Hugging Face pipeline (e.g., sentiment-analysis)
+        classifier = pipeline("sentiment-analysis", model="distilbert-base-uncased")
+        return classifier
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
+
+classifier = load_pipeline()
+
+# ----------------- Streamlit UI -----------------
 # Logo and Title
-st.image("LOGO.png", width=300)
+st.image("LOGO.png", width=300)  # Replace LOGO.png with your actual logo file
 st.title("MUPAI Digital Training Science")
 st.write("Welcome to your science-based training platform.")
 
-# Sidebar Menu
-menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire"])
+# ----------------- Sidebar Menu -----------------
+menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire", "Sentiment Analysis"])
 
 # Initialize session_state variables
 for var in ['ffmi', 'lean_mass', 'genetic_potential', 'stress_score']:
     if var not in st.session_state:
         st.session_state[var] = None
 
-# Genetic Potential Questionnaire
+# ----------------- Genetic Potential Questionnaire -----------------
 if menu == "Genetic Potential Questionnaire":
     st.header("Genetic Potential Calculator for Muscle Growth")
-    st.write("Enter your details below to calculate your genetic potential based on scientific models.")
-
     height = st.number_input("Height (cm):", min_value=100, max_value=250, step=1)
     weight = st.number_input("Weight (kg):", min_value=30.0, max_value=200.0, step=0.1)
     body_fat = st.number_input("Body Fat Percentage (%):", min_value=5.0, max_value=50.0, step=0.1)
@@ -41,30 +60,27 @@ if menu == "Genetic Potential Questionnaire":
             st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
             st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
 
-# Perceived Stress Questionnaire (PSS)
+# ----------------- Perceived Stress Questionnaire (PSS) -----------------
 elif menu == "Perceived Stress Questionnaire":
     st.header("Perceived Stress Scale (PSS)")
-    st.write("This questionnaire measures your perceived stress over the last month.")
-
     questions = [
-        "En el último mes, ¿con qué frecuencia te has sentido molesto/a por algo inesperado?",
-        "En el último mes, ¿con qué frecuencia has sentido que no podías controlar las cosas importantes en tu vida?",
-        "En el último mes, ¿con qué frecuencia te has sentido nervioso/a y estresado/a?",
-        "En el último mes, ¿con qué frecuencia te sentiste confiado/a sobre tu capacidad para manejar tus problemas personales?",
-        "En el último mes, ¿con qué frecuencia sentiste que las cosas iban como querías?",
-        "En el último mes, ¿con qué frecuencia sentiste que no podías lidiar con todo lo que tenías que hacer?",
-        "En el último mes, ¿con qué frecuencia fuiste capaz de controlar las irritaciones en tu vida?",
-        "En el último mes, ¿con qué frecuencia sentiste que tenías todo bajo control?",
-        "En el último mes, ¿con qué frecuencia te has sentido enfadado/a por cosas que estaban fuera de tu control?",
-        "En el último mes, ¿con qué frecuencia sentiste que las dificultades se acumulaban tanto que no podías superarlas?",
+        "1. In the last month, how often have you felt upset because of something unexpected?",
+        "2. In the last month, how often have you felt unable to control important things in your life?",
+        "3. In the last month, how often have you felt nervous and stressed?",
+        "4. In the last month, how often have you felt confident about handling personal problems?",
+        "5. In the last month, how often have you felt that things were going your way?",
+        "6. In the last month, how often have you felt that you couldn't cope with all the things you had to do?",
+        "7. In the last month, how often have you been able to control irritations in your life?",
+        "8. In the last month, how often have you felt on top of things?",
+        "9. In the last month, how often have you felt angered because of things outside your control?",
+        "10. In the last month, how often have you felt that difficulties were piling up so high that you couldn't overcome them?",
     ]
-    options = ["0 - Nunca", "1 - Casi nunca", "2 - A veces", "3 - Frecuentemente", "4 - Muy frecuentemente"]
+    options = ["0 - Never", "1 - Almost Never", "2 - Sometimes", "3 - Fairly Often", "4 - Very Often"]
     reversed_indices = [3, 4, 6, 7]
     responses = []
 
-    # Loop through the questions with numbering
-    for i, question in enumerate(questions, 1):
-        response = st.selectbox(f"{i}. {question}", options, key=f"pss_{i}")
+    for i, question in enumerate(questions):
+        response = st.selectbox(question, options, key=f"pss_{i}")
         score = int(response.split(" - ")[0])
         if i in reversed_indices:
             score = 4 - score
@@ -82,7 +98,24 @@ elif menu == "Perceived Stress Questionnaire":
         else:
             st.error("High stress.")
 
-# Home Section
+# ----------------- Sentiment Analysis Section -----------------
+elif menu == "Sentiment Analysis":
+    st.header("Hugging Face Sentiment Analysis")
+    st.write("Analyze text sentiment using a Hugging Face Transformer model.")
+    user_input = st.text_area("Enter text to analyze:", placeholder="Type something here...")
+    if st.button("Analyze"):
+        if classifier and user_input.strip():
+            try:
+                result = classifier(user_input)
+                st.subheader("Sentiment Analysis Result")
+                for res in result:
+                    st.write(f"**Label:** {res['label']}, **Confidence:** {res['score']:.4f}")
+            except Exception as e:
+                st.error(f"Error during analysis: {e}")
+        else:
+            st.warning("Please provide text input or check model initialization.")
+
+# ----------------- Home Section -----------------
 if menu == "Home":
     st.header("Complete Profile")
     if all(value is not None for value in [st.session_state.ffmi, st.session_state.stress_score]):
@@ -98,64 +131,3 @@ if menu == "Home":
             st.download_button("Download Your Profile", f, "profile.pdf")
     else:
         st.warning("Complete all questionnaires to generate your profile.")
-        from transformers import pipeline
-import streamlit as st
-
-# Initialize Hugging Face pipeline
-@st.cache_resource
-def load_pipeline():
-    return pipeline("text-generation", model="gpt2")
-
-model = load_pipeline()
-
-# Streamlit interface
-st.title("Chatbot App")
-user_input = st.text_input("Ask me anything:")
-if user_input:
-    response = model(user_input, max_length=50, num_return_sequences=1)
-    st.write(response[0]['generated_text'])
-import os
-import streamlit as st
-from huggingface_hub import login
-from transformers import pipeline
-
-# Set up Hugging Face authentication
-HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")  # Use your environment variable
-if not HUGGINGFACE_TOKEN:
-    st.error("Hugging Face token not found. Please add it to your environment variables.")
-else:
-    login(HUGGINGFACE_TOKEN)
-
-# Initialize Hugging Face pipeline
-@st.cache_resource
-def load_pipeline():
-    try:
-        classifier = pipeline("sentiment-analysis", model="distilbert-base-uncased")
-        return classifier
-    except Exception as e:
-        st.error(f"Error loading model: {e}")
-        return None
-
-classifier = load_pipeline()
-
-# Streamlit UI
-st.title("Hugging Face Sentiment Analysis")
-st.write("This app uses Hugging Face's transformers library to analyze the sentiment of text.")
-
-# User input
-user_input = st.text_area("Enter text to analyze:")
-
-if st.button("Analyze"):
-    if classifier and user_input:
-        try:
-            result = classifier(user_input)
-            st.subheader("Sentiment Analysis Result")
-            for res in result:
-                st.write(f"Label: {res['label']}, Confidence: {res['score']:.4f}")
-        except Exception as e:
-            st.error(f"Error during analysis: {e}")
-    else:
-        st.warning("Please enter text to analyze or ensure the Hugging Face pipeline is loaded.")
-
-st.sidebar.title("Settings")
-st.sidebar.write("Make sure your Hugging Face token is set in the environment variables.")
