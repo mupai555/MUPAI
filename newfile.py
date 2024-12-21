@@ -8,7 +8,7 @@ st.set_page_config(
 )
 
 # Mostrar el logo desde GitHub
-st.image("https://github.com/mupai555/MUPAI/raw/main/LOGO.png", use_column_width=True)
+st.image("https://github.com/mupai555/MUPAI/raw/main/LOGO.png", use_container_width=True)
 
 # Título principal
 st.title("Bienvenido a MUPAI")
