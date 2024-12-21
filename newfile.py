@@ -127,3 +127,49 @@ elif menu == "Muscle Genetic Potential":
                 st.info("You still have room to grow towards your genetic potential.")
         else:
             st.error("Please fill in all the fields with valid values.")
+            import streamlit as st
+from transformers import pipeline
+
+# Step 1: Display the logo
+st.image("path_to_logo.png", width=200)  # Add the logo image (adjust the path to your logo)
+
+# Step 2: Display secrets to check if Hugging Face token is available
+st.write("Streamlit secrets:")
+st.write(st.secrets)  # This will display the secrets to check if the token is loaded
+
+# Step 3: Make sure Hugging Face token is correctly loaded from secrets
+huggingface_token = st.secrets.get("HUGGINGFACE_TOKEN", "Token not found")
+
+# Check if the token was found and display
+if huggingface_token == "Token not found":
+    st.warning("Hugging Face token is missing or not correctly set in the secrets.")
+else:
+    st.success("Hugging Face token loaded successfully.")
+
+# Step 4: Load the sentiment analysis model if the token is available
+if huggingface_token != "Token not found":
+    classifier = pipeline("sentiment-analysis", use_auth_token=huggingface_token)
+
+    # Step 5: Allow user input to analyze sentiment
+    text = st.text_input("Enter text to analyze:", "I am happy with the progress!")
+    
+    # Step 6: Perform sentiment analysis and display result
+    if text:
+        st.write("Analyzing sentiment...")
+        result = classifier(text)
+        st.write(result)
+
+# Step 7: Add Muscle Genetic Potential analysis section
+st.header("Muscle Genetic Potential Assessment")
+muscle_genetic_score = st.slider("On a scale of 1 to 10, rate your muscle genetic potential:", 1, 10, 5)
+st.write(f"Your muscle genetic potential score is: {muscle_genetic_score}")
+
+# Step 8: Add Stress Questionnaire
+st.header("Stress Questionnaire")
+stress_level = st.radio("How would you rate your current stress level?", ("Low", "Medium", "High"))
+sleep_quality = st.radio("How would you rate your sleep quality?", ("Good", "Fair", "Poor"))
+
+st.write(f"Stress level: {stress_level}")
+st.write(f"Sleep quality: {sleep_quality}")
+
+# You can add more questions or forms to analyze this data further
