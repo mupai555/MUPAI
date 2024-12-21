@@ -1,7 +1,6 @@
 import os
 import streamlit as st
 from huggingface_hub import login
-import streamlit as st
 
 # Retrieve Hugging Face token securely
 HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_TOKEN"]
