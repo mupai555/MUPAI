@@ -1,3 +1,7 @@
+from huggingface_hub import login
+
+# Authenticate with Hugging Face
+login("your-hugging-face-token-here")  # Replace with your actual token
 import streamlit as st
 from fpdf import FPDF
 
