@@ -2,21 +2,17 @@ import os
 import streamlit as st
 from huggingface_hub import login
 from transformers import pipeline
-from fpdf import FPDF
 
-# ----------------- Hugging Face Authentication -----------------
-HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")  # Fetch token from environment variable
-if not HUGGINGFACE_TOKEN:
-    st.warning("Hugging Face token not found. Please add it to your environment variables.")
-    st.stop()
-else:
-    login(HUGGINGFACE_TOKEN)
+# Retrieve Hugging Face token securely
+HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_TOKEN"]
 
-# ----------------- Load Hugging Face Model -----------------
-@st.cache_resource  # Cache the pipeline to avoid reloading
+# Authenticate with Hugging Face
+login(HUGGINGFACE_TOKEN)
+
+# Initialize Hugging Face pipeline
+@st.cache_resource
 def load_pipeline():
     try:
-        # Load a pre-trained Hugging Face pipeline (e.g., sentiment-analysis)
         classifier = pipeline("sentiment-analysis", model="distilbert-base-uncased")
         return classifier
     except Exception as e:
@@ -25,57 +21,52 @@ def load_pipeline():
 
 classifier = load_pipeline()
 
-# ----------------- Streamlit UI -----------------
-# Logo and Title
-st.image("LOGO.png", width=300)  # Replace LOGO.png with your actual logo file
-st.title("MUPAI Digital Training Science")
-st.write("Welcome to your science-based training platform.")
+# Streamlit Sidebar Navigation
+menu = st.sidebar.selectbox(
+    "Navigation", ["Home", "Sentiment Analysis", "Stress Questionnaire", "Muscle Genetic Potential"]
+)
 
-# ----------------- Sidebar Menu -----------------
-menu = st.sidebar.selectbox("Select a section:", ["Home", "Genetic Potential Questionnaire", "Perceived Stress Questionnaire", "Sentiment Analysis"])
+# Logo
+st.sidebar.image("LOGO.png", use_column_width=True)  # Ensure LOGO.png is in the same folder as the app
 
-# Initialize session_state variables
-for var in ['ffmi', 'lean_mass', 'genetic_potential', 'stress_score']:
-    if var not in st.session_state:
-        st.session_state[var] = None
+# Home Section
+if menu == "Home":
+    st.title("Welcome to the Digital Training App")
+    st.write("This app integrates science-based tools for training, assessment, and analysis.")
 
-# ----------------- Genetic Potential Questionnaire -----------------
-if menu == "Genetic Potential Questionnaire":
-    st.header("Genetic Potential Calculator for Muscle Growth")
-    height = st.number_input("Height (cm):", min_value=100, max_value=250, step=1)
-    weight = st.number_input("Weight (kg):", min_value=30.0, max_value=200.0, step=0.1)
-    body_fat = st.number_input("Body Fat Percentage (%):", min_value=5.0, max_value=50.0, step=0.1)
+# Sentiment Analysis Section
+elif menu == "Sentiment Analysis":
+    st.title("Hugging Face Sentiment Analysis")
+    st.write("Analyze the sentiment of text using Hugging Face models.")
+    user_input = st.text_area("Enter text to analyze:")
+    if st.button("Analyze"):
+        if classifier and user_input:
+            try:
+                result = classifier(user_input)
+                st.subheader("Sentiment Analysis Result")
+                for res in result:
+                    st.write(f"Label: {res['label']}, Confidence: {res['score']:.4f}")
+            except Exception as e:
+                st.error(f"Error during analysis: {e}")
+        else:
+            st.warning("Please enter text to analyze or ensure the Hugging Face pipeline is loaded.")
 
-    if st.button("Calculate Genetic Potential"):
-        if height > 0 and weight > 0 and body_fat > 0:
-            height_m = height / 100
-            lean_mass = weight * (1 - body_fat / 100)
-            ffmi = lean_mass / (height_m ** 2)
-            genetic_potential = (height - 100) * 1.1
-
-            st.session_state.update({'ffmi': ffmi, 'lean_mass': lean_mass, 'genetic_potential': genetic_potential})
-
-            st.subheader("Results")
-            st.write(f"**FFMI:** {ffmi:.2f}")
-            st.write(f"**Lean Mass:** {lean_mass:.2f} kg")
-            st.write(f"**Genetic Potential:** {genetic_potential:.2f} kg")
-
-# ----------------- Perceived Stress Questionnaire (PSS) -----------------
-elif menu == "Perceived Stress Questionnaire":
-    st.header("Perceived Stress Scale (PSS)")
+# Stress Questionnaire Section
+elif menu == "Stress Questionnaire":
+    st.title("Perceived Stress Scale (PSS)")
     questions = [
-        "1. In the last month, how often have you felt upset because of something unexpected?",
-        "2. In the last month, how often have you felt unable to control important things in your life?",
-        "3. In the last month, how often have you felt nervous and stressed?",
-        "4. In the last month, how often have you felt confident about handling personal problems?",
-        "5. In the last month, how often have you felt that things were going your way?",
-        "6. In the last month, how often have you felt that you couldn't cope with all the things you had to do?",
-        "7. In the last month, how often have you been able to control irritations in your life?",
-        "8. In the last month, how often have you felt on top of things?",
-        "9. In the last month, how often have you felt angered because of things outside your control?",
-        "10. In the last month, how often have you felt that difficulties were piling up so high that you couldn't overcome them?",
+        "In the last month, how often have you been upset because of something unexpected?",
+        "In the last month, how often have you felt unable to control the important things in your life?",
+        "In the last month, how often have you felt nervous and stressed?",
+        "In the last month, how often have you felt confident about your ability to handle your personal problems?",
+        "In the last month, how often have you felt that things were going your way?",
+        "In the last month, how often have you found that you could not cope with all the things you had to do?",
+        "In the last month, how often have you been able to control irritations in your life?",
+        "In the last month, how often have you felt that you were on top of things?",
+        "In the last month, how often have you been angered because of things outside your control?",
+        "In the last month, how often have you felt difficulties piling up so high that you could not overcome them?",
     ]
-    options = ["0 - Never", "1 - Almost Never", "2 - Sometimes", "3 - Fairly Often", "4 - Very Often"]
+    options = ["0 - Never", "1 - Almost never", "2 - Sometimes", "3 - Fairly often", "4 - Very often"]
     reversed_indices = [3, 4, 6, 7]
     responses = []
 
@@ -88,7 +79,6 @@ elif menu == "Perceived Stress Questionnaire":
 
     if st.button("Submit PSS Responses"):
         total_score = sum(responses)
-        st.session_state['stress_score'] = total_score
         st.subheader("Results")
         st.write(f"Your total PSS score is: **{total_score}**")
         if total_score <= 13:
@@ -98,36 +88,34 @@ elif menu == "Perceived Stress Questionnaire":
         else:
             st.error("High stress.")
 
-# ----------------- Sentiment Analysis Section -----------------
-elif menu == "Sentiment Analysis":
-    st.header("Hugging Face Sentiment Analysis")
-    st.write("Analyze text sentiment using a Hugging Face Transformer model.")
-    user_input = st.text_area("Enter text to analyze:", placeholder="Type something here...")
-    if st.button("Analyze"):
-        if classifier and user_input.strip():
-            try:
-                result = classifier(user_input)
-                st.subheader("Sentiment Analysis Result")
-                for res in result:
-                    st.write(f"**Label:** {res['label']}, **Confidence:** {res['score']:.4f}")
-            except Exception as e:
-                st.error(f"Error during analysis: {e}")
-        else:
-            st.warning("Please provide text input or check model initialization.")
+# Muscle Genetic Potential Section
+elif menu == "Muscle Genetic Potential":
+    st.title("Muscle Genetic Potential Calculator")
+    st.write("Calculate your genetic muscle-building potential based on scientific approaches.")
 
-# ----------------- Home Section -----------------
-if menu == "Home":
-    st.header("Complete Profile")
-    if all(value is not None for value in [st.session_state.ffmi, st.session_state.stress_score]):
-        st.success("All questionnaires completed.")
-        pdf = FPDF()
-        pdf.add_page()
-        pdf.set_font("Arial", size=12)
-        pdf.cell(200, 10, txt="Complete Profile", ln=True, align="C")
-        pdf.cell(200, 10, txt=f"FFMI: {st.session_state.ffmi:.2f}", ln=True)
-        pdf.cell(200, 10, txt=f"Stress Score: {st.session_state.stress_score}", ln=True)
-        pdf.output("profile.pdf")
-        with open("profile.pdf", "rb") as f:
-            st.download_button("Download Your Profile", f, "profile.pdf")
-    else:
-        st.warning("Complete all questionnaires to generate your profile.")
+    # Inputs
+    height = st.number_input("Enter your height (in cm):", min_value=100, max_value=250, step=1)
+    wrist = st.number_input("Enter your wrist circumference (in cm):", min_value=10, max_value=30, step=1)
+    ankle = st.number_input("Enter your ankle circumference (in cm):", min_value=10, max_value=30, step=1)
+    body_fat = st.number_input("Enter your current body fat percentage (%):", min_value=0.0, max_value=50.0, step=0.1)
+    weight = st.number_input("Enter your current weight (in kg):", min_value=30.0, max_value=200.0, step=0.1)
+
+    # Calculation
+    if st.button("Calculate"):
+        if height > 0 and wrist > 0 and ankle > 0 and weight > 0:
+            # Formula (Casey Butt's approximation)
+            ffm = (weight * (100 - body_fat) / 100)
+            potential_ffm = (
+                (height * 0.267) +
+                (wrist * 10.5) +
+                (ankle * 6.5) - 18
+            )
+            st.subheader("Results")
+            st.write(f"Your current fat-free mass (FFM): **{ffm:.2f} kg**")
+            st.write(f"Your genetic potential fat-free mass (FFM): **{potential_ffm:.2f} kg**")
+            if ffm >= potential_ffm:
+                st.success("You've likely reached your genetic muscle-building potential!")
+            else:
+                st.info("You still have room to grow towards your genetic potential.")
+        else:
+            st.error("Please fill in all the fields with valid values.")
