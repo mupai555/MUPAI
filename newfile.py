@@ -1,3 +1,8 @@
+import streamlit as st
+
+# Display all secrets to check if Hugging Face token is available
+st.write("Streamlit secrets:")
+st.write(st.secrets)  # This will display the secrets to check if the token is loaded
 import os
 import streamlit as st
 from huggingface_hub import login
