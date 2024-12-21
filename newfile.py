@@ -8,7 +8,10 @@ st.set_page_config(
 )
 
 # Mostrar el logo desde GitHub
-st.image("https://github.com/mupai555/MUPAI/raw/main/LOGO.png", use_container_width=True)
+try:
+    st.image("https://github.com/mupai555/MUPAI/raw/main/LOGO.png", use_container_width=True)
+except:
+    st.warning("No se pudo cargar el logotipo desde GitHub. Asegúrate de que la URL sea correcta.")
 
 # Título principal
 st.title("Bienvenido a MUPAI")
