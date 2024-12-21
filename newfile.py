@@ -4,10 +4,10 @@ from huggingface_hub import login
 from transformers import pipeline
 
 # Retrieve Hugging Face token securely
-HUGGINGFACE_TOKEN = st.secrets["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"]
+HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_hf_xZjDEaqrDoHIZeWNVoVwpGSdbGmjbvLEaC"]
 
 # Authenticate with Hugging Face
-login(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)
+login(HUGGINGFACE_hf_xZjDEaqrDoHIZeWNVoVwpGSdbGmjbvLEaC)
 
 # Initialize Hugging Face pipeline
 @st.cache_resource
