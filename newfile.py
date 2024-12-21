@@ -1,27 +1,27 @@
 import streamlit as st
 
-# Page configuration
+# Configuración de la página
 st.set_page_config(
     page_title="MUPAI - Entrenamiento Digital",
     page_icon="🤖",
     layout="wide",
 )
 
-# Sidebar navigation
+# Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
     ["Inicio", "Sobre Mí", "Servicios", "Contacto"]
 )
 
-# Content based on menu selection
+# Contenido según la selección del menú
 if menu == "Inicio":
-    # Add the logo
-    st.image("LOGO.png", use_column_width=True)
+    # Mostrar el logo
+    st.image("LOGO.png", use_container_width=True)
 
-    # Welcome title
+    # Título principal
     st.title("Bienvenido a MUPAI")
 
-    # Mission
+    # Misión
     st.header("Misión")
     st.write(
         """
@@ -29,7 +29,7 @@ if menu == "Inicio":
         """
     )
 
-    # Vision
+    # Visión
     st.header("Visión")
     st.write(
         """
@@ -37,7 +37,7 @@ if menu == "Inicio":
         """
     )
 
-    # Policy
+    # Política
     st.header("Política")
     st.write(
         """
@@ -45,7 +45,7 @@ if menu == "Inicio":
         """
     )
 
-    # Service Policy
+    # Política del Servicio
     st.header("Política del Servicio")
     st.write(
         """
@@ -59,18 +59,20 @@ if menu == "Inicio":
     )
 
 elif menu == "Sobre Mí":
+    # Sección "Sobre Mí"
     st.title("Sobre Mí")
     st.write("""
     ¡Hola! Soy Erick Francisco De Luna Hernandez, un profesional apasionado por el fitness y la ciencia del ejercicio.
     """)
 
-    # Add your uploaded images with captions
-    st.image("FB_IMG_1734820693317.jpg", caption="Erick Francisco De Luna Hernandez", use_column_width=True)
-    st.image("FB_IMG_1734820709707.jpg", caption="Demostración de Entrenamiento Funcional", use_column_width=True)
-    st.image("FB_IMG_1734820712642.jpg", caption="Logros en el Gimnasio", use_column_width=True)
-    st.image("FB_IMG_1734820729323.jpg", caption="Sesión al Atardecer - Flexión de Brazos", use_column_width=True)
-    st.image("FB_IMG_1734820808186.jpg", caption="Entrenamiento de Fuerza y Resistencia", use_column_width=True)
+    # Mostrar imágenes con captions
+    st.image("FB_IMG_1734820693317.jpg", caption="Erick Francisco De Luna Hernandez", use_container_width=True)
+    st.image("FB_IMG_1734820709707.jpg", caption="Demostración de Entrenamiento Funcional", use_container_width=True)
+    st.image("FB_IMG_1734820712642.jpg", caption="Logros en el Gimnasio", use_container_width=True)
+    st.image("FB_IMG_1734820729323.jpg", caption="Sesión al Atardecer - Flexión de Brazos", use_container_width=True)
+    st.image("FB_IMG_1734820808186.jpg", caption="Entrenamiento de Fuerza y Resistencia", use_container_width=True)
 
+    # Formación académica
     st.subheader("Formación Académica")
     st.write("""
     - **Maestría** (En curso): Strength and Conditioning, Football Science Institute (2023–Presente).
@@ -78,6 +80,7 @@ elif menu == "Sobre Mí":
     - Intercambio Académico: Universidad de Sevilla (2016–2017).
     """)
 
+    # Premios y reconocimientos
     st.subheader("Premios y Reconocimientos")
     st.write("""
     - **UANL Academic Merit Award** (2019).
@@ -85,6 +88,7 @@ elif menu == "Sobre Mí":
     """)
 
 elif menu == "Servicios":
+    # Sección "Servicios"
     st.title("Servicios")
     st.write("""
     **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
@@ -94,6 +98,7 @@ elif menu == "Servicios":
     """)
 
 elif menu == "Contacto":
+    # Sección "Contacto"
     st.title("Contacto")
     st.write("""
     Para más información o consultas, contáctanos:
@@ -102,6 +107,6 @@ elif menu == "Contacto":
     - **Ubicación**: Monterrey, Nuevo León, México
     """)
 
-# Footer
+# Pie de página
 st.markdown("---")
 st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
