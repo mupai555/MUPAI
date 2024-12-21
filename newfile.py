@@ -1,3 +1,6 @@
+git filter-branch --force --index-filter \
+"git rm --cached --ignore-unmatch path/to/file/with/token" \
+--prune-empty --tag-name-filter cat -- --all
 import streamlit as st
 
 # Display all secrets to check if Hugging Face token is available
