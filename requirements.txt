@@ -3,4 +3,5 @@ fpdf
 pymupdf
 transformers
 huggingface-hub
-transformers
+torch  # Add PyTorch for Hugging Face models (you can comment this and use tensorflow if needed)
+# tensorflow  # Uncomment this if you are using TensorFlow instead of PyTorch
