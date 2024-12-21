@@ -7,9 +7,8 @@ st.set_page_config(
     layout="centered",
 )
 
-# Mostrar el logo
-# Cambia la ruta a la URL correcta del logotipo si ya está alojado públicamente
-st.image("https://muscleupgym.com.mx/wp-content/uploads/2023/12/logo-mupai.png", use_column_width=True)
+# Mostrar el logo desde GitHub
+st.image("https://github.com/mupai555/MUPAI/raw/main/LOGO.png", use_column_width=True)
 
 # Título principal
 st.title("Bienvenido a MUPAI")
