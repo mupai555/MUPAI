@@ -110,3 +110,48 @@ user_input = st.text_input("Ask me anything:")
 if user_input:
     response = model(user_input, max_length=50, num_return_sequences=1)
     st.write(response[0]['generated_text'])
+import os
+import streamlit as st
+from huggingface_hub import login
+from transformers import pipeline
+
+# Set up Hugging Face authentication
+HUGGINGFACE_TOKEN = os.getenv("HUGGINGFACE_TOKEN")  # Use your environment variable
+if not HUGGINGFACE_TOKEN:
+    st.error("Hugging Face token not found. Please add it to your environment variables.")
+else:
+    login(HUGGINGFACE_TOKEN)
+
+# Initialize Hugging Face pipeline
+@st.cache_resource
+def load_pipeline():
+    try:
+        classifier = pipeline("sentiment-analysis", model="distilbert-base-uncased")
+        return classifier
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
+
+classifier = load_pipeline()
+
+# Streamlit UI
+st.title("Hugging Face Sentiment Analysis")
+st.write("This app uses Hugging Face's transformers library to analyze the sentiment of text.")
+
+# User input
+user_input = st.text_area("Enter text to analyze:")
+
+if st.button("Analyze"):
+    if classifier and user_input:
+        try:
+            result = classifier(user_input)
+            st.subheader("Sentiment Analysis Result")
+            for res in result:
+                st.write(f"Label: {res['label']}, Confidence: {res['score']:.4f}")
+        except Exception as e:
+            st.error(f"Error during analysis: {e}")
+    else:
+        st.warning("Please enter text to analyze or ensure the Hugging Face pipeline is loaded.")
+
+st.sidebar.title("Settings")
+st.sidebar.write("Make sure your Hugging Face token is set in the environment variables.")
