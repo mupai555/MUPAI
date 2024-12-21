@@ -2,3 +2,5 @@ streamlit
 fpdf
 pymupdf
 transformers
+huggingface-hub
+transformers
