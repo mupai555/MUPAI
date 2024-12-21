@@ -1,22 +1,26 @@
 import os
 import streamlit as st
 from huggingface_hub import login
-from transformers import pipeline  # Make sure you import pipeline
+from transformers import pipeline  # Asegúrate de importar el pipeline
 
-# Check if Hugging Face token exists in secrets
+# Verificar si el token de Hugging Face está presente en los secretos
 if "HUGGINGFACE_TOKEN" in st.secrets:
     HUGGINGFACE_TOKEN = st.secrets["HUGGINGFACE_TOKEN"]
-    # Authenticate with Hugging Face
+    
+    # Mostrar el contenido de los secretos para verificar si el token está cargado
+    st.write(st.secrets)  # Esto mostrará los secretos para comprobar que el token está allí
+    
+    # Autenticarse con Hugging Face
     login(HUGGINGFACE_TOKEN)
     st.success("Successfully authenticated with Hugging Face.")
 else:
     st.error("Hugging Face token not found. Please check your secrets.")
 
-# Initialize Hugging Face pipeline (this part assumes you're loading a Hugging Face model)
+# Inicializar el pipeline de Hugging Face (esto asume que estás cargando un modelo de Hugging Face)
 @st.cache_resource
 def load_pipeline():
     try:
-        # Loading sentiment analysis model
+        # Cargar el modelo de análisis de sentimientos
         classifier = pipeline("sentiment-analysis", model="distilbert-base-uncased")
         return classifier
     except Exception as e:
@@ -25,20 +29,20 @@ def load_pipeline():
 
 classifier = load_pipeline()
 
-# Streamlit Sidebar Navigation
+# Barra lateral de Streamlit para navegación
 menu = st.sidebar.selectbox(
     "Navigation", ["Home", "Sentiment Analysis", "Stress Questionnaire", "Muscle Genetic Potential"]
 )
 
-# Logo (Updated to use_container_width to avoid deprecation warning)
-st.sidebar.image("LOGO.png", use_container_width=True)  # Ensure LOGO.png is in the same folder as the app
+# Logo (se usa use_container_width para evitar la advertencia deprecada)
+st.sidebar.image("LOGO.png", use_container_width=True)  # Asegúrate de que LOGO.png esté en la misma carpeta que la app
 
-# Home Section
+# Sección de inicio
 if menu == "Home":
     st.title("Welcome to the Digital Training App")
     st.write("This app integrates science-based tools for training, assessment, and analysis.")
 
-# Sentiment Analysis Section
+# Sección de análisis de sentimientos
 elif menu == "Sentiment Analysis":
     st.title("Hugging Face Sentiment Analysis")
     st.write("Analyze the sentiment of text using Hugging Face models.")
@@ -55,7 +59,7 @@ elif menu == "Sentiment Analysis":
         else:
             st.warning("Please enter text to analyze or ensure the Hugging Face pipeline is loaded.")
 
-# Stress Questionnaire Section
+# Sección del cuestionario de estrés
 elif menu == "Stress Questionnaire":
     st.title("Perceived Stress Scale (PSS)")
     questions = [
@@ -92,22 +96,22 @@ elif menu == "Stress Questionnaire":
         else:
             st.error("High stress.")
 
-# Muscle Genetic Potential Section
+# Sección de cálculo de potencial genético muscular
 elif menu == "Muscle Genetic Potential":
     st.title("Muscle Genetic Potential Calculator")
     st.write("Calculate your genetic muscle-building potential based on scientific approaches.")
 
-    # Inputs
+    # Entradas
     height = st.number_input("Enter your height (in cm):", min_value=100, max_value=250, step=1)
     wrist = st.number_input("Enter your wrist circumference (in cm):", min_value=10, max_value=30, step=1)
     ankle = st.number_input("Enter your ankle circumference (in cm):", min_value=10, max_value=30, step=1)
     body_fat = st.number_input("Enter your current body fat percentage (%):", min_value=0.0, max_value=50.0, step=0.1)
     weight = st.number_input("Enter your current weight (in kg):", min_value=30.0, max_value=200.0, step=0.1)
 
-    # Calculation
+    # Cálculo
     if st.button("Calculate"):
         if height > 0 and wrist > 0 and ankle > 0 and weight > 0:
-            # Formula (Casey Butt's approximation)
+            # Fórmula (aproximación de Casey Butt)
             ffm = (weight * (100 - body_fat) / 100)
             potential_ffm = (
                 (height * 0.267) +
