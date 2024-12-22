@@ -21,7 +21,10 @@ if menu == "Inicio":
     st.write("""
         Hacer accesible el entrenamiento basado en ciencia...
     """)
-    # Continúa con los demás textos de Inicio...
+    st.header("Visión")
+    st.write("""
+        Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado...
+    """)
 
 elif menu == "Evaluación del Estilo de Vida":
     submenu = st.sidebar.radio(
@@ -38,67 +41,75 @@ elif menu == "Evaluación del Estilo de Vida":
     if submenu == "Calidad del Sueño":
         st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
         st.write("""
-        Responda las siguientes preguntas sobre sus hábitos de sueño durante el último mes.
+        Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes.
         """)
 
-        # Preguntas
+        # Preguntas principales del PSQI
         hora_acostarse = st.text_input("1. ¿A qué hora se ha acostado normalmente?")
         tiempo_dormirse = st.selectbox(
-            "2. ¿Cuánto tiempo tarda en dormirse?",
+            "2. ¿Cuánto tiempo tarda normalmente en dormirse?",
             ["Menos de 15 minutos", "16-30 minutos", "31-60 minutos", "Más de 60 minutos"]
         )
-        hora_levantarse = st.text_input("3. ¿A qué hora se levanta habitualmente?")
-        horas_dormidas = st.slider("4. ¿Cuántas horas calcula que duerme por noche?", 0, 12, 7)
+        hora_levantarse = st.text_input("3. ¿A qué hora se ha levantado normalmente?")
+        horas_dormidas = st.number_input(
+            "4. ¿Cuántas horas calcula que duerme habitualmente cada noche?",
+            min_value=0, max_value=12, step=1
+        )
 
+        # Problemas para dormir
+        st.write("5. Durante el último mes, ¿con qué frecuencia ha experimentado los siguientes problemas?")
         problemas_dormir = {
             "No poder conciliar el sueño": st.radio(
                 "5a. No poder conciliar el sueño en la primera media hora:",
                 ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
             ),
             "Despertarse durante la noche": st.radio(
-                "5b. Despertarse durante la noche o de madrugada:",
+                "5b. Despertarse durante la noche o demasiado temprano:",
                 ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
             ),
-            # Continúa con las demás preguntas del apartado 5...
+            "Ir al baño durante la noche": st.radio(
+                "5c. Tener que levantarse para ir al baño:",
+                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+            ),
+            "Dificultad para respirar": st.radio(
+                "5d. No poder respirar bien durante la noche:",
+                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+            ),
+            # Continúa con todas las preguntas del apartado 5...
         }
 
         calidad_sueno = st.radio(
-            "6. ¿Cómo valoraría la calidad de su sueño?",
+            "6. ¿Cómo calificaría la calidad de su sueño?",
             ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
         )
 
-        medicamentos_dormir = st.radio(
-            "7. ¿Cuántas veces tomó medicamentos para dormir?",
+        uso_medicacion = st.radio(
+            "7. ¿Cuántas veces tomó medicación para dormir?",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         )
 
-        somnolencia = st.radio(
-            "8. ¿Cuántas veces ha sentido somnolencia durante el día?",
+        somnolencia_diurna = st.radio(
+            "8. ¿Con qué frecuencia ha sentido somnolencia durante el día?",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         )
 
         dificultad_diurna = st.radio(
-            "9. ¿Ha tenido problemas para realizar actividades diurnas?",
-            ["Ningún problema", "Leve problema", "Problema", "Grave problema"]
+            "9. ¿Con qué frecuencia ha tenido dificultades para mantener suficiente energía durante el día?",
+            ["Ninguna vez", "Leve problema", "Problema", "Grave problema"]
         )
 
-        # Procesamiento de puntuaciones
+        # Cálculo de puntuaciones
         if st.button("Calcular Puntuación"):
-            puntuaciones = {
-                "calidad_sueno": {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3},
-                "tiempo_dormirse": {"Menos de 15 minutos": 0, "16-30 minutos": 1, "31-60 minutos": 2, "Más de 60 minutos": 3},
-                # Añade las demás puntuaciones aquí...
-            }
+            puntuacion_total = 0
 
-            total_puntuacion = 0
-            total_puntuacion += puntuaciones["calidad_sueno"][calidad_sueno]
-            total_puntuacion += puntuaciones["tiempo_dormirse"][tiempo_dormirse]
-            # Continúa con el cálculo de puntuaciones...
+            # Ejemplo de cómo calcular puntuaciones (usar la lógica del PDF):
+            puntuacion_total += {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}[calidad_sueno]
+            # Continúa con las demás puntuaciones...
 
-            st.write("### Tu puntuación total del PSQI es:", total_puntuacion)
-            if total_puntuacion <= 5:
+            st.write(f"### Tu puntuación total del PSQI es: {puntuacion_total}")
+            if puntuacion_total <= 5:
                 st.success("Buena calidad de sueño.")
-            elif 6 <= total_puntuacion <= 10:
+            elif 6 <= puntuacion_total <= 10:
                 st.warning("Calidad de sueño moderada.")
             else:
                 st.error("Mala calidad de sueño. Considera consultar a un especialista.")
