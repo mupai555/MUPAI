@@ -10,17 +10,105 @@ st.set_page_config(
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
-    [
-        "Inicio", 
-        "Sobre Mí", 
-        "Servicios", 
-        "Contacto", 
-        "Evaluación del Estilo de Vida"
-    ]
+    ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Evaluación del Estilo de Vida"]
 )
 
-# Submenú de Evaluación del Estilo de Vida
-if menu == "Evaluación del Estilo de Vida":
+# Contenido del menú principal
+if menu == "Inicio":
+    # Mostrar el logo
+    st.image("LOGO.png", use_container_width=True)
+
+    # Título principal
+    st.title("Bienvenido a MUPAI")
+
+    # Misión
+    st.header("Misión")
+    st.write(
+        """
+        Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
+        """
+    )
+
+    # Visión
+    st.header("Visión")
+    st.write(
+        """
+        Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
+        """
+    )
+
+    # Política
+    st.header("Política")
+    st.write(
+        """
+        En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
+        """
+    )
+
+    # Política del Servicio
+    st.header("Política del Servicio")
+    st.write(
+        """
+        En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
+        - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
+        - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
+        - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
+        - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
+        - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
+        """
+    )
+
+elif menu == "Sobre Mí":
+    # Sección "Sobre Mí"
+    st.title("Sobre Mí")
+    st.write("""
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en **Muscle Up Gym**, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el **Football Science Institute**, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la **Universidad de Sevilla**. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el **Premio al Mérito Académico de la UANL**, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una **beca completa para un intercambio internacional** en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    """)
+
+    # Collage de imágenes
+    st.subheader("Galería de Imágenes")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.image("FB_IMG_1734820693317.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
+
+    with col2:
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
+
+    with col3:
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
+
+elif menu == "Servicios":
+    # Sección "Servicios"
+    st.title("Servicios")
+    st.write("""
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
+    """)
+
+elif menu == "Contacto":
+    # Sección "Contacto"
+    st.title("Contacto")
+    st.write("""
+    Para más información o consultas, contáctanos:
+    - **Correo**: contacto@mupai.com
+    - **Teléfono**: +52 123 456 7890
+    - **Ubicación**: Monterrey, Nuevo León
+    """)
+
+elif menu == "Evaluación del Estilo de Vida":
+    # Submenú para Evaluación del Estilo de Vida
     submenu = st.sidebar.radio(
         "Áreas de Evaluación",
         [
@@ -34,61 +122,23 @@ if menu == "Evaluación del Estilo de Vida":
 
     if submenu == "Estrés Percibido":
         st.title("Evaluación del Estrés Percibido")
-        st.write("""
-        En este apartado se evalúa el nivel de estrés percibido mediante preguntas o indicadores clave.
-        """)
-        # Aquí podrías agregar preguntas o gráficos
+        st.write("En este apartado se evalúa el nivel de estrés percibido mediante indicadores clave.")
 
     elif submenu == "Calidad del Sueño":
         st.title("Evaluación de la Calidad del Sueño")
-        st.write("""
-        Evaluación de la calidad del sueño basada en factores como la duración, consistencia y eficiencia.
-        """)
+        st.write("Evaluación de la calidad del sueño basada en duración, consistencia y eficiencia.")
 
     elif submenu == "Nivel de Actividad Física":
         st.title("Nivel de Actividad Física")
-        st.write("""
-        Análisis del nivel de actividad física diaria y semanal, enfocado en identificar patrones de movimiento.
-        """)
+        st.write("Análisis del nivel de actividad física diaria y semanal.")
 
     elif submenu == "Hábitos Alimenticios":
         st.title("Hábitos Alimenticios")
-        st.write("""
-        Evaluación de los hábitos alimenticios, incluyendo el consumo de alimentos procesados, horarios de comidas y balance nutricional.
-        """)
+        st.write("Evaluación de patrones de alimentación y balance nutricional.")
 
     elif submenu == "Potencial Genético Muscular":
         st.title("Potencial Genético Muscular")
-        st.write("""
-        Evaluación del potencial genético muscular mediante parámetros físicos y genéticos disponibles.
-        """)
-
-# Contenido del resto del menú
-elif menu == "Inicio":
-    st.image("LOGO.png", use_container_width=True)
-    st.title("Bienvenido a MUPAI")
-    st.header("Misión")
-    st.write("Hacer accesible el entrenamiento basado en ciencia...")
-    # Aquí va el resto del contenido de Inicio
-
-elif menu == "Sobre Mí":
-    st.title("Sobre Mí")
-    st.write("""
-    Soy Erick Francisco De Luna Hernández...
-    """)
-    # Aquí va el resto del contenido de Sobre Mí
-
-elif menu == "Servicios":
-    st.title("Servicios")
-    st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio...
-    """)
-
-elif menu == "Contacto":
-    st.title("Contacto")
-    st.write("""
-    Para más información o consultas, contáctanos...
-    """)
+        st.write("Evaluación del potencial genético muscular con base en parámetros físicos y genéticos.")
 
 # Footer
 st.markdown("---")
