@@ -124,78 +124,61 @@ elif menu == "Evaluación del Estilo de Vida":
         st.title("Evaluación del Estrés Percibido")
         st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
 
+        # Preguntas del cuestionario
         options = ["Nunca", "Casi nunca", "A veces", "Bastante seguido", "Muy seguido"]
         q1 = st.radio("1. ¿Con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?", options)
-        # Más preguntas relacionadas al estrés...
+        q2 = st.radio("2. ¿Con qué frecuencia has sentido que no puedes controlar las cosas importantes de tu vida?", options)
+        q3 = st.radio("3. ¿Con qué frecuencia has sentido nerviosismo o estrés?", options)
+        q4 = st.radio("4. ¿Con qué frecuencia has sentido confianza en tu capacidad para manejar tus problemas personales?", options)
+        q5 = st.radio("5. ¿Con qué frecuencia has sentido que las cosas estaban saliendo bien para ti?", options)
+        q6 = st.radio("6. ¿Con qué frecuencia has sentido que no podías lidiar con todas las cosas que tenías que hacer?", options)
+        q7 = st.radio("7. ¿Con qué frecuencia has sentido que podías controlar las irritaciones en tu vida?", options)
+        q8 = st.radio("8. ¿Con qué frecuencia has sentido que tenías el control sobre las cosas?", options)
+        q9 = st.radio("9. ¿Con qué frecuencia te has sentido enojado/a por cosas fuera de tu control?", options)
+        q10 = st.radio("10. ¿Con qué frecuencia has sentido que las dificultades se acumulaban tanto que no podías superarlas?", options)
+
+        # Botón para calcular el puntaje
+        if st.button("Calcular Puntuación"):
+            scores = {"Nunca": 0, "Casi nunca": 1, "A veces": 2, "Bastante seguido": 3, "Muy seguido": 4}
+
+            total_score = (
+                scores[q1] + scores[q2] + scores[q3] +
+                (4 - scores[q4]) +  # Pregunta inversa
+                (4 - scores[q5]) +  # Pregunta inversa
+                scores[q6] +
+                (4 - scores[q7]) +  # Pregunta inversa
+                (4 - scores[q8]) +  # Pregunta inversa
+                scores[q9] + scores[q10]
+            )
+
+            st.write("### Tu puntuación total es:", total_score)
+            if total_score <= 13:
+                st.success("Estrés bajo. ¡Excelente trabajo en mantener el equilibrio!")
+            elif 14 <= total_score <= 26:
+                st.warning("Estrés moderado. Podrías beneficiarte de técnicas de manejo del estrés.")
+            else:
+                st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
 
     elif submenu == "Calidad del Sueño":
-        st.title("Evaluación de la Calidad del Sueño")
-        st.write("Responde las siguientes preguntas relacionadas con tus hábitos de sueño durante el último mes:")
+        st.title("Evaluación de la Calidad del Sueño (Índice de Pittsburgh)")
+        st.write("Responde las siguientes preguntas relacionadas con tus hábitos de sueño durante el último mes.")
 
-        hora_acostarse = st.text_input("1. ¿A qué hora usualmente te has ido a la cama por la noche?")
-        tiempo_para_dormir = st.number_input("2. ¿Cuánto tiempo (en minutos) te ha tomado usualmente quedarte dormido/a cada noche?", min_value=0)
-        hora_levantarse = st.text_input("3. ¿A qué hora usualmente te has levantado por la mañana?")
-        horas_sueño = st.number_input("4. ¿Cuántas horas de sueño real has tenido por noche?", min_value=0)
+        # Preguntas del Índice de Pittsburgh
+        p1 = st.text_input("1. ¿A qué hora generalmente te acuestas por la noche?")
+        p2 = st.number_input("2. ¿Cuánto tiempo (en minutos) sueles tardar en quedarte dormido cada noche?", min_value=0)
+        p3 = st.text_input("3. ¿A qué hora generalmente te levantas por la mañana?")
+        p4 = st.number_input("4. ¿Cuántas horas de sueño real obtuviste por noche? (Esto puede ser diferente al tiempo que pasaste en la cama)", min_value=0.0, step=0.1)
 
-        st.write("5. ¿Con qué frecuencia has tenido problemas para dormir debido a las siguientes razones?")
-        opciones_frecuencia = ["Nunca", "Menos de una vez por semana", "Una o dos veces por semana", "Tres o más veces por semana"]
-        p5a = st.radio("a. No puedes dormir en los primeros 30 minutos.", opciones_frecuencia)
-        # Más preguntas...
+        st.write("5. Durante el último mes, ¿con qué frecuencia has tenido problemas para dormir debido a:")
+        p5a = st.radio("a. No poder quedarte dormido en 30 minutos:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5b = st.radio("b. Despertarte en medio de la noche o temprano en la mañana:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5c = st.radio("c. Levantarte para ir al baño:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5d = st.radio("d. No poder respirar cómodamente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5e = st.radio("e. Toser o roncar fuerte:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5f = st.radio("f. Sentirte demasiado frío:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+        p5g = st.radio("g. Sentirte demasiado caliente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
 
-        if st.button("Calcular Puntuación"):
-            st.write("Función de cálculo pendiente.")
-
-# Footer
-st.markdown("---")
-st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
-elif submenu == "Calidad del Sueño":
-    st.title("Evaluación de la Calidad del Sueño (Índice de Pittsburgh)")
-    st.write("Responde las siguientes preguntas relacionadas con tus hábitos de sueño durante el último mes.")
-
-    # Preguntas del cuestionario
-    p1 = st.text_input("1. ¿A qué hora generalmente te acuestas por la noche?")
-    p2 = st.number_input("2. ¿Cuánto tiempo (en minutos) sueles tardar en quedarte dormido cada noche?", min_value=0)
-    p3 = st.text_input("3. ¿A qué hora generalmente te levantas por la mañana?")
-    p4 = st.number_input("4. ¿Cuántas horas de sueño real obtuviste por noche? (Esto puede ser diferente al tiempo que pasaste en la cama)", min_value=0.0, step=0.1)
-
-    st.write("5. Durante el último mes, ¿con qué frecuencia has tenido problemas para dormir debido a:")
-    p5a = st.radio("a. No poder quedarte dormido en 30 minutos:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5b = st.radio("b. Despertarte en medio de la noche o temprano en la mañana:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5c = st.radio("c. Levantarte para ir al baño:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5d = st.radio("d. No poder respirar cómodamente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5e = st.radio("e. Toser o roncar fuerte:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5f = st.radio("f. Sentirte demasiado frío:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5g = st.radio("g. Sentirte demasiado caliente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5h = st.radio("h. Tener sueños desagradables:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5i = st.radio("i. Tener dolor:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p5j = st.text_input("j. Otro motivo, por favor descríbelo:")
-
-    p6 = st.radio("6. Durante el último mes, ¿con qué frecuencia has tomado medicamentos para ayudarte a dormir (recetados o de venta libre)?", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p7 = st.radio("7. Durante el último mes, ¿con qué frecuencia has tenido problemas para mantenerte despierto mientras conducías, comías o realizabas actividades sociales?", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
-    p8 = st.radio("8. Durante el último mes, ¿cuánto problema has tenido para mantener suficiente entusiasmo para hacer las cosas?", ["Ningún problema", "Un problema leve", "Un problema moderado", "Un problema grave"])
-    p9 = st.radio("9. Durante el último mes, ¿cómo calificarías la calidad de tu sueño en general?", ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"])
-
-    # Botón para calcular el puntaje
-    if st.button("Calcular Puntuación"):
-        # Cálculo de puntajes basado en las reglas de PSQI
-        puntuacion = 0
-
-        # Componente 1: Calidad subjetiva del sueño
-        puntuacion += {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}[p9]
-
-        # Componente 2: Latencia del sueño
-        latencia = 0 if p2 < 15 else 1 if p2 <= 30 else 2 if p2 <= 60 else 3
-        frecuencia_5a = {"Nunca": 0, "Menos de una vez a la semana": 1, "Una o dos veces por semana": 2, "Tres o más veces por semana": 3}[p5a]
-        puntuacion += 1 if latencia + frecuencia_5a <= 2 else 2 if latencia + frecuencia_5a <= 4 else 3
-
-        # Mostrar puntaje
-        st.write(f"### Tu puntuación total es: {puntuacion}")
-        if puntuacion <= 5:
-            st.success("Calidad del sueño adecuada.")
-        elif puntuacion <= 10:
-            st.warning("Calidad del sueño moderada. Considera ajustar tus hábitos de sueño.")
-        else:
-            st.error("Calidad del sueño pobre. Se recomienda buscar ayuda profesional.")
+        st.write("Completa las preguntas restantes en el Índice de Calidad del Sueño para obtener tu evaluación completa.")
 
 # Footer
 st.markdown("---")
