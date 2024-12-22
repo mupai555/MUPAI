@@ -87,6 +87,7 @@ elif menu == "Sobre Mí":
         st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
 
 elif menu == "Servicios":
+    # Sección "Servicios"
     st.title("Servicios")
     st.write("""
     **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
@@ -97,6 +98,7 @@ elif menu == "Servicios":
     """)
 
 elif menu == "Contacto":
+    # Sección "Contacto"
     st.title("Contacto")
     st.write("""
     Para más información o consultas, contáctanos:
@@ -106,6 +108,7 @@ elif menu == "Contacto":
     """)
 
 elif menu == "Evaluación del Estilo de Vida":
+    # Submenú para Evaluación del Estilo de Vida
     submenu = st.sidebar.radio(
         "Áreas de Evaluación",
         [
@@ -117,65 +120,44 @@ elif menu == "Evaluación del Estilo de Vida":
         ]
     )
 
-    if submenu == "Calidad del Sueño":
-        st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
-        st.write("""
-        Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes.
-        """)
+    if submenu == "Estrés Percibido":
+        st.title("Evaluación del Estrés Percibido")
+        st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
 
-        # Preguntas principales del PSQI
-        hora_acostarse = st.text_input("1. ¿A qué hora se ha acostado normalmente?")
-        tiempo_dormirse = st.selectbox(
-            "2. ¿Cuánto tiempo tarda normalmente en dormirse?",
-            ["Menos de 15 minutos", "16-30 minutos", "31-60 minutos", "Más de 60 minutos"]
-        )
-        hora_levantarse = st.text_input("3. ¿A qué hora se ha levantado normalmente?")
-        horas_dormidas = st.number_input(
-            "4. ¿Cuántas horas calcula que duerme habitualmente cada noche?",
-            min_value=0, max_value=12, step=1
-        )
+        # Preguntas del cuestionario
+        options = ["Nunca", "Casi nunca", "A veces", "Bastante seguido", "Muy seguido"]
+        q1 = st.radio("1. ¿Con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?", options)
+        q2 = st.radio("2. ¿Con qué frecuencia has sentido que no puedes controlar las cosas importantes de tu vida?", options)
+        q3 = st.radio("3. ¿Con qué frecuencia has sentido nerviosismo o estrés?", options)
+        q4 = st.radio("4. ¿Con qué frecuencia has sentido confianza en tu capacidad para manejar tus problemas personales?", options)
+        q5 = st.radio("5. ¿Con qué frecuencia has sentido que las cosas estaban saliendo bien para ti?", options)
+        q6 = st.radio("6. ¿Con qué frecuencia has sentido que no podías lidiar con todas las cosas que tenías que hacer?", options)
+        q7 = st.radio("7. ¿Con qué frecuencia has sentido que podías controlar las irritaciones en tu vida?", options)
+        q8 = st.radio("8. ¿Con qué frecuencia has sentido que tenías el control sobre las cosas?", options)
+        q9 = st.radio("9. ¿Con qué frecuencia te has sentido enojado/a por cosas fuera de tu control?", options)
+        q10 = st.radio("10. ¿Con qué frecuencia has sentido que las dificultades se acumulaban tanto que no podías superarlas?", options)
 
-        # Problemas para dormir
-        problemas_dormir = {
-            "No poder conciliar el sueño": st.radio(
-                "5a. No poder conciliar el sueño en la primera media hora:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
-            ),
-            "Despertarse durante la noche": st.radio(
-                "5b. Despertarse durante la noche o demasiado temprano:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
-            ),
-            "Ir al baño durante la noche": st.radio(
-                "5c. Tener que levantarse para ir al baño:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
-            )
-        }
-
-        calidad_sueno = st.radio(
-            "6. ¿Cómo calificaría la calidad de su sueño?",
-            ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
-        )
-
-        uso_medicacion = st.radio(
-            "7. ¿Cuántas veces tomó medicación para dormir?",
-            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
-        )
-
+        # Botón para calcular el puntaje
         if st.button("Calcular Puntuación"):
-            # Lógica de puntuación
-            puntuacion_total = 0
+            scores = {"Nunca": 0, "Casi nunca": 1, "A veces": 2, "Bastante seguido": 3, "Muy seguido": 4}
 
-            puntuacion_total += {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}[calidad_sueno]
-            puntuacion_total += {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}[problemas_dormir["No poder conciliar el sueño"]]
-            puntuacion_total += {"Menos de 15 minutos": 0, "16-30 minutos": 1, "31-60 minutos": 2, "Más de 60 minutos": 3}[tiempo_dormirse]
+            total_score = (
+                scores[q1] + scores[q2] + scores[q3] +
+                (4 - scores[q4]) +  # Pregunta inversa
+                (4 - scores[q5]) +  # Pregunta inversa
+                scores[q6] +
+                (4 - scores[q7]) +  # Pregunta inversa
+                (4 - scores[q8]) +  # Pregunta inversa
+                scores[q9] + scores[q10]
+            )
 
-            st.write(f"### Tu puntuación total del PSQI es: {puntuacion_total}")
-            if puntuacion_total <= 5:
-                st.success("Buena calidad de sueño.")
-            elif 6 <= puntuacion_total <= 10:
-                st.warning("Calidad de sueño moderada.")
+            st.write("### Tu puntuación total es:", total_score)
+            if total_score <= 13:
+                st.success("Estrés bajo. ¡Excelente trabajo en mantener el equilibrio!")
+            elif 14 <= total_score <= 26:
+                st.warning("Estrés moderado. Podrías beneficiarte de técnicas de manejo del estrés.")
             else:
-                st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+                st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
 
 # Footer
 st.markdown("---")
