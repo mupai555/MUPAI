@@ -148,3 +148,55 @@ elif menu == "Evaluación del Estilo de Vida":
 # Footer
 st.markdown("---")
 st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
+elif submenu == "Calidad del Sueño":
+    st.title("Evaluación de la Calidad del Sueño (Índice de Pittsburgh)")
+    st.write("Responde las siguientes preguntas relacionadas con tus hábitos de sueño durante el último mes.")
+
+    # Preguntas del cuestionario
+    p1 = st.text_input("1. ¿A qué hora generalmente te acuestas por la noche?")
+    p2 = st.number_input("2. ¿Cuánto tiempo (en minutos) sueles tardar en quedarte dormido cada noche?", min_value=0)
+    p3 = st.text_input("3. ¿A qué hora generalmente te levantas por la mañana?")
+    p4 = st.number_input("4. ¿Cuántas horas de sueño real obtuviste por noche? (Esto puede ser diferente al tiempo que pasaste en la cama)", min_value=0.0, step=0.1)
+
+    st.write("5. Durante el último mes, ¿con qué frecuencia has tenido problemas para dormir debido a:")
+    p5a = st.radio("a. No poder quedarte dormido en 30 minutos:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5b = st.radio("b. Despertarte en medio de la noche o temprano en la mañana:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5c = st.radio("c. Levantarte para ir al baño:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5d = st.radio("d. No poder respirar cómodamente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5e = st.radio("e. Toser o roncar fuerte:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5f = st.radio("f. Sentirte demasiado frío:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5g = st.radio("g. Sentirte demasiado caliente:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5h = st.radio("h. Tener sueños desagradables:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5i = st.radio("i. Tener dolor:", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p5j = st.text_input("j. Otro motivo, por favor descríbelo:")
+
+    p6 = st.radio("6. Durante el último mes, ¿con qué frecuencia has tomado medicamentos para ayudarte a dormir (recetados o de venta libre)?", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p7 = st.radio("7. Durante el último mes, ¿con qué frecuencia has tenido problemas para mantenerte despierto mientras conducías, comías o realizabas actividades sociales?", ["Nunca", "Menos de una vez a la semana", "Una o dos veces por semana", "Tres o más veces por semana"])
+    p8 = st.radio("8. Durante el último mes, ¿cuánto problema has tenido para mantener suficiente entusiasmo para hacer las cosas?", ["Ningún problema", "Un problema leve", "Un problema moderado", "Un problema grave"])
+    p9 = st.radio("9. Durante el último mes, ¿cómo calificarías la calidad de tu sueño en general?", ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"])
+
+    # Botón para calcular el puntaje
+    if st.button("Calcular Puntuación"):
+        # Cálculo de puntajes basado en las reglas de PSQI
+        puntuacion = 0
+
+        # Componente 1: Calidad subjetiva del sueño
+        puntuacion += {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}[p9]
+
+        # Componente 2: Latencia del sueño
+        latencia = 0 if p2 < 15 else 1 if p2 <= 30 else 2 if p2 <= 60 else 3
+        frecuencia_5a = {"Nunca": 0, "Menos de una vez a la semana": 1, "Una o dos veces por semana": 2, "Tres o más veces por semana": 3}[p5a]
+        puntuacion += 1 if latencia + frecuencia_5a <= 2 else 2 if latencia + frecuencia_5a <= 4 else 3
+
+        # Mostrar puntaje
+        st.write(f"### Tu puntuación total es: {puntuacion}")
+        if puntuacion <= 5:
+            st.success("Calidad del sueño adecuada.")
+        elif puntuacion <= 10:
+            st.warning("Calidad del sueño moderada. Considera ajustar tus hábitos de sueño.")
+        else:
+            st.error("Calidad del sueño pobre. Se recomienda buscar ayuda profesional.")
+
+# Footer
+st.markdown("---")
+st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
