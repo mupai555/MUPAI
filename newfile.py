@@ -62,13 +62,7 @@ elif menu == "Sobre Mí":
     # Sección "Sobre Mí"
     st.title("Sobre Mí")
     st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en **Muscle Up Gym**, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
-
-    Cuento con una Maestría en Fuerza y Acondicionamiento por el **Football Science Institute**, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la **Universidad de Sevilla**. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
-
-    Mi trayectoria ha sido reconocida con distinciones como el **Premio al Mérito Académico de la UANL**, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una **beca completa para un intercambio internacional** en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
-
-    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio...
     """)
 
     # Collage de imágenes
@@ -90,11 +84,7 @@ elif menu == "Servicios":
     # Sección "Servicios"
     st.title("Servicios")
     st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
-    - Planes de entrenamiento individualizados.
-    - Programas de mejora física y mental.
-    - Asesoría en nutrición deportiva.
-    - Consultoría en rendimiento deportivo.
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio...
     """)
 
 elif menu == "Contacto":
@@ -122,24 +112,42 @@ elif menu == "Evaluación del Estilo de Vida":
 
     if submenu == "Estrés Percibido":
         st.title("Evaluación del Estrés Percibido")
-        st.write("En este apartado se evalúa el nivel de estrés percibido mediante indicadores clave.")
+        st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
 
-    elif submenu == "Calidad del Sueño":
-        st.title("Evaluación de la Calidad del Sueño")
-        st.write("Evaluación de la calidad del sueño basada en duración, consistencia y eficiencia.")
+        # Preguntas del cuestionario
+        options = ["Nunca", "Casi nunca", "A veces", "Bastante seguido", "Muy seguido"]
+        q1 = st.radio("1. ¿Con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?", options)
+        q2 = st.radio("2. ¿Con qué frecuencia has sentido que no puedes controlar las cosas importantes de tu vida?", options)
+        q3 = st.radio("3. ¿Con qué frecuencia has sentido nerviosismo o estrés?", options)
+        q4 = st.radio("4. ¿Con qué frecuencia has sentido confianza en tu capacidad para manejar tus problemas personales?", options)
+        q5 = st.radio("5. ¿Con qué frecuencia has sentido que las cosas estaban saliendo bien para ti?", options)
+        q6 = st.radio("6. ¿Con qué frecuencia has sentido que no podías lidiar con todas las cosas que tenías que hacer?", options)
+        q7 = st.radio("7. ¿Con qué frecuencia has sentido que podías controlar las irritaciones en tu vida?", options)
+        q8 = st.radio("8. ¿Con qué frecuencia has sentido que tenías el control sobre las cosas?", options)
+        q9 = st.radio("9. ¿Con qué frecuencia te has sentido enojado/a por cosas fuera de tu control?", options)
+        q10 = st.radio("10. ¿Con qué frecuencia has sentido que las dificultades se acumulaban tanto que no podías superarlas?", options)
 
-    elif submenu == "Nivel de Actividad Física":
-        st.title("Nivel de Actividad Física")
-        st.write("Análisis del nivel de actividad física diaria y semanal.")
+        # Botón para calcular el puntaje
+        if st.button("Calcular Puntuación"):
+            # Asignar valores a las respuestas
+            scores = {"Nunca": 0, "Casi nunca": 1, "A veces": 2, "Bastante seguido": 3, "Muy seguido": 4}
 
-    elif submenu == "Hábitos Alimenticios":
-        st.title("Hábitos Alimenticios")
-        st.write("Evaluación de patrones de alimentación y balance nutricional.")
+            # Calcular el puntaje total
+            total_score = (
+                scores[q1] + scores[q2] + scores[q3] +
+                (4 - scores[q4]) +  # Pregunta inversa
+                (4 - scores[q5]) +  # Pregunta inversa
+                scores[q6] +
+                (4 - scores[q7]) +  # Pregunta inversa
+                (4 - scores[q8]) +  # Pregunta inversa
+                scores[q9] + scores[q10]
+            )
 
-    elif submenu == "Potencial Genético Muscular":
-        st.title("Potencial Genético Muscular")
-        st.write("Evaluación del potencial genético muscular con base en parámetros físicos y genéticos.")
-
-# Footer
-st.markdown("---")
-st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
+            # Interpretación del puntaje
+            st.write("### Tu puntuación total es:", total_score)
+            if total_score <= 13:
+                st.success("Estrés bajo. ¡Excelente trabajo en mantener el equilibrio!")
+            elif 14 <= total_score <= 26:
+                st.warning("Estrés moderado. Podrías beneficiarte de técnicas de manejo del estrés.")
+            else:
+                st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
