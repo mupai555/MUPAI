@@ -65,12 +65,20 @@ elif menu == "Sobre Mí":
     ¡Hola! Soy Erick Francisco De Luna Hernandez, un profesional apasionado por el fitness y la ciencia del ejercicio.
     """)
 
-    # Mostrar imágenes con captions
-    st.image("FB_IMG_1734820693317.jpg", caption="Erick Francisco De Luna Hernandez", use_container_width=True)
-    st.image("FB_IMG_1734820709707.jpg", caption="Demostración de Entrenamiento Funcional", use_container_width=True)
-    st.image("FB_IMG_1734820712642.jpg", caption="Logros en el Gimnasio", use_container_width=True)
-    st.image("FB_IMG_1734820729323.jpg", caption="Sesión al Atardecer - Flexión de Brazos", use_container_width=True)
-    st.image("FB_IMG_1734820808186.jpg", caption="Entrenamiento de Fuerza y Resistencia", use_container_width=True)
+    # Collage de imágenes
+    st.subheader("Galería de Imágenes")
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.image("FB_IMG_1734820693317.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
+
+    with col2:
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
+
+    with col3:
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
 
     # Formación académica
     st.subheader("Formación Académica")
@@ -95,6 +103,7 @@ elif menu == "Servicios":
     - Planes de entrenamiento individualizados.
     - Programas de mejora física y mental.
     - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
     """)
 
 elif menu == "Contacto":
@@ -104,9 +113,5 @@ elif menu == "Contacto":
     Para más información o consultas, contáctanos:
     - **Correo**: contacto@mupai.com
     - **Teléfono**: +52 123 456 7890
-    - **Ubicación**: Monterrey, Nuevo León, México
+    - **Ubicación**: Monterrey, Nuevo León
     """)
-
-# Pie de página
-st.markdown("---")
-st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
