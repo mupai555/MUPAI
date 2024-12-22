@@ -62,7 +62,13 @@ elif menu == "Sobre Mí":
     # Sección "Sobre Mí"
     st.title("Sobre Mí")
     st.write("""
-    ¡Hola! Soy Erick Francisco De Luna Hernandez, un profesional apasionado por el fitness y la ciencia del ejercicio.
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en **Muscle Up Gym**, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el **Football Science Institute**, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la **Universidad de Sevilla**. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el **Premio al Mérito Académico de la UANL**, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una **beca completa para un intercambio internacional** en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
     """)
 
     # Collage de imágenes
@@ -79,21 +85,6 @@ elif menu == "Sobre Mí":
 
     with col3:
         st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
-
-    # Formación académica
-    st.subheader("Formación Académica")
-    st.write("""
-    - **Maestría** (En curso): Strength and Conditioning, Football Science Institute (2023–Presente).
-    - **Licenciatura**: Ciencias del Ejercicio, Universidad Autónoma de Nuevo León (2013–2017).
-    - Intercambio Académico: Universidad de Sevilla (2016–2017).
-    """)
-
-    # Premios y reconocimientos
-    st.subheader("Premios y Reconocimientos")
-    st.write("""
-    - **UANL Academic Merit Award** (2019).
-    - **100% Beca para Intercambio Académico**: Universidad de Sevilla (2016–2017).
-    """)
 
 elif menu == "Servicios":
     # Sección "Servicios"
