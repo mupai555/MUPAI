@@ -83,8 +83,19 @@ elif menu == "Evaluación del Estilo de Vida":
         # Botón para calcular puntaje
         if st.button("Calcular Puntuación de Calidad de Sueño"):
             # Simplificación para lógica de puntuación
-            puntaje_total = 0  # Aquí debes implementar la lógica completa del PSQI si es necesario
+            scores = {"Nunca": 0, "Menos de una vez por semana": 1, "Una o dos veces por semana": 2, "Tres o más veces por semana": 3}
+            puntaje_total = (
+                scores[p5a] + scores[p5b] + scores[p5c] +
+                scores[p5d] + scores[p5e] + scores[p5f] +
+                scores[p5g] + scores[p5h] + scores[p5i]
+            )
             st.write("### Tu puntuación total de calidad de sueño es:", puntaje_total)
+            if puntaje_total <= 5:
+                st.success("Buena calidad de sueño. ¡Sigue así!")
+            elif 6 <= puntaje_total <= 10:
+                st.warning("Calidad de sueño moderada. Considera mejorar tus hábitos de sueño.")
+            else:
+                st.error("Calidad de sueño baja. Podrías beneficiarte de estrategias para mejorar tu descanso.")
 
 # Footer
 st.markdown("---")
