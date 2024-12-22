@@ -62,7 +62,13 @@ elif menu == "Sobre Mí":
     # Sección "Sobre Mí"
     st.title("Sobre Mí")
     st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio...
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en **Muscle Up Gym**, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el **Football Science Institute**, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la **Universidad de Sevilla**. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el **Premio al Mérito Académico de la UANL**, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una **beca completa para un intercambio internacional** en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
     """)
 
     # Collage de imágenes
@@ -84,7 +90,11 @@ elif menu == "Servicios":
     # Sección "Servicios"
     st.title("Servicios")
     st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio...
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
     """)
 
 elif menu == "Contacto":
@@ -129,10 +139,8 @@ elif menu == "Evaluación del Estilo de Vida":
 
         # Botón para calcular el puntaje
         if st.button("Calcular Puntuación"):
-            # Asignar valores a las respuestas
             scores = {"Nunca": 0, "Casi nunca": 1, "A veces": 2, "Bastante seguido": 3, "Muy seguido": 4}
 
-            # Calcular el puntaje total
             total_score = (
                 scores[q1] + scores[q2] + scores[q3] +
                 (4 - scores[q4]) +  # Pregunta inversa
@@ -143,7 +151,6 @@ elif menu == "Evaluación del Estilo de Vida":
                 scores[q9] + scores[q10]
             )
 
-            # Interpretación del puntaje
             st.write("### Tu puntuación total es:", total_score)
             if total_score <= 13:
                 st.success("Estrés bajo. ¡Excelente trabajo en mantener el equilibrio!")
@@ -151,3 +158,7 @@ elif menu == "Evaluación del Estilo de Vida":
                 st.warning("Estrés moderado. Podrías beneficiarte de técnicas de manejo del estrés.")
             else:
                 st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
+
+# Footer
+st.markdown("---")
+st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
