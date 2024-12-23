@@ -361,7 +361,7 @@ elif menu == "Evaluación del Estilo de Vida":
         cuestionario_calidad_sueno()  # Llama la función de Calidad del Sueño
    
     elif submenu == "Nivel de Actividad Física":
-     cuestionario_ipaq()  # Llama la función para Nivel de Actividad Física
+      cuestionario_ipaq()  # Llama la función para Nivel de Actividad Física
 
 
 # Función para el cuestionario de Calidad del Sueño
