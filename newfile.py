@@ -163,7 +163,8 @@ elif menu == "Evaluación del Estilo de Vida":
 st.markdown("---")
 st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
 
-# Función para el cuestionario de Calidad del Sueño (Índice de Pittsburgh)
+if submenu == "Calidad del Sueño":
+        cuestionario_calidad_sueno() # Función para el cuestionario de Calidad del Sueño (Índice de Pittsburgh)
 def cuestionario_calidad_sueno():
     st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
     st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
@@ -258,7 +259,5 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
-
-    if submenu == "Calidad del Sueño":
-        cuestionario_calidad_sueno()
+        
     
