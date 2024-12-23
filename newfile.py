@@ -105,6 +105,7 @@ def cuestionario_calidad_sueno():
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
 
+# Definir la función para Nivel de Actividad Física 
 def cuestionario_ipaq():
     st.title("Cuestionario de Actividad Física - IPAQ (Versión Corta)")
     st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
@@ -360,7 +361,7 @@ elif menu == "Evaluación del Estilo de Vida":
         cuestionario_calidad_sueno()  # Llama la función de Calidad del Sueño
    
     elif submenu == "Nivel de Actividad Física":
-    cuestionario_ipaq():  # Llama al cuestionario IPAQ
+    cuestionario_ipaq():  # Llama la función para Nivel de Actividad Física
 
 
 # Función para el cuestionario de Calidad del Sueño
