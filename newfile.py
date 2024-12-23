@@ -305,3 +305,101 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+def cuestionario_ipaq():
+    st.title("Cuestionario de Actividad Física - IPAQ (Versión Corta)")
+    st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
+
+    # Actividades físicas vigorosas
+    st.subheader("Actividades Físicas Vigorosas")
+    dias_vigorosa = st.number_input(
+        "1. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas vigorosas como levantar objetos pesados, cavar, aeróbicos o andar en bicicleta rápido? (Días por semana)", 
+        min_value=0, max_value=7, step=1
+    )
+    if dias_vigorosa > 0:
+        tiempo_vigorosa_horas = st.number_input(
+            "2. ¿Cuántas horas por día dedicaste generalmente a esas actividades vigorosas?", 
+            min_value=0, step=1
+        )
+        tiempo_vigorosa_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1
+        )
+    else:
+        tiempo_vigorosa_horas = 0
+        tiempo_vigorosa_minutos = 0
+
+    # Actividades físicas moderadas
+    st.subheader("Actividades Físicas Moderadas")
+    dias_moderada = st.number_input(
+        "3. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas moderadas como llevar cargas ligeras o andar en bicicleta a un ritmo normal? (Días por semana)", 
+        min_value=0, max_value=7, step=1
+    )
+    if dias_moderada > 0:
+        tiempo_moderada_horas = st.number_input(
+            "4. ¿Cuántas horas por día dedicaste generalmente a esas actividades moderadas?", 
+            min_value=0, step=1
+        )
+        tiempo_moderada_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1
+        )
+    else:
+        tiempo_moderada_horas = 0
+        tiempo_moderada_minutos = 0
+
+    # Caminata
+    st.subheader("Tiempo Dedicado a Caminar")
+    dias_caminata = st.number_input(
+        "5. Durante los últimos 7 días, ¿en cuántos días caminaste al menos 10 minutos seguidos? (Días por semana)", 
+        min_value=0, max_value=7, step=1
+    )
+    if dias_caminata > 0:
+        tiempo_caminata_horas = st.number_input(
+            "6. ¿Cuántas horas por día dedicaste generalmente a caminar?", 
+            min_value=0, step=1
+        )
+        tiempo_caminata_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1
+        )
+    else:
+        tiempo_caminata_horas = 0
+        tiempo_caminata_minutos = 0
+
+    # Tiempo sedentario
+    st.subheader("Tiempo de Sedentarismo")
+    tiempo_sedentario_horas = st.number_input(
+        "7. Durante los últimos 7 días, ¿cuántas horas por día dedicaste a estar sentado? (Promedio diario)", 
+        min_value=0, step=1
+    )
+    tiempo_sedentario_minutos = st.number_input(
+        "¿Y cuántos minutos por día (además de las horas)?", 
+        min_value=0, max_value=59, step=1
+    )
+
+    # Calcular el scoring
+    if st.button("Calcular Puntuación"):
+        # Conversión de tiempo en minutos
+        minutos_vigorosa = dias_vigorosa * ((tiempo_vigorosa_horas * 60) + tiempo_vigorosa_minutos)
+        minutos_moderada = dias_moderada * ((tiempo_moderada_horas * 60) + tiempo_moderada_minutos)
+        minutos_caminata = dias_caminata * ((tiempo_caminata_horas * 60) + tiempo_caminata_minutos)
+
+        # Cálculo de METs
+        met_vigorosa = minutos_vigorosa * 8.0  # METs para actividad vigorosa
+        met_moderada = minutos_moderada * 4.0  # METs para actividad moderada
+        met_caminata = minutos_caminata * 3.3  # METs para caminata
+
+        # Total de METs
+        total_met = met_vigorosa + met_moderada + met_caminata
+
+        # Mostrar resultados
+        st.write(f"### Tu puntuación total de MET-minutos/semana es: {total_met:.2f}")
+        st.write(f"Tiempo sedentario promedio: {tiempo_sedentario_horas} horas y {tiempo_sedentario_minutos} minutos por día.")
+
+        # Clasificación de actividad
+        if total_met >= 3000:
+            st.success("Nivel de actividad: Alta. Excelente trabajo en mantenerte activo.")
+        elif 600 <= total_met < 3000:
+            st.info("Nivel de actividad: Moderada. Podrías incluir más actividad física para mejorar.")
+        else:
+            st.warning("Nivel de actividad: Baja. Considera realizar más actividades físicas para mejorar.")
