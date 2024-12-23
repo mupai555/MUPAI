@@ -13,10 +13,7 @@ def cuestionario_calidad_sueno():
 
     # Bloque 1: Horarios de sueño
     hora_acostarse = st.text_input("1. ¿A qué hora te acuestas normalmente?")
-    tiempo_dormirse = st.selectbox(
-        "2. ¿Cuánto tiempo tardas normalmente en dormirte?",
-        ["Menos de 15 minutos", "16-30 minutos", "31-60 minutos", "Más de 60 minutos"]
-    )
+    tiempo_dormirse = st.slider("2. ¿Cuánto tiempo tardas normalmente en dormirte (minutos)?", 0, 120, 15)
     hora_levantarse = st.text_input("3. ¿A qué hora te levantas normalmente?")
     horas_dormidas = st.slider("4. ¿Cuántas horas calculas que duermes habitualmente por noche?", 0, 12, 7)
 
@@ -43,11 +40,11 @@ def cuestionario_calidad_sueno():
             "e. Toser o roncar fuerte mientras duermes:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         ),
-        "Sentirte frío": st.radio(
+        "Sentir frío": st.radio(
             "f. Sentir frío mientras duermes:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         ),
-        "Sentirte caliente": st.radio(
+        "Sentir calor": st.radio(
             "g. Sentir calor mientras duermes:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         ),
@@ -55,15 +52,32 @@ def cuestionario_calidad_sueno():
             "h. Tener pesadillas:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         ),
-        "Dolor": st.radio(
+        "Sentir dolor": st.radio(
             "i. Sentir dolor que dificulte tu sueño:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         )
     }
 
-    # Bloque 3: Calidad global del sueño
+    # Bloque 3: Uso de medicación
+    uso_medicacion = st.radio(
+        "6. ¿Cuántas veces tomaste medicamentos para dormir durante el último mes?",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+
+    # Bloque 4: Disfunción diurna
+    st.write("7. Durante el último mes, ¿con qué frecuencia tuviste los siguientes problemas?")
+    disfuncion_diurna_1 = st.radio(
+        "a. Problemas para mantenerte despierto(a) mientras realizabas actividades sociales o tareas:",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+    disfuncion_diurna_2 = st.radio(
+        "b. Dificultad para mantener el entusiasmo para hacer cosas:",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+
+    # Bloque 5: Calidad subjetiva del sueño
     calidad_sueno = st.radio(
-        "6. ¿Cómo calificarías la calidad de tu sueño durante el último mes?",
+        "8. ¿Cómo calificarías la calidad de tu sueño durante el último mes?",
         ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
     )
 
@@ -72,16 +86,26 @@ def cuestionario_calidad_sueno():
         puntuacion = {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}
         calidad_puntuacion = {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}
 
-        total_puntuacion = sum(puntuacion[respuesta] for respuesta in problemas_dormir.values())
-        total_puntuacion += calidad_puntuacion[calidad_sueno]
+        # Cálculo de los componentes
+        componente_1 = calidad_puntuacion[calidad_sueno]
+        componente_2 = 1 if tiempo_dormirse > 30 else 0  # Ejemplo de puntuación
+        componente_3 = 0 if horas_dormidas >= 7 else (1 if horas_dormidas >= 6 else 2)
+        componente_4 = sum(puntuacion[v] for v in problemas_dormir.values())
+        componente_5 = puntuacion[uso_medicacion]
+        componente_6 = puntuacion[disfuncion_diurna_1] + puntuacion[disfuncion_diurna_2]
 
-        st.write(f"### Tu puntuación total es: {total_puntuacion}")
+        total_puntuacion = componente_1 + componente_2 + componente_3 + componente_4 + componente_5 + componente_6
+
+        # Mostrar resultado
+        st.write(f"### Tu puntuación total del PSQI es: {total_puntuacion}")
         if total_puntuacion <= 5:
             st.success("Buena calidad de sueño.")
         elif 6 <= total_puntuacion <= 10:
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+    
+
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
