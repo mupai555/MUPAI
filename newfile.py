@@ -218,7 +218,8 @@ elif menu == "Evaluación del Estilo de Vida":
             "Potencial Genético Muscular"
         ]
     )
-
+elif submenu == "Nivel de Actividad Física":
+    cuestionario_ipaq()  # Llama al cuestionario de IPAQ
     if submenu == "Estrés Percibido":
         st.title("Evaluación del Estrés Percibido")
         st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
