@@ -113,7 +113,10 @@ def cuestionario_ipaq():
 
 def cuestionario_ipaq():
     st.title("Cuestionario de Actividad Física - IPAQ (Versión Corta)")
-    st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
+    st.write("Responde las 
+
+ elif  submenu == "Nivel de Actividad Física":
+    cuestionario_ipaq()  # Llama al cuestionario_ipaq
 
     # Actividades físicas vigorosas
     st.subheader("Actividades Físicas Vigorosas")
@@ -409,5 +412,4 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
-            elif submenu == "Nivel de Actividad Física":
-    cuestionario_ipaq()  # Llama al cuestionario IPAQ
+            
