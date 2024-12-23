@@ -410,5 +410,5 @@ def cuestionario_calidad_sueno():
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
 
-elif submenu == "Nivel de Actividad Física":
+       elif submenu == "Nivel de Actividad Física":
     cuestionario_ipaq()  # Llama a la función cuestionario_ipaq para mostrar el cuestionario
