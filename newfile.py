@@ -258,19 +258,6 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
-        # Modificación en el submenú de "Evaluación del Estilo de Vida"
-if menu == "Evaluación del Estilo de Vida":
-    submenu = st.sidebar.radio(
-        "Áreas de Evaluación",
-        [
-            "Estrés Percibido",
-            "Calidad del Sueño",
-            "Nivel de Actividad Física",
-            "Hábitos Alimenticios",
-            "Potencial Genético Muscular"
-        ],
-        key="evaluacion_estilo_vida"  # Clave única para evitar conflictos
-    )
 
     if submenu == "Calidad del Sueño":
         cuestionario_calidad_sueno()
