@@ -409,3 +409,5 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+            elif submenu == "Nivel de Actividad Física":
+    cuestionario_ipaq()  # Llama al cuestionario IPAQ
