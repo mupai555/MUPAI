@@ -269,7 +269,8 @@ if menu == "Evaluación del Estilo de Vida":
             "Nivel de Actividad Física",
             "Hábitos Alimenticios",
             "Potencial Genético Muscular"
-        ]
+        ],
+        key="evaluacion_estilo_vida"  # Clave única para evitar conflictos
     )
 
     if submenu == "Calidad del Sueño":
