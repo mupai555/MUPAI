@@ -163,7 +163,7 @@ elif menu == "Evaluación del Estilo de Vida":
 st.markdown("---")
 st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
 
-# Función para el cuestionario de Calidad del Sueño
+if # Función para el cuestionario de Calidad del Sueño
 def cuestionario_calidad_sueno():
     st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
     st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
