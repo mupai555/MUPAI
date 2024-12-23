@@ -11,6 +11,7 @@ def cuestionario_calidad_sueno():
     st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
     st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
 
+    # Bloque 1: Horarios de sueño
     hora_acostarse = st.text_input("1. ¿A qué hora te acuestas normalmente?")
     tiempo_dormirse = st.selectbox(
         "2. ¿Cuánto tiempo tardas normalmente en dormirte?",
@@ -19,6 +20,7 @@ def cuestionario_calidad_sueno():
     hora_levantarse = st.text_input("3. ¿A qué hora te levantas normalmente?")
     horas_dormidas = st.slider("4. ¿Cuántas horas calculas que duermes habitualmente por noche?", 0, 12, 7)
 
+    # Bloque 2: Problemas para dormir
     st.write("5. Durante el último mes, ¿con qué frecuencia has experimentado los siguientes problemas?")
     problemas_dormir = {
         "No poder conciliar el sueño en 30 minutos": st.radio(
@@ -28,14 +30,44 @@ def cuestionario_calidad_sueno():
         "Despertarte durante la noche o muy temprano": st.radio(
             "b. Despertarte durante la noche o muy temprano:",
             ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Ir al baño durante la noche": st.radio(
+            "c. Tener que levantarte para ir al baño:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "No poder respirar bien": st.radio(
+            "d. No poder respirar bien mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Toser o roncar fuerte": st.radio(
+            "e. Toser o roncar fuerte mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Sentirte frío": st.radio(
+            "f. Sentir frío mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Sentirte caliente": st.radio(
+            "g. Sentir calor mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Tener pesadillas": st.radio(
+            "h. Tener pesadillas:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Dolor": st.radio(
+            "i. Sentir dolor que dificulte tu sueño:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         )
     }
 
+    # Bloque 3: Calidad global del sueño
     calidad_sueno = st.radio(
-        "6. ¿Cómo calificarías la calidad de tu sueño?",
+        "6. ¿Cómo calificarías la calidad de tu sueño durante el último mes?",
         ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
     )
 
+    # Botón para calcular la puntuación
     if st.button("Calcular Puntuación"):
         puntuacion = {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}
         calidad_puntuacion = {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}
