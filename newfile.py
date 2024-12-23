@@ -276,6 +276,7 @@ elif menu == "Evaluación del Estilo de Vida":
         # Código existente de Estrés Percibido
         st.title("Evaluación del Estrés Percibido")
         # Mantén la lógica existente aquí...
+
     elif submenu == "Calidad del Sueño":
         # Llama al cuestionario del PSQI
         cuestionario_calidad_sueno()
