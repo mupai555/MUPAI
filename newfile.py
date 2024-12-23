@@ -114,16 +114,16 @@ def cuestionario_ipaq():
     st.subheader("Actividades Físicas Vigorosas")
     dias_vigorosa = st.number_input(
         "1. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas vigorosas como levantar objetos pesados, cavar, aeróbicos o andar en bicicleta rápido? (Días por semana)", 
-        min_value=0, max_value=7, step=1
+        min_value=0, max_value=7, step=1, key="dias_vigorosa"
     )
     if dias_vigorosa > 0:
         tiempo_vigorosa_horas = st.number_input(
             "2. ¿Cuántas horas por día dedicaste generalmente a esas actividades vigorosas?", 
-            min_value=0, step=1
+            min_value=0, step=1, key="horas_vigorosa"
         )
         tiempo_vigorosa_minutos = st.number_input(
             "¿Y cuántos minutos por día (además de las horas)?", 
-            min_value=0, max_value=59, step=1
+            min_value=0, max_value=59, step=1, key="minutos_vigorosa"
         )
     else:
         tiempo_vigorosa_horas = 0
@@ -133,16 +133,16 @@ def cuestionario_ipaq():
     st.subheader("Actividades Físicas Moderadas")
     dias_moderada = st.number_input(
         "3. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas moderadas como llevar cargas ligeras o andar en bicicleta a un ritmo normal? (Días por semana)", 
-        min_value=0, max_value=7, step=1
+        min_value=0, max_value=7, step=1, key="dias_moderada"
     )
     if dias_moderada > 0:
         tiempo_moderada_horas = st.number_input(
             "4. ¿Cuántas horas por día dedicaste generalmente a esas actividades moderadas?", 
-            min_value=0, step=1
+            min_value=0, step=1, key="horas_moderada"
         )
         tiempo_moderada_minutos = st.number_input(
             "¿Y cuántos minutos por día (además de las horas)?", 
-            min_value=0, max_value=59, step=1
+            min_value=0, max_value=59, step=1, key="minutos_moderada"
         )
     else:
         tiempo_moderada_horas = 0
@@ -152,16 +152,16 @@ def cuestionario_ipaq():
     st.subheader("Tiempo Dedicado a Caminar")
     dias_caminata = st.number_input(
         "5. Durante los últimos 7 días, ¿en cuántos días caminaste al menos 10 minutos seguidos? (Días por semana)", 
-        min_value=0, max_value=7, step=1
+        min_value=0, max_value=7, step=1, key="dias_caminata"
     )
     if dias_caminata > 0:
         tiempo_caminata_horas = st.number_input(
             "6. ¿Cuántas horas por día dedicaste generalmente a caminar?", 
-            min_value=0, step=1
+            min_value=0, step=1, key="horas_caminata"
         )
         tiempo_caminata_minutos = st.number_input(
             "¿Y cuántos minutos por día (además de las horas)?", 
-            min_value=0, max_value=59, step=1
+            min_value=0, max_value=59, step=1, key="minutos_caminata"
         )
     else:
         tiempo_caminata_horas = 0
@@ -171,15 +171,15 @@ def cuestionario_ipaq():
     st.subheader("Tiempo de Sedentarismo")
     tiempo_sedentario_horas = st.number_input(
         "7. Durante los últimos 7 días, ¿cuántas horas por día dedicaste a estar sentado? (Promedio diario)", 
-        min_value=0, step=1
+        min_value=0, step=1, key="horas_sedentario"
     )
     tiempo_sedentario_minutos = st.number_input(
         "¿Y cuántos minutos por día (además de las horas)?", 
-        min_value=0, max_value=59, step=1
+        min_value=0, max_value=59, step=1, key="minutos_sedentario"
     )
 
     # Calcular el scoring
-    if st.button("Calcular Puntuación"):
+    if st.button("Calcular Puntuación", key="calcular_puntuacion"):
         # Conversión de tiempo en minutos
         minutos_vigorosa = dias_vigorosa * ((tiempo_vigorosa_horas * 60) + tiempo_vigorosa_minutos)
         minutos_moderada = dias_moderada * ((tiempo_moderada_horas * 60) + tiempo_moderada_minutos)
