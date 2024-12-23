@@ -6,7 +6,50 @@ st.set_page_config(
     page_icon="🤖",
     layout="wide",
 )
+# Definir la función para Calidad del Sueño
+def cuestionario_calidad_sueno():
+    st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
+    st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
 
+    hora_acostarse = st.text_input("1. ¿A qué hora te acuestas normalmente?")
+    tiempo_dormirse = st.selectbox(
+        "2. ¿Cuánto tiempo tardas normalmente en dormirte?",
+        ["Menos de 15 minutos", "16-30 minutos", "31-60 minutos", "Más de 60 minutos"]
+    )
+    hora_levantarse = st.text_input("3. ¿A qué hora te levantas normalmente?")
+    horas_dormidas = st.slider("4. ¿Cuántas horas calculas que duermes habitualmente por noche?", 0, 12, 7)
+
+    st.write("5. Durante el último mes, ¿con qué frecuencia has experimentado los siguientes problemas?")
+    problemas_dormir = {
+        "No poder conciliar el sueño en 30 minutos": st.radio(
+            "a. No poder conciliar el sueño en los primeros 30 minutos:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Despertarte durante la noche o muy temprano": st.radio(
+            "b. Despertarte durante la noche o muy temprano:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        )
+    }
+
+    calidad_sueno = st.radio(
+        "6. ¿Cómo calificarías la calidad de tu sueño?",
+        ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
+    )
+
+    if st.button("Calcular Puntuación"):
+        puntuacion = {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}
+        calidad_puntuacion = {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}
+
+        total_puntuacion = sum(puntuacion[respuesta] for respuesta in problemas_dormir.values())
+        total_puntuacion += calidad_puntuacion[calidad_sueno]
+
+        st.write(f"### Tu puntuación total es: {total_puntuacion}")
+        if total_puntuacion <= 5:
+            st.success("Buena calidad de sueño.")
+        elif 6 <= total_puntuacion <= 10:
+            st.warning("Calidad de sueño moderada.")
+        else:
+            st.error("Mala calidad de sueño. Considera consultar a un especialista.")
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
