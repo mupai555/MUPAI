@@ -259,24 +259,22 @@ def cuestionario_calidad_sueno():
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
 
-# Modificar el submenú de "Evaluación del Estilo de Vida"
-elif menu == "Evaluación del Estilo de Vida":
+# Modificación en el submenú de "Evaluación del Estilo de Vida"
+if menu == "Evaluación del Estilo de Vida":
     submenu = st.sidebar.radio(
         "Áreas de Evaluación",
         [
-            "Estrés Percibido", 
-            "Calidad del Sueño", 
-            "Nivel de Actividad Física", 
-            "Hábitos Alimenticios", 
+            "Estrés Percibido",
+            "Calidad del Sueño",
+            "Nivel de Actividad Física",
+            "Hábitos Alimenticios",
             "Potencial Genético Muscular"
         ]
     )
 
-    if submenu == "Estrés Percibido":
-        # Código existente de Estrés Percibido
-        st.title("Evaluación del Estrés Percibido")
-        # Mantén la lógica existente aquí...
-
-    elif submenu == "Calidad del Sueño":
-        # Llama al cuestionario del PSQI
+    if submenu == "Calidad del Sueño":
         cuestionario_calidad_sueno()
+    elif submenu == "Estrés Percibido":
+        st.title("Evaluación del Estrés Percibido")
+
+    
