@@ -105,7 +105,7 @@ def cuestionario_calidad_sueno():
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
 
-Definir la función para el cuestionario IPAQ
+# Definir la función para el cuestionario IPAQ
 def cuestionario_ipaq():
     st.title("Cuestionario de Actividad Física - IPAQ (Versión Corta)")
     st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
