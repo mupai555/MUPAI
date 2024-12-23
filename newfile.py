@@ -103,7 +103,7 @@ elif menu == "Contacto":
     st.write("""
     Para más información o consultas, contáctanos:
     - **Correo**: contacto@mupai.com
-    - **Teléfono**: +52 123 456 7890
+    - **Teléfono**: +52 866 258 05 94
     - **Ubicación**: Monterrey, Nuevo León
     """)
 
@@ -159,11 +159,7 @@ elif menu == "Evaluación del Estilo de Vida":
             else:
                 st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
 
-# Footer
-st.markdown("---")
-st.write("© 2024 MUPAI - Entrenamiento Digital Basado en Ciencia")
-
-elif submenu == "Calidad del Sueño":
+    elif submenu == "Calidad del Sueño":
         cuestionario_calidad_sueno()  # Llama la función de Calidad del Sueño
 
 # Función para el cuestionario de Calidad del Sueño
