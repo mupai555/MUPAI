@@ -204,50 +204,6 @@ def cuestionario_ipaq():
             st.info("Nivel de actividad: Moderada. Podrías incluir más actividad física para mejorar.")
         else:
             st.warning("Nivel de actividad: Baja. Considera realizar más actividades físicas para mejorar tu salud.")
-        
-
-# Definir la función para el cuestionario Mini-ECCA v.2
-def cuestionario_mini_ecca():
-    st.title("Cuestionario Mini-ECCA v.2")
-    st.write("Responde las siguientes preguntas sobre tus hábitos alimenticios y estilo de vida:")
-
-    # Preguntas del cuestionario
-    opciones = ["Nunca", "Algunas veces", "Casi siempre", "Siempre"]
-
-    q1 = st.radio("1. ¿Bebe, por lo menos, 1.5 litros de agua natural todos los días (de lunes a domingo)?", opciones)
-    q2 = st.radio("2. ¿Consume, por lo menos, 200 g de verduras cocidas o crudas todos los días (de lunes a domingo)?", opciones)
-    q3 = st.radio("3. ¿Consume, al menos, 200 g de pescado fresco o congelado (no enlatado) a la semana?", opciones)
-    q4 = st.radio("4. ¿Cuántas veces a la semana consume una o más latas (o vasos) de alguna bebida azucarada?", opciones)
-    q5 = st.radio("5. ¿Consume, por lo menos, 200 g de frutas todos los días (de lunes a domingo)?", opciones)
-    q6 = st.radio("6. ¿Consume, por lo menos, 30 g de oleaginosas o medio aguacate todos los días (de lunes a domingo)?", opciones)
-    q7 = st.radio("7. ¿Consume alimentos no preparados en casa 3 o más veces por semana?", opciones)
-    q8 = st.radio("8. ¿Consume alimentos procesados (frituras, embutidos, platillos empaquetados) 2 o más veces por semana?", opciones)
-    q9 = st.radio("9. ¿Consume, por lo menos, 300 g de leguminosas a la semana?", opciones)
-    q10 = st.radio("10. ¿Incluye algún tipo de lácteos o sus equivalentes en su dieta diaria?", opciones)
-    q11 = st.radio("11. ¿Cuántas veces a la semana consume alimentos fritos?", opciones)
-    q12 = st.radio("12. ¿Realiza al menos 30 minutos de actividad física 3 veces por semana o más?", opciones)
-    q13 = st.radio("13. ¿Evita el consumo de alimentos con alto contenido de sodio (ejemplo: embutidos, sopas instantáneas)?", opciones)
-    q14 = st.radio("14. ¿Consume productos integrales como pan integral, avena o arroz integral al menos 3 veces a la semana?", opciones)
-
-    # Botón para calcular la puntuación
-    if st.button("Calcular Puntuación"):
-        # Asignar valores numéricos a las respuestas
-        puntuacion = {"Nunca": 1, "Algunas veces": 2, "Casi siempre": 3, "Siempre": 4}
-        total_puntuacion = (
-            puntuacion[q1] + puntuacion[q2] + puntuacion[q3] + puntuacion[q4] +
-            puntuacion[q5] + puntuacion[q6] + puntuacion[q7] + puntuacion[q8] +
-            puntuacion[q9] + puntuacion[q10] + puntuacion[q11] + puntuacion[q12] +
-            puntuacion[q13] + puntuacion[q14]
-        )
-
-        # Mostrar resultado
-        st.write(f"### Tu puntuación total es: {total_puntuacion}")
-        if total_puntuacion >= 50:
-            st.success("¡Excelente! Tienes hábitos alimenticios muy saludables.")
-        elif 35 <= total_puntuacion < 50:
-            st.info("Tus hábitos alimenticios son buenos, pero pueden mejorar.")
-        else:
-            st.warning("Considera adoptar hábitos más saludables para mejorar tu calidad de vida.")
 
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
@@ -452,7 +408,5 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
-   
-elif submenu == "Mini-ECCA v.2":
-        cuestionario_mini_ecca()  # Llama a la función Mini-ECCA v.2
-        
+
+Updated
