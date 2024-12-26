@@ -204,6 +204,7 @@ def cuestionario_ipaq():
             st.info("Nivel de actividad: Moderada. Podrías incluir más actividad física para mejorar.")
         else:
             st.warning("Nivel de actividad: Baja. Considera realizar más actividades físicas para mejorar tu salud.")
+
 # Función del Cuestionario de Hábitos Alimenticios
 def cuestionario_habitos_alimenticios():
     st.title("Evaluación General de Hábitos Alimenticios")
@@ -249,8 +250,9 @@ def cuestionario_habitos_alimenticios():
     # Botón para calcular la puntuación
     if st.button("Calcular Puntuación"):
         puntuaciones = {"Nunca": 1, "Algunas veces": 2, "Casi siempre": 3, "Siempre": 4}
-        carne_fresca_valores = {"Pescado fresco": 3, "Pollo fresco": 2, "Carne roja fresca": 1, "No consumo carne fresca": 0}
+        carne_fresca_valores = {"Pescado fresco": 4, "Pollo fresco": 3, "Carne roja fresca": 2, "No consumo carne fresca": 0}
         carnes_procesadas_valores = {"Nunca": 0, "Algunas veces": -1, "Casi siempre": -2, "Siempre": -3}
+        cereales_valores = {"Granos integrales": 4, "Granos mínimamente procesados": 3, "Granos procesados o ultraprocesados": -2}
 
         puntuacion_total = (
             puntuaciones[agua] +
@@ -264,16 +266,22 @@ def cuestionario_habitos_alimenticios():
             puntuaciones[bebidas_azucaradas] +
             puntuaciones[postres_dulces] +
             puntuaciones[alimentos_procesados] +
+            cereales_valores[cereales] +
             puntuaciones[alcohol]
         )
 
         st.write(f"### Tu puntuación total es: {puntuacion_total}")
-        if puntuacion_total >= 20:
-            st.success("Tus hábitos alimenticios son saludables.")
-        elif 10 <= puntuacion_total < 20:
-            st.warning("Tus hábitos son moderadamente saludables.")
+
+        # Feedback en función del puntaje
+        if puntuacion_total >= 30:
+            st.success("✅ Tus hábitos alimenticios son saludables.")
+            st.write("¡Felicidades! Tus elecciones alimenticias son excelentes. Sigue así para mantener una salud óptima.")
+        elif 15 <= puntuacion_total < 30:
+            st.warning("⚠️ Tus hábitos alimenticios son moderadamente saludables.")
+            st.write("Tienes hábitos buenos, pero hay áreas donde puedes mejorar. Considera reducir el consumo de alimentos procesados y aumentar tu ingesta de alimentos frescos.")
         else:
-            st.error("Tus hábitos alimenticios necesitan mejoras significativas.")
+            st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
+            st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
 
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
