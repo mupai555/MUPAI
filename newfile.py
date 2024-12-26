@@ -204,6 +204,76 @@ def cuestionario_ipaq():
             st.info("Nivel de actividad: Moderada. Podrías incluir más actividad física para mejorar.")
         else:
             st.warning("Nivel de actividad: Baja. Considera realizar más actividades físicas para mejorar tu salud.")
+# Función del Cuestionario de Hábitos Alimenticios
+def cuestionario_habitos_alimenticios():
+    st.title("Evaluación General de Hábitos Alimenticios")
+    st.write("Responde las siguientes preguntas para evaluar tus hábitos alimenticios y recibir recomendaciones personalizadas.")
+
+    # Sección 1: Consumo de Alimentos Frescos
+    st.header("Sección 1: Consumo de Alimentos Frescos")
+    agua = st.radio("1. ¿Bebes al menos 1.5 litros de agua natural diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    verduras = st.radio("2. ¿Consumes al menos 200 g de verduras frescas diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    frutas = st.radio("3. ¿Consumes al menos 200 g de frutas diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    leguminosas = st.radio("4. ¿Consumes al menos 300 g de leguminosas semanalmente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    frutos_secos = st.radio("5. ¿Consumes al menos 30 g de frutos secos o medio aguacate diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+
+    # Sección 2: Carnes Frescas y Procesadas
+    st.header("Sección 2: Carnes Frescas y Procesadas")
+    carne_fresca = st.radio(
+        "6. ¿Qué tipo de carne fresca consumes con mayor frecuencia durante la semana?",
+        ["Pescado fresco", "Pollo fresco", "Carne roja fresca", "No consumo carne fresca"]
+    )
+    carnes_procesadas = st.radio(
+        "7. ¿Con qué frecuencia consumes carnes procesadas (embutidos, curadas, enlatadas o fritas)?",
+        ["Nunca", "Algunas veces", "Casi siempre", "Siempre"]
+    )
+
+    # Sección 3: Hábitos Alimenticios Generales
+    st.header("Sección 3: Hábitos Alimenticios Generales")
+    alimentos_fuera = st.radio("8. ¿Consumes alimentos no preparados en casa tres o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    bebidas_azucaradas = st.radio("9. ¿Cuántas veces consumes bebidas azucaradas semanalmente?", ["Nunca", "1–3 veces", "4–6 veces", "Diario"])
+    postres_dulces = st.radio("10. ¿Consumes postres o dulces dos o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    alimentos_procesados = st.radio("11. ¿Consumes alimentos procesados dos o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    cereales = st.radio(
+        "12. ¿Qué tipo de cereales consumes con mayor frecuencia?",
+        ["Granos integrales", "Granos mínimamente procesados", "Granos procesados o ultraprocesados"]
+    )
+
+    # Sección 4: Consumo de Alcohol
+    st.header("Sección 4: Consumo de Alcohol")
+    alcohol = st.radio(
+        "13. Si eres hombre, ¿consumes más de 2 bebidas alcohólicas al día? Si eres mujer, ¿más de 1 bebida al día?",
+        ["Nunca", "Algunas veces", "Casi siempre", "Siempre"]
+    )
+
+    # Botón para calcular la puntuación
+    if st.button("Calcular Puntuación"):
+        puntuaciones = {"Nunca": 1, "Algunas veces": 2, "Casi siempre": 3, "Siempre": 4}
+        carne_fresca_valores = {"Pescado fresco": 3, "Pollo fresco": 2, "Carne roja fresca": 1, "No consumo carne fresca": 0}
+        carnes_procesadas_valores = {"Nunca": 0, "Algunas veces": -1, "Casi siempre": -2, "Siempre": -3}
+
+        puntuacion_total = (
+            puntuaciones[agua] +
+            puntuaciones[verduras] +
+            puntuaciones[frutas] +
+            puntuaciones[leguminosas] +
+            puntuaciones[frutos_secos] +
+            carne_fresca_valores[carne_fresca] +
+            carnes_procesadas_valores[carnes_procesadas] +
+            puntuaciones[alimentos_fuera] +
+            puntuaciones[bebidas_azucaradas] +
+            puntuaciones[postres_dulces] +
+            puntuaciones[alimentos_procesados] +
+            puntuaciones[alcohol]
+        )
+
+        st.write(f"### Tu puntuación total es: {puntuacion_total}")
+        if puntuacion_total >= 20:
+            st.success("Tus hábitos alimenticios son saludables.")
+        elif 10 <= puntuacion_total < 20:
+            st.warning("Tus hábitos son moderadamente saludables.")
+        else:
+            st.error("Tus hábitos alimenticios necesitan mejoras significativas.")
 
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
@@ -362,6 +432,9 @@ elif menu == "Evaluación del Estilo de Vida":
    
     elif submenu == "Nivel de Actividad Física":
       cuestionario_ipaq()  # Llama la función para Nivel de Actividad Física
+
+    elif submenu == "Hábitos Alimenticios":
+    cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
 
 
 # Función para el cuestionario de Calidad del Sueño
