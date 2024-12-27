@@ -288,10 +288,11 @@ def cuestionario_habitos_alimenticios():
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
 
+
 # Función: Evaluación del Potencial Genético
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
-    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y recibir recomendaciones personalizadas.")
+    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
 
     # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
@@ -306,15 +307,16 @@ def evaluacion_potencial_genetico():
         masa_magra_actual = peso_kg * (1 - grasa_corporal / 100)
         ffmi_actual = masa_magra_actual / (altura_m ** 2)
         peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
-        ffmi_proyectado = peso_proyectado / (altura_m ** 2)
+        masa_magra_proyectada = peso_proyectado * (1 - grasa_deseada / 100)
+        ffmi_proyectado = masa_magra_proyectada / (altura_m ** 2)
 
-        # Tablas de referencia para FFMI
+        # Tablas de referencia
         referencia_ffmi = {
             "Hombre": {"Principiante": 18, "Intermedio": 21, "Avanzado": 25, "Élite": 27},
             "Mujer": {"Principiante": 15, "Intermedio": 18, "Avanzado": 20, "Élite": 22}
         }
 
-        # Clasificación del FFMI
+        # Clasificaciones y feedback
         def clasificar_ffmi(ffmi, genero):
             for nivel, valor in referencia_ffmi[genero].items():
                 if ffmi <= valor:
@@ -333,11 +335,11 @@ def evaluacion_potencial_genetico():
         st.write(f"**Peso Proyectado:** {peso_proyectado:.2f} kg")
         st.write(f"**FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
 
-        # Comparativa gráfica de FFMI
+        # Gráfica de comparación de FFMI
         st.subheader("Comparativa de FFMI")
         niveles = list(referencia_ffmi[genero].keys())
         valores = list(referencia_ffmi[genero].values())
-        valores.insert(0, ffmi_actual)  # Insertar FFMI actual al inicio
+        valores.insert(0, ffmi_actual)  # Insertar el FFMI actual al inicio
 
         fig, ax = plt.subplots()
         ax.bar(["Actual"] + niveles, valores, color=["blue"] + ["gray"] * len(niveles))
@@ -345,17 +347,11 @@ def evaluacion_potencial_genetico():
         ax.set_title("Comparativa de FFMI Actual vs Referencias")
         st.pyplot(fig)
 
-        # Feedback personalizado
-        st.subheader("Recomendaciones Personalizadas")
-        st.write(f"**Tu nivel actual:** {nivel_ffmi_actual}")
-        if nivel_ffmi_actual == "Principiante":
-            st.info("¡Buen comienzo! Enfócate en un programa equilibrado de entrenamiento y alimentación.")
-        elif nivel_ffmi_actual == "Intermedio":
-            st.info("Estás progresando bien. Considera aumentar el volumen de entrenamiento y ajustar tu dieta.")
-        elif nivel_ffmi_actual == "Avanzado":
-            st.success("¡Estás en un gran nivel! Optimiza detalles en tu entrenamiento y recuperación.")
-        else:
-            st.success("¡Nivel Élite alcanzado! Mantén tu rendimiento y enfócate en estrategias de recuperación y entrenamiento avanzadas.")
+        # Tabla de referencia para FFMI
+        st.subheader("Tabla de Referencia: FFMI por Género")
+        tabla_referencia = pd.DataFrame(referencia_ffmi).T
+        tabla_referencia.index.name = "Género"
+        st.table(tabla_referencia)
 
         
 # Barra lateral de navegación
