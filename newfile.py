@@ -289,8 +289,8 @@ def cuestionario_habitos_alimenticios():
      
    # Función del Cuestionario de Potencial Genético Muscular 
     def evaluacion_potencial_genetico():                         
-        st.title("Evaluación del Potencial Genético Muscular")
-    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
+         st.title("Evaluación del Potencial Genético Muscular")
+         st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
 
     # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
