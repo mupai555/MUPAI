@@ -288,46 +288,37 @@ def cuestionario_habitos_alimenticios():
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
 
-# Function: Genetic Potential Evaluation
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
     st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
 
-    # Inputs for user data
+    # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
     altura_m = st.number_input("Altura (en metros):", min_value=1.0, max_value=2.5, step=0.01)
     peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
     grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
 
-    # Circumferences
+    # Circunferencias corporales
     st.subheader("Circunferencias Corporales (en cm)")
     brazo_cm = st.number_input("Brazo (flexionado):", min_value=20.0, max_value=60.0, step=0.1)
     pecho_cm = st.number_input("Pecho:", min_value=50.0, max_value=150.0, step=0.1)
     cintura_cm = st.number_input("Cintura:", min_value=40.0, max_value=150.0, step=0.1)
     cadera_cm = st.number_input("Cadera:", min_value=50.0, max_value=150.0, step=0.1)
 
-    # Validation for desired fat percentage
     if grasa_deseada > grasa_corporal:
         st.error("El porcentaje de grasa corporal deseado no puede ser mayor al actual.")
         return
 
-    # Calculate button
     if st.button("Calcular Potencial"):
-        # Calculate FFMI
         def calcular_ffmi(peso, altura, grasa):
             masa_magra = peso * (1 - grasa / 100)
             ffmi = masa_magra / (altura ** 2)
             return masa_magra, ffmi
 
-        # Current values
         masa_magra_actual, ffmi_actual = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
+        masa_magra_proyectada, ffmi_proyectado = calcular_ffmi(masa_magra_actual / (1 - grasa_deseada / 100), altura_m, grasa_deseada)
 
-        # Projected values
-        peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
-        _, ffmi_proyectado = calcular_ffmi(peso_proyectado, altura_m, grasa_deseada)
-
-        # Calculate proportions
         def calcular_proporciones(brazo, pecho, cintura, cadera):
             brazo_cintura = brazo / cintura
             pecho_cintura = pecho / cintura
@@ -336,7 +327,6 @@ def evaluacion_potencial_genetico():
 
         brazo_cintura, pecho_cintura, cintura_cadera = calcular_proporciones(brazo_cm, pecho_cm, cintura_cm, cadera_cm)
 
-        # Classification for metrics
         def clasificar_metricas(metric, genero, tipo):
             rangos = {
                 "Hombre": {
@@ -356,43 +346,34 @@ def evaluacion_potencial_genetico():
                 if rango[0] <= metric < rango[1]:
                     return rango[2]
 
-        # Classifications
         nivel_ffmi_actual = clasificar_metricas(ffmi_actual, genero, "FFMI")
+        nivel_ffmi_proyectado = clasificar_metricas(ffmi_proyectado, genero, "FFMI")
         nivel_brazo_cintura = clasificar_metricas(brazo_cintura, genero, "Brazo-Cintura")
         nivel_pecho_cintura = clasificar_metricas(pecho_cintura, genero, "Pecho-Cintura")
         nivel_cintura_cadera = clasificar_metricas(cintura_cadera, genero, "Cintura-Cadera")
 
-        # Projected classification
-        nivel_ffmi_proyectado = clasificar_metricas(ffmi_proyectado, genero, "FFMI")
-
-        # Weighted general level
-        pesos = {"FFMI": 0.5, "Brazo-Cintura": 0.2, "Pecho-Cintura": 0.2, "Cintura-Cadera": 0.1}
-        puntajes = {"Principiante": 1, "Intermedio": 2, "Avanzado": 3, "Élite": 4}
-
-        puntaje_general_actual = (
-            puntajes[nivel_ffmi_actual] * pesos["FFMI"] +
-            puntajes[nivel_brazo_cintura] * pesos["Brazo-Cintura"] +
-            puntajes[nivel_pecho_cintura] * pesos["Pecho-Cintura"] +
-            puntajes[nivel_cintura_cadera] * pesos["Cintura-Cadera"]
-        )
-
-        nivel_general_actual = (
-            "Principiante" if puntaje_general_actual < 1.5 else
-            "Intermedio" if puntaje_general_actual < 2.5 else
-            "Avanzado" if puntaje_general_actual < 3.5 else
-            "Élite"
-        )
-
-        # Display results
         st.write("### Resultados Actuales")
         st.write(f"- **FFMI Actual:** {ffmi_actual:.2f} ({nivel_ffmi_actual})")
-        st.write(f"- **Nivel General Actual:** {nivel_general_actual}")
+        st.write(f"- **Masa Magra Actual:** {masa_magra_actual:.2f} kg")
+        st.write(f"- **Brazo-Cintura:** {brazo_cintura:.2f} ({nivel_brazo_cintura})")
+        st.write(f"- **Pecho-Cintura:** {pecho_cintura:.2f} ({nivel_pecho_cintura})")
+        st.write(f"- **Cintura-Cadera:** {cintura_cadera:.2f} ({nivel_cintura_cadera})")
 
         st.write("### Resultados Proyectados")
-        st.write(f"- **Peso Proyectado:** {peso_proyectado:.2f} kg")
         st.write(f"- **FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
+        st.write(f"- **Masa Magra Proyectada:** {masa_magra_proyectada:.2f} kg")
 
-        # Plot graph
+        st.write("### Tabla Comparativa de FFMI")
+        st.write("""
+        | Nivel       | Hombres (FFMI) | Mujeres (FFMI) |
+        |-------------|----------------|----------------|
+        | Principiante | <18            | <15            |
+        | Intermedio   | 18–21          | 15–18          |
+        | Avanzado     | 21–25          | 18–20          |
+        | Élite        | >25            | >20            |
+        """)
+
+        st.write("### Gráfica Comparativa de FFMI")
         fig, ax = plt.subplots()
         categorias = ["Actual", "Proyectado"]
         valores = [ffmi_actual, ffmi_proyectado]
