@@ -287,8 +287,6 @@ def cuestionario_habitos_alimenticios():
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
-
-
 # Función: Evaluación del Potencial Genético
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
@@ -352,7 +350,6 @@ def evaluacion_potencial_genetico():
         tabla_referencia = pd.DataFrame(referencia_ffmi).T
         tabla_referencia.index.name = "Género"
         st.table(tabla_referencia)
-
         
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
