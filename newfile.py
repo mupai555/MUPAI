@@ -291,7 +291,7 @@ def cuestionario_habitos_alimenticios():
 # Función: Evaluación del Potencial Genético
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
-    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
+    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y recibir recomendaciones personalizadas.")
 
     # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
@@ -299,13 +299,6 @@ def evaluacion_potencial_genetico():
     peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
     grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
-    
-    # Circunferencias corporales
-    st.subheader("Circunferencias Corporales (en cm)")
-    brazo_cm = st.number_input("Brazo (flexionado):", min_value=20.0, max_value=60.0, step=0.1)
-    pecho_cm = st.number_input("Pecho:", min_value=50.0, max_value=150.0, step=0.1)
-    cintura_cm = st.number_input("Cintura:", min_value=40.0, max_value=150.0, step=0.1)
-    cadera_cm = st.number_input("Cadera:", min_value=50.0, max_value=150.0, step=0.1)
 
     # Botón para calcular
     if st.button("Calcular Potencial"):
@@ -313,50 +306,23 @@ def evaluacion_potencial_genetico():
         masa_magra_actual = peso_kg * (1 - grasa_corporal / 100)
         ffmi_actual = masa_magra_actual / (altura_m ** 2)
         peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
-        masa_magra_proyectada = peso_proyectado * (1 - grasa_deseada / 100)
-        ffmi_proyectado = masa_magra_proyectada / (altura_m ** 2)
+        ffmi_proyectado = peso_proyectado / (altura_m ** 2)
 
-        # Calcular relaciones corporales
-        brazo_cintura = brazo_cm / cintura_cm
-        pecho_cintura = pecho_cm / cintura_cm
-        cintura_cadera = cintura_cm / cadera_cm
-
-        # Tablas de referencia
+        # Tablas de referencia para FFMI
         referencia_ffmi = {
             "Hombre": {"Principiante": 18, "Intermedio": 21, "Avanzado": 25, "Élite": 27},
             "Mujer": {"Principiante": 15, "Intermedio": 18, "Avanzado": 20, "Élite": 22}
         }
-        referencia_circunferencias = {
-            "Hombre": {
-                "Brazo-Cintura": {"Principiante": 0.35, "Intermedio": 0.4, "Avanzado": 0.45, "Élite": 0.5},
-                "Pecho-Cintura": {"Principiante": 1.2, "Intermedio": 1.4, "Avanzado": 1.6, "Élite": 1.8},
-                "Cintura-Cadera": {"Principiante": 0.95, "Intermedio": 0.9, "Avanzado": 0.85, "Élite": 0.8}
-            },
-            "Mujer": {
-                "Brazo-Cintura": {"Principiante": 0.35, "Intermedio": 0.4, "Avanzado": 0.45, "Élite": 0.5},
-                "Pecho-Cintura": {"Principiante": 1.1, "Intermedio": 1.3, "Avanzado": 1.5, "Élite": 1.7},
-                "Cintura-Cadera": {"Principiante": 0.85, "Intermedio": 0.8, "Avanzado": 0.75, "Élite": 0.7}
-            }
-        }
 
-        # Clasificaciones y feedback
+        # Clasificación del FFMI
         def clasificar_ffmi(ffmi, genero):
             for nivel, valor in referencia_ffmi[genero].items():
                 if ffmi <= valor:
                     return nivel
             return "Élite"
 
-        def clasificar_circunferencia(ratio, genero, tipo):
-            for nivel, valor in referencia_circunferencias[genero][tipo].items():
-                if ratio <= valor:
-                    return nivel
-            return "Élite"
-
         nivel_ffmi_actual = clasificar_ffmi(ffmi_actual, genero)
         nivel_ffmi_proyectado = clasificar_ffmi(ffmi_proyectado, genero)
-        nivel_brazo_cintura = clasificar_circunferencia(brazo_cintura, genero, "Brazo-Cintura")
-        nivel_pecho_cintura = clasificar_circunferencia(pecho_cintura, genero, "Pecho-Cintura")
-        nivel_cintura_cadera = clasificar_circunferencia(cintura_cadera, genero, "Cintura-Cadera")
 
         # Mostrar resultados
         st.subheader("Resultados Actuales")
@@ -367,16 +333,11 @@ def evaluacion_potencial_genetico():
         st.write(f"**Peso Proyectado:** {peso_proyectado:.2f} kg")
         st.write(f"**FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
 
-        st.subheader("Relaciones Corporales")
-        st.write(f"**Brazo-Cintura:** {brazo_cintura:.2f} ({nivel_brazo_cintura})")
-        st.write(f"**Pecho-Cintura:** {pecho_cintura:.2f} ({nivel_pecho_cintura})")
-        st.write(f"**Cintura-Cadera:** {cintura_cadera:.2f} ({nivel_cintura_cadera})")
-
-        # Gráfica de comparación de FFMI
+        # Comparativa gráfica de FFMI
         st.subheader("Comparativa de FFMI")
         niveles = list(referencia_ffmi[genero].keys())
         valores = list(referencia_ffmi[genero].values())
-        valores.insert(0, ffmi_actual)  # Insertar el FFMI actual al inicio
+        valores.insert(0, ffmi_actual)  # Insertar FFMI actual al inicio
 
         fig, ax = plt.subplots()
         ax.bar(["Actual"] + niveles, valores, color=["blue"] + ["gray"] * len(niveles))
@@ -384,12 +345,17 @@ def evaluacion_potencial_genetico():
         ax.set_title("Comparativa de FFMI Actual vs Referencias")
         st.pyplot(fig)
 
-        # Tabla de referencia para circunferencias
-        st.subheader("Tabla de Referencia: Circunferencias")
-        tabla_circunferencias = pd.DataFrame(referencia_circunferencias[genero]).T
-        st.table(tabla_circunferencias)
-
-
+        # Feedback personalizado
+        st.subheader("Recomendaciones Personalizadas")
+        st.write(f"**Tu nivel actual:** {nivel_ffmi_actual}")
+        if nivel_ffmi_actual == "Principiante":
+            st.info("¡Buen comienzo! Enfócate en un programa equilibrado de entrenamiento y alimentación.")
+        elif nivel_ffmi_actual == "Intermedio":
+            st.info("Estás progresando bien. Considera aumentar el volumen de entrenamiento y ajustar tu dieta.")
+        elif nivel_ffmi_actual == "Avanzado":
+            st.success("¡Estás en un gran nivel! Optimiza detalles en tu entrenamiento y recuperación.")
+        else:
+            st.success("¡Nivel Élite alcanzado! Mantén tu rendimiento y enfócate en estrategias de recuperación y entrenamiento avanzadas.")
 
         
 # Barra lateral de navegación
