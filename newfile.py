@@ -287,6 +287,7 @@ def cuestionario_habitos_alimenticios():
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
+   # Función del Cuestionario de Potencial Genético Muscular 
     def evaluacion_potencial_genetico():                         
         st.title("Evaluación del Potencial Genético Muscular")
     st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
