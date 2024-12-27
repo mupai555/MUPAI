@@ -295,14 +295,18 @@ def evaluacion_potencial_genetico():
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
     grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
 
+    # Validación
+    if grasa_deseada > grasa_corporal:
+        st.error("El porcentaje de grasa corporal deseado no puede ser mayor al actual.")
+        return
+
     # Botón para calcular
     if st.button("Calcular Potencial Muscular"):
-        # Funciones internas
+        # Función para calcular FFMI
         def calcular_ffmi(peso_kg, altura_m, grasa_corporal):
             """Calcula el FFMI normalizado."""
-            altura_pulgadas = altura_m * 39.3701
-            ffmi = ((altura_pulgadas * (peso_kg / 7.2546 + grasa_corporal / 5.9772) *
-                    (grasa_corporal / 450 + 1)) * 1.024) / 2.20462
+            masa_magra = peso_kg * (1 - grasa_corporal / 100)  # Masa magra en kg
+            ffmi = masa_magra / (altura_m ** 2)  # FFMI ajustado
             return round(ffmi, 2)
 
         def clasificar_nivel(ffmi, grasa_corporal, genero):
@@ -336,6 +340,28 @@ def evaluacion_potencial_genetico():
         st.write(f"- **Nivel de entrenamiento:** {nivel}")
         st.write(f"- **Retroalimentación:** {retroalimentacion}")
 
+        # Visualización gráfica (opcional)
+        st.write("### Comparación de FFMI")
+        fig, ax = plt.subplots()
+        categorias = ["FFMI Actual", "FFMI Promedio", "FFMI Máximo Natural"]
+        valores = [ffmi, 20, 25]  # Valores promedio y máximos de referencia
+        colores = ["blue", "gray", "green"]
+
+        ax.bar(categorias, valores, color=colores)
+        ax.set_ylabel("FFMI")
+        ax.set_title("Comparación de tu FFMI")
+        st.pyplot(fig)
+
+        # Tabla resumen de valores FFMI
+        st.write("### Tabla Resumen de FFMI por Nivel de Entrenamiento")
+        data = {
+            "Nivel de Entrenamiento": ["Principiante", "Intermedio", "Avanzado", "Élite"],
+            "FFMI Hombres": ["<18", "18-21", "21-25", ">25"],
+            "FFMI Mujeres": ["<15", "15-18", "18-20", ">20"]
+        }
+        tabla_ffmi = pd.DataFrame(data)
+        st.table(tabla_ffmi)
+        
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
