@@ -389,11 +389,6 @@ def evaluacion_potencial_genetico():
         tabla_circunferencias = pd.DataFrame(referencia_circunferencias[genero]).T
         st.table(tabla_circunferencias)
 
-# Llamada a la función en Streamlit
-if __name__ == "__main__":
-    evaluacion_potencial_genetico()
-
-
 
 
         
