@@ -288,8 +288,7 @@ def cuestionario_habitos_alimenticios():
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
    # Función para evaluar el potencial genético muscular 
-    def 
-    evaluacion_potencial_genetico():                         
+    def evaluacion_potencial_genetico():                         
          st.title("Evaluación del Potencial Genético Muscular")
          st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
 
@@ -565,7 +564,7 @@ elif menu == "Evaluación del Estilo de Vida":
       cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
 
     elif submenu == "Potencial Genético Muscular":         
-       evaluacion_potencial_genetico() # Llama la función para evaluar el potencial genético muscular
+       evaluacion_potencial_genetico()  # Llama la función para evaluar el potencial genético muscular
         
 
 
