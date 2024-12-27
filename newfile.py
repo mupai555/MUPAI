@@ -287,10 +287,10 @@ def cuestionario_habitos_alimenticios():
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
-   # Función para evaluar el potencial genético muscular 
-    def evaluacion_potencial_genetico():                         
-         st.title("Evaluación del Potencial Genético Muscular")
-         st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
+# Función para evaluar el potencial genético muscular
+def evaluacion_potencial_genetico():
+    st.title("Evaluación del Potencial Genético Muscular")
+    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
 
     # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
@@ -299,109 +299,73 @@ def cuestionario_habitos_alimenticios():
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
     grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
 
-    # Circunferencias corporales
-    st.subheader("Circunferencias Corporales (en cm)")
-    brazo_cm = st.number_input("Brazo (flexionado):", min_value=20.0, max_value=60.0, step=0.1)
-    pecho_cm = st.number_input("Pecho:", min_value=50.0, max_value=150.0, step=0.1)
-    cintura_cm = st.number_input("Cintura:", min_value=40.0, max_value=150.0, step=0.1)
-    cadera_cm = st.number_input("Cadera:", min_value=50.0, max_value=150.0, step=0.1)
-
     # Validación
     if grasa_deseada > grasa_corporal:
         st.error("El porcentaje de grasa corporal deseado no puede ser mayor al actual.")
         return
 
     # Botón para calcular
-    if st.button("Calcular Potencial"):
+    if st.button("Calcular Potencial Muscular"):
         # Función para calcular FFMI
-        def calcular_ffmi(peso, altura, grasa):
-            masa_magra = peso * (1 - grasa / 100)
-            ffmi = masa_magra / (altura ** 2)
-            return masa_magra, ffmi
+        def calcular_ffmi(peso_kg, altura_m, grasa_corporal):
+            """Calcula el FFMI normalizado."""
+            masa_magra = peso_kg * (1 - grasa_corporal / 100)  # Masa magra en kg
+            ffmi = masa_magra / (altura_m ** 2)  # FFMI ajustado
+            return round(ffmi, 2)
 
-        # Calcular valores actuales
-        masa_magra_actual, ffmi_actual = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
+        def clasificar_nivel(ffmi, grasa_corporal, genero):
+            """Clasifica el nivel de entrenamiento."""
+            if genero == "Hombre":
+                if ffmi < 18 or grasa_corporal > 20:
+                    return "Principiante", "Enfócate en desarrollar fuerza básica y masa muscular gradualmente."
+                elif 18 <= ffmi <= 21 and 15 <= grasa_corporal <= 20:
+                    return "Intermedio", "Incrementa la intensidad y trabaja en sobrecarga progresiva."
+                elif 21 < ffmi <= 25 and 10 <= grasa_corporal <= 15:
+                    return "Avanzado", "Utiliza técnicas avanzadas y periodización para progresar."
+                else:
+                    return "Élite", "Estás cerca del límite natural. Mantén un balance entre recuperación y especialización."
+            else:  # Mujer
+                if ffmi < 15 or grasa_corporal > 25:
+                    return "Principiante", "Céntrate en mejorar fuerza y composición corporal."
+                elif 15 <= ffmi <= 18 and 20 <= grasa_corporal <= 25:
+                    return "Intermedio", "Optimiza la progresión y mejora la resistencia muscular."
+                elif 18 < ffmi <= 20 and 18 <= grasa_corporal <= 22:
+                    return "Avanzado", "Aplica estrategias avanzadas de hipertrofia y enfócate en áreas débiles."
+                else:
+                    return "Élite", "Estás en el límite natural. Prioriza la recuperación y planes especializados."
 
-        # Calcular valores proyectados
-        peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
-        _, ffmi_proyectado = calcular_ffmi(peso_proyectado, altura_m, grasa_deseada)
-
-        # Calcular proporciones corporales
-        def calcular_proporciones(brazo, pecho, cintura, cadera):
-            brazo_cintura = brazo / cintura
-            pecho_cintura = pecho / cintura
-            cintura_cadera = cintura / cadera
-            return brazo_cintura, pecho_cintura, cintura_cadera
-
-        brazo_cintura, pecho_cintura, cintura_cadera = calcular_proporciones(brazo_cm, pecho_cm, cintura_cm, cadera_cm)
-
-        # Clasificación por métricas individuales
-        def clasificar_metricas(metric, genero, tipo):
-            rangos = {
-                "Hombre": {
-                    "FFMI": [(0, 18, "Principiante"), (18, 21, "Intermedio"), (21, 25, "Avanzado"), (25, float('inf'), "Élite")],
-                    "Brazo-Cintura": [(0, 0.35, "Principiante"), (0.35, 0.4, "Intermedio"), (0.4, 0.45, "Avanzado"), (0.45, float('inf'), "Élite")],
-                    "Pecho-Cintura": [(0, 1.2, "Principiante"), (1.2, 1.4, "Intermedio"), (1.4, 1.6, "Avanzado"), (1.6, float('inf'), "Élite")],
-                    "Cintura-Cadera": [(0.9, float('inf'), "Principiante"), (0.85, 0.9, "Intermedio"), (0.8, 0.85, "Avanzado"), (0, 0.8, "Élite")]
-                },
-                "Mujer": {
-                    "FFMI": [(0, 15, "Principiante"), (15, 18, "Intermedio"), (18, 20, "Avanzado"), (20, float('inf'), "Élite")],
-                    "Brazo-Cintura": [(0, 0.35, "Principiante"), (0.35, 0.4, "Intermedio"), (0.4, 0.45, "Avanzado"), (0.45, float('inf'), "Élite")],
-                    "Pecho-Cintura": [(0, 1.2, "Principiante"), (1.2, 1.4, "Intermedio"), (1.4, 1.6, "Avanzado"), (1.6, float('inf'), "Élite")],
-                    "Cintura-Cadera": [(0.9, float('inf'), "Principiante"), (0.85, 0.9, "Intermedio"), (0.8, 0.85, "Avanzado"), (0, 0.8, "Élite")]
-                }
-            }
-            for rango in rangos[genero][tipo]:
-                if rango[0] <= metric < rango[1]:
-                    return rango[2]
-
-        # Clasificaciones actuales
-        nivel_ffmi_actual = clasificar_metricas(ffmi_actual, genero, "FFMI")
-        nivel_brazo_cintura = clasificar_metricas(brazo_cintura, genero, "Brazo-Cintura")
-        nivel_pecho_cintura = clasificar_metricas(pecho_cintura, genero, "Pecho-Cintura")
-        nivel_cintura_cadera = clasificar_metricas(cintura_cadera, genero, "Cintura-Cadera")
-
-        # Clasificación proyectada del FFMI
-        nivel_ffmi_proyectado = clasificar_metricas(ffmi_proyectado, genero, "FFMI")
-
-        # Ponderación para el nivel general
-        pesos = {"FFMI": 0.5, "Brazo-Cintura": 0.2, "Pecho-Cintura": 0.2, "Cintura-Cadera": 0.1}
-        puntajes = {"Principiante": 1, "Intermedio": 2, "Avanzado": 3, "Élite": 4}
-
-        puntaje_general_actual = (
-            puntajes[nivel_ffmi_actual] * pesos["FFMI"] +
-            puntajes[nivel_brazo_cintura] * pesos["Brazo-Cintura"] +
-            puntajes[nivel_pecho_cintura] * pesos["Pecho-Cintura"] +
-            puntajes[nivel_cintura_cadera] * pesos["Cintura-Cadera"]
-        )
-
-        nivel_general_actual = (
-            "Principiante" if puntaje_general_actual < 1.5 else
-            "Intermedio" if puntaje_general_actual < 2.5 else
-            "Avanzado" if puntaje_general_actual < 3.5 else
-            "Élite"
-        )
+        # Realizar cálculos
+        ffmi = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
+        nivel, retroalimentacion = clasificar_nivel(ffmi, grasa_corporal, genero)
 
         # Mostrar resultados
-        st.write("### Resultados Actuales")
-        st.write(f"- **FFMI Actual:** {ffmi_actual:.2f} ({nivel_ffmi_actual})")
-        st.write(f"- **Nivel General Actual:** {nivel_general_actual}")
+        st.write(f"### Resultados:")
+        st.write(f"- **FFMI:** {ffmi}")
+        st.write(f"- **Nivel de entrenamiento:** {nivel}")
+        st.write(f"- **Retroalimentación:** {retroalimentacion}")
 
-        st.write("### Resultados Proyectados")
-        st.write(f"- **Peso Proyectado:** {peso_proyectado:.2f} kg")
-        st.write(f"- **FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
-
-        # Gráfica de comparación
+        # Visualización gráfica (opcional)
+        st.write("### Comparación de FFMI")
         fig, ax = plt.subplots()
-        categorias = ["Actual", "Proyectado"]
-        valores = [ffmi_actual, ffmi_proyectado]
-        ax.bar(categorias, valores, color=['blue', 'green'])
-        ax.set_ylabel("FFMI")
-        ax.set_title("Comparación de FFMI Actual vs Proyectado")
-        st.pyplot(fig)         
+        categorias = ["FFMI Actual", "FFMI Promedio", "FFMI Máximo Natural"]
+        valores = [ffmi, 20, 25]  # Valores promedio y máximos de referencia
+        colores = ["blue", "gray", "green"]
 
-         
-         
+        ax.bar(categorias, valores, color=colores)
+        ax.set_ylabel("FFMI")
+        ax.set_title("Comparación de tu FFMI")
+        st.pyplot(fig)
+
+        # Tabla resumen de valores FFMI
+        st.write("### Tabla Resumen de FFMI por Nivel de Entrenamiento")
+        data = {
+            "Nivel de Entrenamiento": ["Principiante", "Intermedio", "Avanzado", "Élite"],
+            "FFMI Hombres": ["<18", "18-21", "21-25", ">25"],
+            "FFMI Mujeres": ["<15", "15-18", "18-20", ">20"]
+        }
+        tabla_ffmi = pd.DataFrame(data)
+        st.table(tabla_ffmi)
+        
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
@@ -563,8 +527,8 @@ elif menu == "Evaluación del Estilo de Vida":
     elif submenu == "Hábitos Alimenticios":
       cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
 
-    elif submenu == "Potencial Genético Muscular":         
-       evaluacion_potencial_genetico()  # Llama la función para evaluar el potencial genético muscular
+    elif submenu == "Potencial Genético Muscular":
+        evaluacion_potencial_genetico() # Llama la función para Potencial Genético Muscular
         
 
 
