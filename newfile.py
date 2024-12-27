@@ -291,8 +291,8 @@ def cuestionario_habitos_alimenticios():
 # Función principal: Evaluación del Potencial Genético Muscular
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
-    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
-
+    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular actual y proyectado.")
+    
     # Entradas del usuario
     genero = st.radio("Género:", ["Hombre", "Mujer"])
     altura_m = st.number_input("Altura (en metros):", min_value=1.0, max_value=2.5, step=0.01)
@@ -314,81 +314,55 @@ def evaluacion_potencial_genetico():
 
     # Botón para calcular
     if st.button("Calcular Potencial"):
-        # Cálculo de masa magra actual
-        masa_magra_actual = peso_kg * (1 - grasa_corporal / 100)
+        # Función para calcular FFMI y masa magra
+        def calcular_ffmi(peso, altura, grasa):
+            masa_magra = peso * (1 - grasa / 100)
+            ffmi = masa_magra / (altura ** 2)
+            return masa_magra, ffmi
 
-        # Cálculo de peso proyectado
+        # Calcular valores actuales
+        masa_magra_actual, ffmi_actual = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
+
+        # Calcular valores proyectados
         peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
+        masa_magra_proyectada, ffmi_proyectado = calcular_ffmi(peso_proyectado, altura_m, grasa_deseada)
 
-        # FFMI actual y proyectado
-        ffmi_actual = masa_magra_actual / (altura_m ** 2)
-        ffmi_proyectado = peso_proyectado * (1 - grasa_deseada / 100) / (altura_m ** 2)
+        # Calcular proporciones corporales
+        def calcular_proporciones(brazo, pecho, cintura, cadera):
+            brazo_cintura = brazo / cintura
+            pecho_cintura = pecho / cintura
+            cintura_cadera = cintura / cadera
+            return brazo_cintura, pecho_cintura, cintura_cadera
 
-        # Proporciones corporales
-        brazo_cintura = brazo_cm / cintura_cm
-        pecho_cintura = pecho_cm / cintura_cm
-        cintura_cadera = cintura_cm / cadera_cm
+        brazo_cintura, pecho_cintura, cintura_cadera = calcular_proporciones(brazo_cm, pecho_cm, cintura_cm, cadera_cm)
 
-        # Clasificación por métricas individuales
-        def clasificar_metricas(metric, genero, tipo):
-            rangos = {
-                "Hombre": {
-                    "FFMI": [(0, 18, "Principiante"), (18, 21, "Intermedio"), (21, 25, "Avanzado"), (25, float('inf'), "Élite")],
-                    "Brazo-Cintura": [(0, 0.35, "Principiante"), (0.35, 0.4, "Intermedio"), (0.4, 0.45, "Avanzado"), (0.45, float('inf'), "Élite")],
-                    "Pecho-Cintura": [(0, 1.2, "Principiante"), (1.2, 1.4, "Intermedio"), (1.4, 1.6, "Avanzado"), (1.6, float('inf'), "Élite")],
-                    "Cintura-Cadera": [(0.9, float('inf'), "Principiante"), (0.85, 0.9, "Intermedio"), (0.8, 0.85, "Avanzado"), (0, 0.8, "Élite")]
-                },
-                "Mujer": {
-                    "FFMI": [(0, 15, "Principiante"), (15, 18, "Intermedio"), (18, 20, "Avanzado"), (20, float('inf'), "Élite")],
-                    "Brazo-Cintura": [(0, 0.3, "Principiante"), (0.3, 0.35, "Intermedio"), (0.35, 0.4, "Avanzado"), (0.4, float('inf'), "Élite")],
-                    "Pecho-Cintura": [(0, 1.0, "Principiante"), (1.0, 1.2, "Intermedio"), (1.2, 1.4, "Avanzado"), (1.4, float('inf'), "Élite")],
-                    "Cintura-Cadera": [(0.85, float('inf'), "Principiante"), (0.8, 0.85, "Intermedio"), (0.75, 0.8, "Avanzado"), (0, 0.75, "Élite")]
-                }
+        # Feedback textual para el FFMI
+        def feedback_textual(ffmi, genero):
+            niveles = {
+                "Hombre": [(0, 18, "Principiante"), (18, 21, "Intermedio"), (21, 25, "Avanzado"), (25, float("inf"), "Élite")],
+                "Mujer": [(0, 15, "Principiante"), (15, 18, "Intermedio"), (18, 20, "Avanzado"), (20, float("inf"), "Élite")]
             }
-            for rango in rangos[genero][tipo]:
-                if rango[0] <= metric < rango[1]:
-                    return rango[2]
 
-        # Feedback de niveles
-        nivel_ffmi_actual = clasificar_metricas(ffmi_actual, genero, "FFMI")
-        nivel_brazo_cintura = clasificar_metricas(brazo_cintura, genero, "Brazo-Cintura")
-        nivel_pecho_cintura = clasificar_metricas(pecho_cintura, genero, "Pecho-Cintura")
-        nivel_cintura_cadera = clasificar_metricas(cintura_cadera, genero, "Cintura-Cadera")
-        nivel_ffmi_proyectado = clasificar_metricas(ffmi_proyectado, genero, "FFMI")
+            for min_val, max_val, nivel in niveles[genero]:
+                if min_val <= ffmi < max_val:
+                    return f"Tu FFMI es de {ffmi:.2f}, lo que te coloca en el nivel {nivel}."
+
+        feedback_actual = feedback_textual(ffmi_actual, genero)
+        feedback_proyectado = feedback_textual(ffmi_proyectado, genero)
 
         # Mostrar resultados
-        st.write("### Resultados Actuales")
+        st.write("### Resultados Actuales y Proyectados")
         st.write(f"- **Masa Magra Actual:** {masa_magra_actual:.2f} kg")
-        st.write(f"- **FFMI Actual:** {ffmi_actual:.2f} ({nivel_ffmi_actual})")
-        st.write(f"- **Relación Brazo/Cintura:** {brazo_cintura:.2f} ({nivel_brazo_cintura})")
-        st.write(f"- **Relación Pecho/Cintura:** {pecho_cintura:.2f} ({nivel_pecho_cintura})")
-        st.write(f"- **Relación Cintura/Cadera:** {cintura_cadera:.2f} ({nivel_cintura_cadera})")
-
-        st.write("### Resultados Proyectados")
+        st.write(f"- **FFMI Actual:** {ffmi_actual:.2f}")
         st.write(f"- **Peso Proyectado:** {peso_proyectado:.2f} kg")
-        st.write(f"- **FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
+        st.write(f"- **Masa Magra Proyectada:** {masa_magra_proyectada:.2f} kg")
+        st.write(f"- **FFMI Proyectado:** {ffmi_proyectado:.2f}")
 
-        # Tablas de referencia
-        st.write("### Tablas de Referencia")
-        tabla_ffmi = pd.DataFrame({
-            "Nivel de Entrenamiento": ["Principiante", "Intermedio", "Avanzado", "Élite"],
-            "FFMI Hombres": ["<18", "18-21", "21-25", ">25"],
-            "FFMI Mujeres": ["<15", "15-18", "18-20", ">20"]
-        })
-        st.table(tabla_ffmi)
+        st.write(f"### Feedback")
+        st.write(feedback_actual)
+        st.write(feedback_proyectado)
 
-        tabla_proporciones = pd.DataFrame({
-            "Nivel de Entrenamiento": ["Principiante", "Intermedio", "Avanzado", "Élite"],
-            "Brazo/Cintura Hombres": ["<0.35", "0.35-0.4", "0.4-0.45", ">0.45"],
-            "Pecho/Cintura Hombres": ["<1.2", "1.2-1.4", "1.4-1.6", ">1.6"],
-            "Cintura/Cadera Hombres": [">=0.9", "0.85-0.9", "0.8-0.85", "<0.8"],
-            "Brazo/Cintura Mujeres": ["<0.3", "0.3-0.35", "0.35-0.4", ">0.4"],
-            "Pecho/Cintura Mujeres": ["<1.0", "1.0-1.2", "1.2-1.4", ">1.4"],
-            "Cintura/Cadera Mujeres": [">=0.85", "0.8-0.85", "0.75-0.8", "<0.75"]
-        })
-        st.table(tabla_proporciones)
-
-        # Gráfica de comparación de FFMI
+        # Graficar comparativa del FFMI
         fig, ax = plt.subplots()
         categorias = ["Actual", "Proyectado"]
         valores = [ffmi_actual, ffmi_proyectado]
@@ -396,6 +370,32 @@ def evaluacion_potencial_genetico():
         ax.set_ylabel("FFMI")
         ax.set_title("Comparación de FFMI Actual vs Proyectado")
         st.pyplot(fig)
+
+        # Tabla de referencia
+        st.write("### Tabla de Referencia de FFMI")
+        data_hombres = {
+            "Nivel": ["Principiante", "Intermedio", "Avanzado", "Élite"],
+            "FFMI Hombres": ["<18", "18-21", "21-25", ">25"]
+        }
+        data_mujeres = {
+            "Nivel": ["Principiante", "Intermedio", "Avanzado", "Élite"],
+            "FFMI Mujeres": ["<15", "15-18", "18-20", ">20"]
+        }
+
+        st.write("#### Hombres")
+        st.table(pd.DataFrame(data_hombres))
+
+        st.write("#### Mujeres")
+        st.table(pd.DataFrame(data_mujeres))
+
+        # Tabla de referencia para circunferencias
+        st.write("### Tabla de Referencia de Circunferencias")
+        circunferencias_data = {
+            "Medida": ["Brazo-Cintura", "Pecho-Cintura", "Cintura-Cadera"],
+            "Hombres": ["0.35-0.45", "1.2-1.6", "<0.9"],
+            "Mujeres": ["0.35-0.45", "1.2-1.6", "<0.8"]
+        }
+        st.table(pd.DataFrame(circunferencias_data))
 
 
 
