@@ -326,7 +326,7 @@ def evaluacion_potencial_genetico():
                     return "Élite", "Estás cerca del límite natural. Mantén un balance entre recuperación y especialización."
             else:  # Mujer
                 if ffmi < 15 or grasa_corporal > 25:
-                    return "Principiante", "Céntrate en mejorar fuerza básica y composición corporal."
+                    return "Principiante", "Céntrate en mejorar fuerza y composición corporal."
                 elif 15 <= ffmi <= 18 and 20 <= grasa_corporal <= 25:
                     return "Intermedio", "Optimiza la progresión y mejora la resistencia muscular."
                 elif 18 < ffmi <= 20 and 18 <= grasa_corporal <= 22:
