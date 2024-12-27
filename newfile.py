@@ -282,6 +282,59 @@ def cuestionario_habitos_alimenticios():
         else:
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
+     
+# Función para evaluar el potencial genético muscular
+def evaluacion_potencial_genetico():
+    st.title("Evaluación del Potencial Genético Muscular")
+    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
+
+    # Entradas del usuario
+    genero = st.radio("Género:", ["Hombre", "Mujer"])
+    altura_m = st.number_input("Altura (en metros):", min_value=1.0, max_value=2.5, step=0.01)
+    peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
+    grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
+    grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
+
+    # Botón para calcular
+    if st.button("Calcular Potencial Muscular"):
+        # Funciones internas
+        def calcular_ffmi(peso_kg, altura_m, grasa_corporal):
+            """Calcula el FFMI normalizado."""
+            altura_pulgadas = altura_m * 39.3701
+            ffmi = ((altura_pulgadas * (peso_kg / 7.2546 + grasa_corporal / 5.9772) *
+                    (grasa_corporal / 450 + 1)) * 1.024) / 2.20462
+            return round(ffmi, 2)
+
+        def clasificar_nivel(ffmi, grasa_corporal, genero):
+            """Clasifica el nivel de entrenamiento."""
+            if genero == "Hombre":
+                if ffmi < 18 or grasa_corporal > 20:
+                    return "Principiante", "Enfócate en desarrollar fuerza básica y masa muscular gradualmente."
+                elif 18 <= ffmi <= 21 and 15 <= grasa_corporal <= 20:
+                    return "Intermedio", "Incrementa la intensidad y trabaja en sobrecarga progresiva."
+                elif 21 < ffmi <= 25 and 10 <= grasa_corporal <= 15:
+                    return "Avanzado", "Utiliza técnicas avanzadas y periodización para progresar."
+                else:
+                    return "Élite", "Estás cerca del límite natural. Mantén un balance entre recuperación y especialización."
+            else:  # Mujer
+                if ffmi < 15 or grasa_corporal > 25:
+                    return "Principiante", "Céntrate en mejorar fuerza básica y composición corporal."
+                elif 15 <= ffmi <= 18 and 20 <= grasa_corporal <= 25:
+                    return "Intermedio", "Optimiza la progresión y mejora la resistencia muscular."
+                elif 18 < ffmi <= 20 and 18 <= grasa_corporal <= 22:
+                    return "Avanzado", "Aplica estrategias avanzadas de hipertrofia y enfócate en áreas débiles."
+                else:
+                    return "Élite", "Estás en el límite natural. Prioriza la recuperación y planes especializados."
+
+        # Realizar cálculos
+        ffmi = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
+        nivel, retroalimentacion = clasificar_nivel(ffmi, grasa_corporal, genero)
+
+        # Mostrar resultados
+        st.write(f"### Resultados:")
+        st.write(f"- **FFMI:** {ffmi}")
+        st.write(f"- **Nivel de entrenamiento:** {nivel}")
+        st.write(f"- **Retroalimentación:** {retroalimentacion}")
 
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
@@ -443,6 +496,10 @@ elif menu == "Evaluación del Estilo de Vida":
 
     elif submenu == "Hábitos Alimenticios":
       cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
+
+    elif submenu == "Potencial Genético Muscular":
+        cuestionario_potencial_genetico_muscular() # Llama la función para Potencial Genético Muscular
+        
 
 
 # Función para el cuestionario de Calidad del Sueño
