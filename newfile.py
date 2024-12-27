@@ -287,7 +287,7 @@ def cuestionario_habitos_alimenticios():
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
      
-# Función para evaluar el potencial genético muscular
+# Función para evaluar el potencial genético muscular con circunferencias
 def evaluacion_potencial_genetico():
     st.title("Evaluación del Potencial Genético Muscular")
     st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
@@ -298,6 +298,15 @@ def evaluacion_potencial_genetico():
     peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
     grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
+
+    # Circunferencias corporales
+    st.write("### Circunferencias Corporales")
+    brazo_cm = st.number_input("Circunferencia del brazo flexionado (cm):", min_value=20.0, max_value=60.0, step=0.1)
+    pecho_cm = st.number_input("Circunferencia del pecho (cm):", min_value=50.0, max_value=150.0, step=0.1)
+    cintura_cm = st.number_input("Circunferencia de la cintura (cm):", min_value=40.0, max_value=150.0, step=0.1)
+    cadera_cm = st.number_input("Circunferencia de la cadera (cm):", min_value=50.0, max_value=150.0, step=0.1)
+    muslo_cm = st.number_input("Circunferencia del muslo (cm):", min_value=30.0, max_value=100.0, step=0.1)
+    pantorrilla_cm = st.number_input("Circunferencia de la pantorrilla (cm):", min_value=20.0, max_value=60.0, step=0.1)
 
     # Validación
     if grasa_deseada > grasa_corporal:
@@ -313,35 +322,55 @@ def evaluacion_potencial_genetico():
             ffmi = masa_magra / (altura_m ** 2)  # FFMI ajustado
             return round(ffmi, 2)
 
-        def clasificar_nivel(ffmi, grasa_corporal, genero):
-            """Clasifica el nivel de entrenamiento."""
+        # Función para calcular proporciones corporales
+        def calcular_proporciones(brazo, pecho, cintura, cadera, muslo, pantorrilla):
+            brazo_cintura = round(brazo / cintura, 2)
+            pecho_cintura = round(pecho / cintura, 2)
+            cintura_cadera = round(cintura / cadera, 2)
+            return brazo_cintura, pecho_cintura, cintura_cadera
+
+        # Función para determinar el nivel de entrenamiento
+        def veredicto_integral(ffmi, brazo_cintura, pecho_cintura, cintura_cadera, genero):
             if genero == "Hombre":
-                if ffmi < 18 or grasa_corporal > 20:
-                    return "Principiante", "Enfócate en desarrollar fuerza básica y masa muscular gradualmente."
-                elif 18 <= ffmi <= 21 and 15 <= grasa_corporal <= 20:
-                    return "Intermedio", "Incrementa la intensidad y trabaja en sobrecarga progresiva."
-                elif 21 < ffmi <= 25 and 10 <= grasa_corporal <= 15:
-                    return "Avanzado", "Utiliza técnicas avanzadas y periodización para progresar."
+                if ffmi < 18 or brazo_cintura < 0.35 or pecho_cintura < 1.2:
+                    nivel = "Principiante"
+                    retroalimentacion = "Enfócate en fuerza básica y mejorar tus proporciones clave."
+                elif 18 <= ffmi <= 21 and 0.35 <= brazo_cintura < 0.4 and 1.2 <= pecho_cintura < 1.4:
+                    nivel = "Intermedio"
+                    retroalimentacion = "Incrementa intensidad y trabaja en balance estético."
+                elif 21 < ffmi <= 25 and brazo_cintura >= 0.4 and pecho_cintura >= 1.4 and cintura_cadera < 0.9:
+                    nivel = "Avanzado"
+                    retroalimentacion = "Perfecciona detalles y busca simetría muscular."
                 else:
-                    return "Élite", "Estás cerca del límite natural. Mantén un balance entre recuperación y especialización."
+                    nivel = "Élite"
+                    retroalimentacion = "Estás en el límite natural. Mantén recuperación y especialización."
             else:  # Mujer
-                if ffmi < 15 or grasa_corporal > 25:
-                    return "Principiante", "Céntrate en mejorar fuerza y composición corporal."
-                elif 15 <= ffmi <= 18 and 20 <= grasa_corporal <= 25:
-                    return "Intermedio", "Optimiza la progresión y mejora la resistencia muscular."
-                elif 18 < ffmi <= 20 and 18 <= grasa_corporal <= 22:
-                    return "Avanzado", "Aplica estrategias avanzadas de hipertrofia y enfócate en áreas débiles."
+                if ffmi < 15 or brazo_cintura < 0.35 or pecho_cintura < 1.2:
+                    nivel = "Principiante"
+                    retroalimentacion = "Céntrate en mejorar fuerza y proporciones básicas."
+                elif 15 <= ffmi <= 18 and 0.35 <= brazo_cintura < 0.4 and 1.2 <= pecho_cintura < 1.4:
+                    nivel = "Intermedio"
+                    retroalimentacion = "Optimiza progresión y balance estético."
+                elif 18 < ffmi <= 20 and brazo_cintura >= 0.4 and pecho_cintura >= 1.4 and cintura_cadera < 0.9:
+                    nivel = "Avanzado"
+                    retroalimentacion = "Mantén simetría y aplica estrategias avanzadas."
                 else:
-                    return "Élite", "Estás en el límite natural. Prioriza la recuperación y planes especializados."
+                    nivel = "Élite"
+                    retroalimentacion = "Límite natural alcanzado. Perfecciona detalles y prioriza recuperación."
+            return nivel, retroalimentacion
 
         # Realizar cálculos
         ffmi = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
-        nivel, retroalimentacion = clasificar_nivel(ffmi, grasa_corporal, genero)
+        brazo_cintura, pecho_cintura, cintura_cadera = calcular_proporciones(brazo_cm, pecho_cm, cintura_cm, cadera_cm, muslo_cm, pantorrilla_cm)
+        nivel, retroalimentacion = veredicto_integral(ffmi, brazo_cintura, pecho_cintura, cintura_cadera, genero)
 
         # Mostrar resultados
         st.write(f"### Resultados:")
         st.write(f"- **FFMI:** {ffmi}")
-        st.write(f"- **Nivel de entrenamiento:** {nivel}")
+        st.write(f"- **Relación Brazo-Cintura:** {brazo_cintura}")
+        st.write(f"- **Relación Pecho-Cintura:** {pecho_cintura}")
+        st.write(f"- **Índice Cintura-Cadera:** {cintura_cadera}")
+        st.write(f"- **Nivel de Entrenamiento:** {nivel}")
         st.write(f"- **Retroalimentación:** {retroalimentacion}")
 
         # Visualización gráfica (opcional)
@@ -365,7 +394,8 @@ def evaluacion_potencial_genetico():
         }
         tabla_ffmi = pd.DataFrame(data)
         st.table(tabla_ffmi)
-        
+
+         
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
