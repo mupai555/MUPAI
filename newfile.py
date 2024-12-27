@@ -498,7 +498,7 @@ elif menu == "Evaluación del Estilo de Vida":
       cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
 
     elif submenu == "Potencial Genético Muscular":
-        cuestionario_potencial_genetico_muscular() # Llama la función para Potencial Genético Muscular
+        evaluacion_potencial_genetico() # Llama la función para Potencial Genético Muscular
         
 
 
