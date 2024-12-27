@@ -297,104 +297,99 @@ def evaluacion_potencial_genetico():
     altura_m = st.number_input("Altura (en metros):", min_value=1.0, max_value=2.5, step=0.01)
     peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
     grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
-    grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
 
     # Circunferencias corporales
-    st.write("### Circunferencias Corporales")
-    brazo_cm = st.number_input("Circunferencia del brazo flexionado (cm):", min_value=20.0, max_value=60.0, step=0.1)
-    pecho_cm = st.number_input("Circunferencia del pecho (cm):", min_value=50.0, max_value=150.0, step=0.1)
-    cintura_cm = st.number_input("Circunferencia de la cintura (cm):", min_value=40.0, max_value=150.0, step=0.1)
-    cadera_cm = st.number_input("Circunferencia de la cadera (cm):", min_value=50.0, max_value=150.0, step=0.1)
-    muslo_cm = st.number_input("Circunferencia del muslo (cm):", min_value=30.0, max_value=100.0, step=0.1)
-    pantorrilla_cm = st.number_input("Circunferencia de la pantorrilla (cm):", min_value=20.0, max_value=60.0, step=0.1)
-
-    # Validación
-    if grasa_deseada > grasa_corporal:
-        st.error("El porcentaje de grasa corporal deseado no puede ser mayor al actual.")
-        return
+    st.subheader("Circunferencias Corporales (en cm)")
+    brazo_cm = st.number_input("Brazo (flexionado):", min_value=20.0, max_value=60.0, step=0.1)
+    pecho_cm = st.number_input("Pecho:", min_value=50.0, max_value=150.0, step=0.1)
+    cintura_cm = st.number_input("Cintura:", min_value=40.0, max_value=150.0, step=0.1)
+    cadera_cm = st.number_input("Cadera:", min_value=50.0, max_value=150.0, step=0.1)
 
     # Botón para calcular
-    if st.button("Calcular Potencial Muscular"):
-        # Función para calcular FFMI
-        def calcular_ffmi(peso_kg, altura_m, grasa_corporal):
-            """Calcula el FFMI normalizado."""
-            masa_magra = peso_kg * (1 - grasa_corporal / 100)  # Masa magra en kg
-            ffmi = masa_magra / (altura_m ** 2)  # FFMI ajustado
-            return round(ffmi, 2)
+    if st.button("Calcular Potencial"):
+        # Cálculo del FFMI
+        masa_magra = peso_kg * (1 - grasa_corporal / 100)
+        ffmi = masa_magra / (altura_m ** 2)
 
-        # Función para calcular proporciones corporales
-        def calcular_proporciones(brazo, pecho, cintura, cadera, muslo, pantorrilla):
-            brazo_cintura = round(brazo / cintura, 2)
-            pecho_cintura = round(pecho / cintura, 2)
-            cintura_cadera = round(cintura / cadera, 2)
-            return brazo_cintura, pecho_cintura, cintura_cadera
+        # Proporciones corporales
+        brazo_cintura = brazo_cm / cintura_cm
+        pecho_cintura = pecho_cm / cintura_cm
+        cintura_cadera = cintura_cm / cadera_cm
 
-        # Función para determinar el nivel de entrenamiento
-        def veredicto_integral(ffmi, brazo_cintura, pecho_cintura, cintura_cadera, genero):
-            if genero == "Hombre":
-                if ffmi < 18 or brazo_cintura < 0.35 or pecho_cintura < 1.2:
-                    nivel = "Principiante"
-                    retroalimentacion = "Enfócate en fuerza básica y mejorar tus proporciones clave."
-                elif 18 <= ffmi <= 21 and 0.35 <= brazo_cintura < 0.4 and 1.2 <= pecho_cintura < 1.4:
-                    nivel = "Intermedio"
-                    retroalimentacion = "Incrementa intensidad y trabaja en balance estético."
-                elif 21 < ffmi <= 25 and brazo_cintura >= 0.4 and pecho_cintura >= 1.4 and cintura_cadera < 0.9:
-                    nivel = "Avanzado"
-                    retroalimentacion = "Perfecciona detalles y busca simetría muscular."
-                else:
-                    nivel = "Élite"
-                    retroalimentacion = "Estás en el límite natural. Mantén recuperación y especialización."
-            else:  # Mujer
-                if ffmi < 15 or brazo_cintura < 0.35 or pecho_cintura < 1.2:
-                    nivel = "Principiante"
-                    retroalimentacion = "Céntrate en mejorar fuerza y proporciones básicas."
-                elif 15 <= ffmi <= 18 and 0.35 <= brazo_cintura < 0.4 and 1.2 <= pecho_cintura < 1.4:
-                    nivel = "Intermedio"
-                    retroalimentacion = "Optimiza progresión y balance estético."
-                elif 18 < ffmi <= 20 and brazo_cintura >= 0.4 and pecho_cintura >= 1.4 and cintura_cadera < 0.9:
-                    nivel = "Avanzado"
-                    retroalimentacion = "Mantén simetría y aplica estrategias avanzadas."
-                else:
-                    nivel = "Élite"
-                    retroalimentacion = "Límite natural alcanzado. Perfecciona detalles y prioriza recuperación."
-            return nivel, retroalimentacion
+        # Clasificación por métricas individuales
+        def clasificar_metricas(metric, genero, tipo):
+            rangos = {
+                "Hombre": {
+                    "FFMI": [(0, 18, "Principiante"), (18, 21, "Intermedio"), (21, 25, "Avanzado"), (25, float('inf'), "Élite")],
+                    "Brazo-Cintura": [(0, 0.35, "Principiante"), (0.35, 0.4, "Intermedio"), (0.4, 0.45, "Avanzado"), (0.45, float('inf'), "Élite")],
+                    "Pecho-Cintura": [(0, 1.2, "Principiante"), (1.2, 1.4, "Intermedio"), (1.4, 1.6, "Avanzado"), (1.6, float('inf'), "Élite")],
+                    "Cintura-Cadera": [(0.9, float('inf'), "Principiante"), (0.85, 0.9, "Intermedio"), (0.8, 0.85, "Avanzado"), (0, 0.8, "Élite")]
+                },
+                "Mujer": {
+                    "FFMI": [(0, 15, "Principiante"), (15, 18, "Intermedio"), (18, 20, "Avanzado"), (20, float('inf'), "Élite")],
+                    "Brazo-Cintura": [(0, 0.35, "Principiante"), (0.35, 0.4, "Intermedio"), (0.4, 0.45, "Avanzado"), (0.45, float('inf'), "Élite")],
+                    "Pecho-Cintura": [(0, 1.2, "Principiante"), (1.2, 1.4, "Intermedio"), (1.4, 1.6, "Avanzado"), (1.6, float('inf'), "Élite")],
+                    "Cintura-Cadera": [(0.9, float('inf'), "Principiante"), (0.85, 0.9, "Intermedio"), (0.8, 0.85, "Avanzado"), (0, 0.8, "Élite")]
+                }
+            }
+            for rango in rangos[genero][tipo]:
+                if rango[0] <= metric < rango[1]:
+                    return rango[2]
 
-        # Realizar cálculos
-        ffmi = calcular_ffmi(peso_kg, altura_m, grasa_corporal)
-        brazo_cintura, pecho_cintura, cintura_cadera = calcular_proporciones(brazo_cm, pecho_cm, cintura_cm, cadera_cm, muslo_cm, pantorrilla_cm)
-        nivel, retroalimentacion = veredicto_integral(ffmi, brazo_cintura, pecho_cintura, cintura_cadera, genero)
+        # Evaluaciones individuales
+        nivel_ffmi = clasificar_metricas(ffmi, genero, "FFMI")
+        nivel_brazo_cintura = clasificar_metricas(brazo_cintura, genero, "Brazo-Cintura")
+        nivel_pecho_cintura = clasificar_metricas(pecho_cintura, genero, "Pecho-Cintura")
+        nivel_cintura_cadera = clasificar_metricas(cintura_cadera, genero, "Cintura-Cadera")
+
+        # Ponderación para el nivel general
+        pesos = {"FFMI": 0.5, "Brazo-Cintura": 0.2, "Pecho-Cintura": 0.2, "Cintura-Cadera": 0.1}
+        niveles_individuales = {
+            "FFMI": (nivel_ffmi, ffmi),
+            "Brazo-Cintura": (nivel_brazo_cintura, brazo_cintura),
+            "Pecho-Cintura": (nivel_pecho_cintura, pecho_cintura),
+            "Cintura-Cadera": (nivel_cintura_cadera, cintura_cadera)
+        }
+
+        puntajes = {"Principiante": 1, "Intermedio": 2, "Avanzado": 3, "Élite": 4}
+        puntaje_general = sum(
+            puntajes[nivel] * pesos[metrica] for metrica, (nivel, _) in niveles_individuales.items()
+        )
+
+        if puntaje_general < 1.5:
+            nivel_general = "Principiante"
+        elif puntaje_general < 2.5:
+            nivel_general = "Intermedio"
+        elif puntaje_general < 3.5:
+            nivel_general = "Avanzado"
+        else:
+            nivel_general = "Élite"
 
         # Mostrar resultados
-        st.write(f"### Resultados:")
-        st.write(f"- **FFMI:** {ffmi}")
-        st.write(f"- **Relación Brazo-Cintura:** {brazo_cintura}")
-        st.write(f"- **Relación Pecho-Cintura:** {pecho_cintura}")
-        st.write(f"- **Índice Cintura-Cadera:** {cintura_cadera}")
-        st.write(f"- **Nivel de Entrenamiento:** {nivel}")
-        st.write(f"- **Retroalimentación:** {retroalimentacion}")
+        st.write("### Resultados Individuales")
+        for metrica, (nivel, valor) in niveles_individuales.items():
+            st.write(f"- **{metrica}:** {valor:.2f} ({nivel})")
 
-        # Visualización gráfica (opcional)
-        st.write("### Comparación de FFMI")
-        fig, ax = plt.subplots()
-        categorias = ["FFMI Actual", "FFMI Promedio", "FFMI Máximo Natural"]
-        valores = [ffmi, 20, 25]  # Valores promedio y máximos de referencia
-        colores = ["blue", "gray", "green"]
+        st.write(f"### Nivel General: {nivel_general}")
 
-        ax.bar(categorias, valores, color=colores)
-        ax.set_ylabel("FFMI")
-        ax.set_title("Comparación de tu FFMI")
-        st.pyplot(fig)
-
-        # Tabla resumen de valores FFMI
-        st.write("### Tabla Resumen de FFMI por Nivel de Entrenamiento")
+        # Tabla resumen de métricas
+        st.write("### Tabla Resumen de Métricas")
         data = {
-            "Nivel de Entrenamiento": ["Principiante", "Intermedio", "Avanzado", "Élite"],
-            "FFMI Hombres": ["<18", "18-21", "21-25", ">25"],
-            "FFMI Mujeres": ["<15", "15-18", "18-20", ">20"]
+            "Métrica": list(niveles_individuales.keys()),
+            "Valor": [v[1] for v in niveles_individuales.values()],
+            "Nivel": [v[0] for v in niveles_individuales.values()]
         }
-        tabla_ffmi = pd.DataFrame(data)
-        st.table(tabla_ffmi)
+        tabla = pd.DataFrame(data)
+        st.table(tabla)
 
+        # Gráfica de barras
+        st.write("### Comparación de Métricas")
+        fig, ax = plt.subplots()
+        ax.bar(data["Métrica"], data["Valor"], color='skyblue', edgecolor='black')
+        ax.set_ylabel("Valores Calculados")
+        ax.set_title("Comparación de Métricas")
+        st.pyplot(fig)
+         
          
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
