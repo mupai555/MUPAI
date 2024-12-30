@@ -85,8 +85,8 @@ def iniciar_sesion():
 
     # Mostrar información del usuario si está logueado
     if "usuario" in st.session_state:
-        st.sidebar.write(f"Sesión iniciada como: {st.session_state['usuario']['nombre']}")'
-
+        st.sidebar.write(f"Sesión iniciada como: {st.session_state['usuario']['nombre']}")
+        
 # Configuración de la página
 st.set_page_config(
     page_title="MUPAI - Entrenamiento Digital",
