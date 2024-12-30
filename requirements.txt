@@ -1,12 +1,12 @@
 streamlit==1.41.1
 fpdf==1.7.2
-pymupdf==1.20.0  # Adjusted version if higher causes issues
-transformers==4.27.1  # Reduced version for compatibility
-huggingface-hub==0.13.0
-torch==2.0.1  # Adjusted version for compatibility
-tensorflow==2.12.0  # Compatible version for Streamlit Cloud
-matplotlib
-pandas
-numpy
-altair
-watchdog
+pymupdf==1.22.3  # Updated version for better compatibility
+transformers==4.27.1  # Adjusted to a stable version
+huggingface-hub==0.13.0  # Compatible with the transformers version
+torch==2.5.1  # Updated for compatibility
+tensorflow==2.14.0  # Compatible with Streamlit Cloud
+matplotlib==3.8.0
+pandas==2.1.0
+numpy==1.24.3
+altair==5.0.1
+watchdog==3.0.0
