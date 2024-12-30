@@ -4,6 +4,89 @@ import matplotlib.pyplot as plt
 
 import pandas as pd
 
+import sqlite3
+
+# Inicializar la base de datos
+def init_db():
+    conn = sqlite3.connect("mupai.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS usuarios (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            correo TEXT UNIQUE,
+            nombre TEXT
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS respuestas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            usuario_id INTEGER,
+            categoria TEXT,
+            pregunta TEXT,
+            respuesta TEXT,
+            FOREIGN KEY(usuario_id) REFERENCES usuarios(id)
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+# Llamar a la función al iniciar la app
+init_db()
+
+# Registrar usuario en la base de datos
+def registrar_usuario(correo, nombre):
+    conn = sqlite3.connect("mupai.db")
+    cursor = conn.cursor()
+    try:
+        cursor.execute("INSERT INTO usuarios (correo, nombre) VALUES (?, ?)", (correo, nombre))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        pass  # Usuario ya registrado
+    conn.close()
+
+# Obtener usuario por correo
+def obtener_usuario(correo):
+    conn = sqlite3.connect("mupai.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, nombre FROM usuarios WHERE correo = ?", (correo,))
+    usuario = cursor.fetchone()
+    conn.close()
+    return usuario
+
+# Guardar respuesta del cuestionario
+def guardar_respuesta(categoria, pregunta, respuesta):
+    if "usuario" in st.session_state:
+        usuario_id = st.session_state["usuario"]["id"]
+        conn = sqlite3.connect("mupai.db")
+        cursor = conn.cursor()
+        cursor.execute("""
+            INSERT INTO respuestas (usuario_id, categoria, pregunta, respuesta)
+            VALUES (?, ?, ?, ?)
+        """, (usuario_id, categoria, pregunta, respuesta))
+        conn.commit()
+        conn.close()
+    else:
+        st.error("Por favor, inicia sesión para guardar tus respuestas.")
+
+def iniciar_sesion():
+    st.sidebar.title("Inicio de Sesión")
+    correo = st.sidebar.text_input("Correo electrónico:")
+    nombre = st.sidebar.text_input("Nombre:")
+    
+    if st.sidebar.button("Iniciar Sesión"):
+        if correo and nombre:
+            registrar_usuario(correo, nombre)
+            usuario = obtener_usuario(correo)
+            if usuario:
+                st.session_state["usuario"] = {"id": usuario[0], "nombre": usuario[1], "correo": correo}
+                st.sidebar.success(f"Bienvenido, {usuario[1]}!")
+        else:
+            st.sidebar.error("Por favor, introduce tu correo y nombre.")
+
+    # Mostrar información del usuario si está logueado
+    if "usuario" in st.session_state:
+        st.sidebar.write(f"Sesión iniciada como: {st.session_state['
+
 # Configuración de la página
 st.set_page_config(
     page_title="MUPAI - Entrenamiento Digital",
