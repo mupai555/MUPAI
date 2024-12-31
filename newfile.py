@@ -1,4 +1,73 @@
 import streamlit as st
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Configuración de la página
+st.set_page_config(
+    page_title="MUPAI - Entrenamiento Digital",
+    page_icon="🤖",
+    layout="wide",
+)
+
+# Función para calcular sets óptimos
+def calcular_sets_optimos(nivel_entrenamiento, es_mujer, factor_recuperacion, factor_balance_energetico):
+    """
+    Calcula el número de sets óptimos por semana basado en los factores ingresados.
+
+    Args:
+        nivel_entrenamiento (int): Nivel de entrenamiento (1-3).
+        es_mujer (int): 1 si es mujer, 0 si no.
+        factor_recuperacion (float): Factor entre 0.5 y 1.2 para ajustar la recuperación.
+        factor_balance_energetico (float): Factor entre 0.5 y 1.5 para ajustar el balance energético.
+
+    Returns:
+        float: Número de sets óptimos recomendados.
+    """
+    base_sets = {1: 10, 2: 15, 3: 20}
+    sets_base = base_sets.get(nivel_entrenamiento, 15)
+
+    if es_mujer:
+        sets_base *= 0.9  # Reducción del 10% para mujeres
+
+    sets_balance = sets_base * factor_balance_energetico
+    sets_finales = sets_balance * factor_recuperacion
+
+    return sets_finales
+
+# Nueva función principal para el cálculo de sets
+def main():
+    st.title("Calculadora de Sets Óptimos por Semana")
+
+    nivel_entrenamiento = st.slider("Nivel de entrenamiento (1: Principiante, 2: Intermedio, 3: Avanzado)", 1, 3, 2)
+    es_mujer = st.radio("¿Eres mujer?", ["No", "Sí"])
+    es_mujer = 1 if es_mujer == "Sí" else 0
+    factor_recuperacion = st.slider("Factor de recuperación (0.5 - 1.2)", 0.5, 1.2, 1.0)
+    factor_balance_energetico = st.slider("Factor de balance energético (0.5 - 1.5)", 0.5, 1.5, 1.0)
+
+    if st.button("Calcular Sets Óptimos"):
+        sets_optimos = calcular_sets_optimos(nivel_entrenamiento, es_mujer, factor_recuperacion, factor_balance_energetico)
+        st.write(f"### Número de sets óptimos por semana: {sets_optimos:.2f}")
+        
+        if sets_optimos < 10:
+            st.warning("El volumen es bajo. Esto puede ser adecuado si estás en déficit calórico o tienes poca capacidad de recuperación.")
+        elif 10 <= sets_optimos <= 20:
+            st.success("El volumen está dentro de un rango moderado y sostenible.")
+        else:
+            st.info("El volumen es alto. Asegúrate de tener una buena recuperación y suficiente energía disponible.")
+
+# Barra lateral de navegación
+menu = st.sidebar.selectbox(
+    "Menú",
+    ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Evaluación del Estilo de Vida", "Cálculo de Sets Óptimos"]
+)
+
+# Actualiza la lógica del menú principal
+if menu == "Inicio":
+    st.title("Bienvenido a MUPAI")
+    st.write("Entrenamiento basado en ciencia y herramientas digitales.")
+elif menu == "Cálculo de Sets Óptimos":
+    main()
+import streamlit as st
 
 import matplotlib.pyplot as plt
 
@@ -561,3 +630,4 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+
