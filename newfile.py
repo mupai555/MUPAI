@@ -1,77 +1,4 @@
 import streamlit as st
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# Configuración de la página
-st.set_page_config(
-    page_title="MUPAI - Entrenamiento Digital",
-    page_icon="🤖",
-    layout="wide",
-)
-
-# Función para calcular sets óptimos
-def calcular_sets_optimos(nivel_entrenamiento, es_mujer, factor_recuperacion, factor_balance_energetico):
-    """
-    Calcula el número de sets óptimos por semana basado en los factores ingresados.
-
-    Args:
-        nivel_entrenamiento (int): Nivel de entrenamiento (1-3).
-        es_mujer (int): 1 si es mujer, 0 si no.
-        factor_recuperacion (float): Factor entre 0.5 y 1.2 para ajustar la recuperación.
-        factor_balance_energetico (float): Factor entre 0.5 y 1.5 para ajustar el balance energético.
-
-    Returns:
-        float: Número de sets óptimos recomendados.
-    """
-    base_sets = {1: 10, 2: 15, 3: 20}
-    sets_base = base_sets.get(nivel_entrenamiento, 15)
-
-    if es_mujer:
-        sets_base *= 0.9  # Reducción del 10% para mujeres
-
-    sets_balance = sets_base * factor_balance_energetico
-    sets_finales = sets_balance * factor_recuperacion
-
-    return sets_finales
-
-# Nueva función principal para el cálculo de sets
-def main():
-    st.title("Calculadora de Sets Óptimos por Semana")
-
-    nivel_entrenamiento = st.slider("Nivel de entrenamiento (1: Principiante, 2: Intermedio, 3: Avanzado)", 1, 3, 2)
-    es_mujer = st.radio("¿Eres mujer?", ["No", "Sí"])
-    es_mujer = 1 if es_mujer == "Sí" else 0
-    factor_recuperacion = st.slider("Factor de recuperación (0.5 - 1.2)", 0.5, 1.2, 1.0)
-    factor_balance_energetico = st.slider("Factor de balance energético (0.5 - 1.5)", 0.5, 1.5, 1.0)
-
-    if st.button("Calcular Sets Óptimos"):
-        sets_optimos = calcular_sets_optimos(nivel_entrenamiento, es_mujer, factor_recuperacion, factor_balance_energetico)
-        st.write(f"### Número de sets óptimos por semana: {sets_optimos:.2f}")
-        
-        if sets_optimos < 10:
-            st.warning("El volumen es bajo. Esto puede ser adecuado si estás en déficit calórico o tienes poca capacidad de recuperación.")
-        elif 10 <= sets_optimos <= 20:
-            st.success("El volumen está dentro de un rango moderado y sostenible.")
-        else:
-            st.info("El volumen es alto. Asegúrate de tener una buena recuperación y suficiente energía disponible.")
-
-# Barra lateral de navegación
-menu = st.sidebar.selectbox(
-    "Menú",
-    ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Evaluación del Estilo de Vida", "Cálculo de Sets Óptimos"]
-)
-
-# Actualiza la lógica del menú principal
-if menu == "Inicio":
-    st.title("Bienvenido a MUPAI")
-    st.write("Entrenamiento basado en ciencia y herramientas digitales.")
-elif menu == "Cálculo de Sets Óptimos":
-    main()
-import streamlit as st
-
-import matplotlib.pyplot as plt
-
-import pandas as pd
 
 # Configuración de la página
 st.set_page_config(
@@ -355,71 +282,7 @@ def cuestionario_habitos_alimenticios():
         else:
             st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
             st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
-     
-# Función: Evaluación del Potencial Genético
-def evaluacion_potencial_genetico():
-    st.title("Evaluación del Potencial Genético Muscular")
-    st.write("Completa los siguientes campos para calcular tu índice de masa libre de grasa (FFMI) y evaluar tu nivel de desarrollo muscular.")
 
-    # Entradas del usuario
-    genero = st.radio("Género:", ["Hombre", "Mujer"])
-    altura_m = st.number_input("Altura (en metros):", min_value=1.0, max_value=2.5, step=0.01)
-    peso_kg = st.number_input("Peso (en kilogramos):", min_value=30.0, max_value=200.0, step=0.1)
-    grasa_corporal = st.slider("Porcentaje de grasa corporal actual (%):", 5, 50, step=1)
-    grasa_deseada = st.slider("Porcentaje de grasa corporal deseado (%):", 5, 50, step=1)
-
-    # Botón para calcular
-    if st.button("Calcular Potencial"):
-        # Cálculos de masa magra y FFMI
-        masa_magra_actual = peso_kg * (1 - grasa_corporal / 100)
-        ffmi_actual = masa_magra_actual / (altura_m ** 2)
-        peso_proyectado = masa_magra_actual / (1 - grasa_deseada / 100)
-        masa_magra_proyectada = peso_proyectado * (1 - grasa_deseada / 100)
-        ffmi_proyectado = masa_magra_proyectada / (altura_m ** 2)
-
-        # Tablas de referencia
-        referencia_ffmi = {
-            "Hombre": {"Principiante": 18, "Intermedio": 21, "Avanzado": 25, "Élite": 27},
-            "Mujer": {"Principiante": 15, "Intermedio": 18, "Avanzado": 20, "Élite": 22}
-        }
-
-        # Clasificaciones y feedback
-        def clasificar_ffmi(ffmi, genero):
-            for nivel, valor in referencia_ffmi[genero].items():
-                if ffmi <= valor:
-                    return nivel
-            return "Élite"
-
-        nivel_ffmi_actual = clasificar_ffmi(ffmi_actual, genero)
-        nivel_ffmi_proyectado = clasificar_ffmi(ffmi_proyectado, genero)
-
-        # Mostrar resultados
-        st.subheader("Resultados Actuales")
-        st.write(f"**Masa Magra Actual:** {masa_magra_actual:.2f} kg")
-        st.write(f"**FFMI Actual:** {ffmi_actual:.2f} ({nivel_ffmi_actual})")
-
-        st.subheader("Resultados Proyectados")
-        st.write(f"**Peso Proyectado:** {peso_proyectado:.2f} kg")
-        st.write(f"**FFMI Proyectado:** {ffmi_proyectado:.2f} ({nivel_ffmi_proyectado})")
-
-        # Gráfica de comparación de FFMI
-        st.subheader("Comparativa de FFMI")
-        niveles = list(referencia_ffmi[genero].keys())
-        valores = list(referencia_ffmi[genero].values())
-        valores.insert(0, ffmi_actual)  # Insertar el FFMI actual al inicio
-
-        fig, ax = plt.subplots()
-        ax.bar(["Actual"] + niveles, valores, color=["blue"] + ["gray"] * len(niveles))
-        ax.set_ylabel("FFMI")
-        ax.set_title("Comparativa de FFMI Actual vs Referencias")
-        st.pyplot(fig)
-
-        # Tabla de referencia para FFMI
-        st.subheader("Tabla de Referencia: FFMI por Género")
-        tabla_referencia = pd.DataFrame(referencia_ffmi).T
-        tabla_referencia.index.name = "Género"
-        st.table(tabla_referencia)
-        
 # Barra lateral de navegación
 menu = st.sidebar.selectbox(
     "Menú",
@@ -581,10 +444,6 @@ elif menu == "Evaluación del Estilo de Vida":
     elif submenu == "Hábitos Alimenticios":
       cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
 
-    elif submenu == "Potencial Genético Muscular":
-        evaluacion_potencial_genetico() # Llama la función para Potencial Genético Muscular
-        
-
 
 # Función para el cuestionario de Calidad del Sueño
 def cuestionario_calidad_sueno():
@@ -630,4 +489,3 @@ def cuestionario_calidad_sueno():
             st.warning("Calidad de sueño moderada.")
         else:
             st.error("Mala calidad de sueño. Considera consultar a un especialista.")
-
