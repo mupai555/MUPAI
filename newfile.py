@@ -392,7 +392,7 @@ elif menu == "Evaluación del Estilo de Vida":
             "Calidad del Sueño", 
             "Nivel de Actividad Física", 
             "Hábitos Alimenticios", 
-            "Potencial Genético Muscular"
+            "Capacidad de autorregulación"
         ]
     )
 
