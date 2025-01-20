@@ -121,9 +121,9 @@ def contacto():
     st.title("Contacto")
     st.write("""
     Para más información o consultas, contáctanos:
-    - **Correo**: contacto@mupai.com
-    - **Teléfono**: "+52 866 258 05 94"
-    - **Ubicación**: Monterrey, Nuevo León
+    - **Correo**: contacto@mupai.com  
+    - **Teléfono**: +52 866 258 05 94  
+    - **Ubicación**: Monterrey, Nuevo León  
     """)
 
 # Panel de administración
