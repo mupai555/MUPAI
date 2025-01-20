@@ -120,21 +120,6 @@ def contacto():
     - **Ubicación**: Monterrey, Nuevo León
     """)
 
-# Sección Perfil MUPAI - Fitness-Performance-Health
-def perfil_mupai(user):
-    st.title("Perfil MUPAI - Fitness-Performance-Health")
-    if user and user[3] == 1:  # Solo usuarios autorizados
-        st.write("""
-        Bienvenido al cuestionario **Perfil MUPAI - Fitness-Performance-Health**. Este cuestionario recopilará información sobre:
-        - Calidad del sueño.
-        - Nivel de estrés percibido.
-        - Hábitos alimenticios.
-        - Nivel de entrenamiento.
-        - Composición corporal.
-        """)
-    else:
-        st.warning("No tienes acceso a esta sección. Por favor, espera autorización.")
-
 # Panel de administración
 def administrar_usuarios():
     st.subheader("Administrar Usuarios Pendientes")
@@ -159,7 +144,7 @@ def main():
     st.sidebar.title("Navegación")
     menu = st.sidebar.radio(
         "Ir a:",
-        ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI - Fitness-Performance-Health", "Administrar Usuarios"]
+        ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Administrar Usuarios"]
     )
 
     user = None
@@ -193,8 +178,6 @@ def main():
         servicios()
     elif menu == "Contacto":
         contacto()
-    elif menu == "Perfil MUPAI - Fitness-Performance-Health":
-        perfil_mupai(user)
     elif menu == "Administrar Usuarios":
         administrar_usuarios()
 
