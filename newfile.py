@@ -3,12 +3,12 @@ import sqlite3
 
 # Configuración inicial de la página
 st.set_page_config(
-    page_title="Sistema de Entrenamiento y Nutrición Personalizado",
+    page_title="MUPAI - Entrenamiento Digital",
     page_icon="🤖",
     layout="wide",
 )
 
-# Configuración inicial de la base de datos
+# Configuración de la base de datos
 def init_db():
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
@@ -54,52 +54,70 @@ def authorize_user(user_id):
 
 # Sección Inicio
 def inicio():
-    st.title("Inicio")
     st.image("LOGO.png", use_container_width=True)
+    st.title("Bienvenido a MUPAI")
+
     st.header("Misión")
     st.write("""
-    Hacer accesible el entrenamiento basado en ciencia, proporcionando planes personalizados respaldados por datos precisos y tecnología avanzada.
+    Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
     """)
+
     st.header("Visión")
     st.write("""
-    Convertirnos en referentes globales en entrenamiento digital personalizado, integrando ciencia e innovación para mejorar el bienestar físico y mental.
+    Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
     """)
+
     st.header("Política")
     st.write("""
-    En **MUPAI**, nuestra política se basa en excelencia, ética y accesibilidad, promoviendo un enfoque integral de bienestar para todos nuestros usuarios.
+    En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
+    """)
+
+    st.header("Política del Servicio")
+    st.write("""
+    En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
+    - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
+    - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
+    - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
+    - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
+    - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
     """)
 
 # Sección Sobre Mí
 def sobre_mi():
     st.title("Sobre Mí")
     st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con experiencia académica y práctica en rendimiento físico.
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia.
     """)
     st.subheader("Galería de Imágenes")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("imagen1.jpg", use_container_width=True)
+        st.image("20250116_074806_0000.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
     with col2:
-        st.image("imagen2.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
     with col3:
-        st.image("imagen3.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
 
 # Sección Servicios
 def servicios():
     st.title("Servicios")
     st.write("""
-    - **Planes de entrenamiento personalizados.**
-    - **Asesoría en nutrición deportiva.**
-    - **Consultoría en rendimiento físico.**
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
     """)
 
 # Sección Contacto
 def contacto():
     st.title("Contacto")
     st.write("""
-    **Correo:** contacto@mupai.com  
-    **Teléfono:** +52 866 258 05 94  
-    **Ubicación:** Monterrey, Nuevo León
+    Para más información o consultas, contáctanos:
+    - **Correo**: contacto@mupai.com
+    - **Teléfono**: +52 866 258 05 94
+    - **Ubicación**: Monterrey, Nuevo León
     """)
 
 # Sección Perfil MUPAI - Fitness-Performance-Health
@@ -113,8 +131,6 @@ def perfil_mupai(user):
         - Hábitos alimenticios.
         - Nivel de entrenamiento.
         - Composición corporal.
-        
-        Próximamente, esta información será utilizada para generar automáticamente planes de entrenamiento y nutrición personalizados.
         """)
     else:
         st.warning("No tienes acceso a esta sección. Por favor, espera autorización.")
@@ -138,42 +154,37 @@ def administrar_usuarios():
 
 # Main function
 def main():
-    # Inicializar la base de datos
     init_db()
 
-    # Sidebar para navegación
     st.sidebar.title("Navegación")
-    menu = st.sidebar.radio("Ir a:", ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI - Fitness-Performance-Health", "Administrar Usuarios"])
-
-    # Registro/Login
-    st.sidebar.title("Registro / Login")
-    choice = st.sidebar.selectbox("¿Qué quieres hacer?", ["Registro", "Login"])
+    menu = st.sidebar.radio(
+        "Ir a:",
+        ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI - Fitness-Performance-Health", "Administrar Usuarios"]
+    )
 
     user = None
+    st.sidebar.title("Registro / Login")
+    choice = st.sidebar.selectbox("¿Qué quieres hacer?", ["Registro", "Login"])
     if choice == "Registro":
-        st.sidebar.subheader("Registro de Usuario")
         username = st.sidebar.text_input("Usuario")
         password = st.sidebar.text_input("Contraseña", type="password")
         if st.sidebar.button("Registrar"):
             if register_user(username, password):
                 st.sidebar.success("Usuario registrado con éxito. Espera autorización.")
             else:
-                st.sidebar.error("El usuario ya existe. Intenta con otro nombre.")
+                st.sidebar.error("El usuario ya existe.")
     elif choice == "Login":
-        st.sidebar.subheader("Iniciar Sesión")
         username = st.sidebar.text_input("Usuario")
         password = st.sidebar.text_input("Contraseña", type="password")
         if st.sidebar.button("Login"):
             user = login_user(username, password)
-            if user:
-                if user[3] == 1:
-                    st.sidebar.success(f"Bienvenido, {user[1]}.")
-                else:
-                    st.sidebar.warning("No estás autorizado aún. Por favor, espera aprobación.")
+            if user and user[3] == 1:
+                st.sidebar.success(f"Bienvenido, {user[1]}.")
+            elif user:
+                st.sidebar.warning("No autorizado.")
             else:
                 st.sidebar.error("Usuario o contraseña incorrectos.")
 
-    # Navegación principal
     if menu == "Inicio":
         inicio()
     elif menu == "Sobre Mí":
