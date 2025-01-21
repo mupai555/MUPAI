@@ -106,6 +106,23 @@ def gestionar_usuarios_activos():
     else:
         st.write("No hay usuarios activos autorizados.")
 
+# Ver usuarios pendientes de autorización
+def gestionar_usuarios_pendientes():
+    st.subheader("Usuarios Pendientes de Autorización")
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        pending_users = cursor.execute("SELECT id, full_name, username, email, date_added FROM users WHERE authorized=0").fetchall()
+
+    if pending_users:
+        st.write("Lista de usuarios pendientes de autorización:")
+        for user in pending_users:
+            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
+            if st.button(f"Autorizar a {user[2]}", key=f"authorize_{user[0]}'):"):
+                authorize_user(user[0])
+                st.success(f"Usuario {user[2]} autorizado exitosamente.")
+    else:
+        st.write("No hay usuarios pendientes de autorización.")
+
 # Exportar usuarios activos a CSV
 def exportar_usuarios_activos():
     with sqlite3.connect('users.db') as conn:
@@ -261,6 +278,7 @@ def main():
     elif choice == "Registro":
         registro()
     elif choice == "Administrar Usuarios":
+        gestionar_usuarios_pendientes()
         gestionar_usuarios_activos()
         exportar_usuarios_activos()
     elif choice == "Historial de Actividades":
