@@ -30,6 +30,15 @@ def init_db():
                 date_added TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ''')
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS user_activity (
+                id INTEGER PRIMARY KEY,
+                user_id INTEGER,
+                action TEXT,
+                timestamp TEXT DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(user_id) REFERENCES users(id)
+            )
+        ''')
         conn.commit()
 
 # Guardar un usuario nuevo en la base de datos
@@ -57,12 +66,28 @@ def login_user(username, password):
             return user
         return None
 
+# Registrar actividad del usuario
+def log_user_activity(user_id, action):
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO user_activity (user_id, action) VALUES (?, ?)", (user_id, action))
+        conn.commit()
+
 # Autorizar usuario manualmente
 def authorize_user(user_id):
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         cursor.execute("UPDATE users SET authorized=1 WHERE id=?", (user_id,))
         conn.commit()
+    log_user_activity(user_id, "Usuario autorizado")
+
+# Revocar acceso a usuario
+def revoke_user(user_id):
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user_id,))
+        conn.commit()
+    log_user_activity(user_id, "Acceso revocado")
 
 # Ver usuarios activos
 def gestionar_usuarios_activos():
@@ -76,10 +101,7 @@ def gestionar_usuarios_activos():
         for user in active_users:
             st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
             if st.button(f"Revocar acceso a {user[2]}", key=f"revoke_{user[0]}"):
-                with sqlite3.connect('users.db') as conn:
-                    cursor = conn.cursor()
-                    cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user[0],))
-                    conn.commit()
+                revoke_user(user[0])
                 st.success(f"Acceso revocado para {user[2]}.")
     else:
         st.write("No hay usuarios activos autorizados.")
@@ -90,6 +112,23 @@ def exportar_usuarios_activos():
         df = pd.read_sql_query("SELECT full_name, username, email, date_added FROM users WHERE authorized=1", conn)
     csv = df.to_csv(index=False)
     st.download_button("Descargar Usuarios Activos", csv, "usuarios_activos.csv", "text/csv")
+
+# Ver historial de actividades
+def ver_historial_actividades():
+    st.subheader("Historial de Actividades")
+    with sqlite3.connect('users.db') as conn:
+        df = pd.read_sql_query('''
+            SELECT u.full_name, ua.action, ua.timestamp 
+            FROM user_activity ua
+            JOIN users u ON ua.user_id = u.id
+            ORDER BY ua.timestamp DESC
+        ''', conn)
+    if not df.empty:
+        st.dataframe(df)
+        csv = df.to_csv(index=False)
+        st.download_button("Descargar Historial de Actividades", csv, "historial_actividades.csv", "text/csv")
+    else:
+        st.write("No hay actividades registradas.")
 
 # Función exclusiva para usuarios autorizados
 def funcionalidad_exclusiva():
@@ -144,116 +183,4 @@ def sobre_mi():
 
     Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)* y un intercambio académico internacional en la *Universidad de Sevilla. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL*, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
 
-    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL, el **Primer Lugar de Generación* en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
-
-    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
-    """)
-
-
-    st.subheader("Galería de Imágenes")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.image("20250116_074806_0000.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
-    with col2:
-        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
-    with col3:
-        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
-
-# Sección Servicios
-def servicios():
-    st.title("Servicios")
-    st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
-    - Planes de entrenamiento individualizados.
-    - Programas de mejora física y mental.
-    - Asesoría en nutrición deportiva.
-    - Consultoría en rendimiento deportivo.
-    """)
-
-# Sección Contacto
-def contacto():
-    st.title("Contacto")
-    st.write("""
-    Para más información o consultas, contáctanos:
-    - **Correo**: contacto@mupai.com  
-    - **Teléfono**: +52 866 258 05 94  
-    - **Ubicación**: Monterrey, Nuevo León  
-    """)
-
-# Panel de administración
-def administrar_usuarios():
-    st.subheader("Administrar Usuarios Pendientes")
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        pending_users = cursor.execute("SELECT id, full_name, username, email FROM users WHERE authorized=0").fetchall()
-
-    if pending_users:
-        st.write("Usuarios pendientes de autorización:")
-        for user in pending_users:
-            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]}")
-            if st.button(f"Autorizar a {user[2]}", key=user[0]):
-                authorize_user(user[0])
-                st.success(f"Usuario {user[2]} autorizado.")
-    else:
-        st.write("No hay usuarios pendientes de autorización.")
-
-# Main function
-def main():
-    init_db()
-
-    st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Administrar Usuarios"]
-
-    user = None
-    st.sidebar.title("Registro / Login")
-    choice = st.sidebar.selectbox("¿Qué quieres hacer?", ["Registro", "Login"])
-    if choice == "Registro":
-        full_name = st.sidebar.text_input("Nombre Completo")
-        username = st.sidebar.text_input("Usuario")
-        email = st.sidebar.text_input("Correo Electrónico")
-        phone = st.sidebar.text_input("Teléfono (opcional)")
-        birth_date = st.sidebar.text_input("Fecha de Nacimiento (YYYY-MM-DD)")
-        password = st.sidebar.text_input("Contraseña", type="password")
-        terms_accepted = st.sidebar.checkbox("Acepto los Términos y Condiciones")
-        if st.sidebar.button("Registrar"):
-            if not terms_accepted:
-                st.sidebar.error("Debes aceptar los Términos y Condiciones para registrarte.")
-            elif register_user(full_name, username, email, phone, birth_date, password, terms_accepted):
-                st.sidebar.success("Usuario registrado con éxito. Espera autorización.")
-            else:
-                st.sidebar.error("El usuario o correo ya existe.")
-    elif choice == "Login":
-        username = st.sidebar.text_input("Usuario")
-        password = st.sidebar.text_input("Contraseña", type="password")
-        if st.sidebar.button("Login"):
-            user = login_user(username, password)
-            if user and user[7] == 1:
-                st.sidebar.success(f"Bienvenido, {user[2]}.")
-                menu.append("Exclusivo")
-            elif user:
-                st.sidebar.warning("No autorizado.")
-            else:
-                st.sidebar.error("Usuario o contraseña incorrectos.")
-
-    selected_menu = st.sidebar.radio("Ir a:", menu)
-
-    if selected_menu == "Inicio":
-        inicio()
-    elif selected_menu == "Sobre Mí":
-        sobre_mi()
-    elif selected_menu == "Servicios":
-        servicios()
-    elif selected_menu == "Contacto":
-        contacto()
-    elif selected_menu == "Perfil MUPAI/Salud y Rendimiento":
-        perfil_mupai()
-    elif selected_menu == "Administrar Usuarios":
-        administrar_usuarios()
-        exportar_usuarios_activos()
-    elif selected_menu == "Exclusivo" and user and user[7] == 1:
-        funcionalidad_exclusiva()
-
-if __name__ == "__main__":
-    main()
+    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL, el **Primer Lugar de Generación* en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la
