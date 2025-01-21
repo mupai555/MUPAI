@@ -260,8 +260,16 @@ def contacto():
 def main():
     init_db()
 
+    # Simulación de usuario logueado (reemplazar con lógica de sesión en producción)
+    logged_user = st.sidebar.text_input("Usuario logueado (simulado para pruebas):")
+    user_role = "user"  # Cambia a "admin" para probar como administrador
+
     st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro", "Administrar Usuarios", "Historial de Actividades"]
+    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro"]
+
+    if logged_user and user_role == "admin":
+        menu.append("Administrar Usuarios")
+        menu.append("Historial de Actividades")
 
     choice = st.sidebar.radio("Selecciona una opción:", menu)
 
@@ -277,11 +285,11 @@ def main():
         perfil_mupai()
     elif choice == "Registro":
         registro()
-    elif choice == "Administrar Usuarios":
+    elif choice == "Administrar Usuarios" and user_role == "admin":
         gestionar_usuarios_pendientes()
         gestionar_usuarios_activos()
         exportar_usuarios_activos()
-    elif choice == "Historial de Actividades":
+    elif choice == "Historial de Actividades" and user_role == "admin":
         ver_historial_actividades()
 
 if __name__ == "__main__":
