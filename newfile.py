@@ -145,6 +145,25 @@ def perfil_mupai():
     """)
     st.write("Aquí se mostrará el cuestionario cuando esté listo.")
 
+# Sección Registro
+def registro():
+    with st.expander("Registro de Usuario"):
+        st.write("Por favor completa los siguientes campos para registrarte:")
+        full_name = st.text_input("Nombre Completo")
+        username = st.text_input("Usuario")
+        email = st.text_input("Correo Electrónico")
+        phone = st.text_input("Teléfono (opcional)")
+        birth_date = st.date_input("Fecha de Nacimiento")
+        password = st.text_input("Contraseña", type="password")
+        terms_accepted = st.checkbox("Acepto los Términos y Condiciones")
+        if st.button("Registrar"):
+            if not terms_accepted:
+                st.error("Debes aceptar los Términos y Condiciones para registrarte.")
+            elif register_user(full_name, username, email, phone, birth_date, password, terms_accepted):
+                st.success("Usuario registrado con éxito. Espera autorización.")
+            else:
+                st.error("El usuario o correo ya existe.")
+
 # Sección Inicio
 def inicio():
     st.image("LOGO.png", use_container_width=True)
@@ -188,6 +207,17 @@ def sobre_mi():
     Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
     """)
 
+    st.subheader("Galería de Imágenes")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("20250116_074806_0000.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
+    with col2:
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
+    with col3:
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
+
 # Sección Servicios
 def servicios():
     st.title("Servicios")
@@ -214,7 +244,7 @@ def main():
     init_db()
 
     st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Administrar Usuarios", "Historial de Actividades"]
+    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro", "Administrar Usuarios", "Historial de Actividades"]
 
     choice = st.sidebar.radio("Selecciona una opción:", menu)
 
@@ -228,6 +258,8 @@ def main():
         contacto()
     elif choice == "Perfil MUPAI/Salud y Rendimiento":
         perfil_mupai()
+    elif choice == "Registro":
+        registro()
     elif choice == "Administrar Usuarios":
         gestionar_usuarios_activos()
         exportar_usuarios_activos()
