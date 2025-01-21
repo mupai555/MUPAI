@@ -153,7 +153,7 @@ def registro():
         username = st.text_input("Usuario")
         email = st.text_input("Correo Electrónico")
         phone = st.text_input("Teléfono (opcional)")
-        birth_date = st.date_input("Fecha de Nacimiento")
+        birth_date = st.date_input("Fecha de Nacimiento", min_value=datetime(1900, 1, 1), max_value=datetime.today())
         password = st.text_input("Contraseña", type="password")
         terms_accepted = st.checkbox("Acepto los Términos y Condiciones")
         if st.button("Registrar"):
