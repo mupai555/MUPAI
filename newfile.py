@@ -181,6 +181,58 @@ def sobre_mi():
     st.write("""
     Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
 
-    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)* y un intercambio académico internacional en la *Universidad de Sevilla. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL*, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
 
-    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL, el **Primer Lugar de Generación* en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la
+    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    """)
+
+# Sección Servicios
+def servicios():
+    st.title("Servicios")
+    st.write("""
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
+    """)
+
+# Sección Contacto
+def contacto():
+    st.title("Contacto")
+    st.write("""
+    Para más información o consultas, contáctanos:
+    - **Correo**: contacto@mupai.com  
+    - **Teléfono**: +52 866 258 05 94  
+    - **Ubicación**: Monterrey, Nuevo León  
+    """)
+
+# Main function
+def main():
+    init_db()
+
+    st.sidebar.title("Navegación")
+    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Administrar Usuarios", "Historial de Actividades"]
+
+    choice = st.sidebar.radio("Selecciona una opción:", menu)
+
+    if choice == "Inicio":
+        inicio()
+    elif choice == "Sobre Mí":
+        sobre_mi()
+    elif choice == "Servicios":
+        servicios()
+    elif choice == "Contacto":
+        contacto()
+    elif choice == "Perfil MUPAI/Salud y Rendimiento":
+        perfil_mupai()
+    elif choice == "Administrar Usuarios":
+        gestionar_usuarios_activos()
+        exportar_usuarios_activos()
+    elif choice == "Historial de Actividades":
+        ver_historial_actividades()
+
+if __name__ == "__main__":
+    main()
