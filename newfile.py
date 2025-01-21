@@ -1,6 +1,8 @@
 import streamlit as st
 import sqlite3
 import bcrypt
+import pandas as pd
+from datetime import datetime
 
 # Configuración inicial de la página
 st.set_page_config(
@@ -16,23 +18,34 @@ def init_db():
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY,
+                full_name TEXT,
                 username TEXT UNIQUE,
+                email TEXT UNIQUE,
+                phone TEXT,
+                birth_date TEXT,
                 password TEXT,
-                authorized INTEGER DEFAULT 0
+                authorized INTEGER DEFAULT 0,
+                role TEXT DEFAULT 'user',
+                terms_accepted INTEGER DEFAULT 0,
+                date_added TEXT DEFAULT CURRENT_TIMESTAMP
             )
         ''')
         conn.commit()
 
 # Guardar un usuario nuevo en la base de datos
-def register_user(username, password):
+def register_user(full_name, username, email, phone, birth_date, password, terms_accepted):
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         try:
-            cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+            cursor.execute('''INSERT INTO users 
+                              (full_name, username, email, phone, birth_date, password, terms_accepted) 
+                              VALUES (?, ?, ?, ?, ?, ?, ?)''', 
+                           (full_name, username, email, phone, birth_date, hashed_password, terms_accepted))
             conn.commit()
             return True
-        except sqlite3.IntegrityError:
+        except sqlite3.IntegrityError as e:
+            st.error(f"Error: {e}")
             return False
 
 # Verificar login
@@ -40,7 +53,7 @@ def login_user(username, password):
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
         user = cursor.execute("SELECT * FROM users WHERE username=?", (username,)).fetchone()
-        if user and bcrypt.checkpw(password.encode('utf-8'), user[2]):
+        if user and bcrypt.checkpw(password.encode('utf-8'), user[6]):
             return user
         return None
 
@@ -53,26 +66,30 @@ def authorize_user(user_id):
 
 # Ver usuarios activos
 def gestionar_usuarios_activos():
-    st.subheader("Usuarios Activos y Autorizados")
+    st.subheader("Usuarios Activos y Fecha de Registro")
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
-        active_users = cursor.execute("SELECT id, username FROM users WHERE authorized=1").fetchall()
+        active_users = cursor.execute("SELECT id, full_name, username, email, date_added FROM users WHERE authorized=1").fetchall()
 
     if active_users:
-        st.write("Usuarios activos:")
+        st.write("Lista de usuarios activos:")
         for user in active_users:
-            col1, col2 = st.columns([4, 1])
-            with col1:
-                st.write(f"**Usuario**: {user[1]}")
-            with col2:
-                if st.button("Revocar", key=f"revoke_{user[0]}"):
-                    with sqlite3.connect('users.db') as conn:
-                        cursor = conn.cursor()
-                        cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user[0],))
-                        conn.commit()
-                    st.success(f"Acceso revocado para {user[1]}.")
+            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
+            if st.button(f"Revocar acceso a {user[2]}", key=f"revoke_{user[0]}"):
+                with sqlite3.connect('users.db') as conn:
+                    cursor = conn.cursor()
+                    cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user[0],))
+                    conn.commit()
+                st.success(f"Acceso revocado para {user[2]}.")
     else:
         st.write("No hay usuarios activos autorizados.")
+
+# Exportar usuarios activos a CSV
+def exportar_usuarios_activos():
+    with sqlite3.connect('users.db') as conn:
+        df = pd.read_sql_query("SELECT full_name, username, email, date_added FROM users WHERE authorized=1", conn)
+    csv = df.to_csv(index=False)
+    st.download_button("Descargar Usuarios Activos", csv, "usuarios_activos.csv", "text/csv")
 
 # Función exclusiva para usuarios autorizados
 def funcionalidad_exclusiva():
@@ -170,14 +187,15 @@ def administrar_usuarios():
     st.subheader("Administrar Usuarios Pendientes")
     with sqlite3.connect('users.db') as conn:
         cursor = conn.cursor()
-        pending_users = cursor.execute("SELECT id, username FROM users WHERE authorized=0").fetchall()
+        pending_users = cursor.execute("SELECT id, full_name, username, email FROM users WHERE authorized=0").fetchall()
 
     if pending_users:
         st.write("Usuarios pendientes de autorización:")
         for user in pending_users:
-            if st.button(f"Autorizar a {user[1]}", key=user[0]):
+            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]}")
+            if st.button(f"Autorizar a {user[2]}", key=user[0]):
                 authorize_user(user[0])
-                st.success(f"Usuario {user[1]} autorizado.")
+                st.success(f"Usuario {user[2]} autorizado.")
     else:
         st.write("No hay usuarios pendientes de autorización.")
 
@@ -192,20 +210,27 @@ def main():
     st.sidebar.title("Registro / Login")
     choice = st.sidebar.selectbox("¿Qué quieres hacer?", ["Registro", "Login"])
     if choice == "Registro":
+        full_name = st.sidebar.text_input("Nombre Completo")
         username = st.sidebar.text_input("Usuario")
+        email = st.sidebar.text_input("Correo Electrónico")
+        phone = st.sidebar.text_input("Teléfono (opcional)")
+        birth_date = st.sidebar.text_input("Fecha de Nacimiento (YYYY-MM-DD)")
         password = st.sidebar.text_input("Contraseña", type="password")
+        terms_accepted = st.sidebar.checkbox("Acepto los Términos y Condiciones")
         if st.sidebar.button("Registrar"):
-            if register_user(username, password):
+            if not terms_accepted:
+                st.sidebar.error("Debes aceptar los Términos y Condiciones para registrarte.")
+            elif register_user(full_name, username, email, phone, birth_date, password, terms_accepted):
                 st.sidebar.success("Usuario registrado con éxito. Espera autorización.")
             else:
-                st.sidebar.error("El usuario ya existe.")
+                st.sidebar.error("El usuario o correo ya existe.")
     elif choice == "Login":
         username = st.sidebar.text_input("Usuario")
         password = st.sidebar.text_input("Contraseña", type="password")
         if st.sidebar.button("Login"):
             user = login_user(username, password)
-            if user and user[3] == 1:
-                st.sidebar.success(f"Bienvenido, {user[1]}.")
+            if user and user[7] == 1:
+                st.sidebar.success(f"Bienvenido, {user[2]}.")
                 menu.append("Exclusivo")
             elif user:
                 st.sidebar.warning("No autorizado.")
@@ -226,7 +251,8 @@ def main():
         perfil_mupai()
     elif selected_menu == "Administrar Usuarios":
         administrar_usuarios()
-    elif selected_menu == "Exclusivo" and user and user[3] == 1:
+        exportar_usuarios_activos()
+    elif selected_menu == "Exclusivo" and user and user[7] == 1:
         funcionalidad_exclusiva()
 
 if __name__ == "__main__":
