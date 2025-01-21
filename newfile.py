@@ -1,5 +1,6 @@
 import streamlit as st
 import sqlite3
+import bcrypt
 
 # Configuración inicial de la página
 st.set_page_config(
@@ -10,47 +11,83 @@ st.set_page_config(
 
 # Configuración de la base de datos
 def init_db():
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY,
-            username TEXT UNIQUE,
-            password TEXT,
-            authorized INTEGER DEFAULT 0
-        )
-    ''')
-    conn.commit()
-    conn.close()
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username TEXT UNIQUE,
+                password TEXT,
+                authorized INTEGER DEFAULT 0
+            )
+        ''')
+        conn.commit()
 
 # Guardar un usuario nuevo en la base de datos
 def register_user(username, password):
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    try:
-        cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        conn.commit()
-        conn.close()
-        return True
-    except sqlite3.IntegrityError:
-        conn.close()
-        return False
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        try:
+            cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, hashed_password))
+            conn.commit()
+            return True
+        except sqlite3.IntegrityError:
+            return False
 
 # Verificar login
 def login_user(username, password):
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    user = cursor.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password)).fetchone()
-    conn.close()
-    return user
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        user = cursor.execute("SELECT * FROM users WHERE username=?", (username,)).fetchone()
+        if user and bcrypt.checkpw(password.encode('utf-8'), user[2]):
+            return user
+        return None
 
 # Autorizar usuario manualmente
 def authorize_user(user_id):
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    cursor.execute("UPDATE users SET authorized=1 WHERE id=?", (user_id,))
-    conn.commit()
-    conn.close()
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE users SET authorized=1 WHERE id=?", (user_id,))
+        conn.commit()
+
+# Ver usuarios activos
+def gestionar_usuarios_activos():
+    st.subheader("Usuarios Activos y Autorizados")
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        active_users = cursor.execute("SELECT id, username FROM users WHERE authorized=1").fetchall()
+
+    if active_users:
+        st.write("Usuarios activos:")
+        for user in active_users:
+            col1, col2 = st.columns([4, 1])
+            with col1:
+                st.write(f"**Usuario**: {user[1]}")
+            with col2:
+                if st.button("Revocar", key=f"revoke_{user[0]}"):
+                    with sqlite3.connect('users.db') as conn:
+                        cursor = conn.cursor()
+                        cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user[0],))
+                        conn.commit()
+                    st.success(f"Acceso revocado para {user[1]}.")
+    else:
+        st.write("No hay usuarios activos autorizados.")
+
+# Función exclusiva para usuarios autorizados
+def funcionalidad_exclusiva():
+    st.subheader("Área Exclusiva para Usuarios Autorizados")
+    st.write("Bienvenido a la sección exclusiva de MUPAI. Aquí puedes acceder a contenido y herramientas especiales.")
+
+# Sección Perfil MUPAI/Salud y Rendimiento
+def perfil_mupai():
+    st.title("Perfil MUPAI/Salud y Rendimiento")
+    st.write("""
+    Este es un cuestionario diseñado para evaluar tu estilo de vida, rendimiento, composición corporal y más. Contesta las preguntas para obtener un feedback inicial sobre tu perfil MUPAI.
+
+    Próximamente, podrás recibir un plan de entrenamiento personalizado basado en los resultados de este perfil.
+    """)
+    st.write("Aquí se mostrará el cuestionario cuando esté listo.")
 
 # Sección Inicio
 def inicio():
@@ -131,10 +168,9 @@ def contacto():
 # Panel de administración
 def administrar_usuarios():
     st.subheader("Administrar Usuarios Pendientes")
-    conn = sqlite3.connect('users.db')
-    cursor = conn.cursor()
-    pending_users = cursor.execute("SELECT id, username FROM users WHERE authorized=0").fetchall()
-    conn.close()
+    with sqlite3.connect('users.db') as conn:
+        cursor = conn.cursor()
+        pending_users = cursor.execute("SELECT id, username FROM users WHERE authorized=0").fetchall()
 
     if pending_users:
         st.write("Usuarios pendientes de autorización:")
@@ -150,10 +186,7 @@ def main():
     init_db()
 
     st.sidebar.title("Navegación")
-    menu = st.sidebar.radio(
-        "Ir a:",
-        ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Administrar Usuarios"]
-    )
+    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Administrar Usuarios"]
 
     user = None
     st.sidebar.title("Registro / Login")
@@ -173,21 +206,28 @@ def main():
             user = login_user(username, password)
             if user and user[3] == 1:
                 st.sidebar.success(f"Bienvenido, {user[1]}.")
+                menu.append("Exclusivo")
             elif user:
                 st.sidebar.warning("No autorizado.")
             else:
                 st.sidebar.error("Usuario o contraseña incorrectos.")
 
-    if menu == "Inicio":
+    selected_menu = st.sidebar.radio("Ir a:", menu)
+
+    if selected_menu == "Inicio":
         inicio()
-    elif menu == "Sobre Mí":
+    elif selected_menu == "Sobre Mí":
         sobre_mi()
-    elif menu == "Servicios":
+    elif selected_menu == "Servicios":
         servicios()
-    elif menu == "Contacto":
+    elif selected_menu == "Contacto":
         contacto()
-    elif menu == "Administrar Usuarios":
+    elif selected_menu == "Perfil MUPAI/Salud y Rendimiento":
+        perfil_mupai()
+    elif selected_menu == "Administrar Usuarios":
         administrar_usuarios()
+    elif selected_menu == "Exclusivo" and user and user[3] == 1:
+        funcionalidad_exclusiva()
 
 if __name__ == "__main__":
     main()
