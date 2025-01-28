@@ -4,6 +4,7 @@ from email.mime.text import MIMEText
 import streamlit as st
 import sqlite3
 from datetime import datetime
+import bcrypt
 
 # Configuración inicial de la página
 st.set_page_config(
@@ -93,6 +94,7 @@ def ajustar_volumen(base_volumen, balance_energetico, calidad_sueno, estres_perc
     elif estres_percibido < 4:
         ajuste += 0.1
 
+    # Ajuste según categoría competitiva
     if categoria_competitiva == "Men’s Physique":
         base_volumen['Pectorales'] *= 1.2
         base_volumen['Espalda'] *= 1.2
@@ -263,6 +265,51 @@ def inicio():
     - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
     """)
 
+# Función para mostrar la sección de "Sobre Mí"
+def sobre_mi():
+    st.title("Sobre Mí")
+    st.write("""
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    """)
+
+    st.subheader("Galería de Imágenes")
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.image("20250116_074806_0000.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
+    with col2:
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
+    with col3:
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
+
+# Función para mostrar los servicios
+def servicios():
+    st.title("Servicios")
+    st.write("""
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
+    """)
+
+# Función para contacto
+def contacto():
+    st.title("Contacto")
+    st.write("""
+    Para más información o consultas, contáctanos:
+    - **Correo**: contacto@mupai.com  
+    - **Teléfono**: +52 866 258 05 94  
+    - **Ubicación**: Monterrey, Nuevo León  
+    """)
+
 # Función principal
 def main():
     init_db()
@@ -292,9 +339,7 @@ def main():
     elif choice == "Registro":
         registro()
     elif choice == "Administrar Usuarios" and user_role == "admin":
-        gestionar_usuarios_pendientes()
-        gestionar_usuarios_activos()
-        exportar_usuarios_activos()
+        administrar_usuarios()
     elif choice == "Historial de Actividades" and user_role == "admin":
         ver_historial_actividades()
 
