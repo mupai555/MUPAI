@@ -117,7 +117,7 @@ def gestionar_usuarios_pendientes():
         st.write("Lista de usuarios pendientes de autorización:")
         for user in pending_users:
             st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
-            if st.button(f"Autorizar a {user[2]}", key=f"authorize_{user[0]}'):"):
+            if st.button(f"Autorizar a {user[2]}", key=f"authorize_{user[0]}"):
                 authorize_user(user[0])
                 st.success(f"Usuario {user[2]} autorizado exitosamente.")
     else:
@@ -154,13 +154,63 @@ def funcionalidad_exclusiva():
 
 # Sección Perfil MUPAI/Salud y Rendimiento
 def perfil_mupai():
-    st.title("Perfil MUPAI/Salud y Rendimiento")
+    st.title("Perfil MUPAI - Fitness, Performance, and Health")
     st.write("""
-    Este es un cuestionario diseñado para evaluar tu estilo de vida, rendimiento, composición corporal y más. Contesta las preguntas para obtener un feedback inicial sobre tu perfil MUPAI.
-
-    Próximamente, podrás recibir un plan de entrenamiento personalizado basado en los resultados de este perfil.
+    Este cuestionario está diseñado para personalizar tu entrenamiento, nutrición y progresión basándonos en tu estilo de vida, objetivos, y estado físico actual. Por favor, completa las siguientes preguntas.
     """)
-    st.write("Aquí se mostrará el cuestionario cuando esté listo.")
+
+    st.header("1. Datos Generales del Usuario")
+    edad = st.number_input("¿Cuál es tu edad?", min_value=1, max_value=120, step=1)
+    genero = st.selectbox("¿Cuál es tu género?", ["Masculino", "Femenino", "Otro"])
+    altura = st.number_input("¿Cuál es tu altura en metros?", min_value=0.5, max_value=2.5, step=0.01, format="%.2f")
+    peso = st.number_input("¿Cuál es tu peso actual en kilogramos?", min_value=1.0, max_value=300.0, step=0.1)
+
+    st.header("2. Objetivos del Entrenamiento")
+    objetivo_principal = st.selectbox("¿Cuál es tu objetivo principal de entrenamiento?", [
+        "Incrementar fuerza",
+        "Ganar masa muscular (hipertrofia)",
+        "Reducir grasa corporal",
+        "Competir en físico-culturismo"
+    ])
+    subobjetivo = st.text_input("¿Tienes algún subobjetivo adicional? (Por ejemplo: mejorar un grupo muscular específico)")
+
+    st.header("3. Porcentaje de Grasa Corporal")
+    grasa_corporal_actual = st.number_input("Introduce tu porcentaje de grasa corporal actual (%)", min_value=0.0, max_value=100.0, step=0.1)
+
+    st.header("4. Indicadores de Estilo de Vida")
+    calidad_sueno = st.selectbox("¿Cómo calificarías tu calidad de sueño general en el último mes?", [
+        "Muy buena", "Bastante buena", "Bastante mala", "Muy mala"
+    ])
+    horas_sueno = st.selectbox("¿Cuántas horas promedio duermes por noche?", [
+        "Más de 7 horas", "6-7 horas", "5-6 horas", "Menos de 5 horas"
+    ])
+    estres_percibido = st.selectbox("¿Con qué frecuencia sientes que no puedes manejar el estrés?", [
+        "Nunca", "Casi nunca", "A veces", "Bastante seguido", "Muy seguido"
+    ])
+
+    st.header("5. Estado Actual y Progresión")
+    condicion_fisica = st.selectbox("¿Cómo calificarías tu condición física actual?", [
+        "Muy baja", "Baja", "Moderada", "Buena", "Excelente"
+    ])
+    maximos_actuales = {
+        "Sentadilla": st.number_input("Peso máximo en Sentadilla (kg):", min_value=0, step=1),
+        "Peso muerto": st.number_input("Peso máximo en Peso Muerto (kg):", min_value=0, step=1),
+        "Press de banca": st.number_input("Peso máximo en Press de Banca (kg):", min_value=0, step=1),
+    }
+
+    st.header("6. Nivel de Actividad Física")
+    actividad_habitual = st.selectbox("Selecciona tu nivel de actividad física habitual:", [
+        "Sedentario", "Algo activo", "Activo", "Muy activo"
+    ])
+    actividades_vigorosas = st.number_input("Días de actividades vigorosas por semana:", min_value=0, max_value=7, step=1)
+    tiempo_vigorosas = st.number_input("Minutos diarios de actividades vigorosas:", min_value=0, step=1)
+
+    st.header("7. Personalización y Seguimiento")
+    adaptabilidad_programa = st.radio("¿Te gustaría que el programa se ajuste automáticamente si no puedes completar un entrenamiento?", ["Sí", "No"])
+    seguimiento_progreso = st.radio("¿Estarías dispuesto a registrar métricas de desempeño (peso levantado, repeticiones, RPE)?", ["Sí", "No"])
+
+    if st.button("Enviar"):
+        st.success("¡Gracias por completar el cuestionario! Pronto recibirás recomendaciones personalizadas basadas en tus respuestas.")
 
 # Sección Registro
 def registro():
