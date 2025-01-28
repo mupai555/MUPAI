@@ -1,10 +1,17 @@
+import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import streamlit as st
 import sqlite3
 from datetime import datetime
-import bcrypt
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
+EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
+ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
 
 # Configuración inicial de la página
 st.set_page_config(
@@ -43,89 +50,8 @@ def init_db():
         ''')
         conn.commit()
 
-# Función para calcular el FFMI
-def calcular_ffmi(peso, altura, porcentaje_grasa):
-    masa_magra = peso * (1 - porcentaje_grasa / 100)
-    return round(masa_magra / (altura ** 2), 2)
-
-# Función para clasificar el FFMI
-def clasificar_ffmi(ffmi):
-    if ffmi < 18:
-        return "Principiante"
-    elif 18 <= ffmi < 20:
-        return "Intermedio"
-    elif 20 <= ffmi < 23.5:
-        return "Avanzado"
-    else:
-        return "Élite"
-
-# Función para calcular déficit calórico diario
-def calcular_deficit_optimo(porcentaje_grasa_actual, porcentaje_grasa_objetivo, semanas_restantes, peso):
-    if porcentaje_grasa_actual <= porcentaje_grasa_objetivo:
-        return 0  # Ya está en el objetivo
-    deficit_calorico_semanal = ((porcentaje_grasa_actual - porcentaje_grasa_objetivo) * peso * 7700) / semanas_restantes
-    deficit_diario = deficit_calorico_semanal / 7
-    return round(deficit_diario, 2)
-
-# Función para determinar balance energético
-def calcular_balance_energetico(deficit_diario, calorias_mantenimiento):
-    if deficit_diario == 0:
-        return "Mantenimiento"
-    elif deficit_diario > 0:
-        return f"DÉFICIT: {calorias_mantenimiento - deficit_diario} kcal/día"
-    else:
-        return f"SUPERÁVIT: {calorias_mantenimiento + abs(deficit_diario)} kcal/día"
-
-# Función para calcular volumen ajustado
-def ajustar_volumen(base_volumen, balance_energetico, calidad_sueno, estres_percibido, categoria_competitiva, nivel_entrenamiento):
-    ajuste = 1.0
-    if balance_energetico == "Déficit":
-        ajuste -= 0.15
-    elif balance_energetico == "Superávit":
-        ajuste += 0.15
-
-    if calidad_sueno in ["Regular", "Mala"]:
-        ajuste -= 0.1
-    elif calidad_sueno == "Muy buena":
-        ajuste += 0.1
-
-    if estres_percibido > 7:
-        ajuste -= 0.2
-    elif estres_percibido < 4:
-        ajuste += 0.1
-
-    # Ajuste según categoría competitiva
-    if categoria_competitiva == "Men’s Physique":
-        base_volumen['Pectorales'] *= 1.2
-        base_volumen['Espalda'] *= 1.2
-        base_volumen['Bíceps'] *= 1.1
-        base_volumen['Tríceps'] *= 1.1
-    elif categoria_competitiva == "Classic Physique":
-        base_volumen['Pectorales'] *= 1.15
-        base_volumen['Espalda'] *= 1.15
-        base_volumen['Cuádriceps'] *= 1.2
-        base_volumen['Piernas'] *= 1.2
-    elif categoria_competitiva == "Wellness":
-        base_volumen['Glúteos'] *= 1.25
-        base_volumen['Cuádriceps'] *= 1.2
-        base_volumen['Espalda'] *= 1.1
-
-    if nivel_entrenamiento == "Principiante":
-        ajuste += 0.1
-    elif nivel_entrenamiento == "Intermedio":
-        ajuste += 0.05
-    elif nivel_entrenamiento == "Avanzado":
-        ajuste -= 0.05
-
-    volumen_ajustado = {grupo: max(6, int(volumen * ajuste)) for grupo, volumen in base_volumen.items()}
-    return volumen_ajustado
-
 # Función para enviar correo al usuario
 def enviar_email_usuario(usuario_email, ffmi, clasificacion_ffmi, porcentaje_grasa, clasificacion_grasa):
-    remitente = "tu_email@hotmail.com"
-    destinatario = usuario_email
-    password = "tu_contraseña"
-
     subject = "Tu Perfil MUPAI: Resultados"
     body = f"""
     Hola,
@@ -138,40 +64,23 @@ def enviar_email_usuario(usuario_email, ffmi, clasificacion_ffmi, porcentaje_gra
     2. **Porcentaje de Grasa Corporal**:
     Tu porcentaje de grasa corporal es {porcentaje_grasa}%. Según este porcentaje, tu clasificación es: {clasificacion_grasa}.
     
-    --- 
-    **Tabla de Clasificación FFMI**:
-    - Principiante: FFMI < 18
-    - Intermedio: 18 <= FFMI < 20
-    - Avanzado: 20 <= FFMI < 23.5
-    - Élite: FFMI >= 23.5
-
-    **Tabla de Clasificación de Grasa Corporal**:
-    - Hombres:
-      - Saludable: 8-20%
-      - Atleta: 6-13%
-      - Rango elevado (no saludable): >25%
-    - Mujeres:
-      - Saludable: 21-32%
-      - Atleta: 14-20%
-      - Rango elevado (no saludable): >35%
-    
     ¡Gracias por confiar en MUPAI para tu entrenamiento personalizado!
 
     Saludos,
     MUPAI Team
     """
+
     mensaje = MIMEMultipart()
-    mensaje['From'] = remitente
-    mensaje['To'] = destinatario
+    mensaje['From'] = EMAIL_ADDRESS
+    mensaje['To'] = usuario_email
     mensaje['Subject'] = subject
     mensaje.attach(MIMEText(body, 'plain'))
 
     try:
         server = smtplib.SMTP('smtp-mail.outlook.com', 587)
         server.starttls()
-        server.login(remitente, password)
-        text = mensaje.as_string()
-        server.sendmail(remitente, destinatario, text)
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.sendmail(EMAIL_ADDRESS, usuario_email, mensaje.as_string())
         server.quit()
         print("Correo enviado exitosamente al usuario.")
     except Exception as e:
@@ -179,10 +88,6 @@ def enviar_email_usuario(usuario_email, ffmi, clasificacion_ffmi, porcentaje_gra
 
 # Función para enviar correo al administrador
 def enviar_email_administrador(usuario_email, usuario_data):
-    remitente = "tu_email@hotmail.com"
-    destinatario = "tu_email_admin@hotmail.com"
-    password = "tu_contraseña"
-
     subject = f"Información Completa del Usuario {usuario_data['username']}"
     body = f"""
     Hola,
@@ -198,40 +103,27 @@ def enviar_email_administrador(usuario_email, usuario_data):
     - FFMI: {usuario_data['ffmi']}
     - Clasificación FFMI: {usuario_data['clasificacion_ffmi']}
     
-    2. **Déficit Calórico Diario**:
-    - Déficit diario recomendado: {usuario_data['deficit_calorico_diario']} kcal/día
-    - Balance energético: {usuario_data['balance_energetico']}
-
-    3. **Volumen de Entrenamiento Ajustado**:
-    - Pectorales: {usuario_data['volumen_pectorales']} series/semana
-    - Espalda: {usuario_data['volumen_espalda']} series/semana
-    - Bíceps: {usuario_data['volumen_biceps']} series/semana
-
-    --- 
-    **Recomendaciones**:
-    Basado en la información proporcionada, ajustamos el volumen y el déficit calórico para este usuario.
-    
     Saludos,
     MUPAI Team
     """
+
     mensaje = MIMEMultipart()
-    mensaje['From'] = remitente
-    mensaje['To'] = destinatario
+    mensaje['From'] = EMAIL_ADDRESS
+    mensaje['To'] = ADMIN_EMAIL
     mensaje['Subject'] = subject
     mensaje.attach(MIMEText(body, 'plain'))
 
     try:
         server = smtplib.SMTP('smtp-mail.outlook.com', 587)
         server.starttls()
-        server.login(remitente, password)
-        text = mensaje.as_string()
-        server.sendmail(remitente, destinatario, text)
+        server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+        server.sendmail(EMAIL_ADDRESS, ADMIN_EMAIL, mensaje.as_string())
         server.quit()
         print("Correo enviado al administrador exitosamente.")
     except Exception as e:
         print(f"Error al enviar correo al administrador: {e}")
 
-# Función para mostrar el inicio
+# Funciones para cada sección
 def inicio():
     st.image("LOGO.png", use_container_width=True)
     st.title("Bienvenido a MUPAI")
@@ -265,17 +157,10 @@ def inicio():
     - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
     """)
 
-# Función para mostrar la sección de "Sobre Mí"
 def sobre_mi():
     st.title("Sobre Mí")
     st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
-
-    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
-
-    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
-
-    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica.
     """)
 
     st.subheader("Galería de Imágenes")
@@ -289,18 +174,6 @@ def sobre_mi():
     with col3:
         st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
 
-# Función para mostrar los servicios
-def servicios():
-    st.title("Servicios")
-    st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
-    - Planes de entrenamiento individualizados.
-    - Programas de mejora física y mental.
-    - Asesoría en nutrición deportiva.
-    - Consultoría en rendimiento deportivo.
-    """)
-
-# Función para contacto
 def contacto():
     st.title("Contacto")
     st.write("""
@@ -314,34 +187,16 @@ def contacto():
 def main():
     init_db()
 
-    logged_user = st.sidebar.text_input("Usuario logueado (simulado para pruebas):")
-    user_role = "user"  # Cambiar a "admin" para probar como administrador
-
     st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro"]
-
-    if logged_user and user_role == "admin":
-        menu.append("Administrar Usuarios")
-        menu.append("Historial de Actividades")
-
+    menu = ["Inicio", "Sobre Mí", "Contacto"]
     choice = st.sidebar.radio("Selecciona una opción:", menu)
 
     if choice == "Inicio":
         inicio()
     elif choice == "Sobre Mí":
         sobre_mi()
-    elif choice == "Servicios":
-        servicios()
     elif choice == "Contacto":
         contacto()
-    elif choice == "Perfil MUPAI/Salud y Rendimiento":
-        perfil_mupai()
-    elif choice == "Registro":
-        registro()
-    elif choice == "Administrar Usuarios" and user_role == "admin":
-        administrar_usuarios()
-    elif choice == "Historial de Actividades" and user_role == "admin":
-        ver_historial_actividades()
 
 if __name__ == "__main__":
     main()
