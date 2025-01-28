@@ -1,12 +1,12 @@
 streamlit==1.41.1
-fpdf==1.7.2
-pymupdf==1.25.1
-transformers==4.47.1
-huggingface-hub==0.27.0
-torch==2.5.1
-tensorflow>=2.17.0
-matplotlib
-pandas
-bcrypt
-email-validator
-python-dotenv
+fpdf==1.7.2          # Para generación de PDFs (planeado)
+pymupdf==1.25.1      # Biblioteca para trabajar con PDFs (planeado)
+transformers==4.47.1 # Para modelos de procesamiento de lenguaje natural (planeado)
+huggingface-hub==0.27.0 # Para gestionar modelos de Hugging Face (planeado)
+torch==2.5.1         # Para soporte de modelos de aprendizaje profundo (planeado)
+tensorflow>=2.17.0   # Para modelos de IA basados en TensorFlow (planeado)
+matplotlib           # Para gráficos avanzados (planeado)
+pandas               # Para manejo de datos tabulares (planeado)
+bcrypt               # Para cifrar contraseñas (listo para usar)
+email-validator      # Para validar direcciones de correo electrónico (listo para usar)
+python-dotenv        # Para gestionar variables de entorno (listo para usar)
