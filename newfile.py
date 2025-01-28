@@ -50,6 +50,83 @@ def init_db():
         ''')
         conn.commit()
 
+# Función para calcular el FFMI
+def calcular_ffmi(peso, altura, porcentaje_grasa):
+    masa_magra = peso * (1 - porcentaje_grasa / 100)
+    return round(masa_magra / (altura ** 2), 2)
+
+# Función para clasificar el FFMI
+def clasificar_ffmi(ffmi):
+    if ffmi < 18:
+        return "Principiante"
+    elif 18 <= ffmi < 20:
+        return "Intermedio"
+    elif 20 <= ffmi < 23.5:
+        return "Avanzado"
+    else:
+        return "Élite"
+
+# Función para calcular déficit calórico diario
+def calcular_deficit_optimo(porcentaje_grasa_actual, porcentaje_grasa_objetivo, semanas_restantes, peso):
+    if porcentaje_grasa_actual <= porcentaje_grasa_objetivo:
+        return 0  # Ya está en el objetivo
+    deficit_calorico_semanal = ((porcentaje_grasa_actual - porcentaje_grasa_objetivo) * peso * 7700) / semanas_restantes
+    deficit_diario = deficit_calorico_semanal / 7
+    return round(deficit_diario, 2)
+
+# Función para determinar balance energético
+def calcular_balance_energetico(deficit_diario, calorias_mantenimiento):
+    if deficit_diario == 0:
+        return "Mantenimiento"
+    elif deficit_diario > 0:
+        return f"DÉFICIT: {calorias_mantenimiento - deficit_diario} kcal/día"
+    else:
+        return f"SUPERÁVIT: {calorias_mantenimiento + abs(deficit_diario)} kcal/día"
+
+# Función para calcular volumen ajustado
+def ajustar_volumen(base_volumen, balance_energetico, calidad_sueno, estres_percibido, categoria_competitiva, nivel_entrenamiento):
+    ajuste = 1.0
+    if balance_energetico == "Déficit":
+        ajuste -= 0.15
+    elif balance_energetico == "Superávit":
+        ajuste += 0.15
+
+    if calidad_sueno in ["Regular", "Mala"]:
+        ajuste -= 0.1
+    elif calidad_sueno == "Muy buena":
+        ajuste += 0.1
+
+    if estres_percibido > 7:
+        ajuste -= 0.2
+    elif estres_percibido < 4:
+        ajuste += 0.1
+
+    # Ajuste según categoría competitiva
+    if categoria_competitiva == "Men’s Physique":
+        base_volumen['Pectorales'] *= 1.2
+        base_volumen['Espalda'] *= 1.2
+        base_volumen['Bíceps'] *= 1.1
+        base_volumen['Tríceps'] *= 1.1
+    elif categoria_competitiva == "Classic Physique":
+        base_volumen['Pectorales'] *= 1.15
+        base_volumen['Espalda'] *= 1.15
+        base_volumen['Cuádriceps'] *= 1.2
+        base_volumen['Piernas'] *= 1.2
+    elif categoria_competitiva == "Wellness":
+        base_volumen['Glúteos'] *= 1.25
+        base_volumen['Cuádriceps'] *= 1.2
+        base_volumen['Espalda'] *= 1.1
+
+    if nivel_entrenamiento == "Principiante":
+        ajuste += 0.1
+    elif nivel_entrenamiento == "Intermedio":
+        ajuste += 0.05
+    elif nivel_entrenamiento == "Avanzado":
+        ajuste -= 0.05
+
+    volumen_ajustado = {grupo: max(6, int(volumen * ajuste)) for grupo, volumen in base_volumen.items()}
+    return volumen_ajustado
+
 # Función para enviar correo al usuario
 def enviar_email_usuario(usuario_email, ffmi, clasificacion_ffmi, porcentaje_grasa, clasificacion_grasa):
     subject = "Tu Perfil MUPAI: Resultados"
@@ -160,7 +237,13 @@ def inicio():
 def sobre_mi():
     st.title("Sobre Mí")
     st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica.
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
     """)
 
     st.subheader("Galería de Imágenes")
