@@ -7,7 +7,7 @@ import sqlite3
 from datetime import datetime
 from dotenv import load_dotenv
 
-# Load environment variables
+# Cargar variables de entorno
 load_dotenv()
 EMAIL_ADDRESS = os.getenv('EMAIL_ADDRESS')
 EMAIL_PASSWORD = os.getenv('EMAIL_PASSWORD')
