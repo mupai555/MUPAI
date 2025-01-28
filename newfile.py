@@ -200,78 +200,55 @@ def enviar_email_administrador(usuario_email, usuario_data):
     except Exception as e:
         print(f"Error al enviar correo al administrador: {e}")
 
-# Funciones para cada sección
-def inicio():
-    st.image("LOGO.png", use_container_width=True)
-    st.title("Bienvenido a MUPAI")
-
-    # Misión
-    st.header("Misión")
+# Función de Perfil MUPAI
+def perfil_mupai():
+    st.title("Perfil MUPAI - Salud y Rendimiento")
     st.write("""
-    Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
+    Responde a las siguientes preguntas para obtener un análisis detallado de tu perfil de salud y rendimiento.
     """)
 
-    # Visión
-    st.header("Visión")
-    st.write("""
-    Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
-    """)
+    # Aquí puedes agregar las preguntas específicas para el cuestionario de MUPAI
+    edad = st.number_input("Edad:", min_value=18, max_value=100, value=25)
+    altura = st.number_input("Altura (m):", min_value=1.5, max_value=2.5, value=1.75)
+    peso = st.number_input("Peso (kg):", min_value=30, max_value=200, value=70)
+    porcentaje_grasa = st.number_input("Porcentaje de grasa corporal (%):", min_value=5, max_value=50, value=20)
+    nivel_entrenamiento = st.selectbox("Nivel de entrenamiento:", ["Principiante", "Intermedio", "Avanzado", "Élite"])
 
-    # Política
-    st.header("Política")
-    st.write("""
-    En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
-    """)
+    # Cálculos del perfil
+    ffmi = calcular_ffmi(peso, altura, porcentaje_grasa)
+    clasificacion_ffmi = clasificar_ffmi(ffmi)
 
-    # Política del Servicio
-    st.header("Política del Servicio")
-    st.write("""
-    En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
-    - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
-    - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
-    - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
-    - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
-    - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
-    """)
+    st.write(f"**Tu FFMI es:** {ffmi} - Clasificación: {clasificacion_ffmi}")
+    st.write(f"**Tu porcentaje de grasa corporal es:** {porcentaje_grasa}%")
 
-def sobre_mi():
-    st.title("Sobre Mí")
-    st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+    # Determinación de clasificación de grasa
+    if porcentaje_grasa < 10:
+        clasificacion_grasa = "Bajo"
+    elif 10 <= porcentaje_grasa < 20:
+        clasificacion_grasa = "Normal"
+    elif 20 <= porcentaje_grasa < 30:
+        clasificacion_grasa = "Alto"
+    else:
+        clasificacion_grasa = "Muy Alto"
 
-    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+    st.write(f"**Tu clasificación de grasa corporal es:** {clasificacion_grasa}")
 
-    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+    # Enviar correo al usuario con los resultados
+    if st.button("Enviar resultados por correo"):
+        enviar_email_usuario("usuario@correo.com", ffmi, clasificacion_ffmi, porcentaje_grasa, clasificacion_grasa)
 
-    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
-    """)
-
-    st.subheader("Galería de Imágenes")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.image("20250116_074806_0000.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
-    with col2:
-        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
-    with col3:
-        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
-
-def contacto():
-    st.title("Contacto")
-    st.write("""
-    Para más información o consultas, contáctanos:
-    - **Correo**: contacto@mupai.com  
-    - **Teléfono**: +52 866 258 05 94  
-    - **Ubicación**: Monterrey, Nuevo León  
-    """)
+    # Volumen ajustado y planificación de entrenamiento
+    base_volumen = {'Pectorales': 12, 'Espalda': 12, 'Bíceps': 8, 'Tríceps': 8, 'Cuádriceps': 10, 'Piernas': 10}
+    volumen_ajustado = ajustar_volumen(base_volumen, "Déficit", "Regular", 6, "Men’s Physique", nivel_entrenamiento)
+    st.write("**Volumen ajustado por grupo muscular:**")
+    st.write(volumen_ajustado)
 
 # Función principal
 def main():
     init_db()
 
     st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Contacto"]
+    menu = ["Inicio", "Sobre Mí", "Contacto", "Perfil MUPAI"]
     choice = st.sidebar.radio("Selecciona una opción:", menu)
 
     if choice == "Inicio":
@@ -280,6 +257,8 @@ def main():
         sobre_mi()
     elif choice == "Contacto":
         contacto()
+    elif choice == "Perfil MUPAI":
+        perfil_mupai()
 
 if __name__ == "__main__":
     main()
