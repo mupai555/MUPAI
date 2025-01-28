@@ -3,6 +3,7 @@ import sqlite3
 import bcrypt
 import pandas as pd
 from datetime import datetime
+import matplotlib.pyplot as plt
 
 # Configuración inicial de la página
 st.set_page_config(
@@ -41,126 +42,120 @@ def init_db():
         ''')
         conn.commit()
 
-# Guardar un usuario nuevo en la base de datos
-def register_user(full_name, username, email, phone, birth_date, password, terms_accepted):
-    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        try:
-            cursor.execute('''INSERT INTO users 
-                              (full_name, username, email, phone, birth_date, password, terms_accepted) 
-                              VALUES (?, ?, ?, ?, ?, ?, ?)''', 
-                           (full_name, username, email, phone, birth_date, hashed_password, terms_accepted))
-            conn.commit()
-            return True
-        except sqlite3.IntegrityError as e:
-            st.error(f"Error: {e}")
-            return False
+# Función para calcular el FFMI
+def calcular_ffmi(peso, altura, porcentaje_grasa):
+    masa_magra = peso * (1 - porcentaje_grasa / 100)
+    return round(masa_magra / (altura ** 2), 2)
 
-# Verificar login
-def login_user(username, password):
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        user = cursor.execute("SELECT * FROM users WHERE username=?", (username,)).fetchone()
-        if user and bcrypt.checkpw(password.encode('utf-8'), user[6]):
-            return user
-        return None
-
-# Registrar actividad del usuario
-def log_user_activity(user_id, action):
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO user_activity (user_id, action) VALUES (?, ?)", (user_id, action))
-        conn.commit()
-
-# Autorizar usuario manualmente
-def authorize_user(user_id):
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        cursor.execute("UPDATE users SET authorized=1 WHERE id=?", (user_id,))
-        conn.commit()
-    log_user_activity(user_id, "Usuario autorizado")
-
-# Revocar acceso a usuario
-def revoke_user(user_id):
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        cursor.execute("UPDATE users SET authorized=0 WHERE id=?", (user_id,))
-        conn.commit()
-    log_user_activity(user_id, "Acceso revocado")
-
-# Ver usuarios activos
-def gestionar_usuarios_activos():
-    st.subheader("Usuarios Activos y Fecha de Registro")
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        active_users = cursor.execute("SELECT id, full_name, username, email, date_added FROM users WHERE authorized=1").fetchall()
-
-    if active_users:
-        st.write("Lista de usuarios activos:")
-        for user in active_users:
-            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
-            if st.button(f"Revocar acceso a {user[2]}", key=f"revoke_{user[0]}"):
-                revoke_user(user[0])
-                st.success(f"Acceso revocado para {user[2]}.")
+# Función para clasificar el FFMI
+def clasificar_ffmi(ffmi):
+    if ffmi < 18:
+        return "Principiante"
+    elif 18 <= ffmi < 20:
+        return "Intermedio"
+    elif 20 <= ffmi < 23.5:
+        return "Avanzado"
     else:
-        st.write("No hay usuarios activos autorizados.")
+        return "Élite"
 
-# Ver usuarios pendientes de autorización
-def gestionar_usuarios_pendientes():
-    st.subheader("Usuarios Pendientes de Autorización")
-    with sqlite3.connect('users.db') as conn:
-        cursor = conn.cursor()
-        pending_users = cursor.execute("SELECT id, full_name, username, email, date_added FROM users WHERE authorized=0").fetchall()
+# Función para calcular déficit óptimo
+def calcular_deficit_optimo(porcentaje_grasa_actual, porcentaje_grasa_objetivo, semanas_restantes, peso):
+    if porcentaje_grasa_actual <= porcentaje_grasa_objetivo:
+        return 0  # Ya está en el objetivo
+    deficit_calorico_semanal = ((porcentaje_grasa_actual - porcentaje_grasa_objetivo) * peso * 7700) / semanas_restantes
+    deficit_diario = deficit_calorico_semanal / 7
+    return round(deficit_diario, 2)
 
-    if pending_users:
-        st.write("Lista de usuarios pendientes de autorización:")
-        for user in pending_users:
-            st.write(f"**Nombre Completo:** {user[1]} | **Usuario:** {user[2]} | **Correo:** {user[3]} | **Fecha de Registro:** {user[4]}")
-            if st.button(f"Autorizar a {user[2]}", key=f"authorize_{user[0]}'):"):
-                authorize_user(user[0])
-                st.success(f"Usuario {user[2]} autorizado exitosamente.")
+# Función para determinar balance energético
+def calcular_balance_energetico(deficit_diario, calorias_mantenimiento):
+    if deficit_diario == 0:
+        return "Mantenimiento"
+    elif deficit_diario > 0:
+        return f"DÉFICIT: {calorias_mantenimiento - deficit_diario} kcal/día"
     else:
-        st.write("No hay usuarios pendientes de autorización.")
+        return f"SUPERÁVIT: {calorias_mantenimiento + abs(deficit_diario)} kcal/día"
 
-# Exportar usuarios activos a CSV
-def exportar_usuarios_activos():
-    with sqlite3.connect('users.db') as conn:
-        df = pd.read_sql_query("SELECT full_name, username, email, date_added FROM users WHERE authorized=1", conn)
-    csv = df.to_csv(index=False)
-    st.download_button("Descargar Usuarios Activos", csv, "usuarios_activos.csv", "text/csv")
+# Función para calcular volumen por grupo muscular
+def calcular_volumen_por_categoria(categoria, nivel_entrenamiento):
+    prioridades = {
+        "Men’s Physique": {
+            "Pectorales": "Alta",
+            "Espalda": "Alta",
+            "Bíceps": "Media",
+            "Tríceps": "Media",
+            "Cuádriceps": "Baja",
+            "Pantorrillas": "Baja"
+        },
+        "Wellness": {
+            "Cuádriceps": "Alta",
+            "Glúteos": "Alta",
+            "Isquiotibiales": "Media",
+            "Pantorrillas": "Media",
+            "Espalda": "Media",
+            "Pectorales": "Baja"
+        }
+    }
+    base_volumen = {"Alta": 18, "Media": 14, "Baja": 10}
+    ajuste_nivel = 1.2 if nivel_entrenamiento == "Avanzado" else 1.0
+    volumen_por_grupo = {grupo: round(base_volumen[prioridad] * ajuste_nivel, 1) for grupo, prioridad in prioridades[categoria].items()}
+    return volumen_por_grupo
 
-# Ver historial de actividades
-def ver_historial_actividades():
-    st.subheader("Historial de Actividades")
-    with sqlite3.connect('users.db') as conn:
-        df = pd.read_sql_query('''
-            SELECT u.full_name, ua.action, ua.timestamp 
-            FROM user_activity ua
-            JOIN users u ON ua.user_id = u.id
-            ORDER BY ua.timestamp DESC
-        ''', conn)
-    if not df.empty:
-        st.dataframe(df)
-        csv = df.to_csv(index=False)
-        st.download_button("Descargar Historial de Actividades", csv, "historial_actividades.csv", "text/csv")
-    else:
-        st.write("No hay actividades registradas.")
-
-# Función exclusiva para usuarios autorizados
-def funcionalidad_exclusiva():
-    st.subheader("Área Exclusiva para Usuarios Autorizados")
-    st.write("Bienvenido a la sección exclusiva de MUPAI. Aquí puedes acceder a contenido y herramientas especiales.")
-
-# Sección Perfil MUPAI/Salud y Rendimiento
+# Función para desplegar el cuestionario completo en Perfil MUPAI
 def perfil_mupai():
-    st.title("Perfil MUPAI/Salud y Rendimiento")
+    st.title("Perfil MUPAI - Fitness, Performance, and Health")
     st.write("""
-    Este es un cuestionario diseñado para evaluar tu estilo de vida, rendimiento, composición corporal y más. Contesta las preguntas para obtener un feedback inicial sobre tu perfil MUPAI.
-
-    Próximamente, podrás recibir un plan de entrenamiento personalizado basado en los resultados de este perfil.
+    Este cuestionario está diseñado para personalizar tu entrenamiento, nutrición y progresión basándonos en tu estilo de vida, objetivos y estado físico actual. Por favor, completa las siguientes preguntas.
     """)
-    st.write("Aquí se mostrará el cuestionario cuando esté listo.")
+
+    # Sección 1: Datos Generales
+    st.header("1. Datos Generales del Usuario")
+    genero = st.selectbox("¿Cuál es tu género?", ["Masculino", "Femenino"])
+    edad = st.number_input("¿Cuál es tu edad?", min_value=10, max_value=80, step=1)
+    altura = st.number_input("¿Cuál es tu altura en metros?", min_value=1.0, max_value=2.5, step=0.01)
+    peso = st.number_input("¿Cuál es tu peso actual en kilogramos?", min_value=30.0, max_value=200.0, step=0.1)
+    porcentaje_grasa = st.number_input("Introduce tu porcentaje de grasa corporal (%)", min_value=5.0, max_value=50.0, step=0.1)
+
+    # Cálculo del FFMI y clasificación
+    if altura > 0 and peso > 0:
+        ffmi = calcular_ffmi(peso, altura, porcentaje_grasa)
+        clasificacion_ffmi = clasificar_ffmi(ffmi)
+        st.subheader("Resultados del FFMI")
+        st.write(f"Tu FFMI es: {ffmi}")
+        st.write(f"Clasificación del Nivel de Entrenamiento (según FFMI): {clasificacion_ffmi}")
+
+    # Sección 2: Objetivos
+    st.header("2. Objetivos del Entrenamiento")
+    objetivo_principal = st.selectbox("¿Cuál es tu objetivo principal de entrenamiento?", [
+        "Hipertrofia General", "Salud General", "Competencia en Fisicoculturismo"
+    ])
+    categoria = st.selectbox("¿En qué categoría competirías?", ["Men’s Physique", "Wellness"])
+
+    # Sección 3: Balance Energético
+    st.header("3. Balance Energético")
+    porcentaje_objetivo = st.number_input("Porcentaje de Grasa Objetivo (%)", min_value=3.0, max_value=50.0, step=0.1)
+    semanas_restantes = st.number_input("Semanas Restantes para Competencia", min_value=1, max_value=52, step=1)
+    calorias_mantenimiento = st.number_input("Calorías de Mantenimiento (kcal)", min_value=1000, max_value=5000, step=100)
+
+    deficit_diario = calcular_deficit_optimo(porcentaje_grasa, porcentaje_objetivo, semanas_restantes, peso)
+    balance_energetico = calcular_balance_energetico(deficit_diario, calorias_mantenimiento)
+    st.write(f"Déficit Diario Recomendado: {deficit_diario} kcal/día")
+    st.write(f"Recomendación: {balance_energetico}")
+
+    # Sección 4: Volumen por Grupo Muscular
+    st.header("4. Volumen Óptimo por Grupo Muscular")
+    volumen_grupos = calcular_volumen_por_categoria(categoria, clasificacion_ffmi)
+    for grupo, volumen in volumen_grupos.items():
+        st.write(f"{grupo}: {volumen} series/semana")
+
+    # Visualización de resultados con gráficos
+    st.subheader("Visualización del Volumen por Grupo Muscular")
+    fig, ax = plt.subplots()
+    ax.bar(volumen_grupos.keys(), volumen_grupos.values(), color='skyblue')
+    ax.set_ylabel("Series/Semana")
+    ax.set_title("Distribución del Volumen por Grupo Muscular")
+    st.pyplot(fig)
+
+    st.success("Cuestionario completado. Revisa las recomendaciones finales.")
 
 # Sección Registro
 def registro():
@@ -185,75 +180,9 @@ def registro():
 def inicio():
     st.image("LOGO.png", use_container_width=True)
     st.title("Bienvenido a MUPAI")
-
     st.header("Misión")
     st.write("""
     Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
-    """)
-
-    st.header("Visión")
-    st.write("""
-    Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
-    """)
-
-    st.header("Política")
-    st.write("""
-    En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
-    """)
-
-    st.header("Política del Servicio")
-    st.write("""
-    En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
-    - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
-    - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
-    - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
-    - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
-    - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
-    """)
-
-# Sección Sobre Mí
-def sobre_mi():
-    st.title("Sobre Mí")
-    st.write("""
-    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en *Muscle Up GYM*, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
-
-    Cuento con una Maestría en Fuerza y Acondicionamiento por el *Football Science Institute*, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la *Universidad de Sevilla*. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
-
-    Mi trayectoria ha sido reconocida con distinciones como el *Premio al Mérito Académico de la UANL*, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una *beca completa para un intercambio internacional* en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
-
-    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
-    """)
-
-    st.subheader("Galería de Imágenes")
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.image("20250116_074806_0000.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
-    with col2:
-        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
-        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
-    with col3:
-        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
-
-# Sección Servicios
-def servicios():
-    st.title("Servicios")
-    st.write("""
-    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
-    - Planes de entrenamiento individualizados.
-    - Programas de mejora física y mental.
-    - Asesoría en nutrición deportiva.
-    - Consultoría en rendimiento deportivo.
-    """)
-
-# Sección Contacto
-def contacto():
-    st.title("Contacto")
-    st.write("""
-    Para más información o consultas, contáctanos:
-    - **Correo**: contacto@mupai.com  
-    - **Teléfono**: +52 866 258 05 94  
-    - **Ubicación**: Monterrey, Nuevo León  
     """)
 
 # Main function
@@ -261,28 +190,15 @@ def main():
     init_db()
 
     st.sidebar.title("Navegación")
-    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro", "Administrar Usuarios", "Historial de Actividades"]
-
+    menu = ["Inicio", "Perfil MUPAI/Salud y Rendimiento", "Registro"]
     choice = st.sidebar.radio("Selecciona una opción:", menu)
 
     if choice == "Inicio":
         inicio()
-    elif choice == "Sobre Mí":
-        sobre_mi()
-    elif choice == "Servicios":
-        servicios()
-    elif choice == "Contacto":
-        contacto()
     elif choice == "Perfil MUPAI/Salud y Rendimiento":
         perfil_mupai()
     elif choice == "Registro":
         registro()
-    elif choice == "Administrar Usuarios":
-        gestionar_usuarios_pendientes()
-        gestionar_usuarios_activos()
-        exportar_usuarios_activos()
-    elif choice == "Historial de Actividades":
-        ver_historial_actividades()
 
 if __name__ == "__main__":
     main()
