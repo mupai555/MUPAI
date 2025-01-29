@@ -1,4 +1,3 @@
-
 import os
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -263,4 +262,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
