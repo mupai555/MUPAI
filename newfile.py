@@ -15,7 +15,7 @@ menu = st.sidebar.selectbox(
 
 # Contenido según la selección del menú
 if menu == "Inicio":
-    st.image("LOGO.png", use_column_width=True)
+    st.image("LOGO.png", use_container_width=True)
     st.title("Bienvenido a MUPAI")
     
     st.header("Misión")
@@ -58,13 +58,13 @@ elif menu == "Sobre Mí":
     st.subheader("Galería de Imágenes")
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.image("FB_IMG_1734820693317.jpg", use_column_width=True)
-        st.image("FB_IMG_1734820729323.jpg", use_column_width=True)
+        st.image("FB_IMG_1734820693317.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
     with col2:
-        st.image("FB_IMG_1734820709707.jpg", use_column_width=True)
-        st.image("FB_IMG_1734820808186.jpg", use_column_width=True)
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
     with col3:
-        st.image("FB_IMG_1734820712642.jpg", use_column_width=True)
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
 
 elif menu == "Servicios":
     st.title("Servicios")
@@ -79,7 +79,9 @@ elif menu == "Servicios":
 elif menu == "Perfil MUPAI/Salud y Rendimiento":
     submenu = st.sidebar.radio(
         "Selecciona una opción", 
-        ["Entrenamiento", "Nutrición"]
+        ["Entrenamiento", "Nutrición"],
+        # Corrección clave: Añadir key único para evitar conflicto de widgets
+        key="submenu_selector"
     )
     
     if submenu == "Entrenamiento":
