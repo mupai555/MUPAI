@@ -1,5 +1,5 @@
 import streamlit as st
-from datetime import time
+from datetime import time, datetime
 
 # Configuración de la página
 st.set_page_config(
@@ -16,18 +16,18 @@ menu = st.sidebar.selectbox(
 
 # Contenido según la selección del menú
 if menu == "Inicio":
-    st.image("LOGO.png", use_container_width=True)
+    st.image("LOGO.png", use_column_width=True)
     st.title("Bienvenido a MUPAI")
     
-    # [...] (Sección Inicio sin cambios)
+    # ... (Mismo contenido original)
 
 elif menu == "Sobre Mí":
     st.title("Sobre Mí")
-    # [...] (Sección Sobre Mí sin cambios)
+    # ... (Mismo contenido original)
 
 elif menu == "Servicios":
     st.title("Servicios")
-    # [...] (Sección Servicios sin cambios)
+    # ... (Mismo contenido original)
 
 elif menu == "Perfil MUPAI/Salud y Rendimiento":
     submenu = st.sidebar.radio(
@@ -37,200 +37,179 @@ elif menu == "Perfil MUPAI/Salud y Rendimiento":
     )
     
     if submenu == "Entrenamiento":
-        st.title("📋 Cuestionario Integral de Evaluación MUPAI")
+        st.title("📋 Evaluación Integral MUPAI")
         
         with st.form("cuestionario_mupai"):
-            # Sección 1: Información Personal
-            st.header("1. Información Personal")
-            nombre = st.text_input("Nombre completo legal:")
-            edad = st.number_input("Edad (años):", min_value=0, max_value=120, step=1)
-            genero = st.radio("Género biológico:", ["Hombre", "Mujer"])
+            # ===== SECCIÓN 1: DATOS PERSONALES =====
+            st.header("1. Información Básica")
+            nombre = st.text_input("Nombre completo:")
+            edad = st.number_input("Edad (años):", 18, 100)
+            genero = st.radio("Sexo biológico:", ["Hombre", "Mujer"])
             
-            # Sección 2: Cálculo FFMI
-            st.header("2. Composición Corporal")
+            # ===== SECCIÓN 2: COMPOSICIÓN CORPORAL =====
+            st.header("2. Medidas Corporales")
             col1, col2, col3 = st.columns(3)
             with col1:
-                peso = st.number_input("Peso actual (kg):", min_value=30.0, max_value=300.0, step=0.1)
+                peso = st.number_input("Peso (kg):", 40.0, 200.0)
             with col2:
-                altura = st.number_input("Altura (cm):", min_value=100, max_value=250, step=1)
+                altura = st.number_input("Altura (cm):", 140, 220)
             with col3:
-                grasa = st.number_input("Porcentaje de grasa corporal:", min_value=5.0, max_value=50.0, step=0.1)
+                grasa = st.number_input("% Grasa corporal:", 5.0, 50.0)
             
-            # Sección 3: IPAQ
+            # ===== SECCIÓN 3: IPAQ =====
             st.header("3. Actividad Física (IPAQ)")
-            with st.expander("Cuestionario de Actividad Física"):
+            with st.expander("Cuestionario IPAQ"):
+                # Actividades vigorosas
                 st.subheader("Actividades Vigorosas")
-                vig_dias = st.number_input("Días con actividades vigorosas:", 0, 7)
-                vig_horas = st.number_input("Horas por día:", 0, 24)
-                vig_minutos = st.number_input("Minutos por día:", 0, 59)
+                vig_dias = st.slider("Días/semana con actividades intensas:", 0, 7)
+                vig_tiempo = st.number_input("Minutos/día:", 0, 1440)
                 
+                # Actividades moderadas
                 st.subheader("Actividades Moderadas")
-                mod_dias = st.number_input("Días con actividades moderadas:", 0, 7)
-                mod_horas = st.number_input("Horas por día:", 0, 24)
-                mod_minutos = st.number_input("Minutos por día:", 0, 59)
+                mod_dias = st.slider("Días/semana con actividades moderadas:", 0, 7)
+                mod_tiempo = st.number_input("Minutos/día:", 0, 1440)
                 
-                st.subheader("Caminata")
-                cam_dias = st.number_input("Días caminando:", 0, 7)
-                cam_horas = st.number_input("Horas por día:", 0, 24)
-                cam_minutos = st.number_input("Minutos por día:", 0, 59)
+                # Caminata
+                st.subheader("Caminatas")
+                cam_dias = st.slider("Días/semana caminando:", 0, 7)
+                cam_tiempo = st.number_input("Minutos/día:", 0, 1440)
                 
-                st.subheader("Tiempo Sentado")
-                sent_horas = st.number_input("Horas sentado por día:", 0, 24)
-                sent_minutos = st.number_input("Minutos sentado por día:", 0, 59)
+                # Tiempo sentado
+                st.subheader("Sedentarismo")
+                sent_tiempo = st.number_input("Minutos/día sentado:", 0, 1440)
             
-            # Sección 4: PSQI (Sueño)
+            # ===== SECCIÓN 4: PSQI =====
             st.header("4. Calidad del Sueño (PSQI)")
             with st.expander("Cuestionario de Sueño"):
                 col1, col2 = st.columns(2)
                 with col1:
-                    dormir = st.time_input("Hora de acostarse:", value=time(22, 0))
+                    hora_acostar = st.time_input("Hora de acostarse:")
                 with col2:
-                    despertar = st.time_input("Hora de despertarse:", value=time(7, 0))
+                    hora_levantar = st.time_input("Hora de despertarse:")
                 
-                tiempo_dormir = st.selectbox("Tiempo en quedarse dormido:", 
-                                           ["Menos de 15 minutos (0 puntos)",
-                                            "Entre 16 y 30 minutos (1 punto)",
-                                            "Entre 31 y 60 minutos (2 puntos)",
-                                            "Más de 60 minutos (3 puntos)"])
+                # Componente 2: Latencia
+                latencia = st.selectbox("Tiempo en conciliar el sueño:", 
+                    ["<15 min (0)", "16-30 min (1)", "31-60 min (2)", ">60 min (3)"])
                 
-                horas_sueño = st.selectbox("Horas de sueño reales:", 
-                                         ["Más de 7 horas (0 puntos)",
-                                          "Entre 6 y 7 horas (1 punto)",
-                                          "Entre 5 y 6 horas (2 puntos)",
-                                          "Menos de 5 horas (3 puntos)"])
+                # Componente 3: Duración
+                horas_sueño = st.selectbox("Horas de sueño real:", 
+                    [">7h (0)", "6-7h (1)", "5-6h (2)", "<5h (3)"])
                 
-                # Componente 5: Perturbaciones del Sueño
+                # Componente 5: Perturbaciones
                 st.subheader("Problemas durante el sueño (último mes)")
-                problemas = [
-                    "Despertar durante la noche",
-                    "Ir al baño",
-                    "Dificultad para respirar",
-                    "Toser o roncar",
-                    "Sentir frío",
-                    "Sentir calor",
-                    "Malos sueños",
-                    "Dolor físico",
-                    "Otros problemas"
+                perturbaciones = [
+                    "Despertar por la noche", "Ir al baño", "Dificultad respirar",
+                    "Ronquidos/toser", "Frío/calor", "Pesadillas", "Dolor físico"
                 ]
-                punt_problemas = []
-                for problema in problemas:
-                    punt = st.selectbox(f"{problema}:", 
-                                      ["Ninguna vez (0)", 
-                                       "Menos de 1 vez/sem (1)", 
-                                       "1-2 veces/sem (2)", 
-                                       "3+ veces/sem (3)"])
-                    punt_problemas.append(int(punt.split("(")[1][0]))
+                punt_perturbaciones = []
+                for p in perturbaciones:
+                    freq = st.selectbox(p, 
+                        ["Ninguna (0)", "<1/sem (1)", "1-2/sem (2)", "≥3/sem (3)"])
+                    punt_perturbaciones.append(int(freq[-2]))
                 
-                calidad_sueño = st.selectbox("Calidad general del sueño:", 
-                                           ["Muy buena (0 puntos)",
-                                            "Buena (1 punto)",
-                                            "Regular (2 puntos)",
-                                            "Mala (3 puntos)"])
+                # Componente 6: Medicación
+                medicacion = st.selectbox("Uso de pastillas para dormir:", 
+                    ["Ninguna (0)", "<1/sem (1)", "1-2/sem (2)", "≥3/sem (3)"])
             
-            # Sección 5: PSS-10 (Estrés)
-            st.header("5. Nivel de Estrés (PSS-10)")
-            with st.expander("Escala de Estrés Percibido"):
-                preguntas_estres = [
-                    "¿Con qué frecuencia ha sentido que no podía controlar lo importante?",
-                    "¿Ha sentido que no manejaba sus responsabilidades?",
-                    "¿Se ha sentido nervioso o estresado?",
-                    "¿Ha confiado en su capacidad para resolver problemas?",
-                    "¿Ha sentido que las cosas iban bien?",
-                    "¿No pudo cumplir con todas sus obligaciones?",
-                    "¿Pudo controlar las irritaciones?",
-                    "¿Sintió que controlaba la situación?",
-                    "¿Se enojó por cosas fuera de su control?",
-                    "¿Sintió que los problemas se acumulaban?"
+            # ===== SECCIÓN 5: PSS-10 =====
+            st.header("5. Estrés Percibido (PSS-10)")
+            with st.expander("Escala de Estrés"):
+                preguntas = [
+                    "Molesto por cosas inesperadas",
+                    "Incapacidad de controlar cosas importantes",
+                    "Sentirse nervioso/estresado",
+                    "Confianza en resolver problemas (invertida)",
+                    "Las cosas van bien (invertida)",
+                    "No cumplir obligaciones",
+                    "Controlar irritaciones (invertida)",
+                    "Control de la situación (invertida)",
+                    "Enojo por cosas fuera de control",
+                    "Problemas acumulados"
                 ]
                 
-                opciones_estres = ["Nunca", "Casi nunca", "Algunas veces", "A menudo", "Muy a menudo"]
-                puntuaciones_estres = []
-                
-                for i, pregunta in enumerate(preguntas_estres):
-                    respuesta = st.selectbox(f"{i+1}. {pregunta}", opciones_estres)
-                    puntuacion = opciones_estres.index(respuesta)
+                respuestas = []
+                for i, pregunta in enumerate(preguntas):
+                    opcion = st.radio(pregunta, 
+                        ["Nunca (0)", "Casi nunca (1)", "A veces (2)", 
+                         "A menudo (3)", "Muy a menudo (4)"],
+                        horizontal=True)
+                    punt = int(opcion[-2])
                     
-                    # Invertir puntuación para preguntas 4,5,7,8
+                    # Invertir preguntas 4,5,7,8
                     if i in [3,4,6,7]:
-                        puntuacion = 4 - puntuacion
-                    puntuaciones_estres.append(puntuacion)
+                        punt = 4 - punt
+                    respuestas.append(punt)
             
-            # Botón de envío
-            submitted = st.form_submit_button("Generar Perfil Completo")
+            # ===== ENVÍO =====
+            submitted = st.form_submit_button("Generar Reporte")
             
             if submitted:
-                # Cálculos FFMI
+                # === CÁLCULOS ===
+                # FFMI
                 mlg = peso * (1 - (grasa/100))
-                ffmi = mlg / ((altura/100) ** 2)
+                ffmi = mlg / ((altura/100)**2)
                 
-                # Nivel de Entrenamiento
-                if genero == "Hombre":
-                    if ffmi <= 18: nivel = "Principiante"
-                    elif 18.1 <= ffmi <= 20: nivel = "Intermedio"
-                    elif 20.1 <= ffmi <= 22: nivel = "Avanzado"
-                    elif 22.1 <= ffmi <= 25: nivel = "Élite"
-                    else: nivel = "Nivel Físico-Culturismo"
-                else:
-                    if ffmi <= 16: nivel = "Principiante"
-                    elif 16.1 <= ffmi <= 18: nivel = "Intermedio"
-                    elif 18.1 <= ffmi <= 20: nivel = "Avanzado"
-                    elif 20.1 <= ffmi <= 23: nivel = "Élite"
-                    else: nivel = "Nivel Físico-Culturismo"
+                # PSQI
+                punt_sueño = (
+                    int(latencia[-2]) + 
+                    int(horas_sueño[-2]) + 
+                    sum(punt_perturbaciones) + 
+                    int(medicacion[-2])
+                )
                 
-                # Cálculo PSQI
-                puntos_sueño = sum([
-                    int(tiempo_dormir.split("(")[1][0]),
-                    int(horas_sueño.split("(")[1][0]),
-                    sum(punt_problemas),
-                    int(calidad_sueño.split("(")[1][0])
-                ])
+                # PSS-10
+                estres_total = sum(respuestas)
                 
-                # Cálculo PSS-10
-                total_estres = sum(puntuaciones_estres)
-                
-                # Cálculo IPAQ
-                met_vig = (vig_dias * ((vig_horas*60 + vig_minutos) * 8.0))
-                met_mod = (mod_dias * ((mod_horas*60 + mod_minutos) * 4.0))
-                met_cam = (cam_dias * ((cam_horas*60 + cam_minutos) * 3.3))
+                # IPAQ
+                met_vig = vig_dias * (vig_tiempo * 8.0)
+                met_mod = mod_dias * (mod_tiempo * 4.0)
+                met_cam = cam_dias * (cam_tiempo * 3.3)
                 met_total = met_vig + met_mod + met_cam
                 
-                # Resultados
-                st.success("**Resultados Integrales**")
+                # === RESULTADOS ===
+                st.success("**Resultados de la Evaluación**")
+                
+                # Columnas
                 col1, col2, col3 = st.columns(3)
                 with col1:
-                    st.metric("FFMI", f"{ffmi:.2f}")
-                    st.metric("Nivel de Entrenamiento", nivel)
-                    st.metric("Masa Libre Grasa", f"{mlg:.2f} kg")
+                    st.metric("FFMI", f"{ffmi:.1f}", help="Índice de Masa Libre de Grasa")
+                    st.metric("Nivel Entrenamiento", 
+                        "Principiante" if ffmi < 18 else "Avanzado" if ffmi < 22 else "Élite")
+                
                 with col2:
-                    st.metric("Calidad de Sueño", f"{puntos_sueño}/21", help="0-5: Buena, 6-10: Moderada, 11-21: Mala")
-                    st.metric("Nivel de Estrés", f"{total_estres}/40", help="0-13: Bajo, 14-26: Moderado, 27-40: Alto")
+                    st.metric("Calidad de Sueño", 
+                        f"{punt_sueño}/21", 
+                        "Buena" if punt_sueño <6 else "Mala" if punt_sueño>10 else "Regular")
+                    st.metric("Estrés Percibido", 
+                        f"{estres_total}/40", 
+                        "Bajo" if estres_total<14 else "Alto" if estres_total>26 else "Moderado")
+                
                 with col3:
-                    st.metric("Actividad Física", f"{met_total:.0f} MET-min/sem", 
-                            help="<600: Sedentario, 600-3000: Moderado, >3000: Activo")
-                    st.metric("Tiempo Sentado", f"{(sent_horas*60 + sent_minutos)} min/día")
+                    st.metric("Actividad Física", 
+                        f"{met_total:.0f} MET-min/sem", 
+                        "Sedentario" if met_total<600 else "Activo")
+                    st.metric("Tiempo Sentado", f"{sent_tiempo} min/día")
                 
                 # Recomendaciones
-                with st.expander("🔍 Recomendaciones Personalizadas", expanded=True):
-                    rec_ejercicio = "Entrenamiento de fuerza 4-5 días/semana" if met_total < 600 else "Mantener rutina actual"
-                    rec_sueño = "Higiene del sueño prioritaria" if puntos_sueño > 10 else "Mantener hábitos actuales"
-                    rec_estres = "Técnicas de relajación diarias" if total_estres > 26 else "Gestión preventiva del estrés"
+                with st.expander("🔍 Plan de Acción Personalizado"):
+                    st.write("""
+                    **Entrenamiento:** 
+                    - Frecuencia: 4 días/semana 
+                    - Enfoque: {'Fuerza' if ffmi <20 else 'Hipertrofia'}
                     
-                    st.write(f"""
-                    ### Plan de Acción:
-                    - **Ejercicio:** {rec_ejercicio}
-                    - **Sueño:** {rec_sueño}
-                    - **Estrés:** {rec_estres}
-                    - **Nutrición:** {"Déficit calórico" if grasa > 20 else "Mantenimiento"}
+                    **Recuperación:**
+                    - Técnicas de relajación diarias
+                    - Higiene del sueño: Mantener horarios regulares
+                    
+                    **Nutrición:**
+                    - {'Déficit calórico' if grasa >20 else 'Mantenimiento'}
+                    - Suplementación: Proteína + Creatina
                     """)
-                    
-                    if nivel in ["Avanzado", "Élite"]:
-                        st.write("### Categorías Competitivas Disponibles:")
-                        st.write("- Classic Physique\n- Men’s Physique\n- Bodybuilding" if genero == "Hombre" else "- Wellness\n- Bikini\n- Bodybuilding")
 
     elif submenu == "Nutrición":
         st.title("Nutrición")
-        # [...] (Sección Nutrición sin cambios)
+        # ... (Mismo contenido original)
 
 elif menu == "Contacto":
     st.title("Contacto")
-    # [...] (Sección Contacto sin cambios)
+    # ... (Mismo contenido original)
