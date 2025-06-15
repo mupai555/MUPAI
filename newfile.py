@@ -1,5 +1,4 @@
 import streamlit as st
-import base64
 
 # Configuración de la página
 st.set_page_config(
@@ -15,6 +14,9 @@ SECONDARY_COLOR = "#000000"  # Negro
 BACKGROUND_COLOR = "#FFFFFF"  # Blanco
 TEXT_COLOR = "#333333"  # Gris oscuro para texto
 ACCENT_COLOR = "#FFED00"  # Amarillo más claro para acentos
+
+# URL del logo real desde GitHub
+LOGO_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/LOGO.png"
 
 # Aplicar estilos CSS personalizados
 def aplicar_estilos():
@@ -161,9 +163,9 @@ def aplicar_estilos():
     }}
     
     .logo {{
-        max-width: 200px;
-        margin: 0 auto;
+        max-width: 100%;
         display: block;
+        margin: 0 auto;
     }}
     
     /* Nueva clase para la imagen principal */
@@ -195,31 +197,43 @@ def aplicar_estilos():
         opacity: 1;
     }}
     
+    /* Logo en el hero section */
+    .hero-logo {{
+        max-width: 300px;
+        margin: 0 auto 20px;
+        animation: pulse 3s infinite;
+    }}
+    
+    /* Logo en el footer */
+    .footer-logo {{
+        max-width: 200px;
+        margin: 20px auto;
+    }}
+    
     @media (max-width: 768px) {{
         .logo-sobre-mi {{
             position: static;
             width: 100px;
             margin: 0 auto 20px;
         }}
+        
+        .hero-logo {{
+            max-width: 200px;
+        }}
     }}
     </style>
     """, unsafe_allow_html=True)
 
-# Función para mostrar el logo
-def mostrar_logo():
-    st.markdown(f"""
-    <div class="logo-container" style="text-align:center; margin:20px 0;">
-        <img src="https://via.placeholder.com/300x100/000000/FFFFFF?text=MUPAI+LOGO" 
-             alt="MUPAI Logo" class="logo">
-    </div>
-    """, unsafe_allow_html=True)
-
 # Página de Inicio
 def pagina_inicio():
+    # Hero section con logo
     st.markdown(f"""
     <div class='hero'>
         <div class='hero-content'>
-            <h1 style='color:white; font-size:3rem;'>MUPAI Digital Training Science</h1>
+            <div class="hero-logo">
+                <img src="{LOGO_URL}" alt="MUPAI Logo" class="logo">
+            </div>
+            <h1 style='color:white; font-size:3rem;'>Digital Training Science</h1>
             <p style='font-size:1.5rem;color:white;'>Ciencia aplicada al rendimiento humano</p>
         </div>
     </div>
@@ -313,9 +327,9 @@ def pagina_inicio():
 
 # Página "Sobre Mí"
 def pagina_sobre_mi():
-    st.markdown("""
+    st.markdown(f"""
     <div class="logo-sobre-mi">
-        <img src="https://via.placeholder.com/150x50/000000/FFFFFF?text=LOGO.PNG" alt="Logo MUPAI">
+        <img src="{LOGO_URL}" alt="Logo MUPAI">
     </div>
     """, unsafe_allow_html=True)
     
@@ -464,8 +478,11 @@ def pagina_contacto():
 
 # Pie de página
 def mostrar_footer():
-    st.markdown("""
+    st.markdown(f"""
     <div class="footer">
+        <div class="footer-logo">
+            <img src="{LOGO_URL}" alt="MUPAI Logo" class="logo">
+        </div>
         <p style="font-size:1.2rem; margin-bottom:10px;">© 2023 <strong style="color:#FFD700;">MUPAI Digital Training Science</strong></p>
         <p style="margin:0;">Todos los derechos reservados | Ciencia aplicada al rendimiento humano</p>
         <div style="margin-top:15px;">
@@ -481,8 +498,8 @@ def mostrar_menu():
     with st.sidebar:
         st.markdown(f"""
         <div style="text-align:center; padding:20px 0;">
-            <img src="https://via.placeholder.com/150x50/000000/FFFFFF?text=LOGO.PNG" 
-                 alt="MUPAI Logo" style="max-width:150px; margin-bottom:20px;">
+            <img src="{LOGO_URL}" 
+                 alt="MUPAI Logo" style="max-width:200px; margin-bottom:20px;">
         </div>
         """, unsafe_allow_html=True)
         
