@@ -165,6 +165,43 @@ def aplicar_estilos():
         margin: 0 auto;
         display: block;
     }}
+    
+    /* Nueva clase para la imagen principal */
+    .imagen-principal {{
+        width: 100%;
+        border-radius: 10px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        border: 3px solid {PRIMARY_COLOR};
+    }}
+    
+    /* Contenedor de logo en sobre mí */
+    .logo-sobre-mi {{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 120px;
+        z-index: 10;
+    }}
+    
+    .logo-sobre-mi img {{
+        width: 100%;
+        opacity: 0.9;
+        transition: transform 0.3s ease;
+    }}
+    
+    .logo-sobre-mi img:hover {{
+        transform: scale(1.05);
+        opacity: 1;
+    }}
+    
+    @media (max-width: 768px) {{
+        .logo-sobre-mi {{
+            position: static;
+            width: 100px;
+            margin: 0 auto 20px;
+        }}
+    }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -231,6 +268,7 @@ def pagina_inicio():
             </div>
             """, unsafe_allow_html=True)
             
+            # Política actualizada
             st.markdown("""
             <div class='card'>
                 <h3>📜 Política</h3>
@@ -238,6 +276,16 @@ def pagina_inicio():
                 excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y 
                 transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y 
                 accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.</p>
+                
+                <h4>📘 Política del Servicio</h4>
+                <p>En MUPAI, guiamos nuestras acciones por los siguientes principios:</p>
+                <ul>
+                    <li>Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.</li>
+                    <li>Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.</li>
+                    <li>Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.</li>
+                    <li>Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.</li>
+                    <li>Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.</li>
+                </ul>
             </div>
             """, unsafe_allow_html=True)
     
@@ -265,7 +313,33 @@ def pagina_inicio():
 
 # Página "Sobre Mí"
 def pagina_sobre_mi():
+    st.markdown("""
+    <div class="logo-sobre-mi">
+        <img src="https://via.placeholder.com/150x50/000000/FFFFFF?text=LOGO.PNG" alt="Logo MUPAI">
+    </div>
+    """, unsafe_allow_html=True)
+    
     st.header("👤 Sobre Mí - Erick Francisco De Luna Hernández")
+    
+    # Imagen principal del gimnasio
+    st.markdown("""
+    <div style="margin: 20px 0 30px; text-align:center;">
+        <img src="https://raw.githubusercontent.com/mupai5/MUPAI/main/20250116_074233_0000.png" 
+             alt="MUSCLE UP GYM" class="imagen-principal">
+        <h3 style="margin-top: 5px;">MUSCLE UP GYM</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Descripción actualizada
+    st.markdown("""
+    <div class="card">
+        <p>Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, 
+        con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. 
+        Actualmente, me desempeño en Muscle Up GYM, donde estoy encargado del diseño y desarrollo de programas de entrenamiento 
+        fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento 
+        físico y promuevan el bienestar integral de nuestros usuarios.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Perfil con foto
     col1, col2 = st.columns([1, 2])
@@ -407,7 +481,7 @@ def mostrar_menu():
     with st.sidebar:
         st.markdown(f"""
         <div style="text-align:center; padding:20px 0;">
-            <img src="https://via.placeholder.com/150x50/000000/FFFFFF?text=MUPAI" 
+            <img src="https://via.placeholder.com/150x50/000000/FFFFFF?text=LOGO.PNG" 
                  alt="MUPAI Logo" style="max-width:150px; margin-bottom:20px;">
         </div>
         """, unsafe_allow_html=True)
@@ -447,7 +521,6 @@ def main():
         pagina_sobre_mi()
     elif menu == "📞 Contacto":
         pagina_contacto()
-    
     mostrar_footer()
 
 if __name__ == "__main__":
