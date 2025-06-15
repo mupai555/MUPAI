@@ -263,7 +263,7 @@ def pagina_sobre_mi():
         </div>
         """, unsafe_allow_html=True)
     
-    # Galería de imágenes
+    # Galería de imágenes - CORRECCIÓN APLICADA AQUÍ
     st.markdown("---")
     st.subheader(f"📷 <span style='color:{PRIMARY_COLOR};'>Galería</span>", unsafe_allow_html=True)
     
@@ -276,7 +276,8 @@ def pagina_sobre_mi():
     
     for idx, col in enumerate(cols):
         with col:
-            st.image(gallery_images[idx], use_column_width=True)
+            # USO CORRECTO DE use_container_width
+            st.image(gallery_images[idx], use_container_width=True)
             st.caption(f"Imagen {idx+1}: Evento profesional")
 
 # Página de evaluaciones con diseño moderno
