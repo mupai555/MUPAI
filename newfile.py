@@ -210,15 +210,32 @@ def aplicar_estilos():
         margin: 20px auto;
     }}
     
+    /* Corrección para superposición */
+    .st-emotion-cache-1v0mbdj {{
+        position: relative;
+        z-index: 1;
+    }}
+    
+    /* Mejora de espaciado */
+    .st-emotion-cache-16txtl3 {{
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }}
+    
     @media (max-width: 768px) {{
         .logo-sobre-mi {{
             position: static;
             width: 100px;
             margin: 0 auto 20px;
+            text-align: center;
         }}
         
         .hero-logo {{
             max-width: 200px;
+        }}
+        
+        .logo-sobre-mi img {{
+            margin: 0 auto;
         }}
     }}
     </style>
@@ -233,7 +250,7 @@ def pagina_inicio():
             <div class="hero-logo">
                 <img src="{LOGO_URL}" alt="MUPAI Logo" class="logo">
             </div>
-            <h1 style='color:white; font-size:3rem;'>Digital Training Science</h1>
+            <h1 style='color:white; font-size:2.5rem; margin-top: 20px;'>Digital Training Science</h1>
             <p style='font-size:1.5rem;color:white;'>Ciencia aplicada al rendimiento humano</p>
         </div>
     </div>
@@ -439,106 +456,4 @@ def pagina_contacto():
     
     with col1:
         st.markdown("""
-        <div class="card">
-            <h3>Información de Contacto</h3>
-            <p>📧 <strong>Email:</strong> contacto@mupai.com</p>
-            <p>📱 <strong>Teléfono:</strong> +52 866 258 05 94</p>
-            <p>📍 <strong>Ubicación:</strong> Monterrey, Nuevo León, México</p>
-            
-            <h3>Horario de Atención</h3>
-            <p>Lunes a Viernes: 9:00 - 18:00</p>
-            <p>Sábados: 10:00 - 14:00</p>
-            
-            <h3>Redes Sociales</h3>
-            <p>📱 Facebook: @MUPAI</p>
-            <p>📸 Instagram: @MUPAI</p>
-            <p>💼 LinkedIn: MUPAI</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        with st.form("form_contacto", clear_on_submit=True):
-            st.markdown("### ✉️ Envíanos un mensaje")
-            nombre = st.text_input("Nombre completo*", placeholder="Tu nombre completo")
-            email = st.text_input("Correo electrónico*", placeholder="tu@email.com")
-            telefono = st.text_input("Teléfono", placeholder="+52 123 456 7890")
-            asunto = st.selectbox("Asunto*", ["Consulta general", "Servicios", "Colaboraciones", "Soporte técnico", "Otros"])
-            mensaje = st.text_area("Mensaje*", placeholder="Escribe tu mensaje aquí...", height=150)
-            
-            # Campos obligatorios
-            required = st.markdown("**\* Campos obligatorios**")
-            
-            # Botón de envío
-            enviado = st.form_submit_button("Enviar mensaje", type="primary")
-            if enviado:
-                if nombre and email and mensaje:
-                    st.success("¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.")
-                else:
-                    st.error("Por favor completa todos los campos obligatorios (*)")
-
-# Pie de página
-def mostrar_footer():
-    st.markdown(f"""
-    <div class="footer">
-        <div class="footer-logo">
-            <img src="{LOGO_URL}" alt="MUPAI Logo" class="logo">
-        </div>
-        <p style="font-size:1.2rem; margin-bottom:10px;">© 2023 <strong style="color:#FFD700;">MUPAI Digital Training Science</strong></p>
-        <p style="margin:0;">Todos los derechos reservados | Ciencia aplicada al rendimiento humano</p>
-        <div style="margin-top:15px;">
-            <a href="#" style="color:#FFD700; margin:0 10px;">Términos de Uso</a> | 
-            <a href="#" style="color:#FFD700; margin:0 10px;">Política de Privacidad</a> | 
-            <a href="#" style="color:#FFD700; margin:0 10px;">Contacto</a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-
-# Menú de navegación
-def mostrar_menu():
-    with st.sidebar:
-        st.markdown(f"""
-        <div style="text-align:center; padding:20px 0;">
-            <img src="{LOGO_URL}" 
-                 alt="MUPAI Logo" style="max-width:200px; margin-bottom:20px;">
-        </div>
-        """, unsafe_allow_html=True)
-        
-        menu = st.radio(
-            "Menú de Navegación",
-            ["🏠 Inicio", "👤 Sobre Mí", "📞 Contacto"],
-            label_visibility="collapsed"
-        )
-        
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align:center; padding:10px; background-color:#FFD720; border-radius:8px;">
-            <p style="color:#000; margin:0; font-weight:bold;">¡Próximamente!</p>
-            <p style="color:#000; margin:0;">Evaluaciones científicas</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align:center; color:#fff; font-size:0.9rem;">
-            <p>MUPAI Digital Training Science</p>
-            <p>Ciencia aplicada al rendimiento humano</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        return menu
-
-# Función principal
-def main():
-    aplicar_estilos()
-    menu = mostrar_menu()
-    
-    if menu == "🏠 Inicio":
-        pagina_inicio()
-    elif menu == "👤 Sobre Mí":
-        pagina_sobre_mi()
-    elif menu == "📞 Contacto":
-        pagina_contacto()
-    mostrar_footer()
-
-if __name__ == "__main__":
-    main()
+        <div class="
