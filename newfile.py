@@ -1,5 +1,6 @@
 import streamlit as st
 import base64
+import os
 
 # Configuración de la página
 st.set_page_config(
@@ -14,11 +15,14 @@ PRIMARY_COLOR = "#FFD700"  # Amarillo
 SECONDARY_COLOR = "#000000"  # Negro
 BACKGROUND_COLOR = "#FFFFFF"  # Blanco
 
-# URL de imágenes
-LOGO_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/LOGO.png"
-GYM_IMAGE_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/20250116_074233_0000.png"
+# URL base para GitHub
+GITHUB_BASE_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/"
 
-# Estilos CSS simplificados
+# URL de imágenes
+LOGO_URL = GITHUB_BASE_URL + "LOGO.png"
+GYM_IMAGE_URL = GITHUB_BASE_URL + "20250116_074233_0000.png"
+
+# Estilos CSS optimizados
 def aplicar_estilos():
     st.markdown(f"""
     <style>
@@ -67,33 +71,9 @@ def aplicar_estilos():
         border-radius: 15px;
         margin-bottom: 2rem;
         text-align: center;
-        position: relative;
-        overflow: hidden;
-    }}
-    
-    .hero::before {{
-        content: "";
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 100%;
-        height: 200%;
-        background: radial-gradient(circle, {PRIMARY_COLOR} 0%, transparent 70%);
-        opacity: 0.15;
-        z-index: 0;
-    }}
-    
-    .hero-content {{
-        position: relative;
-        z-index: 1;
     }}
     
     /* Imágenes */
-    .hero-logo {{
-        max-width: 300px;
-        margin: 0 auto 20px;
-    }}
-    
     .imagen-principal {{
         width: 100%;
         border-radius: 10px;
@@ -114,15 +94,7 @@ def aplicar_estilos():
     .footer-logo {{
         max-width: 200px;
         margin: 20px auto;
-    }}
-    
-    /* Logo en sobre mí */
-    .logo-sobre-mi {{
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 120px;
-        z-index: 10;
+        display: block;
     }}
     
     /* Footer */
@@ -135,18 +107,20 @@ def aplicar_estilos():
         margin-top: 3rem;
     }}
     
-    /* Responsive */
-    @media (max-width: 768px) {{
-        .logo-sobre-mi {{
-            position: static;
-            width: 100px;
-            margin: 0 auto 20px;
-            text-align: center;
-        }}
-        
-        .hero-logo {{
-            max-width: 200px;
-        }}
+    /* Logo en sobre mí */
+    .logo-sobre-mi {{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        width: 120px;
+        z-index: 10;
+    }}
+    
+    /* Logo en la barra lateral */
+    .sidebar-logo {{
+        max-width: 80%;
+        margin: 0 auto 20px;
+        display: block;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -157,12 +131,14 @@ def pagina_inicio():
     st.markdown(f"""
     <div class='hero'>
         <div class='hero-content'>
-            <img src="{LOGO_URL}" alt="MUPAI Logo" class="hero-logo">
             <h1 style='color:white; font-size:2.5rem;'>Digital Training Science</h1>
             <p style='font-size:1.5rem;color:white;'>Ciencia aplicada al rendimiento humano</p>
         </div>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Logo principal
+    st.markdown(f'<div style="text-align:center; margin-bottom:30px;"><img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:400px;"></div>', unsafe_allow_html=True)
     
     # Misión, Visión y Valores
     st.header("Nuestra Identidad")
@@ -242,6 +218,7 @@ def pagina_inicio():
 
 # Página "Sobre Mí"
 def pagina_sobre_mi():
+    # Logo en esquina superior derecha
     st.markdown(f"""
     <div class="logo-sobre-mi">
         <img src="{LOGO_URL}" alt="Logo MUPAI">
@@ -250,7 +227,7 @@ def pagina_sobre_mi():
     
     st.header("👤 Sobre Mí - Erick Francisco De Luna Hernández")
     
-    # Imagen principal del gimnasio
+    # Imagen del gimnasio
     st.markdown(f"""
     <div style="text-align:center; margin: 20px 0 30px;">
         <img src="{GYM_IMAGE_URL}" alt="MUSCLE UP GYM" class="imagen-principal">
@@ -342,6 +319,9 @@ def pagina_sobre_mi():
 
 # Página de contacto
 def pagina_contacto():
+    # Logo en la parte superior
+    st.markdown(f'<div style="text-align:center; margin-bottom:20px;"><img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:300px;"></div>', unsafe_allow_html=True)
+    
     st.header("📞 Contáctanos")
     
     col1, col2 = st.columns(2)
@@ -390,11 +370,8 @@ def mostrar_footer():
 # Menú de navegación
 def mostrar_menu():
     with st.sidebar:
-        st.markdown(f"""
-        <div style="text-align:center; padding:20px 0;">
-            <img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:200px; margin-bottom:20px;">
-        </div>
-        """, unsafe_allow_html=True)
+        # Logo en la barra lateral
+        st.markdown(f'<div class="sidebar-logo"><img src="{LOGO_URL}" alt="MUPAI Logo"></div>', unsafe_allow_html=True)
         
         menu = st.radio(
             "Menú de Navegación",
