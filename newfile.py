@@ -1,6 +1,5 @@
 import streamlit as st
 import base64
-import os
 
 # Configuración de la página
 st.set_page_config(
@@ -15,14 +14,11 @@ PRIMARY_COLOR = "#FFD700"  # Amarillo
 SECONDARY_COLOR = "#000000"  # Negro
 BACKGROUND_COLOR = "#FFFFFF"  # Blanco
 
-# URL base para GitHub
-GITHUB_BASE_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/"
-
 # URL de imágenes
-LOGO_URL = GITHUB_BASE_URL + "LOGO.png"
-GYM_IMAGE_URL = GITHUB_BASE_URL + "20250116_074233_0000.png"
+LOGO_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/LOGO.png"
+GYM_IMAGE_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/20250116_074233_0000.png"
 
-# Estilos CSS optimizados
+# Estilos CSS optimizados y corregidos
 def aplicar_estilos():
     st.markdown(f"""
     <style>
@@ -107,13 +103,13 @@ def aplicar_estilos():
         margin-top: 3rem;
     }}
     
-    /* Logo en sobre mí */
+    /* Logo en sobre mí - FIXED POSITION */
     .logo-sobre-mi {{
-        position: absolute;
+        position: fixed;
         top: 20px;
         right: 20px;
         width: 120px;
-        z-index: 10;
+        z-index: 1000;
     }}
     
     /* Logo en la barra lateral */
@@ -121,6 +117,30 @@ def aplicar_estilos():
         max-width: 80%;
         margin: 0 auto 20px;
         display: block;
+    }}
+    
+    /* FIX: Remove Streamlit's default padding */
+    .st-emotion-cache-1y4p8pa {{
+        padding: 0;
+    }}
+    
+    /* FIX: Logo container in main page */
+    .logo-container {{
+        text-align: center;
+        margin: 30px 0;
+    }}
+    
+    /* FIX: Hero content z-index */
+    .hero-content {{
+        position: relative;
+        z-index: 2;
+    }}
+    
+    /* FIX: Card hover effect */
+    .card:hover {{
+        transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
     }}
     </style>
     """, unsafe_allow_html=True)
@@ -137,8 +157,12 @@ def pagina_inicio():
     </div>
     """, unsafe_allow_html=True)
     
-    # Logo principal
-    st.markdown(f'<div style="text-align:center; margin-bottom:30px;"><img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:400px;"></div>', unsafe_allow_html=True)
+    # Logo principal - FIXED CONTAINER
+    st.markdown(f"""
+    <div class="logo-container">
+        <img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:400px;">
+    </div>
+    """, unsafe_allow_html=True)
     
     # Misión, Visión y Valores
     st.header("Nuestra Identidad")
@@ -218,10 +242,10 @@ def pagina_inicio():
 
 # Página "Sobre Mí"
 def pagina_sobre_mi():
-    # Logo en esquina superior derecha
+    # Logo en esquina superior derecha - FIXED POSITION
     st.markdown(f"""
     <div class="logo-sobre-mi">
-        <img src="{LOGO_URL}" alt="Logo MUPAI">
+        <img src="{LOGO_URL}" alt="Logo MUPAI" width="120">
     </div>
     """, unsafe_allow_html=True)
     
@@ -229,7 +253,7 @@ def pagina_sobre_mi():
     
     # Imagen del gimnasio
     st.markdown(f"""
-    <div style="text-align:center; margin: 20px 0 30px;">
+    <div style="text-align:center; margin: 40px 0 30px;">
         <img src="{GYM_IMAGE_URL}" alt="MUSCLE UP GYM" class="imagen-principal">
         <h3>MUSCLE UP GYM</h3>
     </div>
