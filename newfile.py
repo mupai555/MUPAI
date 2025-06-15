@@ -1,439 +1,270 @@
 import streamlit as st
-import base64
+import sqlite3
+import bcrypt
+import pandas as pd
+from datetime import datetime
+from PIL import Image
+import requests
+from io import BytesIO
 
-# Configuración de la página
+# Configuración inicial de la página
 st.set_page_config(
-    page_title="MUPAI - Entrenamiento Científico",
+    page_title="MUPAI - Entrenamiento Digital",
     page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
 )
 
-# Paleta de colores
-PRIMARY_COLOR = "#FFD700"  # Amarillo
-SECONDARY_COLOR = "#000000"  # Negro
-BACKGROUND_COLOR = "#FFFFFF"  # Blanco
-
-# URL de imágenes
+# URLs de las imágenes desde GitHub
 LOGO_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/LOGO.png"
 GYM_IMAGE_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/20250116_074233_0000.png"
+IMAGE1_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/20250116_074806_0000.jpg"
+IMAGE2_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/FB_IMG_1734820709707.jpg"
+IMAGE3_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/FB_IMG_1734820712642.jpg"
+IMAGE4_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/FB_IMG_1734820729323.jpg"
+IMAGE5_URL = "https://raw.githubusercontent.com/mupai5/MUPAI/main/FB_IMG_1734820808186.jpg"
 
-# Estilos CSS optimizados y corregidos
+# Función para cargar imágenes desde URL
+def load_image(url):
+    try:
+        response = requests.get(url)
+        img = Image.open(BytesIO(response.content))
+        return img
+    except Exception as e:
+        st.error(f"Error cargando imagen: {e}")
+        return None
+
+# Aplicar estilos CSS personalizados
 def aplicar_estilos():
-    st.markdown(f"""
+    st.markdown("""
     <style>
     /* Estilos generales */
-    body {{
-        background-color: {BACKGROUND_COLOR};
+    body {
+        font-family: 'Arial', sans-serif;
         color: #333;
-        font-family: Arial, sans-serif;
-    }}
+        line-height: 1.6;
+    }
     
-    .stApp {{
-        background-color: {BACKGROUND_COLOR};
-    }}
+    h1, h2, h3, h4 {
+        color: #000000;
+    }
+    
+    .stApp {
+        background-color: #FFFFFF;
+    }
+    
+    /* Mejorar contraste de texto */
+    p, li, div {
+        color: #333333 !important;
+    }
     
     /* Barra lateral */
-    [data-testid="stSidebar"] {{
-        background-color: {SECONDARY_COLOR} !important;
-        color: white;
-    }}
+    [data-testid="stSidebar"] {
+        background-color: #000000 !important;
+    }
     
-    /* Títulos */
-    h1, h2, h3 {{
-        color: {SECONDARY_COLOR};
-    }}
+    /* Imágenes */
+    .logo-img {
+        max-width: 400px;
+        margin: 0 auto;
+        display: block;
+    }
     
-    h1 {{
-        border-bottom: 3px solid {PRIMARY_COLOR};
-        padding-bottom: 10px;
-    }}
+    .gallery-img {
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* Secciones */
+    .section {
+        margin-bottom: 30px;
+    }
     
     /* Tarjetas */
-    .card {{
+    .card {
         background: white;
         border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border-left: 5px solid {PRIMARY_COLOR};
-    }}
-    
-    /* Hero Section */
-    .hero {{
-        background: linear-gradient(135deg, {SECONDARY_COLOR} 0%, #333333 100%);
-        color: white;
-        padding: 4rem 2rem;
-        border-radius: 15px;
-        margin-bottom: 2rem;
-        text-align: center;
-    }}
-    
-    /* Imágenes */
-    .imagen-principal {{
-        width: 100%;
-        border-radius: 10px;
-        margin-bottom: 25px;
-        border: 3px solid {PRIMARY_COLOR};
-    }}
-    
-    .profile-img {{
-        border-radius: 50%;
-        border: 5px solid {PRIMARY_COLOR};
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        margin: 0 auto;
-        display: block;
-    }}
-    
-    .footer-logo {{
-        max-width: 200px;
-        margin: 20px auto;
-        display: block;
-    }}
-    
-    /* Footer */
-    .footer {{
-        background-color: {SECONDARY_COLOR};
-        color: white;
-        padding: 2rem;
-        border-radius: 15px;
-        text-align: center;
-        margin-top: 3rem;
-    }}
-    
-    /* Logo en sobre mí - FIXED POSITION */
-    .logo-sobre-mi {{
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        width: 120px;
-        z-index: 1000;
-    }}
-    
-    /* Logo en la barra lateral */
-    .sidebar-logo {{
-        max-width: 80%;
-        margin: 0 auto 20px;
-        display: block;
-    }}
-    
-    /* FIX: Remove Streamlit's default padding */
-    .st-emotion-cache-1y4p8pa {{
-        padding: 0;
-    }}
-    
-    /* FIX: Logo container in main page */
-    .logo-container {{
-        text-align: center;
-        margin: 30px 0;
-    }}
-    
-    /* FIX: Hero content z-index */
-    .hero-content {{
-        position: relative;
-        z-index: 2;
-    }}
-    
-    /* FIX: Card hover effect */
-    .card:hover {{
-        transform: translateY(-5px);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
-    }}
+        border-left: 5px solid #FFD700;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# Página de Inicio
-def pagina_inicio():
-    # Hero section con logo
-    st.markdown(f"""
-    <div class='hero'>
-        <div class='hero-content'>
-            <h1 style='color:white; font-size:2.5rem;'>Digital Training Science</h1>
-            <p style='font-size:1.5rem;color:white;'>Ciencia aplicada al rendimiento humano</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+# Sección Inicio (actualizada)
+def inicio():
+    logo_img = load_image(LOGO_URL)
+    if logo_img:
+        st.image(logo_img, use_column_width=True, output_format="PNG")
     
-    # Logo principal - FIXED CONTAINER
-    st.markdown(f"""
-    <div class="logo-container">
-        <img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:400px;">
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Misión, Visión y Valores
-    st.header("Nuestra Identidad")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div class='card'>
-            <h3>🌟 Misión</h3>
-            <p>Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente 
-            personalizados a través de herramientas digitales respaldadas por inteligencia artificial, 
-            datos precisos y la investigación más actualizada en ciencias del ejercicio.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div class='card'>
-            <h3>💎 Valores</h3>
-            <ul>
-                <li><strong>Ciencia:</strong> Base en evidencia científica</li>
-                <li><strong>Personalización:</strong> Soluciones individualizadas</li>
-                <li><strong>Innovación:</strong> Tecnología de vanguardia</li>
-                <li><strong>Ética:</strong> Transparencia y responsabilidad</li>
-                <li><strong>Excelencia:</strong> Compromiso con la calidad</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div class='card'>
-            <h3>🌍 Visión</h3>
-            <p>Convertirnos en referente global en entrenamiento digital personalizado, aprovechando 
-            nuevas tecnologías para hacer accesible el fitness basado en ciencia.</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-        <div class='card'>
-            <h3>📜 Política</h3>
-            <p>En MUPAI, nuestra política está fundamentada en el compromiso con la excelencia, 
-            ética y servicio centrado en el usuario.</p>
-            
-            <h4>📘 Política del Servicio</h4>
-            <ul>
-                <li>Diseñamos entrenamientos digitales personalizados basados en ciencia</li>
-                <li>Ofrecemos servicio accesible y adaptable a necesidades individuales</li>
-                <li>Respetamos y protegemos la privacidad de datos personales</li>
-                <li>Innovamos continuamente para mejorar experiencia y resultados</li>
-                <li>Promovemos valores como esfuerzo, constancia y respeto</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Servicios destacados
-    st.header("Nuestros Servicios")
-    
-    servicios = [
-        ("💪 Evaluación Corporal", "Análisis de composición corporal y potencial genético"),
-        ("😌 Gestión del Estrés", "Evaluación y manejo científico del estrés"),
-        ("🌙 Calidad del Sueño", "Optimización de patrones de descanso"),
-        ("🏃 Planes de Entrenamiento", "Programas personalizados basados en ciencia"),
-        ("🍎 Asesoría Nutricional", "Planes alimenticios para tus objetivos"),
-        ("📊 Seguimiento Continuo", "Monitoreo y ajuste de tu progreso")
-    ]
-    
-    cols = st.columns(3)
-    for i, (titulo, desc) in enumerate(servicios):
-        with cols[i % 3]:
-            st.markdown(f"""
-            <div class='card'>
-                <h3>{titulo}</h3>
-                <p>{desc}</p>
-            </div>
-            """, unsafe_allow_html=True)
+    st.title("Bienvenido a MUPAI")
 
-# Página "Sobre Mí"
-def pagina_sobre_mi():
-    # Logo en esquina superior derecha - FIXED POSITION
-    st.markdown(f"""
-    <div class="logo-sobre-mi">
-        <img src="{LOGO_URL}" alt="Logo MUPAI" width="120">
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.header("👤 Sobre Mí - Erick Francisco De Luna Hernández")
-    
-    # Imagen del gimnasio
-    st.markdown(f"""
-    <div style="text-align:center; margin: 40px 0 30px;">
-        <img src="{GYM_IMAGE_URL}" alt="MUSCLE UP GYM" class="imagen-principal">
-        <h3>MUSCLE UP GYM</h3>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Descripción
     st.markdown("""
-    <div class="card">
-        <p>Soy Erick Francisco De Luna Hernández, profesional apasionado por el fitness y ciencias del ejercicio. 
-        Actualmente me desempeño en Muscle Up GYM, donde diseño programas de entrenamiento basados en evidencia científica, 
-        creando metodologías personalizadas que optimizan el rendimiento físico y promueven el bienestar integral.</p>
+    <div class="section">
+        <h2>Misión</h2>
+        <div class="card">
+            Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados 
+            a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la 
+            investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo 
+            integral de nuestros usuarios y su bienestar físico y mental.
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    
-    # Perfil con foto
-    col1, col2 = st.columns([1, 2])
-    
-    with col1:
-        st.markdown("""
-        <div style="text-align:center;">
-            <img src="https://via.placeholder.com/300x300/000000/FFFFFF?text=FOTO+PERFIL" 
-                 alt="Erick De Luna" class="profile-img">
-            <h3>Erick Francisco De Luna Hernández</h3>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
+
+    st.markdown("""
+    <div class="section">
+        <h2>Visión</h2>
         <div class="card">
-            <h3>Formación Académica</h3>
+            Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, 
+            aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos 
+            a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación 
+            científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+        <h2>Política</h2>
+        <div class="card">
+            En <strong>MUPAI</strong>, nuestra política está fundamentada en el compromiso con la excelencia, 
+            la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para 
+            ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo 
+            al bienestar integral de quienes confían en nosotros.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+        <h2>Política del Servicio</h2>
+        <div class="card">
+            En <strong>MUPAI</strong>, guiamos nuestras acciones por los siguientes principios:
             <ul>
-                <li>🎓 Maestría en Fuerza y Acondicionamiento - Football Science Institute</li>
-                <li>📚 Licenciatura en Ciencias del Ejercicio - UANL</li>
-                <li>🌍 Intercambio académico - Universidad de Sevilla</li>
+                <li>Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.</li>
+                <li>Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.</li>
+                <li>Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.</li>
+                <li>Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.</li>
+                <li>Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.</li>
             </ul>
         </div>
-        
+    </div>
+    """, unsafe_allow_html=True)
+
+# Sección Sobre Mí (actualizada)
+def sobre_mi():
+    st.title("Sobre Mí")
+    
+    # Imagen principal del gimnasio
+    gym_img = load_image(GYM_IMAGE_URL)
+    if gym_img:
+        st.image(gym_img, use_column_width=True, caption="MUSCLE UP GYM")
+    
+    st.markdown("""
+    <div class="section">
         <div class="card">
-            <h3>Experiencia Profesional</h3>
+            Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, 
+            con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas 
+            en ciencia. Actualmente, me desempeño en <em>Muscle Up GYM</em>, donde estoy encargado del diseño y desarrollo 
+            de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías 
+            personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+        <h3>Formación Académica</h3>
+        <div class="card">
             <ul>
-                <li>💼 Diseñador de metodologías de entrenamiento - Muscle Up Gym</li>
-                <li>🔬 Investigador en Laboratorio de Rendimiento Humano - UANL</li>
-                <li>👨‍🏫 Asesor científico - Atletas de alto rendimiento</li>
+                <li>🎓 <strong>Maestría en Fuerza y Acondicionamiento</strong> - Football Science Institute</li>
+                <li>📚 <strong>Licenciatura en Ciencias del Ejercicio</strong> - Universidad Autónoma de Nuevo León (UANL)</li>
+                <li>🌍 <strong>Intercambio académico internacional</strong> - Universidad de Sevilla</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
-    
-    # Logros y reconocimientos
-    st.header("🏆 Logros y Reconocimientos")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="section">
+        <h3>Logros y Reconocimientos</h3>
         <div class="card">
-            <h3>Premios Académicos</h3>
             <ul>
                 <li>🥇 Premio al Mérito Académico UANL</li>
-                <li>🏅 Primer Lugar de Generación</li>
+                <li>🏅 Primer Lugar de Generación en la Facultad de Organización Deportiva</li>
                 <li>🎖️ Beca completa para intercambio internacional</li>
+                <li>⭐ Miembro del Programa de Talento Universitario de la UANL</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div class="card">
-            <h3>Publicaciones y Contribuciones</h3>
-            <ul>
-                <li>📄 Métodos innovadores en entrenamiento deportivo</li>
-                <li>📊 Análisis de rendimiento físico avanzado</li>
-                <li>🤖 Desarrollo de herramientas digitales para fitness</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Filosofía profesional
-    st.header("🧠 Filosofía Profesional")
-    st.markdown("""
-    <div class="card">
-        <p>"Creo firmemente en el poder transformador del entrenamiento basado en evidencia científica. 
-        Mi enfoque combina rigor metodológico con personalización individual, reconociendo que cada 
-        persona tiene necesidades y objetivos únicos. A través de MUPAI, busco democratizar 
-        el acceso a metodologías de entrenamiento de elite."</p>
     </div>
     """, unsafe_allow_html=True)
 
-# Página de contacto
-def pagina_contacto():
-    # Logo en la parte superior
-    st.markdown(f'<div style="text-align:center; margin-bottom:20px;"><img src="{LOGO_URL}" alt="MUPAI Logo" style="max-width:300px;"></div>', unsafe_allow_html=True)
+    st.subheader("Galería de Imágenes")
     
-    st.header("📞 Contáctanos")
+    # Cargar imágenes para la galería
+    img1 = load_image(IMAGE1_URL)
+    img2 = load_image(IMAGE2_URL)
+    img3 = load_image(IMAGE3_URL)
+    img4 = load_image(IMAGE4_URL)
+    img5 = load_image(IMAGE5_URL)
     
-    col1, col2 = st.columns(2)
+    # Mostrar galería en columnas
+    col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("""
-        <div class="card">
-            <h3>Información de Contacto</h3>
-            <p>📧 <strong>Email:</strong> contacto@mupai.com</p>
-            <p>📱 <strong>Teléfono:</strong> +52 866 258 05 94</p>
-            <p>📍 <strong>Ubicación:</strong> Monterrey, Nuevo León, México</p>
-            
-            <h3>Horario de Atención</h3>
-            <p>Lunes a Viernes: 9:00 - 18:00</p>
-            <p>Sábados: 10:00 - 14:00</p>
-        </div>
-        """, unsafe_allow_html=True)
+        if img1:
+            st.image(img1, use_column_width=True, caption="", output_format="JPEG")
+        if img4:
+            st.image(img4, use_column_width=True, caption="", output_format="JPEG")
     
     with col2:
-        with st.form("form_contacto", clear_on_submit=True):
-            st.markdown("### ✉️ Envíanos un mensaje")
-            nombre = st.text_input("Nombre completo*", placeholder="Tu nombre completo")
-            email = st.text_input("Correo electrónico*", placeholder="tu@email.com")
-            telefono = st.text_input("Teléfono", placeholder="+52 123 456 7890")
-            asunto = st.selectbox("Asunto*", ["Consulta general", "Servicios", "Colaboraciones", "Soporte técnico", "Otros"])
-            mensaje = st.text_area("Mensaje*", placeholder="Escribe tu mensaje aquí...", height=150)
-            
-            st.markdown("**\* Campos obligatorios**")
-            
-            if st.form_submit_button("Enviar mensaje", type="primary"):
-                if nombre and email and mensaje:
-                    st.success("¡Mensaje enviado con éxito! Nos pondremos en contacto contigo pronto.")
-                else:
-                    st.error("Por favor completa todos los campos obligatorios")
+        if img2:
+            st.image(img2, use_column_width=True, caption="", output_format="JPEG")
+        if img5:
+            st.image(img5, use_column_width=True, caption="", output_format="JPEG")
+    
+    with col3:
+        if img3:
+            st.image(img3, use_column_width=True, caption="", output_format="JPEG")
 
-# Pie de página
-def mostrar_footer():
-    st.markdown(f"""
-    <div class="footer">
-        <img src="{LOGO_URL}" alt="MUPAI Logo" class="footer-logo">
-        <p style="font-size:1.2rem; margin-bottom:10px;">© 2023 <strong style="color:#FFD700;">MUPAI Digital Training Science</strong></p>
-        <p style="margin:0;">Todos los derechos reservados | Ciencia aplicada al rendimiento humano</p>
-    </div>
-    """, unsafe_allow_html=True)
+# (Mantén las demás funciones como registro, contacto, servicios, etc. sin cambios)
 
-# Menú de navegación
-def mostrar_menu():
-    with st.sidebar:
-        # Logo en la barra lateral
-        st.markdown(f'<div class="sidebar-logo"><img src="{LOGO_URL}" alt="MUPAI Logo"></div>', unsafe_allow_html=True)
-        
-        menu = st.radio(
-            "Menú de Navegación",
-            ["🏠 Inicio", "👤 Sobre Mí", "📞 Contacto"],
-            label_visibility="collapsed"
-        )
-        
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align:center; padding:10px; background-color:#FFD720; border-radius:8px;">
-            <p style="color:#000; margin:0; font-weight:bold;">¡Próximamente!</p>
-            <p style="color:#000; margin:0;">Evaluaciones científicas</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("---")
-        st.markdown("""
-        <div style="text-align:center; color:#fff; font-size:0.9rem;">
-            <p>MUPAI Digital Training Science</p>
-            <p>Ciencia aplicada al rendimiento humano</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        return menu
-
-# Función principal
 def main():
     aplicar_estilos()
-    menu = mostrar_menu()
-    
-    if menu == "🏠 Inicio":
-        pagina_inicio()
-    elif menu == "👤 Sobre Mí":
-        pagina_sobre_mi()
-    elif menu == "📞 Contacto":
-        pagina_contacto()
-    
-    mostrar_footer()
+    init_db()
+
+    # Simulación de usuario logueado (reemplazar con lógica de sesión en producción)
+    logged_user = st.sidebar.text_input("Usuario logueado (simulado para pruebas):")
+    user_role = "user"  # Cambia a "admin" para probar como administrador
+
+    st.sidebar.title("Navegación")
+    menu = ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Perfil MUPAI/Salud y Rendimiento", "Registro"]
+
+    if logged_user and user_role == "admin":
+        menu.append("Administrar Usuarios")
+        menu.append("Historial de Actividades")
+
+    choice = st.sidebar.radio("Selecciona una opción:", menu)
+
+    if choice == "Inicio":
+        inicio()
+    elif choice == "Sobre Mí":
+        sobre_mi()
+    elif choice == "Servicios":
+        servicios()
+    elif choice == "Contacto":
+        contacto()
+    elif choice == "Perfil MUPAI/Salud y Rendimiento":
+        perfil_mupai()
+    elif choice == "Registro":
+        registro()
+    elif choice == "Administrar Usuarios" and user_role == "admin":
+        gestionar_usuarios_pendientes()
+        gestionar_usuarios_activos()
+        exportar_usuarios_activos()
+    elif choice == "Historial de Actividades" and user_role == "admin":
+        ver_historial_actividades()
 
 if __name__ == "__main__":
     main()
