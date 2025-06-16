@@ -1,886 +1,491 @@
 import streamlit as st
-from datetime import datetime
-import pandas as pd
-import numpy as np
 
-# Configuración premium de la página
+# Configuración de la página
 st.set_page_config(
-    page_title="MUPAI - Ciencia del Entrenamiento Digital",
-    page_icon="🏋️‍♂️",
+    page_title="MUPAI - Entrenamiento Digital",
+    page_icon="🤖",
     layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://mupai.com/ayuda',
-        'Report a bug': "https://mupai.com/reportar",
-        'About': "### MUPAI Premium\nPlataforma de entrenamiento científico digital"
+)
+# Definir la función para Calidad del Sueño
+def cuestionario_calidad_sueno():
+    st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
+    st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
+
+    # Bloque 1: Horarios de sueño
+    hora_acostarse = st.text_input("1. ¿A qué hora te acuestas normalmente?")
+    tiempo_dormirse = st.slider("2. ¿Cuánto tiempo tardas normalmente en dormirte (minutos)?", 0, 120, 15)
+    hora_levantarse = st.text_input("3. ¿A qué hora te levantas normalmente?")
+    horas_dormidas = st.slider("4. ¿Cuántas horas calculas que duermes habitualmente por noche?", 0, 12, 7)
+
+    # Bloque 2: Problemas para dormir
+    st.write("5. Durante el último mes, ¿con qué frecuencia has experimentado los siguientes problemas?")
+    problemas_dormir = {
+        "No poder conciliar el sueño en 30 minutos": st.radio(
+            "a. No poder conciliar el sueño en los primeros 30 minutos:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Despertarte durante la noche o muy temprano": st.radio(
+            "b. Despertarte durante la noche o muy temprano:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Ir al baño durante la noche": st.radio(
+            "c. Tener que levantarte para ir al baño:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "No poder respirar bien": st.radio(
+            "d. No poder respirar bien mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Toser o roncar fuerte": st.radio(
+            "e. Toser o roncar fuerte mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Sentir frío": st.radio(
+            "f. Sentir frío mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Sentir calor": st.radio(
+            "g. Sentir calor mientras duermes:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Tener pesadillas": st.radio(
+            "h. Tener pesadillas:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Sentir dolor": st.radio(
+            "i. Sentir dolor que dificulte tu sueño:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        )
     }
+
+    # Bloque 3: Uso de medicación
+    uso_medicacion = st.radio(
+        "6. ¿Cuántas veces tomaste medicamentos para dormir durante el último mes?",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+
+    # Bloque 4: Disfunción diurna
+    st.write("7. Durante el último mes, ¿con qué frecuencia tuviste los siguientes problemas?")
+    disfuncion_diurna_1 = st.radio(
+        "a. Problemas para mantenerte despierto(a) mientras realizabas actividades sociales o tareas:",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+    disfuncion_diurna_2 = st.radio(
+        "b. Dificultad para mantener el entusiasmo para hacer cosas:",
+        ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+    )
+
+    # Bloque 5: Calidad subjetiva del sueño
+    calidad_sueno = st.radio(
+        "8. ¿Cómo calificarías la calidad de tu sueño durante el último mes?",
+        ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
+    )
+
+    # Botón para calcular la puntuación
+    if st.button("Calcular Puntuación"):
+        puntuacion = {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}
+        calidad_puntuacion = {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}
+
+        # Cálculo de los componentes
+        componente_1 = calidad_puntuacion[calidad_sueno]
+        componente_2 = 1 if tiempo_dormirse > 30 else 0  # Ejemplo de puntuación
+        componente_3 = 0 if horas_dormidas >= 7 else (1 if horas_dormidas >= 6 else 2)
+        componente_4 = sum(puntuacion[v] for v in problemas_dormir.values())
+        componente_5 = puntuacion[uso_medicacion]
+        componente_6 = puntuacion[disfuncion_diurna_1] + puntuacion[disfuncion_diurna_2]
+
+        total_puntuacion = componente_1 + componente_2 + componente_3 + componente_4 + componente_5 + componente_6
+
+        # Mostrar resultado
+        st.write(f"### Tu puntuación total del PSQI es: {total_puntuacion}")
+        if total_puntuacion <= 5:
+            st.success("Buena calidad de sueño.")
+        elif 6 <= total_puntuacion <= 10:
+            st.warning("Calidad de sueño moderada.")
+        else:
+            st.error("Mala calidad de sueño. Considera consultar a un especialista.")
+
+# Definir la función para Nivel de Actividad Física 
+def cuestionario_ipaq():
+    st.title("Cuestionario de Actividad Física - IPAQ (Versión Corta)")
+    st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
+
+    # Actividades físicas vigorosas
+    st.subheader("Actividades Físicas Vigorosas")
+    dias_vigorosa = st.number_input(
+        "1. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas vigorosas como levantar objetos pesados, cavar, aeróbicos o andar en bicicleta rápido? (Días por semana)", 
+        min_value=0, max_value=7, step=1, key="dias_vigorosa"
+    )
+    if dias_vigorosa > 0:
+        tiempo_vigorosa_horas = st.number_input(
+            "2. ¿Cuántas horas por día dedicaste generalmente a esas actividades vigorosas?", 
+            min_value=0, step=1, key="horas_vigorosa"
+        )
+        tiempo_vigorosa_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1, key="minutos_vigorosa"
+        )
+    else:
+        tiempo_vigorosa_horas = 0
+        tiempo_vigorosa_minutos = 0
+
+    # Actividades físicas moderadas
+    st.subheader("Actividades Físicas Moderadas")
+    dias_moderada = st.number_input(
+        "3. Durante los últimos 7 días, ¿en cuántos días realizaste actividades físicas moderadas como llevar cargas ligeras o andar en bicicleta a un ritmo normal? (Días por semana)", 
+        min_value=0, max_value=7, step=1, key="dias_moderada"
+    )
+    if dias_moderada > 0:
+        tiempo_moderada_horas = st.number_input(
+            "4. ¿Cuántas horas por día dedicaste generalmente a esas actividades moderadas?", 
+            min_value=0, step=1, key="horas_moderada"
+        )
+        tiempo_moderada_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1, key="minutos_moderada"
+        )
+    else:
+        tiempo_moderada_horas = 0
+        tiempo_moderada_minutos = 0
+
+    # Caminata
+    st.subheader("Tiempo Dedicado a Caminar")
+    dias_caminata = st.number_input(
+        "5. Durante los últimos 7 días, ¿en cuántos días caminaste al menos 10 minutos seguidos? (Días por semana)", 
+        min_value=0, max_value=7, step=1, key="dias_caminata"
+    )
+    if dias_caminata > 0:
+        tiempo_caminata_horas = st.number_input(
+            "6. ¿Cuántas horas por día dedicaste generalmente a caminar?", 
+            min_value=0, step=1, key="horas_caminata"
+        )
+        tiempo_caminata_minutos = st.number_input(
+            "¿Y cuántos minutos por día (además de las horas)?", 
+            min_value=0, max_value=59, step=1, key="minutos_caminata"
+        )
+    else:
+        tiempo_caminata_horas = 0
+        tiempo_caminata_minutos = 0
+
+    # Tiempo sedentario
+    st.subheader("Tiempo de Sedentarismo")
+    tiempo_sedentario_horas = st.number_input(
+        "7. Durante los últimos 7 días, ¿cuántas horas por día dedicaste a estar sentado? (Promedio diario)", 
+        min_value=0, step=1, key="horas_sedentario"
+    )
+    tiempo_sedentario_minutos = st.number_input(
+        "¿Y cuántos minutos por día (además de las horas)?", 
+        min_value=0, max_value=59, step=1, key="minutos_sedentario"
+    )
+
+    # Calcular el scoring
+    if st.button("Calcular Puntuación", key="calcular_puntuacion"):
+        # Conversión de tiempo en minutos
+        minutos_vigorosa = dias_vigorosa * ((tiempo_vigorosa_horas * 60) + tiempo_vigorosa_minutos)
+        minutos_moderada = dias_moderada * ((tiempo_moderada_horas * 60) + tiempo_moderada_minutos)
+        minutos_caminata = dias_caminata * ((tiempo_caminata_horas * 60) + tiempo_caminata_minutos)
+
+        # Cálculo de METs
+        met_vigorosa = minutos_vigorosa * 8.0  # METs para actividad vigorosa
+        met_moderada = minutos_moderada * 4.0  # METs para actividad moderada
+        met_caminata = minutos_caminata * 3.3  # METs para caminata
+
+        # Total de METs
+        total_met = met_vigorosa + met_moderada + met_caminata
+
+        # Mostrar resultados
+        st.write(f"### Tu puntuación total de MET-minutos/semana es: {total_met:.2f}")
+        st.write(f"Tiempo sedentario promedio: {tiempo_sedentario_horas} horas y {tiempo_sedentario_minutos} minutos por día.")
+
+        # Clasificación de actividad
+        if total_met >= 3000:
+            st.success("Nivel de actividad: Alta. Excelente trabajo en mantenerte activo.")
+        elif 600 <= total_met < 3000:
+            st.info("Nivel de actividad: Moderada. Podrías incluir más actividad física para mejorar.")
+        else:
+            st.warning("Nivel de actividad: Baja. Considera realizar más actividades físicas para mejorar tu salud.")
+
+# Función del Cuestionario de Hábitos Alimenticios
+def cuestionario_habitos_alimenticios():
+    st.title("Evaluación General de Hábitos Alimenticios")
+    st.write("Responde las siguientes preguntas para evaluar tus hábitos alimenticios y recibir recomendaciones personalizadas.")
+
+    # Sección 1: Consumo de Alimentos Frescos
+    st.header("Sección 1: Consumo de Alimentos Frescos")
+    agua = st.radio("1. ¿Bebes al menos 1.5 litros de agua natural diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    verduras = st.radio("2. ¿Consumes al menos 200 g de verduras frescas diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    frutas = st.radio("3. ¿Consumes al menos 200 g de frutas diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    leguminosas = st.radio("4. ¿Consumes al menos 300 g de leguminosas semanalmente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    frutos_secos = st.radio("5. ¿Consumes al menos 30 g de frutos secos o medio aguacate diariamente?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+
+    # Sección 2: Carnes Frescas y Procesadas
+    st.header("Sección 2: Carnes Frescas y Procesadas")
+    carne_fresca = st.radio(
+        "6. ¿Qué tipo de carne fresca consumes con mayor frecuencia durante la semana?",
+        ["Pescado fresco", "Pollo fresco", "Carne roja fresca", "No consumo carne fresca"]
+    )
+    carnes_procesadas = st.radio(
+        "7. ¿Con qué frecuencia consumes carnes procesadas (embutidos, curadas, enlatadas o fritas)?",
+        ["Nunca", "Algunas veces", "Casi siempre", "Siempre"]
+    )
+
+    # Sección 3: Hábitos Alimenticios Generales
+    st.header("Sección 3: Hábitos Alimenticios Generales")
+    alimentos_fuera = st.radio("8. ¿Consumes alimentos no preparados en casa tres o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    bebidas_azucaradas = st.radio("9. ¿Cuántas veces consumes bebidas azucaradas semanalmente?", ["Nunca", "1–3 veces", "4–6 veces", "Diario"])
+    postres_dulces = st.radio("10. ¿Consumes postres o dulces dos o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    alimentos_procesados = st.radio("11. ¿Consumes alimentos procesados dos o más veces por semana?", ["Nunca", "Algunas veces", "Casi siempre", "Siempre"])
+    cereales = st.radio(
+        "12. ¿Qué tipo de cereales consumes con mayor frecuencia?",
+        ["Granos integrales", "Granos mínimamente procesados", "Granos procesados o ultraprocesados"]
+    )
+
+    # Sección 4: Consumo de Alcohol
+    st.header("Sección 4: Consumo de Alcohol")
+    alcohol = st.radio(
+        "13. Si eres hombre, ¿consumes más de 2 bebidas alcohólicas al día? Si eres mujer, ¿más de 1 bebida al día?",
+        ["Nunca", "Algunas veces", "Casi siempre", "Siempre"]
+    )
+
+    # Botón para calcular la puntuación
+    if st.button("Calcular Puntuación"):
+        puntuaciones = {"Nunca": 1, "Algunas veces": 2, "Casi siempre": 3, "Siempre": 4}
+        carne_fresca_valores = {"Pescado fresco": 4, "Pollo fresco": 3, "Carne roja fresca": 2, "No consumo carne fresca": 0}
+        carnes_procesadas_valores = {"Nunca": 0, "Algunas veces": -1, "Casi siempre": -2, "Siempre": -3}
+        cereales_valores = {"Granos integrales": 4, "Granos mínimamente procesados": 3, "Granos procesados o ultraprocesados": -2}
+
+        puntuacion_total = (
+            puntuaciones[agua] +
+            puntuaciones[verduras] +
+            puntuaciones[frutas] +
+            puntuaciones[leguminosas] +
+            puntuaciones[frutos_secos] +
+            carne_fresca_valores[carne_fresca] +
+            carnes_procesadas_valores[carnes_procesadas] +
+            puntuaciones[alimentos_fuera] +
+            puntuaciones[bebidas_azucaradas] +
+            puntuaciones[postres_dulces] +
+            puntuaciones[alimentos_procesados] +
+            cereales_valores[cereales] +
+            puntuaciones[alcohol]
+        )
+
+        st.write(f"### Tu puntuación total es: {puntuacion_total}")
+
+        # Feedback en función del puntaje
+        if puntuacion_total >= 30:
+            st.success("✅ Tus hábitos alimenticios son saludables.")
+            st.write("¡Felicidades! Tus elecciones alimenticias son excelentes. Sigue así para mantener una salud óptima.")
+        elif 15 <= puntuacion_total < 30:
+            st.warning("⚠️ Tus hábitos alimenticios son moderadamente saludables.")
+            st.write("Tienes hábitos buenos, pero hay áreas donde puedes mejorar. Considera reducir el consumo de alimentos procesados y aumentar tu ingesta de alimentos frescos.")
+        else:
+            st.error("❌ Tus hábitos alimenticios necesitan mejoras significativas.")
+            st.write("Es importante trabajar en tus hábitos alimenticios. Intenta incorporar más alimentos frescos y reducir el consumo de alimentos ultraprocesados. Podría ser útil consultar a un especialista.")
+
+# Barra lateral de navegación
+menu = st.sidebar.selectbox(
+    "Menú",
+    ["Inicio", "Sobre Mí", "Servicios", "Contacto", "Evaluación del Estilo de Vida"]
 )
 
-# Paleta de colores profesional
-COLORS = {
-    "primary": "#FFD700",  # Oro premium
-    "secondary": "#1A1A1A",  # Negro mate
-    "background": "#F8F9FA",  # Fondo claro premium
-    "text": "#333333",  # Texto oscuro
-    "accent": "#FFC72C",  # Amarillo más cálido
-    "success": "#4BB543",
-    "info": "#0096FF",
-    "warning": "#FFA500",
-    "danger": "#FF3333",
-    "light": "#FFFFFF",
-    "dark": "#121212"
-}
+# Contenido del menú principal
+if menu == "Inicio":
+    # Mostrar el logo
+    st.image("LOGO.png", use_container_width=True)
 
-# Fuentes y tipografía
-FONTS = {
-    "title": "'Montserrat', sans-serif",
-    "text": "'Open Sans', sans-serif",
-    "special": "'Playfair Display', serif"
-}
+    # Título principal
+    st.title("Bienvenido a MUPAI")
 
-# Efectos visuales
-SHADOWS = {
-    "small": "0 2px 8px rgba(0,0,0,0.1)",
-    "medium": "0 4px 12px rgba(0,0,0,0.15)",
-    "large": "0 8px 24px rgba(0,0,0,0.2)"
-}
+    # Misión
+    st.header("Misión")
+    st.write(
+        """
+        Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio. Nos enfocamos en promover el desarrollo integral de nuestros usuarios y su bienestar físico y mental.
+        """
+    )
 
-# Estilos CSS premium
-@st.cache_data
-def aplicar_estilos_premium():
-    st.markdown(f"""
-    <style>
-    /* Importar fuentes de Google */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;500;600&family=Playfair+Display:wght@700&display=swap');
-    
-    /* Reset y estilos base */
-    * {{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }}
-    
-    .stApp {{
-        background-color: {COLORS['background']};
-        color: {COLORS['text']};
-        font-family: {FONTS['text']};
-        line-height: 1.6;
-    }}
-    
-    /* Mejorar los headers */
-    h1 {{
-        font-family: {FONTS['title']};
-        font-weight: 700;
-        color: {COLORS['secondary']};
-        margin-bottom: 1.5rem;
-        position: relative;
-        padding-bottom: 0.5rem;
-    }}
-    
-    h1:after {{
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 80px;
-        height: 4px;
-        background: linear-gradient(90deg, {COLORS['primary']}, {COLORS['accent']});
-        border-radius: 2px;
-    }}
-    
-    h2 {{
-        font-family: {FONTS['title']};
-        font-weight: 600;
-        color: {COLORS['secondary']};
-        margin: 2rem 0 1rem;
-    }}
-    
-    h3 {{
-        font-family: {FONTS['title']};
-        font-weight: 600;
-        color: {COLORS['secondary']};
-        margin: 1.5rem 0 0.5rem;
-    }}
-    
-    /* Sidebar premium */
-    [data-testid="stSidebar"] {{
-        background-color: {COLORS['secondary']} !important;
-        color: {COLORS['light']};
-    }}
-    
-    [data-testid="stSidebar"] .stRadio div {{
-        color: {COLORS['light']} !important;
-    }}
-    
-    /* Botones premium */
-    .stButton>button {{
-        background: linear-gradient(135deg, {COLORS['primary']}, {COLORS['accent']});
-        color: {COLORS['secondary']};
-        border: none;
-        border-radius: 8px;
-        font-family: {FONTS['title']};
-        font-weight: 600;
-        padding: 0.75rem 1.5rem;
-        transition: all 0.3s ease;
-        box-shadow: {SHADOWS['small']};
-    }}
-    
-    .stButton>button:hover {{
-        transform: translateY(-2px);
-        box-shadow: {SHADOWS['medium']};
-        background: linear-gradient(135deg, {COLORS['accent']}, {COLORS['primary']});
-    }}
-    
-    /* Tarjetas premium */
-    .card-premium {{
-        background: {COLORS['light']};
-        border-radius: 12px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: {SHADOWS['small']};
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-        border: 1px solid rgba(0,0,0,0.05);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }}
-    
-    .card-premium:hover {{
-        transform: translateY(-8px);
-        box-shadow: {SHADOWS['large']};
-    }}
-    
-    .card-premium h3 {{
-        font-family: {FONTS['special']};
-        font-size: 1.5rem;
-        margin-top: 0;
-        margin-bottom: 1rem;
-        color: {COLORS['secondary']};
-    }}
-    
-    .card-premium-icon {{
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: {COLORS['primary']};
-    }}
-    
-    /* Hero section premium */
-    .hero-premium {{
-        background: linear-gradient(135deg, {COLORS['secondary']}, #2A2A2A);
-        color: white;
-        padding: 6rem 2rem;
-        border-radius: 16px;
-        margin-bottom: 3rem;
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-    }}
-    
-    .hero-premium::before {{
-        content: "";
-        position: absolute;
-        top: -50%;
-        right: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255,215,0,0.15) 0%, transparent 70%);
-        z-index: 0;
-    }}
-    
-    .hero-content {{
-        position: relative;
-        z-index: 1;
-        max-width: 800px;
-        margin: 0 auto;
-    }}
-    
-    .hero-premium h1 {{
-        font-size: 3.5rem;
-        color: white;
-        margin-bottom: 1.5rem;
-        font-family: {FONTS['special']};
-    }}
-    
-    .hero-premium h1:after {{
-        display: none;
-    }}
-    
-    .hero-premium p {{
-        font-size: 1.4rem;
-        opacity: 0.9;
-        margin-bottom: 2.5rem;
-    }}
-    
-    /* Efectos de animación */
-    @keyframes fadeInUp {{
-        from {{ opacity: 0; transform: translateY(20px); }}
-        to {{ opacity: 1; transform: translateY(0); }}
-    }}
-    
-    .animate-in {{
-        animation: fadeInUp 0.6s ease-out forwards;
-        opacity: 0;
-        animation-fill-mode: forwards;
-    }}
-    
-    /* Timeline de experiencia */
-    .timeline {{
-        position: relative;
-        max-width: 100%;
-        margin: 0 auto;
-    }}
-    
-    .timeline::after {{
-        content: '';
-        position: absolute;
-        width: 4px;
-        background: linear-gradient(to bottom, {COLORS['primary']}, {COLORS['accent']});
-        top: 0;
-        bottom: 0;
-        left: 50%;
-        margin-left: -2px;
-        border-radius: 2px;
-    }}
-    
-    .timeline-item {{
-        padding: 10px 40px;
-        position: relative;
-        width: 50%;
-        box-sizing: border-box;
-    }}
-    
-    .timeline-item::after {{
-        content: '';
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: {COLORS['primary']};
-        border: 4px solid {COLORS['light']};
-        border-radius: 50%;
-        top: 15px;
-        z-index: 1;
-    }}
-    
-    .left {{
-        left: 0;
-        text-align: right;
-    }}
-    
-    .right {{
-        left: 50%;
-        text-align: left;
-    }}
-    
-    .left::after {{
-        right: -12px;
-    }}
-    
-    .right::after {{
-        left: -12px;
-    }}
-    
-    .timeline-content {{
-        padding: 20px;
-        background: {COLORS['light']};
-        border-radius: 12px;
-        box-shadow: {SHADOWS['small']};
-    }}
-    
-    /* Footer premium */
-    .footer-premium {{
-        background: {COLORS['secondary']};
-        color: {COLORS['light']};
-        padding: 3rem 2rem;
-        border-radius: 16px;
-        margin-top: 4rem;
-        text-align: center;
-    }}
-    
-    .social-icons {{
-        display: flex;
-        justify-content: center;
-        gap: 1.5rem;
-        margin: 1.5rem 0;
-    }}
-    
-    .social-icon {{
-        width: 40px;
-        height: 40px;
-        background: rgba(255,255,255,0.1);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s;
-    }}
-    
-    .social-icon:hover {{
-        background: {COLORS['primary']};
-        color: {COLORS['secondary']};
-        transform: translateY(-3px);
-    }}
-    
-    /* Responsive design */
-    @media (max-width: 768px) {{
-        .timeline::after {{
-            left: 31px;
-        }}
-        
-        .timeline-item {{
-            width: 100%;
-            padding-left: 70px;
-            padding-right: 25px;
-        }}
-        
-        .timeline-item::after {{
-            left: 21px;
-        }}
-        
-        .left, .right {{
-            left: 0;
-            text-align: left;
-        }}
-    }}
-    </style>
-    """, unsafe_allow_html=True)
+    # Visión
+    st.header("Visión")
+    st.write(
+        """
+        Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia. Aspiramos a transformar la experiencia del entrenamiento físico, integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
+        """
+    )
 
-# Componente de tarjeta premium
-def card_premium(title, content, icon=None, delay=0):
-    icon_html = f"<div class='card-premium-icon'>{icon}</div>" if icon else ""
-    st.markdown(f"""
-    <div class='card-premium animate-in' style='animation-delay: {delay}ms;'>
-        {icon_html}
-        <h3>{title}</h3>
-        {content}
-    </div>
-    """, unsafe_allow_html=True)
+    # Política
+    st.header("Política")
+    st.write(
+        """
+        En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para ofrecer soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
+        """
+    )
 
-# Hero section premium
-def hero_section():
-    st.markdown(f"""
-    <div class='hero-premium'>
-        <div class='hero-content'>
-            <h1>Transforma tu Rendimiento con Ciencia</h1>
-            <p>Entrenamiento digital personalizado basado en evidencia científica</p>
-            <div style='display: flex; gap: 1rem; justify-content: center;'>
-                <a href='#servicios' style='
-                    background: {COLORS['primary']};
-                    color: {COLORS['secondary']};
-                    padding: 0.8rem 1.8rem;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-family: {FONTS['title']};
-                    transition: all 0.3s;
-                    box-shadow: {SHADOWS['small']};
-                '>Nuestros Servicios</a>
-                <a href='#contacto' style='
-                    background: transparent;
-                    color: white;
-                    padding: 0.8rem 1.8rem;
-                    border-radius: 8px;
-                    text-decoration: none;
-                    font-weight: 600;
-                    font-family: {FONTS['title']};
-                    transition: all 0.3s;
-                    border: 2px solid {COLORS['primary']};
-                '>Contacto</a>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # Política del Servicio
+    st.header("Política del Servicio")
+    st.write(
+        """
+        En **MUPAI**, guiamos nuestras acciones por los siguientes principios:
+        - Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio.
+        - Aprovechamos la tecnología para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.
+        - Respetamos y protegemos la privacidad de los datos personales, garantizando su uso responsable.
+        - Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios.
+        - Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.
+        """
+    )
 
-# Página de Inicio Premium
-def pagina_inicio_premium():
-    hero_section()
-    
-    # Sección de identidad
-    st.header("🏆 Nuestra Identidad", anchor="identidad")
-    
-    cols = st.columns(2)
-    with cols[0]:
-        card_premium(
-            "Misión",
-            """
-            <p>Hacer accesible el entrenamiento basado en ciencia mediante soluciones digitales 
-            personalizadas que integren inteligencia artificial, investigación de vanguardia y 
-            metodologías probadas.</p>
-            """,
-            "🌟",
-            100
-        )
-        
-        card_premium(
-            "Valores",
-            """
-            <ul style='margin-left: 1rem;'>
-                <li><strong>Excelencia:</strong> En cada detalle de nuestro servicio</li>
-                <li><strong>Innovación:</strong> Siempre a la vanguardia tecnológica</li>
-                <li><strong>Integridad:</strong> Transparencia en nuestras metodologías</li>
-            </ul>
-            """,
-            "💎",
-            300
-        )
-    
-    with cols[1]:
-        card_premium(
-            "Visión",
-            """
-            <p>Ser líderes globales en entrenamiento digital científico, transformando la 
-            experiencia del fitness mediante tecnología avanzada que democratice el acceso 
-            a metodologías de elite.</p>
-            """,
-            "🌍",
-            200
-        )
-        
-        card_premium(
-            "Compromiso",
-            """
-            <p>Garantizar que cada plan de entrenamiento esté respaldado por evidencia 
-            científica y adaptado a las necesidades individuales de cada usuario.</p>
-            """,
-            "🤝",
-            400
-        )
-    
-    # Sección de servicios con pestañas
-    st.header("💎 Nuestros Servicios Premium", anchor="servicios")
-    
-    tabs = st.tabs(["🏋️‍♂️ Entrenamiento", "📊 Evaluación", "🧘 Bienestar"])
-    
-    with tabs[0]:
-        cols = st.columns(3)
-        with cols[0]:
-            card_premium(
-                "Planes Personalizados",
-                "Programas 100% adaptados a tus objetivos y capacidades",
-                "📝",
-                100
-            )
-        with cols[1]:
-            card_premium(
-                "Periodización Avanzada",
-                "Estructuración científica de tu entrenamiento a largo plazo",
-                "📅",
-                200
-            )
-        with cols[2]:
-            card_premium(
-                "Ajuste Automático",
-                "Planes que evolucionan con tu progreso",
-                "🔄",
-                300
-            )
-    
-    with tabs[1]:
-        cols = st.columns(3)
-        with cols[0]:
-            card_premium(
-                "Composición Corporal",
-                "Análisis avanzado de masa muscular y grasa corporal",
-                "📏",
-                100
-            )
-        with cols[1]:
-            card_premium(
-                "Rendimiento Físico",
-                "Evaluación de capacidades y limitaciones",
-                "⚡",
-                200
-            )
-        with cols[2]:
-            card_premium(
-                "Biomecánica",
-                "Análisis de movimiento y técnica",
-                "👟",
-                300
-            )
-    
-    with tabs[2]:
-        cols = st.columns(3)
-        with cols[0]:
-            card_premium(
-                "Gestión del Estrés",
-                "Técnicas basadas en evidencia científica",
-                "😌",
-                100
-            )
-        with cols[1]:
-            card_premium(
-                "Optimización del Sueño",
-                "Mejora tu recuperación con ciencia",
-                "🌙",
-                200
-            )
-        with cols[2]:
-            card_premium(
-                "Nutrición Personalizada",
-                "Planes alimenticios para tus objetivos",
-                "🍎",
-                300
-            )
+elif menu == "Sobre Mí":
+    # Sección "Sobre Mí"
+    st.title("Sobre Mí")
+    st.write("""
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia. Actualmente, me desempeño en **Muscle Up Gym**, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica. Mi labor se centra en crear metodologías personalizadas que optimicen el rendimiento físico y promuevan el bienestar integral de nuestros usuarios.
 
-# Página "Sobre Mí" Premium
-def pagina_sobre_mi_premium():
-    st.header("👨‍🔬 Erick De Luna - Fundador")
-    
-    # Perfil con columnas
-    col1, col2 = st.columns([1, 2])
-    
+    Cuento con una Maestría en Fuerza y Acondicionamiento por el **Football Science Institute**, una Licenciatura en Ciencias del Ejercicio por la **Universidad Autónoma de Nuevo León (UANL)** y un intercambio académico internacional en la **Universidad de Sevilla**. Durante mi carrera, fui miembro del **Programa de Talento Universitario de la UANL**, una distinción que reconoce a estudiantes de excelencia académica y extracurricular. Además, adquirí experiencia clave en el **Laboratorio de Rendimiento Humano de la UANL**, colaborando en evaluaciones avanzadas de fuerza, biomecánica y acondicionamiento físico con tecnologías innovadoras.
+
+    Mi trayectoria ha sido reconocida con distinciones como el **Premio al Mérito Académico de la UANL**, el **Primer Lugar de Generación** en la Facultad de Organización Deportiva y una **beca completa para un intercambio internacional** en la Universidad de Sevilla. Estos logros reflejan mi compromiso con la excelencia académica y profesional.
+
+    Con una combinación de preparación académica, experiencia práctica y un enfoque basado en la evidencia, me dedico a diseñar soluciones que transformen el rendimiento físico y promuevan la salud integral, integrando ciencia, innovación y personalización.
+    """)
+
+    # Collage de imágenes
+    st.subheader("Galería de Imágenes")
+    col1, col2, col3 = st.columns(3)
+
     with col1:
-        st.markdown("""
-        <div style='text-align: center;'>
-            <img src='https://images.unsplash.com/photo-1583864697784-a0efc8379f70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=880&q=80' 
-                 style='width: 100%; border-radius: 16px; border: 4px solid #FFD700; margin-bottom: 1rem;'>
-            <h3 style='font-family: {FONTS["special"]};'>Erick Francisco De Luna</h3>
-            <p style='color: {COLORS["primary"]}; font-weight: 600;'>Científico del Ejercicio</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
+        st.image("FB_IMG_1734820693317.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820729323.jpg", use_container_width=True)
+
     with col2:
-        st.markdown("""
-        <div style='background: {COLORS["light"]}; padding: 2rem; border-radius: 16px; box-shadow: {SHADOWS["small"]};'>
-            <h2 style='font-family: {FONTS["special"]}; margin-top: 0;'>Biografía Profesional</h2>
-            <p>Con más de 10 años de experiencia en ciencias del ejercicio, Erick ha dedicado su carrera 
-            a desarrollar metodologías innovadoras que integran la investigación científica con aplicaciones 
-            prácticas para atletas y entusiastas del fitness.</p>
-            <p>Su enfoque multidisciplinario combina conocimientos avanzados en fisiología, biomecánica 
-            y psicología del deporte para crear soluciones de entrenamiento integrales.</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Experiencia con timeline interactivo
-    st.header("📜 Trayectoria Profesional")
-    
-    st.markdown("""
-    <div class='timeline'>
-        <div class='timeline-item left animate-in' style='animation-delay: 100ms;'>
-            <div class='timeline-content'>
-                <h3>Football Science Institute</h3>
-                <p><strong>Maestría en Fuerza y Acondicionamiento</strong></p>
-                <p>2020-2022</p>
-                <p>Investigación aplicada al alto rendimiento deportivo</p>
-            </div>
-        </div>
-        
-        <div class='timeline-item right animate-in' style='animation-delay: 200ms;'>
-            <div class='timeline-content'>
-                <h3>Muscle Up Gym</h3>
-                <p><strong>Diseñador de Metodologías</strong></p>
-                <p>2018-2020</p>
-                <p>Desarrollo de 15+ protocolos de entrenamiento</p>
-            </div>
-        </div>
-        
-        <div class='timeline-item left animate-in' style='animation-delay: 300ms;'>
-            <div class='timeline-content'>
-                <h3>UANL</h3>
-                <p><strong>Investigador en Rendimiento Humano</strong></p>
-                <p>2016-2018</p>
-                <p>5 publicaciones indexadas en revistas científicas</p>
-            </div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Logros con columnas
-    st.header("🏆 Logros y Reconocimientos")
-    
-    cols = st.columns(2)
-    with cols[0]:
-        card_premium(
-            "Premios Académicos",
-            """
-            <ul>
-                <li>Premio al Mérito Académico UANL</li>
-                <li>Primer Lugar de Generación</li>
-                <li>Beca de Excelencia para intercambio</li>
-            </ul>
-            """,
-            "🎓"
-        )
-    
-    with cols[1]:
-        card_premium(
-            "Publicaciones",
-            """
-            <ul>
-                <li>Métodos innovadores en entrenamiento</li>
-                <li>Análisis de rendimiento físico</li>
-                <li>Estudios de composición corporal</li>
-            </ul>
-            """,
-            "📚"
-        )
-    
-    # Filosofía con cita destacada
-    st.header("🧠 Filosofía de Entrenamiento")
-    st.markdown(f"""
-    <div style='
-        background: linear-gradient(135deg, {COLORS["secondary"]}, #2A2A2A);
-        color: white;
-        padding: 3rem;
-        border-radius: 16px;
-        margin: 2rem 0;
-        position: relative;
-        overflow: hidden;
-    '>
-        <div style='
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 5rem;
-            opacity: 0.1;
-            color: {COLORS["primary"]};
-        '>❝</div>
-        
-        <div style='
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        '>
-            <p style='
-                font-size: 1.5rem;
-                font-style: italic;
-                margin-bottom: 1.5rem;
-                line-height: 1.6;
-            '>
-                "Creo en el poder transformador del entrenamiento científico. Cada individuo 
-                tiene necesidades únicas que requieren soluciones personalizadas basadas en 
-                evidencia, no en modas pasajeras."
-            </p>
-            <p style='font-weight: 600;'>— Erick De Luna</p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+        st.image("FB_IMG_1734820709707.jpg", use_container_width=True)
+        st.image("FB_IMG_1734820808186.jpg", use_container_width=True)
 
-# Página de Contacto Premium
-def pagina_contacto_premium():
-    st.header("📬 Contacto Premium", anchor="contacto")
-    
-    cols = st.columns(2)
-    
-    with cols[0]:
-        card_premium(
-            "Información de Contacto",
-            f"""
-            <div style='margin-bottom: 1.5rem;'>
-                <p style='display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;'>
-                    <span style='font-size: 1.2rem;'>📧</span>
-                    <span><strong>Email:</strong> contacto@mupai.com</span>
-                </p>
-                <p style='display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;'>
-                    <span style='font-size: 1.2rem;'>📱</span>
-                    <span><strong>Teléfono:</strong> +52 866 258 05 94</span>
-                </p>
-                <p style='display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;'>
-                    <span style='font-size: 1.2rem;'>📍</span>
-                    <span><strong>Ubicación:</strong> Monterrey, México</span>
-                </p>
-            </div>
-            
-            <h4 style='margin-bottom: 0.5rem;'>Horario de Atención</h4>
-            <p>Lunes a Viernes: 9:00 - 18:00</p>
-            <p>Sábados: 10:00 - 14:00</p>
-            """,
-            "📌"
-        )
-        
-        # Mapa de ubicación (simulado)
-        st.markdown("""
-        <div style='
-            background: #eee;
-            border-radius: 16px;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1rem;
-            overflow: hidden;
-            position: relative;
-        '>
-            <img src='https://maps.googleapis.com/maps/api/staticmap?center=Monterrey,Mexico&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7CMonterrey,Mexico&key=YOUR_API_KEY' 
-                 style='width: 100%; height: 100%; object-fit: cover;'>
-            <div style='
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: rgba(0,0,0,0.3);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: white;
-                font-weight: bold;
-                font-size: 1.2rem;
-            '>
-                Ubicación en Monterrey, México
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with cols[1]:
-        with st.form("contact_form_premium", clear_on_submit=True):
-            st.markdown("### ✨ Envíanos un Mensaje")
-            
-            nombre = st.text_input("Nombre completo*", placeholder="Tu nombre completo")
-            email = st.text_input("Correo electrónico*", placeholder="tu@email.com")
-            telefono = st.text_input("Teléfono", placeholder="+52 123 456 7890")
-            servicio_interes = st.selectbox(
-                "Servicio de interés",
-                ["Evaluación física", "Plan de entrenamiento", "Asesoría nutricional", "Otro"]
+    with col3:
+        st.image("FB_IMG_1734820712642.jpg", use_container_width=True)
+
+elif menu == "Servicios":
+    # Sección "Servicios"
+    st.title("Servicios")
+    st.write("""
+    **MUPAI** ofrece una amplia gama de servicios personalizados basados en ciencia del ejercicio:
+    - Planes de entrenamiento individualizados.
+    - Programas de mejora física y mental.
+    - Asesoría en nutrición deportiva.
+    - Consultoría en rendimiento deportivo.
+    """)
+
+elif menu == "Contacto":
+    # Sección "Contacto"
+    st.title("Contacto")
+    st.write("""
+    Para más información o consultas, contáctanos:
+    - **Correo**: contacto@mupai.com
+    - **Teléfono**: +52 866 258 05 94
+    - **Ubicación**: Monterrey, Nuevo León
+    """)
+
+elif menu == "Evaluación del Estilo de Vida":
+    # Submenú para Evaluación del Estilo de Vida
+    submenu = st.sidebar.radio(
+        "Áreas de Evaluación",
+        [
+            "Estrés Percibido", 
+            "Calidad del Sueño", 
+            "Nivel de Actividad Física", 
+            "Hábitos Alimenticios", 
+            "Potencial Genético Muscular"
+        ]
+    )
+
+    if submenu == "Estrés Percibido":
+        st.title("Evaluación del Estrés Percibido")
+        st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
+
+        # Preguntas del cuestionario
+        options = ["Nunca", "Casi nunca", "A veces", "Bastante seguido", "Muy seguido"]
+        q1 = st.radio("1. ¿Con qué frecuencia te has sentido molesto/a por algo que ocurrió inesperadamente?", options)
+        q2 = st.radio("2. ¿Con qué frecuencia has sentido que no puedes controlar las cosas importantes de tu vida?", options)
+        q3 = st.radio("3. ¿Con qué frecuencia has sentido nerviosismo o estrés?", options)
+        q4 = st.radio("4. ¿Con qué frecuencia has sentido confianza en tu capacidad para manejar tus problemas personales?", options)
+        q5 = st.radio("5. ¿Con qué frecuencia has sentido que las cosas estaban saliendo bien para ti?", options)
+        q6 = st.radio("6. ¿Con qué frecuencia has sentido que no podías lidiar con todas las cosas que tenías que hacer?", options)
+        q7 = st.radio("7. ¿Con qué frecuencia has sentido que podías controlar las irritaciones en tu vida?", options)
+        q8 = st.radio("8. ¿Con qué frecuencia has sentido que tenías el control sobre las cosas?", options)
+        q9 = st.radio("9. ¿Con qué frecuencia te has sentido enojado/a por cosas fuera de tu control?", options)
+        q10 = st.radio("10. ¿Con qué frecuencia has sentido que las dificultades se acumulaban tanto que no podías superarlas?", options)
+
+        # Botón para calcular el puntaje
+        if st.button("Calcular Puntuación"):
+            scores = {"Nunca": 0, "Casi nunca": 1, "A veces": 2, "Bastante seguido": 3, "Muy seguido": 4}
+
+            total_score = (
+                scores[q1] + scores[q2] + scores[q3] +
+                (4 - scores[q4]) +  # Pregunta inversa
+                (4 - scores[q5]) +  # Pregunta inversa
+                scores[q6] +
+                (4 - scores[q7]) +  # Pregunta inversa
+                (4 - scores[q8]) +  # Pregunta inversa
+                scores[q9] + scores[q10]
             )
-            mensaje = st.text_area("Mensaje*", placeholder="Describe tus necesidades...", height=150)
-            
-            # Checkbox para newsletter
-            newsletter = st.checkbox("Deseo suscribirme al boletín informativo")
-            
-            submitted = st.form_submit_button("Enviar Mensaje", type="primary")
-            
-            if submitted:
-                if not nombre or not email or not mensaje:
-                    st.error("Por favor completa los campos obligatorios (*)")
-                elif "@" not in email or "." not in email:
-                    st.error("Por favor ingresa un email válido")
-                else:
-                    # Simular envío
-                    with st.spinner("Enviando tu mensaje..."):
-                        st.balloons()
-                        st.success("¡Mensaje enviado con éxito!")
-                        
-                        # Mostrar resumen
-                        with st.expander("Ver resumen de tu mensaje"):
-                            st.json({
-                                "nombre": nombre,
-                                "email": email,
-                                "telefono": telefono if telefono else "No proporcionado",
-                                "servicio_interes": servicio_interes,
-                                "newsletter": "Sí" if newsletter else "No",
-                                "fecha": datetime.now().strftime("%d/%m/%Y %H:%M")
-                            })
 
-# Footer Premium
-def footer_premium():
-    st.markdown(f"""
-    <div class='footer-premium'>
-        <div style='max-width: 800px; margin: 0 auto;'>
-            <img src='https://via.placeholder.com/200x60/000000/FFFFFF?text=MUPAI+PREMIUM' 
-                 style='max-width: 200px; margin-bottom: 1rem;'>
-            <p style='margin-bottom: 1.5rem;'>Ciencia aplicada al rendimiento humano</p>
-            
-            <div class='social-icons'>
-                <a href='#' class='social-icon'>📱</a>
-                <a href='#' class='social-icon'>📸</a>
-                <a href='#' class='social-icon'>🔗</a>
-                <a href='#' class='social-icon'>📧</a>
-            </div>
-            
-            <div style='display: flex; justify-content: center; gap: 1.5rem; margin: 1.5rem 0;'>
-                <a href='#' style='color: {COLORS["light"]}; text-decoration: none;'>Inicio</a>
-                <a href='#' style='color: {COLORS["light"]}; text-decoration: none;'>Servicios</a>
-                <a href='#' style='color: {COLORS["light"]}; text-decoration: none;'>Sobre Mí</a>
-                <a href='#' style='color: {COLORS["light"]}; text-decoration: none;'>Contacto</a>
-            </div>
-            
-            <p style='font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem;'>
-                © {datetime.now().year} MUPAI Premium. Todos los derechos reservados.
-            </p>
-            <p style='font-size: 0.8rem; opacity: 0.6; margin-bottom: 0;'>
-                Ciencia del ejercicio aplicada a tu rendimiento
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+            st.write("### Tu puntuación total es:", total_score)
+            if total_score <= 13:
+                st.success("Estrés bajo. ¡Excelente trabajo en mantener el equilibrio!")
+            elif 14 <= total_score <= 26:
+                st.warning("Estrés moderado. Podrías beneficiarte de técnicas de manejo del estrés.")
+            else:
+                st.error("Estrés alto. Considera buscar apoyo o implementar estrategias de relajación.")
 
-# Sidebar Premium
-def sidebar_premium():
-    with st.sidebar:
-        st.markdown(f"""
-        <div style='
-            text-align: center; 
-            padding: 1rem 0 2rem;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            margin-bottom: 1.5rem;
-        '>
-            <img src='https://via.placeholder.com/180x60/FFFFFF/000000?text=MUPAI+PRO' 
-                 style='max-width: 180px; margin-bottom: 0.5rem;'>
-            <p style='
-                color: {COLORS["primary"]}; 
-                font-weight: 600; 
-                letter-spacing: 1px;
-                margin: 0;
-            '>DIGITAL TRAINING SCIENCE</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Menú de navegación
-        menu_options = {
-            "🏠 Inicio": pagina_inicio_premium,
-            "👨‍🔬 Sobre Mí": pagina_sobre_mi_premium,
-            "📬 Contacto": pagina_contacto_premium
-        }
-        
-        selected = st.radio(
-            "Navegación Principal",
-            list(menu_options.keys()),
-            label_visibility="collapsed"
+    elif submenu == "Calidad del Sueño":
+        cuestionario_calidad_sueno()  # Llama la función de Calidad del Sueño
+   
+    elif submenu == "Nivel de Actividad Física":
+      cuestionario_ipaq()  # Llama la función para Nivel de Actividad Física
+
+    elif submenu == "Hábitos Alimenticios":
+      cuestionario_habitos_alimenticios()  # Llama la función para Hábitos Alimenticios 
+
+
+# Función para el cuestionario de Calidad del Sueño
+def cuestionario_calidad_sueno():
+    st.title("Evaluación de la Calidad del Sueño - Índice de Pittsburgh")
+    st.write("Responde las siguientes preguntas sobre tus hábitos de sueño durante el último mes:")
+
+    hora_acostarse = st.text_input("1. ¿A qué hora te acuestas normalmente?")
+    tiempo_dormirse = st.selectbox(
+        "2. ¿Cuánto tiempo tardas normalmente en dormirte?",
+        ["Menos de 15 minutos", "16-30 minutos", "31-60 minutos", "Más de 60 minutos"]
+    )
+    hora_levantarse = st.text_input("3. ¿A qué hora te levantas normalmente?")
+    horas_dormidas = st.slider("4. ¿Cuántas horas calculas que duermes habitualmente por noche?", 0, 12, 7)
+
+    st.write("5. Durante el último mes, ¿con qué frecuencia has experimentado los siguientes problemas?")
+    problemas_dormir = {
+        "No poder conciliar el sueño en 30 minutos": st.radio(
+            "a. No poder conciliar el sueño en los primeros 30 minutos:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
+        ),
+        "Despertarte durante la noche o muy temprano": st.radio(
+            "b. Despertarte durante la noche o muy temprano:",
+            ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"]
         )
-        
-        st.markdown("---")
-        
-        # Widget de suscripción
-        with st.expander("💌 Boletín Científico", expanded=False):
-            with st.form("sidebar_newsletter"):
-                email = st.text_input("Tu email profesional", placeholder="email@ejemplo.com")
-                if st.form_submit_button("Suscribirme →"):
-                    if email and "@" in email:
-                        st.success("¡Gracias por suscribirte!")
-                    else:
-                        st.warning("Ingresa un email válido")
-        
-        st.markdown("---")
-        
-        # Badge de certificación
-        st.markdown(f"""
-        <div style='
-            background: rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 1rem;
-            text-align: center;
-            margin: 1rem 0;
-        '>
-            <div style='
-                font-size: 2rem;
-                margin-bottom: 0.5rem;
-                color: {COLORS["primary"]};
-            '>🔬</div>
-            <p style='
-                font-size: 0.9rem;
-                margin-bottom: 0;
-                color: white;
-            '>Certificado en Ciencias del Ejercicio</p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        return menu_options[selected]
+    }
 
-# Función principal
-def main():
-    aplicar_estilos_premium()
-    
-    # Sistema de navegación premium
-    page_func = sidebar_premium()
-    
-    # Mostrar página seleccionada
-    page_func()
-    
-    # Mostrar footer premium
-    footer_premium()
+    calidad_sueno = st.radio(
+        "6. ¿Cómo calificarías la calidad de tu sueño?",
+        ["Muy buena", "Bastante buena", "Bastante mala", "Muy mala"]
+    )
 
-if __name__ == "__main__":
-    main()
+    if st.button("Calcular Puntuación"):
+        puntuacion = {"Ninguna vez": 0, "Menos de una vez a la semana": 1, "Una o dos veces a la semana": 2, "Tres o más veces a la semana": 3}
+        calidad_puntuacion = {"Muy buena": 0, "Bastante buena": 1, "Bastante mala": 2, "Muy mala": 3}
+
+        total_puntuacion = sum(puntuacion[respuesta] for respuesta in problemas_dormir.values())
+        total_puntuacion += calidad_puntuacion[calidad_sueno]
+
+        st.write(f"### Tu puntuación total es: {total_puntuacion}")
+        if total_puntuacion <= 5:
+            st.success("Buena calidad de sueño.")
+        elif 6 <= total_puntuacion <= 10:
+            st.warning("Calidad de sueño moderada.")
+        else:
+            st.error("Mala calidad de sueño. Considera consultar a un especialista.")
