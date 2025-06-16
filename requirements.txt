@@ -1,14 +1,10 @@
-# MUPAI Streamlit Application - Optimized Dependencies
-# Last updated: 2025-06-16
-
 streamlit==1.41.1
 plotly==5.17.0
-pandas==2.1.1
-numpy==1.24.3
+pandas==2.0.3
+numpy==1.25.2
 matplotlib==3.7.2
 bcrypt==4.1.2
 email-validator==2.1.0
 python-dotenv==1.0.0
-
-# Note: AI/ML packages moved to separate requirements-ai.txt
-# Install with: pip install -r requirements-ai.txt (when needed)
+setuptools>=68.0.0
+gunicorn==21.2.0
