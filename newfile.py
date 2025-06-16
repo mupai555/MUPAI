@@ -14,31 +14,17 @@ def local_css(file_name):
     with open(file_name) as f:
         st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
 
-local_css("styles.css")  # Archivo CSS que crearemos después
+# Intenta cargar el CSS si existe
+try:
+    local_css("styles.css")
+except:
+    st.warning("No se encontró el archivo CSS personalizado")
 
 # ---- Logo y Encabezado ----
 def get_base64(bin_file):
     with open(bin_file, 'rb') as f:
         data = f.read()
     return base64.b64encode(data).decode()
-
-def set_bg(png_file):
-    bin_str = get_base64(png_file)
-    page_bg_img = f'''
-    <style>
-    .stApp {{
-        background-image: url("data:image/png;base64,{bin_str}");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-    }}
-    </style>
-    '''
-    st.markdown(page_bg_img, unsafe_allow_html=True)
-
-# Establecer fondo si lo deseas (opcional)
-# set_bg('background.png')
 
 # ---- Definición de funciones mejoradas ----
 def cuestionario_calidad_sueno():
@@ -87,7 +73,7 @@ def cuestionario_calidad_sueno():
         with st.expander("💊 Uso de medicación"):
             uso_medicacion = st.radio(
                 "Frecuencia de uso de medicamentos para dormir:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"],
+                opciones,
                 horizontal=True,
                 key="medicacion"
             )
@@ -95,13 +81,13 @@ def cuestionario_calidad_sueno():
         with st.expander("😴 Disfunción diurna"):
             disfuncion_diurna_1 = st.radio(
                 "Problemas para mantenerse despierto durante actividades:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"],
+                opciones,
                 horizontal=True,
                 key="disfuncion1"
             )
             disfuncion_diurna_2 = st.radio(
                 "Dificultad para mantener el entusiasmo:",
-                ["Ninguna vez", "Menos de una vez a la semana", "Una o dos veces a la semana", "Tres o más veces a la semana"],
+                opciones,
                 horizontal=True,
                 key="disfuncion2"
             )
@@ -144,11 +130,12 @@ def cuestionario_calidad_sueno():
                 st.progress(0.8)
                 st.write("Tu calidad de sueño necesita atención. Te recomendamos consultar con un especialista y revisar tus hábitos de sueño.")
 
-# Definir las otras funciones (ipaq, habitos_alimenticios, etc) con mejoras similares...
+# Otras funciones (ipaq, habitos_alimenticios, etc) irían aquí...
 
 # ---- Barra lateral mejorada ----
 with st.sidebar:
-    st.image("LOGO.png", use_container_width=True)
+    st.title("MUPAI")
+    st.subheader("Entrenamiento Digital")
     st.divider()
     
     menu = st.selectbox(
@@ -163,12 +150,8 @@ with st.sidebar:
 
 # ---- Contenido principal ----
 if menu == "🏠 Inicio":
-    col1, col2 = st.columns([1, 2])
-    with col1:
-        st.image("LOGO.png", use_container_width=True)
-    with col2:
-        st.title("Bienvenido a MUPAI")
-        st.subheader("Entrenamiento Digital Basado en Ciencia")
+    st.title("Bienvenido a MUPAI")
+    st.subheader("Entrenamiento Digital Basado en Ciencia")
     
     st.divider()
     
@@ -179,21 +162,18 @@ if menu == "🏠 Inicio":
         st.write("""
         Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y la investigación más actualizada en ciencias del ejercicio.
         """)
-        st.image("mision.jpg", caption="Transformando vidas a través de la ciencia del ejercicio", use_container_width=True)
     
     with tab2:
         st.header("🔭 Visión")
         st.write("""
         Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia.
         """)
-        st.image("vision.jpg", caption="Liderando la revolución del fitness digital", use_container_width=True)
     
     with tab3:
         st.header("📜 Política")
         st.write("""
         En **MUPAI**, nuestra política está fundamentada en el compromiso con la excelencia, la ética y el servicio centrado en el usuario.
         """)
-        st.image("politica.jpg", caption="Comprometidos con tu bienestar integral", use_container_width=True)
     
     st.divider()
     
@@ -214,33 +194,122 @@ if menu == "🏠 Inicio":
     st.divider()
 
 elif menu == "👤 Sobre Mí":
-    # Contenido similar con mejoras visuales...
+    st.title("Sobre Mí")
+    st.write("""
+    Soy Erick Francisco De Luna Hernández, un profesional apasionado por el fitness y las ciencias del ejercicio, con una sólida formación académica y amplia experiencia en el diseño de metodologías de entrenamiento basadas en ciencia.
+    """)
+    
+    st.subheader("Formación Académica")
+    st.write("""
+    - Maestría en Fuerza y Acondicionamiento por el Football Science Institute
+    - Licenciatura en Ciencias del Ejercicio por la UANL
+    - Intercambio académico en la Universidad de Sevilla
+    """)
+    
+    st.subheader("Experiencia Profesional")
+    st.write("""
+    Actualmente me desempeño en Muscle Up Gym, donde estoy encargado del diseño y desarrollo de programas de entrenamiento fundamentados en evidencia científica.
+    """)
+    
+    st.subheader("Logros y Reconocimientos")
+    st.write("""
+    - Premio al Mérito Académico de la UANL
+    - Primer Lugar de Generación en la Facultad de Organización Deportiva
+    - Beca completa para intercambio internacional
+    """)
 
 elif menu == "💼 Servicios":
-    # Contenido similar con mejoras visuales...
+    st.title("Nuestros Servicios")
+    st.write("Ofrecemos soluciones personalizadas basadas en ciencia para optimizar tu rendimiento físico y bienestar integral.")
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.subheader("🎯 Entrenamiento Personalizado")
+        st.write("Planes individualizados basados en tu perfil físico, objetivos y disponibilidad.")
+        st.button("Más información", key="btn_entrenamiento")
+    
+    with col2:
+        st.subheader("📊 Evaluación Integral")
+        st.write("Análisis completo de tu condición física, hábitos y potencial de mejora.")
+        st.button("Más información", key="btn_evaluacion")
+    
+    with col3:
+        st.subheader("🍎 Nutrición Deportiva")
+        st.write("Asesoría nutricional personalizada para potenciar tu rendimiento y salud.")
+        st.button("Más información", key="btn_nutricion")
+    
+    st.divider()
+    
+    st.subheader("Nuestro Enfoque")
+    st.write("""
+    Combinamos ciencia del ejercicio, tecnología de vanguardia y metodologías probadas para ofrecer:
+    - Programas 100% personalizados
+    - Seguimiento constante
+    - Ajustes basados en datos
+    - Soporte profesional continuo
+    """)
 
 elif menu == "📞 Contacto":
-    # Contenido similar con mejoras visuales...
+    st.title("Contacto")
+    st.write("Estamos aquí para ayudarte en tu camino hacia un mejor bienestar físico.")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.subheader("Información de Contacto")
+        st.write("📧 contacto@mupai.com")
+        st.write("📱 +52 866 258 05 94")
+        st.write("🏢 Monterrey, Nuevo León, México")
+        
+        st.subheader("Horario de Atención")
+        st.write("Lunes a Viernes: 9:00 AM - 6:00 PM")
+        st.write("Sábados: 10:00 AM - 2:00 PM")
+    
+    with col2:
+        st.subheader("Envíanos un Mensaje")
+        nombre = st.text_input("Nombre completo")
+        email = st.text_input("Correo electrónico")
+        mensaje = st.text_area("Mensaje", height=150)
+        if st.button("Enviar mensaje", type="primary"):
+            st.success("¡Mensaje enviado con éxito! Te contactaremos pronto.")
 
 elif menu == "📊 Evaluación del Estilo de Vida":
+    st.title("Evaluación de Estilo de Vida")
+    st.write("Completa nuestras evaluaciones para recibir recomendaciones personalizadas.")
+    
     # Submenú para Evaluación del Estilo de Vida
-    with st.sidebar:
-        st.subheader("Áreas de Evaluación")
-        submenu = st.radio(
-            "Selecciona una evaluación",
-            [
-                "😰 Estrés Percibido", 
-                "🌙 Calidad del Sueño", 
-                "🏃 Nivel de Actividad Física", 
-                "🍎 Hábitos Alimenticios", 
-                "🧬 Potencial Genético Muscular"
-            ]
-        )
+    submenu = st.selectbox(
+        "Selecciona una evaluación",
+        [
+            "😰 Estrés Percibido", 
+            "🌙 Calidad del Sueño", 
+            "🏃 Nivel de Actividad Física", 
+            "🍎 Hábitos Alimenticios", 
+            "🧬 Potencial Genético Muscular"
+        ]
+    )
     
     if submenu == "😰 Estrés Percibido":
-        # Contenido mejorado...
-    
+        st.header("Evaluación del Estrés Percibido")
+        st.write("Responde las siguientes preguntas según cómo te has sentido durante el último mes:")
+        
+        # (Contenido del cuestionario de estrés iría aquí)
+
     elif submenu == "🌙 Calidad del Sueño":
         cuestionario_calidad_sueno()
     
-    # Otras evaluaciones...
+    elif submenu == "🏃 Nivel de Actividad Física":
+        st.header("Cuestionario de Actividad Física - IPAQ")
+        st.write("Responde las siguientes preguntas sobre tu actividad física durante los últimos 7 días.")
+        # (Contenido del cuestionario IPAQ iría aquí)
+    
+    elif submenu == "🍎 Hábitos Alimenticios":
+        st.header("Evaluación de Hábitos Alimenticios")
+        st.write("Responde las siguientes preguntas para evaluar tus hábitos alimenticios.")
+        # (Contenido del cuestionario de hábitos alimenticios iría aquí)
+    
+    elif submenu == "🧬 Potencial Genético Muscular":
+        st.header("Evaluación de Potencial Genético Muscular")
+        st.write("Completa este cuestionario para evaluar tu potencial genético para el desarrollo muscular.")
+        # (Contenido del cuestionario genético iría aquí)
