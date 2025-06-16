@@ -40,7 +40,23 @@ def display_image_safe(image_path, caption="", use_container_width=True, width=N
             """, unsafe_allow_html=True)
     except Exception as e:
         st.error(f"❌ Error mostrando imagen {image_path}: {str(e)}")
+# Split CSS into smaller chunks and add loading optimization
+st.markdown('<meta name="viewport" content="width=device-width, initial-scale=1.0">', unsafe_allow_html=True)
 
+# Load critical CSS first
+st.markdown("""
+<style>
+    /* Critical CSS - Load first */
+    .stApp { font-family: 'Inter', sans-serif; }
+    .main-header { font-size: 3rem; text-align: center; margin: 1rem 0; }
+    
+    /* Responsive base */
+    @media (max-width: 768px) {
+        .main-header { font-size: 2rem; }
+        .stColumn { width: 100% !important; }
+    }
+</style>
+""", unsafe_allow_html=True)
 # CSS profesional completo y optimizado
 st.markdown("""
 <style>
