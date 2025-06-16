@@ -30,7 +30,7 @@ MUPAI_COLORS = {
 
 # ---- CSS PROFESIONAL PERSONALIZADO ----
 def apply_custom_css():
-    st.markdown(f"""
+    css_content = f"""
     <style>
     /* Variables CSS */
     :root {{
@@ -209,7 +209,8 @@ def apply_custom_css():
         margin: 1rem 0;
     }}
     </style>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(css_content, unsafe_allow_html=True)
 
 # Aplicar CSS
 apply_custom_css()
@@ -305,12 +306,13 @@ def safe_image(image_path, caption="", use_container_width=True, fallback_text="
     if os.path.exists(image_path):
         st.image(image_path, caption=caption, use_container_width=use_container_width)
     else:
-        st.markdown(f"""
+        placeholder_html = f"""
         <div class="image-placeholder">
             <h3>📷 {fallback_text}</h3>
             <p>{image_path}</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(placeholder_html, unsafe_allow_html=True)
 
 # ---- FUNCIONES DE CUESTIONARIOS CON GRÁFICOS ----
 
@@ -598,37 +600,6 @@ def cuestionario_ipaq():
                 )
                 st.plotly_chart(fig_pie, use_container_width=True)
 
-            # Gráfico de barras comparativo
-            fig_bar = go.Figure()
-            
-            # Valores actuales
-            fig_bar.add_trace(go.Bar(
-                name='Tu Actividad',
-                x=['Vigorosa', 'Moderada', 'Caminata'],
-                y=[total_vigorosa, total_moderada, total_caminata],
-                marker_color=MUPAI_COLORS['primary']
-            ))
-            
-            # Recomendaciones OMS
-            fig_bar.add_trace(go.Bar(
-                name='Recomendado (OMS)',
-                x=['Vigorosa', 'Moderada', 'Caminata'],
-                y=[75, 150, 150],  # Mínimos recomendados
-                marker_color=MUPAI_COLORS['success'],
-                opacity=0.7
-            ))
-            
-            fig_bar.update_layout(
-                title="Comparación con Recomendaciones OMS (min/semana)",
-                xaxis_title="Tipo de Actividad",
-                yaxis_title="Minutos por Semana",
-                barmode='group',
-                paper_bgcolor="rgba(0,0,0,0)",
-                plot_bgcolor="rgba(0,0,0,0)",
-                font_color=MUPAI_COLORS['secondary']
-            )
-            st.plotly_chart(fig_bar, use_container_width=True)
-
             # Clasificación y recomendaciones
             if total_met >= 3000:
                 st.success("🏆 **NIVEL DE ACTIVIDAD: ALTO**")
@@ -662,11 +633,6 @@ def cuestionario_ipaq():
             st.markdown("### 💡 Recomendaciones Personalizadas")
             for i, rec in enumerate(recomendaciones, 1):
                 st.markdown(f"**{i}.** {rec}")
-
-            # Alerta de sedentarismo
-            if tiempo_sedentario_total > 480:  # >8 horas
-                st.error("⚠️ **ALTO NIVEL DE SEDENTARISMO DETECTADO**")
-                st.markdown("Más de 8 horas diarias sentado aumenta riesgos de salud. Implementa pausas activas.")
 
         except Exception as e:
             st.error(f"Error en el análisis: {e}")
@@ -802,71 +768,16 @@ def cuestionario_habitos_alimenticios():
                 )
                 st.plotly_chart(gauge_fig, use_container_width=True)
 
-            # Gráfico de barras detallado
-            alimentos_detalle = {
-                'Agua': puntuaciones[agua] * 25,
-                'Verduras': puntuaciones[verduras] * 25,
-                'Frutas': puntuaciones[frutas] * 25,
-                'Leguminosas': puntuaciones[leguminosas] * 25,
-                'Frutos Secos': puntuaciones[frutos_secos] * 25,
-                'Carnes Procesadas': carnes_procesadas_valores[carnes_procesadas] * 25,
-                'Comida Fuera': (5 - puntuaciones[alimentos_fuera]) * 25,
-                'Bebidas Azucaradas': bebidas_puntuacion[bebidas_azucaradas] * 25
-            }
-
-            fig_detail = px.bar(
-                x=list(alimentos_detalle.keys()),
-                y=list(alimentos_detalle.values()),
-                title="Análisis Detallado por Alimento (%)",
-                color=list(alimentos_detalle.values()),
-                color_continuous_scale=['#FF6B6B', '#FFE066', '#4ECDC4', '#45B7D1']
-            )
-            fig_detail.update_layout(
-                paper_bgcolor="rgba(0,0,0,0)",
-                plot_bgcolor="rgba(0,0,0,0)",
-                font_color=MUPAI_COLORS['secondary'],
-                xaxis_tickangle=-45
-            )
-            st.plotly_chart(fig_detail, use_container_width=True)
-
             # Interpretación y recomendaciones
             if puntuacion_total >= 80:
                 st.success("✅ **HÁBITOS ALIMENTICIOS EXCELENTES**")
                 st.markdown("¡Felicidades! Tu alimentación es muy saludable. Mantén estos hábitos.")
-                icono_recomendacion = "🏆"
             elif puntuacion_total >= 60:
                 st.warning("⚠️ **HÁBITOS ALIMENTICIOS MODERADOS**")
                 st.markdown("Tienes una base sólida, pero hay áreas importantes que mejorar.")
-                icono_recomendacion = "📈"
             else:
                 st.error("❌ **HÁBITOS ALIMENTICIOS NECESITAN MEJORA**")
                 st.markdown("Es crucial hacer cambios significativos en tu alimentación.")
-                icono_recomendacion = "🚨"
-
-            # Recomendaciones específicas
-            st.markdown(f"### {icono_recomendacion} Recomendaciones Personalizadas")
-            
-            recomendaciones = []
-            
-            if alimentos_frescos < 70:
-                recomendaciones.append("🥬 **Aumenta frutas y verduras**: Objetivo 5 porciones/día")
-            if proteinas < 70:
-                recomendaciones.append("🐟 **Mejora fuentes de proteína**: Prioriza pescado y reduce procesados")
-            if habitos_generales < 70:
-                recomendaciones.append("🍽️ **Optimiza patrones alimentarios**: Cocina más en casa")
-            if consumo_alcohol < 70:
-                recomendaciones.append("🚫 **Modera el alcohol**: Respeta los límites recomendados")
-
-            if puntuaciones[agua] < 3:
-                recomendaciones.append("💧 **Hidratación**: Lleva botella de agua y programa recordatorios")
-            if bebidas_puntuacion[bebidas_azucaradas] < 3:
-                recomendaciones.append("🥤 **Reduce azúcares**: Sustituye bebidas azucaradas por agua/té")
-
-            if not recomendaciones:
-                st.markdown("🎉 **¡Excelente trabajo! Continúa con tus hábitos saludables.**")
-            else:
-                for i, rec in enumerate(recomendaciones, 1):
-                    st.markdown(f"**{i}.** {rec}")
 
         except Exception as e:
             st.error(f"Error en el análisis: {e}")
@@ -923,14 +834,12 @@ def cuestionario_estres():
             preguntas_inversas = ["stress_q4", "stress_q5", "stress_q7", "stress_q8"]
             
             total_score = 0
-            scores_detalle = {}
             
             for key, respuesta in respuestas.items():
                 if key in preguntas_inversas:
                     score = 4 - scores[respuesta]  # Invertir puntuación
                 else:
                     score = scores[respuesta]
-                scores_detalle[key] = score
                 total_score += score
 
             porcentaje_estres = (total_score / 40) * 100
@@ -959,105 +868,25 @@ def cuestionario_estres():
                 riesgo = "Bajo" if total_score <= 13 else ("Medio" if total_score <= 26 else "Alto")
                 st.markdown(create_metric_card("Riesgo", riesgo), unsafe_allow_html=True)
 
-            # Gráficos
-            col1, col2 = st.columns(2)
-
-            with col1:
-                # Gauge de estrés
-                gauge_fig = create_gauge_chart(
-                    porcentaje_estres,
-                    "Nivel de Estrés (%)",
-                    100,
-                    color_cat
-                )
-                st.plotly_chart(gauge_fig, use_container_width=True)
-
-            with col2:
-                # Gráfico de distribución de respuestas
-                distribucion = {opcion: list(respuestas.values()).count(opcion) for opcion in opciones}
-                
-                fig_dist = px.pie(
-                    values=list(distribucion.values()),
-                    names=list(distribucion.keys()),
-                    title="Distribución de Respuestas",
-                    color_discrete_sequence=['#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#FDCB6E']
-                )
-                fig_dist.update_layout(
-                    paper_bgcolor="rgba(0,0,0,0)",
-                    font_color=MUPAI_COLORS['secondary']
-                )
-                st.plotly_chart(fig_dist, use_container_width=True)
-
-            # Análisis temporal (simulado)
-            fechas = pd.date_range(end=datetime.now(), periods=7)
-            estres_semanal = np.random.normal(total_score, 3, 7)
-            estres_semanal = np.clip(estres_semanal, 0, 40)
-
-            fig_temporal = px.line(
-                x=fechas,
-                y=estres_semanal,
-                title="Evolución del Estrés (Última Semana - Simulado)",
-                markers=True
+            # Gráfico de gauge
+            gauge_fig = create_gauge_chart(
+                porcentaje_estres,
+                "Nivel de Estrés (%)",
+                100,
+                color_cat
             )
-            fig_temporal.update_traces(line_color=MUPAI_COLORS['primary'], marker_color=MUPAI_COLORS['primary'])
-            fig_temporal.update_layout(
-                paper_bgcolor="rgba(0,0,0,0)",
-                plot_bgcolor="rgba(0,0,0,0)",
-                font_color=MUPAI_COLORS['secondary'],
-                xaxis_title="Fecha",
-                yaxis_title="Puntuación de Estrés"
-            )
-            st.plotly_chart(fig_temporal, use_container_width=True)
+            st.plotly_chart(gauge_fig, use_container_width=True)
 
             # Interpretación
             if total_score <= 13:
                 st.success("✅ **ESTRÉS BAJO - EXCELENTE MANEJO**")
                 st.markdown("Tienes un buen control del estrés. Mantén tus estrategias actuales.")
-                recomendaciones = [
-                    "Continúa con tus técnicas de afrontamiento",
-                    "Practica mindfulness preventivo",
-                    "Mantén rutinas saludables",
-                    "Comparte tus estrategias con otros"
-                ]
             elif total_score <= 26:
                 st.warning("⚠️ **ESTRÉS MODERADO - REQUIERE ATENCIÓN**")
                 st.markdown("Nivel de estrés manejable pero con margen de mejora.")
-                recomendaciones = [
-                    "Implementa técnicas de respiración profunda",
-                    "Establece límites claros trabajo-vida personal",
-                    "Incluye ejercicio regular en tu rutina",
-                    "Considera hablar con un profesional",
-                    "Dedica tiempo a actividades placenteras"
-                ]
             else:
                 st.error("❌ **ESTRÉS ALTO - INTERVENCIÓN NECESARIA**")
                 st.markdown("Nivel de estrés que requiere atención profesional inmediata.")
-                recomendaciones = [
-                    "🚨 Busca ayuda profesional (psicólogo/psiquiatra)",
-                    "Implementa técnicas de relajación inmediatamente",
-                    "Evalúa cambios significativos en tu estilo de vida",
-                    "Considera técnicas de meditación guiada",
-                    "Establece una red de apoyo social",
-                    "Evalúa tu carga de trabajo y responsabilidades"
-                ]
-
-            # Panel de recomendaciones
-            st.markdown("### 💡 Plan de Acción Personalizado")
-            for i, rec in enumerate(recomendaciones, 1):
-                st.markdown(f"**{i}.** {rec}")
-
-            # Recursos adicionales
-            st.markdown("### 📚 Recursos Adicionales")
-            st.info("""
-            **Apps recomendadas**: Headspace, Calm, Insight Timer
-            
-            **Técnicas rápidas**:
-            • Respiración 4-7-8 (inhala 4, mantén 7, exhala 8)
-            • Relajación muscular progresiva
-            • Caminata de 10 minutos en la naturaleza
-            
-            **Cuándo buscar ayuda**: Si el estrés interfiere con tu trabajo, relaciones o sueño.
-            """)
 
         except Exception as e:
             st.error(f"Error en el análisis: {e}")
@@ -1067,12 +896,13 @@ with st.sidebar:
     # Logo
     safe_image("LOGO.png", fallback_text="MUPAI Logo")
     
-    st.markdown(f"""
+    sidebar_header = f"""
     <div style="text-align: center; padding: 1rem; background: linear-gradient(90deg, {MUPAI_COLORS['primary']} 0%, #E6B800 100%); border-radius: 12px; margin: 1rem 0;">
         <h2 style="color: {MUPAI_COLORS['secondary']}; margin: 0;">MUPAI</h2>
         <p style="color: {MUPAI_COLORS['secondary']}; margin: 0; font-weight: 600;">Entrenamiento Digital Científico</p>
     </div>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(sidebar_header, unsafe_allow_html=True)
     
     menu = st.selectbox(
         "🚀 Navegación Principal",
@@ -1089,19 +919,20 @@ with st.sidebar:
     st.markdown("📞 +52 866 258 05 94")
     
     st.markdown("---")
-    st.markdown(f"""
+    footer_sidebar = f"""
     <div style="text-align: center; color: {MUPAI_COLORS['dark_gray']}; font-size: 0.8rem;">
         © 2024 MUPAI<br>
         Todos los derechos reservados
     </div>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(footer_sidebar, unsafe_allow_html=True)
 
 # ---- CONTENIDO PRINCIPAL ----
 if menu == "🏠 Inicio":
     # Hero Section
     safe_image("LOGO.png", fallback_text="MUPAI - Logo Principal")
     
-    st.markdown(f"""
+    hero_section = f"""
     <div style="text-align: center; padding: 3rem 0;">
         <h1 style="font-size: 3rem; color: {MUPAI_COLORS['secondary']}; margin-bottom: 1rem;">
             Bienvenido a MUPAI
@@ -1110,7 +941,8 @@ if menu == "🏠 Inicio":
             Entrenamiento Digital Basado en Ciencia del Ejercicio
         </h3>
     </div>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(hero_section, unsafe_allow_html=True)
     
     # Métricas destacadas
     col1, col2, col3, col4 = st.columns(4)
@@ -1129,39 +961,211 @@ if menu == "🏠 Inicio":
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown(f"""
+        mission_card = """
         <div class="service-card">
             <h2>🎯 Nuestra Misión</h2>
             <p>Hacer accesible el entrenamiento basado en ciencia, proporcionando planes completamente personalizados 
             a través de herramientas digitales respaldadas por inteligencia artificial, datos precisos y metodologías 
             validadas científicamente.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(mission_card, unsafe_allow_html=True)
         
-        st.markdown(f"""
+        policy_card = """
         <div class="service-card">
             <h2>📋 Nuestra Política</h2>
             <p>En <strong>MUPAI</strong>, nuestra política está fundamentada en el compromiso con la excelencia, 
             la ética y el servicio centrado en el usuario. Actuamos con responsabilidad y transparencia para 
             ofrecer soluciones de entrenamiento que transformen positivamente la vida de nuestros usuarios.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(policy_card, unsafe_allow_html=True)
 
     with col2:
-        st.markdown(f"""
+        vision_card = """
         <div class="service-card">
             <h2>🔮 Nuestra Visión</h2>
             <p>Convertirnos en uno de los máximos referentes a nivel global en entrenamiento digital personalizado, 
             aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia para todas 
             las personas, sin importar su ubicación o nivel de experiencia.</p>
         </div>
-        """, unsafe_allow_html=True)
+        """
+        st.markdown(vision_card, unsafe_allow_html=True)
         
-        st.markdown(f"""
+        values_card = """
         <div class="service-card">
             <h2>🤝 Valores Fundamentales</h2>
             <ul>
                 <li><strong>Personalización Científica</strong>: Datos confiables y ciencia del ejercicio</li>
                 <li><strong>Tecnología Accesible</strong>: Servicio adaptable a cada usuario</li>
                 <li><strong>Privacidad y Seguridad</strong>: Protección de datos personales</li>
-                <li><strong>Innovación Continua</strong>: Mejora constante
+                <li><strong>Innovación Continua</strong>: Mejora constante de la experiencia</li>
+                <li><strong>Excelencia y Respeto</strong>: Promovemos el esfuerzo y la constancia</li>
+            </ul>
+        </div>
+        """
+        st.markdown(values_card, unsafe_allow_html=True)
+
+elif menu == "👤 Sobre Mí":
+    st.markdown('<h1>👤 Erick Francisco De Luna Hernández</h1>', unsafe_allow_html=True)
+    st.markdown("### Especialista en Ciencias del Ejercicio y Entrenamiento Digital")
+    
+    # Información profesional con diseño mejorado
+    col1, col2 = st.columns([2, 1])
+    
+    with col1:
+        academic_card = """
+        <div class="service-card">
+            <h2>🎓 Formación Académica de Excelencia</h2>
+            <ul>
+                <li><strong>Maestría en Fuerza y Acondicionamiento</strong><br>
+                    <em>Football Science Institute</em></li>
+                <li><strong>Licenciatura en Ciencias del Ejercicio</strong><br>
+                    <em>Universidad Autónoma de Nuevo León (UANL)</em></li>
+                <li><strong>Certificaciones Especializadas</strong><br>
+                    <em>Metodologías avanzadas de entrenamiento</em></li>
+            </ul>
+        </div>
+        """
+        st.markdown(academic_card, unsafe_allow_html=True)
+
+        achievements_card = """
+        <div class="service-card">
+            <h2>🏆 Reconocimientos y Logros</h2>
+            <ul>
+                <li>🥇 <strong>Premio al Mérito Académico de la UANL</strong></li>
+                <li>🏅 <strong>Primer Lugar de Generación</strong> - Facultad de Organización Deportiva</li>
+                <li>🎖️ <strong>Beca de Excelencia Académica</strong> por desempeño sobresaliente</li>
+                <li>📚 <strong>Investigación Aplicada</strong> en metodologías de entrenamiento</li>
+            </ul>
+        </div>
+        """
+        st.markdown(achievements_card, unsafe_allow_html=True)
+
+        philosophy_card = """
+        <div class="service-card">
+            <h2>💡 Filosofía Profesional</h2>
+            <p>Mi enfoque combina <strong>preparación académica rigurosa</strong>, <strong>experiencia práctica</strong> 
+            y un <strong>enfoque basado en evidencia científica</strong>. Me dedico a diseñar soluciones que transformen 
+            el rendimiento físico y promuevan un estilo de vida saludable y sostenible para cada individuo.</p>
+            
+            <p>Creo firmemente en la <strong>personalización</strong> como clave del éxito, utilizando tecnología 
+            avanzada para hacer accesible el entrenamiento científico a personas de todos los niveles.</p>
+        </div>
+        """
+        st.markdown(philosophy_card, unsafe_allow_html=True)
+
+    with col2:
+        # Métricas profesionales
+        st.markdown(create_metric_card("Años de Experiencia", "5+"), unsafe_allow_html=True)
+        st.markdown(create_metric_card("Programas Diseñados", "50+"), unsafe_allow_html=True)
+        st.markdown(create_metric_card("Certificaciones", "10+"), unsafe_allow_html=True)
+        st.markdown(create_metric_card("Clientes Atendidos", "200+"), unsafe_allow_html=True)
+
+        st.markdown("### 🌟 Especialidades")
+        st.info("""
+        **Áreas de Expertise:**
+        • Periodización del entrenamiento
+        • Análisis biomecánico
+        • Composición corporal
+        • Prevención de lesiones
+        • Entrenamiento funcional
+        • Tecnología deportiva
+        """)
+
+    # Galería profesional
+    st.markdown("---")
+    st.markdown("## 📸 Galería Profesional")
+    
+    col1, col2, col3 = st.columns(3)
+    images = [
+        ("FB_IMG_1734820693317.jpg", "Entrenamiento Funcional"),
+        ("FB_IMG_1734820709707.jpg", "Evaluación Biomecánica"),
+        ("FB_IMG_1734820712642.jpg", "Análisis de Rendimiento"),
+        ("FB_IMG_1734820729323.jpg", "Sesión de Coaching"),
+        ("FB_IMG_1734820808186.jpg", "Conferencia Científica")
+    ]
+    
+    for i, (img, caption) in enumerate(images):
+        with [col1, col2, col3][i % 3]:
+            safe_image(img, caption)
+
+elif menu == "💼 Servicios":
+    st.markdown('<h1>💼 Servicios Profesionales MUPAI</h1>', unsafe_allow_html=True)
+    st.markdown("### Soluciones Integrales de Entrenamiento Basado en Ciencia")
+    
+    # Servicios principales
+    services = [
+        {
+            "icon": "🏋️",
+            "title": "Entrenamiento Personalizado",
+            "description": "Planes de entrenamiento individualizados basados en análisis científico completo",
+            "features": ["Periodización científica", "Seguimiento de progreso", "Adaptación continua", "Análisis biomecánico"]
+        },
+        {
+            "icon": "🧠",
+            "title": "Consultoría en Rendimiento",
+            "description": "Optimización del rendimiento deportivo mediante análisis avanzado",
+            "features": ["Evaluación funcional", "Análisis de movimiento", "Prevención de lesiones", "Optimización técnica"]
+        },
+        {
+            "icon": "💪",
+            "title": "Programas de Transformación",
+            "description": "Desarrollo integral de fuerza, resistencia y composición corporal",
+            "features": ["Desarrollo muscular", "Pérdida de grasa", "Mejora cardiovascular", "Rehabilitación funcional"]
+        },
+        {
+            "icon": "🥗",
+            "title": "Asesoría Nutricional Deportiva",
+            "description": "Planes alimentarios especializados para optimizar el rendimiento",
+            "features": ["Nutrición personalizada", "Timing nutricional", "Suplementación", "Hidratación óptima"]
+        },
+        {
+            "icon": "📊",
+            "title": "Análisis y Monitoreo",
+            "description": "Evaluación integral del estilo de vida y seguimiento de resultados",
+            "features": ["Evaluaciones PSQI, IPAQ", "Monitoreo de progreso", "Análisis de datos", "Reportes detallados"]
+        },
+        {
+            "icon": "🎯",
+            "title": "Coaching Digital",
+            "description": "Acompañamiento profesional a través de plataformas tecnológicas",
+            "features": ["Sesiones virtuales", "Retroalimentación continua", "Ajustes en tiempo real", "Soporte 24/7"]
+        }
+    ]
+    
+    # Mostrar servicios en grid
+    for i in range(0, len(services), 2):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            service = services[i]
+            service_card = f"""
+            <div class="service-card">
+                <h2>{service['icon']} {service['title']}</h2>
+                <p>{service['description']}</p>
+                <h4>✨ Características:</h4>
+                <ul>
+                    {''.join([f'<li>{feature}</li>' for feature in service['features']])}
+                </ul>
+            </div>
+            """
+            st.markdown(service_card, unsafe_allow_html=True)
+        
+        if i + 1 < len(services):
+            with col2:
+                service = services[i + 1]
+                service_card = f"""
+                <div class="service-card">
+                    <h2>{service['icon']} {service['title']}</h2>
+                    <p>{service['description']}</p>
+                    <h4>✨ Características:</h4>
+                    <ul>
+                        {''.join([f'<li>{feature}</li>' for feature in service['features']])}
+                    </ul>
+                </div>
+                """
+                st.markdown(service_card, unsafe_allow_html=True)
+
+elif menu == "📞 Contacto":
+    st.markdown('<h1>📞 Información de Contacto</h1>', unsafe_allow_html=True
