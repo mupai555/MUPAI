@@ -1230,7 +1230,249 @@ elif st.session_state.page == "antojos_alimentarios":
             "nombre": "Pan blanco, bolillos, teleras, baguettes",
             "ejemplos": "Bolillo, Telera, Baguette, Pan dulce, Concha, Empanada dulce"
         },
+
         {
             "emoji": "🥤",
             "nombre": "Refrescos y bebidas azucaradas",
-            "ejemplos": "Coca-Cola, Pepsi, Sprite, Jarritos, Sidral
+            "ejemplos": "Coca-Cola, Pepsi, Sprite, Jarritos, Sidral, Boing, Del Valle, Jumex, Powerade, Gatorade"
+        },
+        {
+            "emoji": "🍨",
+            "nombre": "Helados y postres fríos",
+            "ejemplos": "Helado de vainilla, Chocolate, Fresa, Paletas de hielo, Nieve, Magnum, Cornetto"
+        },
+        {
+            "emoji": "🥙",
+            "nombre": "Comida rápida mexicana",
+            "ejemplos": "Tacos al pastor, Quesadillas, Tortas, Tamales, Pozole, Flautas, Sopes"
+        },
+        {
+            "emoji": "🍕",
+            "nombre": "Pizza y comida rápida internacional",
+            "ejemplos": "Pizza, Hamburguesas, Hot dogs, Papas fritas, Alitas, Nuggets"
+        },
+        {
+            "emoji": "🍺",
+            "nombre": "Alcohol y bebidas fermentadas",
+            "ejemplos": "Cerveza, Tequila, Mezcal, Vino, Micheladas, Pulque, Tepache"
+        }
+    ]
+    
+    with st.form("antojos_alimentarios_form"):
+        resultados_antojos = {}
+        
+        for i, categoria in enumerate(categorias_antojos_mexicanas):
+            st.markdown(f"""
+            <div class="questionnaire-container">
+                <h3>{categoria['emoji']} {categoria['nombre']}</h3>
+                <p style="font-style: italic; color: #666;">Ejemplos: {categoria['ejemplos']}</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            col1, col2 = st.columns(2)
+            
+            with col1:
+                frecuencia = st.selectbox(
+                    f"¿Con qué frecuencia tienes antojos de {categoria['nombre'].lower()}?",
+                    ["Nunca", "Rara vez (1-2 veces/mes)", "A veces (1-2 veces/semana)", 
+                     "Frecuentemente (3-4 veces/semana)", "Muy frecuentemente (diario)"],
+                    key=f"freq_{i}"
+                )
+                
+                momento = st.selectbox(
+                    "¿En qué momento del día aparece más?",
+                    ["Mañana", "Media mañana", "Mediodía", "Tarde", "Noche", "Madrugada", "Todo el día"],
+                    key=f"momento_{i}"
+                )
+                
+                intensidad = st.slider(
+                    "Intensidad del antojo (1 = Muy débil, 10 = Irresistible)",
+                    1, 10, 5, key=f"intensidad_{i}"
+                )
+            
+            with col2:
+                control = st.selectbox(
+                    "¿Qué tan fácil es controlar este antojo?",
+                    ["Muy fácil", "Fácil", "Moderado", "Difícil", "Muy difícil"],
+                    key=f"control_{i}"
+                )
+                
+                conducta = st.selectbox(
+                    "¿Qué haces cuando tienes este antojo?",
+                    ["Lo ignoro completamente", "Trato de sustituirlo", "Cedo parcialmente", 
+                     "Cedo completamente", "Como más de lo planeado"],
+                    key=f"conducta_{i}"
+                )
+                
+                emocion = st.selectbox(
+                    "¿Qué emoción lo detona principalmente?",
+                    ["Ninguna en particular", "Estrés", "Ansiedad", "Tristeza", "Aburrimiento", 
+                     "Felicidad", "Nostalgia", "Cansancio"],
+                    key=f"emocion_{i}"
+                )
+            
+            resultados_antojos[categoria['nombre']] = {
+                'frecuencia': frecuencia,
+                'momento': momento,
+                'intensidad': intensidad,
+                'control': control,
+                'conducta': conducta,
+                'emocion': emocion
+            }
+            
+            st.markdown("---")
+        
+        # Email opcional
+        enviar_email = st.checkbox("📧 Enviar resultados por email")
+        email_destinatario = ""
+        if enviar_email:
+            email_destinatario = st.text_input("Correo electrónico:", placeholder="tu@email.com")
+        
+        submitted = st.form_submit_button("🧁 Analizar Perfil de Antojos", use_container_width=True)
+        
+        if submitted:
+            # Análisis de resultados
+            st.markdown("""
+            <div class="results-container">
+                <h2>🧁 Análisis de tu Perfil de Antojos Alimentarios</h2>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Crear tabs para resultados
+            tab1, tab2, tab3 = st.tabs(["📊 Resumen General", "🎯 Análisis Detallado", "💡 Estrategias"])
+            
+            with tab1:
+                # Calcular métricas generales
+                antojos_frecuentes = [k for k, v in resultados_antojos.items() 
+                                    if v['frecuencia'] in ["Frecuentemente (3-4 veces/semana)", "Muy frecuentemente (diario)"]]
+                
+                intensidad_promedio = sum([v['intensidad'] for v in resultados_antojos.values()]) / len(resultados_antojos)
+                
+                antojos_dificiles = [k for k, v in resultados_antojos.items() 
+                                   if v['control'] in ["Difícil", "Muy difícil"]]
+                
+                col1, col2, col3, col4 = st.columns(4)
+                
+                with col1:
+                    st.metric("🔥 Antojos Frecuentes", f"{len(antojos_frecuentes)}/10")
+                
+                with col2:
+                    st.metric("💪 Intensidad Promedio", f"{intensidad_promedio:.1f}/10")
+                
+                with col3:
+                    st.metric("⚠️ Difíciles de Controlar", f"{len(antojos_dificiles)}/10")
+                
+                with col4:
+                    nivel_riesgo = "Alto" if len(antojos_frecuentes) >= 4 else "Medio" if len(antojos_frecuentes) >= 2 else "Bajo"
+                    color = "🔴" if nivel_riesgo == "Alto" else "🟡" if nivel_riesgo == "Medio" else "🟢"
+                    st.metric("📈 Nivel de Riesgo", f"{color} {nivel_riesgo}")
+                
+                # Top 3 antojos más problemáticos
+                if antojos_frecuentes:
+                    st.markdown("### 🚨 Antojos Más Frecuentes")
+                    for antojo in antojos_frecuentes[:3]:
+                        datos = resultados_antojos[antojo]
+                        st.markdown(f"""
+                        **{antojo}:** {datos['frecuencia']} | Intensidad: {datos['intensidad']}/10 | 
+                        Control: {datos['control']} | Emoción: {datos['emocion']}
+                        """)
+            
+            with tab2:
+                st.markdown("### 📊 Análisis por Categoría")
+                
+                for categoria, datos in resultados_antojos.items():
+                    if datos['frecuencia'] != "Nunca":
+                        emoji = next(c['emoji'] for c in categorias_antojos_mexicanas if c['nombre'] == categoria)
+                        
+                        with st.expander(f"{emoji} {categoria}"):
+                            col1, col2 = st.columns(2)
+                            
+                            with col1:
+                                st.write(f"**Frecuencia:** {datos['frecuencia']}")
+                                st.write(f"**Momento preferido:** {datos['momento']}")
+                                st.write(f"**Intensidad:** {datos['intensidad']}/10")
+                            
+                            with col2:
+                                st.write(f"**Control:** {datos['control']}")
+                                st.write(f"**Conducta:** {datos['conducta']}")
+                                st.write(f"**Emoción detonante:** {datos['emocion']}")
+            
+            with tab3:
+                st.markdown("### 💡 Estrategias Personalizadas")
+                
+                # Estrategias basadas en emociones más comunes
+                emociones_principales = [v['emocion'] for v in resultados_antojos.values() 
+                                       if v['frecuencia'] != "Nunca"]
+                emociones_frecuentes = Counter(emociones_principales).most_common(3)
+                
+                if emociones_frecuentes:
+                    st.markdown("#### 🎭 Estrategias por Emociones Detonantes")
+                    
+                    for emocion, frecuencia in emociones_frecuentes:
+                        if emocion == "Estrés":
+                            st.markdown("""
+                            **🧘 Para el Estrés:**
+                            - Practica respiración profunda antes de comer
+                            - Ten snacks saludables preparados (frutas, nueces)
+                            - Implementa 5 minutos de meditación cuando sientas el antojo
+                            """)
+                        elif emocion == "Aburrimiento":
+                            st.markdown("""
+                            **🎯 Para el Aburrimiento:**
+                            - Identifica actividades alternativas (caminar, leer, llamar a un amigo)
+                            - Mantén las manos ocupadas con hobbies
+                            - Planifica comidas y snacks estructurados
+                            """)
+                        elif emocion == "Ansiedad":
+                            st.markdown("""
+                            **😌 Para la Ansiedad:**
+                            - Técnicas de grounding (5 cosas que ves, 4 que escuchas, etc.)
+                            - Infusiones relajantes como manzanilla o té verde
+                            - Ejercicio ligero como yoga o estiramientos
+                            """)
+                
+                # Estrategias generales
+                st.markdown("#### 🛡️ Estrategias Generales")
+                st.markdown("""
+                - **🥗 Sustitución inteligente:** Prepara versiones más saludables de tus antojos
+                - **⏰ Timing estratégico:** Planifica pequeñas porciones en momentos controlados
+                - **💧 Hidratación:** A veces el antojo es sed disfrazada
+                - **😴 Sueño adecuado:** La falta de sueño aumenta antojos de azúcar
+                - **🍽️ Comidas balanceadas:** Proteína y fibra reducen antojos posteriores
+                """)
+
+# ==================== PÁGINAS ADICIONALES ====================
+elif st.session_state.page == "about":
+    # [Código del perfil profesional que ya proporcioné anteriormente]
+    pass
+
+elif st.session_state.page == "contacto":
+    st.markdown("""
+    <div class="section-header">
+        <h2>📞 Contacto</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="results-container">
+        <h3>💪 MUPAI - Entrenamiento Digital Basado en Ciencia</h3>
+        <p><strong>Dirigido por:</strong> Erick Francisco De Luna Hernández</p>
+        <p><strong>Especialidad:</strong> Maestría en Fuerza y Acondicionamiento | Ciencias del Ejercicio UANL</p>
+        <br>
+        <p>📧 <strong>Email:</strong> contacto@mupai.com</p>
+        <p>📱 <strong>WhatsApp:</strong> +52 XXX XXX XXXX</p>
+        <p>🌐 <strong>Sitio Web:</strong> www.mupai.com</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# Footer
+st.markdown("---")
+st.markdown("""
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px;">
+    <h3 style="color: #000; margin-bottom: 1rem;">💪 MUPAI - Entrenamiento Digital Basado en Ciencia</h3>
+    <p style="color: #666; margin-bottom: 0.5rem;">Dirigido por <strong>Erick Francisco De Luna Hernández</strong></p>
+    <p style="color: #666; margin-bottom: 1rem;">Maestría en Fuerza y Acondicionamiento | Ciencias del Ejercicio UANL</p>
+    <p style="color: #888; font-size: 0.9rem;">© 2025 MUPAI. Todos los derechos reservados.</p>
+    <p style="color: #888; font-size: 0.8rem;">Respaldado por evidencia científica y tecnología avanzada</p>
+</div>
+""", unsafe_allow_html=True)
