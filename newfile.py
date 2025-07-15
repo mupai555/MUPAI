@@ -369,261 +369,505 @@ if st.session_state.page == "inicio":
 elif st.session_state.page == "balance_energetico":
     st.markdown("""
     <div class="section-header">
-        <h2>⚡ Cuestionario: Balance Energético Óptimo</h2>
+        <h2>🧮 Cálculo del Factor de Balance Energético Óptimo (FBEO)</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
         <h3>🎯 Objetivo</h3>
-        <p>Este cuestionario calcula tu <strong>gasto energético total diario (TDEE)</strong> usando la fórmula <strong>Katch-McArdle</strong> 
-        y factores de actividad personalizados, considerando tu composición corporal, nivel de actividad, calidad del sueño y nivel de estrés.</p>
+        <p>Esta sección permite estimar la <strong>ingesta calórica personalizada</strong> según tu composición corporal, 
+        actividad física, frecuencia de entrenamiento, calidad de la dieta, y estado de recuperación fisiológica 
+        (estrés y sueño). Se define automáticamente si debes estar en déficit, mantenimiento o superávit calórico.</p>
     </div>
     """, unsafe_allow_html=True)
     
     with st.form("balance_energetico_form"):
-        # Datos básicos
-        st.markdown("### 📊 Datos Básicos")
-        col1, col2, col3 = st.columns(3)
-        
-        with col1:
-            sexo = st.selectbox("Sexo biológico:", ["Hombre", "Mujer"])
-            edad = st.number_input("Edad (años):", min_value=15, max_value=80, value=25)
-        
-        with col2:
-            peso = st.number_input("Peso (kg):", min_value=30.0, max_value=200.0, value=70.0, step=0.1)
-            estatura = st.number_input("Estatura (cm):", min_value=120.0, max_value=220.0, value=170.0, step=0.1)
-        
-        with col3:
-            grasa_corporal = st.number_input("Porcentaje de grasa corporal (%):", min_value=5.0, max_value=50.0, value=15.0, step=0.1)
-        
-        # Nivel de actividad
-        st.markdown("### 🏃 Nivel de Actividad")
+        st.subheader("📋 Datos Antropométricos")
         col1, col2 = st.columns(2)
         
         with col1:
-            nivel_actividad = st.selectbox(
-                "Actividad física general:",
-                ["Sedentario", "Ligera", "Activo", "Muy activo"]
-            )
-            
-            dias_entrenamiento = st.number_input("Días de entrenamiento por semana:", min_value=0, max_value=7, value=3)
+            sexo = st.selectbox("Sexo", ["Hombre", "Mujer"])
+            peso = st.number_input("Peso (kg)", min_value=30.0, max_value=200.0, value=70.0, step=0.1)
+            estatura = st.number_input("Estatura (m)", min_value=1.0, max_value=2.5, value=1.70, step=0.01)
         
         with col2:
-            duracion_entrenamiento = st.selectbox(
-                "Duración promedio por sesión:",
-                ["30 min", "45 min", "60 min", "75 min", "90 min", ">90 min"]
-            )
-            
-            intensidad_entrenamiento = st.selectbox(
-                "Intensidad del entrenamiento:",
-                ["Baja", "Moderada", "Alta", "Muy alta"]
-            )
+            grasa_corporal = st.number_input("Porcentaje de grasa corporal (%)", min_value=5.0, max_value=50.0, value=20.0, step=0.1)
+            masa_magra = peso * (1 - grasa_corporal/100)
+            st.info(f"Masa magra calculada: {masa_magra:.1f} kg")
         
-        # Calidad del sueño
-        st.markdown("### 😴 Calidad del Sueño")
+        st.subheader("🏃 Actividad Física")
         col1, col2 = st.columns(2)
         
         with col1:
-            horas_sueno = st.selectbox(
-                "¿Cuántas horas duermes habitualmente?",
-                ["<5h", "5–6.5h", "6.5–8h", ">8h"]
-            )
-            
-            tiempo_dormir = st.radio(
-                "¿Te cuesta trabajo quedarte dormido(a)?",
-                ["No", "Sí"]
-            )
+            nivel_actividad = st.selectbox("Nivel de actividad diaria", [
+                "Sedentario (trabajo de escritorio, poco/nada de ejercicio)",
+                "Ligeramente activo (ejercicio ligero/deportes 1-3 días/semana)",
+                "Moderadamente activo (ejercicio moderado/deportes 3-5 días/semana)",
+                "Muy activo (ejercicio intenso/deportes 6-7 días/semana)",
+                "Extremadamente activo (ejercicio muy intenso, trabajo físico)"
+            ])
         
         with col2:
-            despertares_nocturnos = st.radio(
-                "¿Te despiertas frecuentemente durante la noche?",
-                ["No", "Sí"]
-            )
-            
-            despertar_descansado = st.radio(
-                "¿Te despiertas sintiéndote descansado(a)?",
-                ["Sí", "No"]
-            )
+            dias_entrenamiento = st.number_input("Días de entrenamiento de fuerza por semana", min_value=0, max_value=7, value=3)
         
-        # Evaluación de estrés
-        st.markdown("### 🧠 Evaluación de Estrés")
-        st.markdown("Evalúa qué tan frecuentemente experimentas cada situación (1 = Nunca, 5 = Siempre):")
+        st.subheader("😴 Evaluación del Sueño")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            horas_sueno = st.selectbox("¿Cuántas horas duermes por noche?", [
+                "Menos de 5h (1)", "5-6h (2)", "6-7h (3)", "7-8h (5)", "8-9h (4)", "Más de 9h (2)"
+            ])
+            tiempo_dormir = st.selectbox("¿Cuánto tardas en quedarte dormido?", [
+                "Menos de 15 min (5)", "15-30 min (4)", "30-45 min (3)", "45-60 min (2)", "Más de 60 min (1)"
+            ])
+        
+        with col2:
+            despertares_nocturnos = st.selectbox("¿Cuántas veces te despiertas por noche?", [
+                "Nunca (5)", "1 vez (4)", "2 veces (3)", "3 veces (2)", "Más de 3 veces (1)"
+            ])
+            calidad_percibida = st.selectbox("¿Cómo percibes la calidad de tu sueño?", [
+                "Excelente (5)", "Buena (4)", "Regular (3)", "Mala (2)", "Muy mala (1)"
+            ])
+        
+        st.subheader("🧠 Evaluación del Estrés (PSS-4)")
+        st.markdown("**En el último mes, ¿con qué frecuencia...**")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            estres_1 = st.slider("Me siento abrumado(a) por mis responsabilidades", 1, 5, 3)
-            estres_2 = st.slider("Tengo dificultad para relajarme", 1, 5, 3)
-            estres_3 = st.slider("Me preocupo constantemente por el futuro", 1, 5, 3)
+            pss1 = st.selectbox("¿Has sentido que no podías controlar las cosas importantes de tu vida?", [
+                "Nunca (0)", "Casi nunca (1)", "A veces (2)", "Frecuentemente (3)", "Muy frecuentemente (4)"
+            ])
+            pss2 = st.selectbox("¿Te has sentido confiado/a sobre tu capacidad para manejar tus problemas personales?", [
+                "Nunca (4)", "Casi nunca (3)", "A veces (2)", "Frecuentemente (1)", "Muy frecuentemente (0)"
+            ])
         
         with col2:
-            estres_4 = st.slider("Siento tensión física (cuello, hombros, etc.)", 1, 5, 3)
-            estres_5 = st.slider("Mi mente está siempre acelerada", 1, 5, 3)
-            estres_6 = st.slider("Me irrito con facilidad", 1, 5, 3)
+            pss3 = st.selectbox("¿Has sentido que las cosas van como tú quieres?", [
+                "Nunca (4)", "Casi nunca (3)", "A veces (2)", "Frecuentemente (1)", "Muy frecuentemente (0)"
+            ])
+            pss4 = st.selectbox("¿Has sentido que las dificultades se acumulan tanto que no puedes superarlas?", [
+                "Nunca (0)", "Casi nunca (1)", "A veces (2)", "Frecuentemente (3)", "Muy frecuentemente (4)"
+            ])
         
-        # Email opcional
-        st.markdown("---")
-        enviar_email = st.checkbox("📧 Enviar resultados por email")
-        email_destinatario = ""
-        if enviar_email:
-            email_destinatario = st.text_input("Correo electrónico:", placeholder="tu@email.com")
+        st.subheader("📧 Información de Contacto")
+        email_destinatario = st.text_input("Email para seguimiento", placeholder="tu@email.com")
         
-        submitted = st.form_submit_button("⚡ Calcular Balance Energético", use_container_width=True)
+        submitted = st.form_submit_button("🚀 Calcular FBEO", type="primary")
         
         if submitted:
-            # Cálculos
-            tmb = calcular_tmb_katch_mcardle(peso, grasa_corporal)
-            geaf = calcular_geaf(sexo, nivel_actividad)
-            gee = calcular_gee(peso, dias_entrenamiento)
+            # PASO 1: Calcular TMB usando Katch-McArdle
+            tmb = 370 + (21.6 * masa_magra)
             
-            # Penalizaciones
-            penalizacion_sueno = evaluar_calidad_sueno(horas_sueno, tiempo_dormir, despertares_nocturnos, despertar_descansado)
-            respuestas_estres = [estres_1, estres_2, estres_3, estres_4, estres_5, estres_6]
-            penalizacion_estres = evaluar_estres(respuestas_estres)
+            # PASO 2: Calcular GER
+            ger = tmb * 1.1
             
-            # TDEE final
-            tdee_base = tmb * geaf + gee
-            penalizacion_total = penalizacion_sueno + penalizacion_estres
-            tdee_final = tdee_base * (1 - penalizacion_total)
+            # PASO 3: Determinar GEAF según nivel de actividad
+            actividad_factores = {
+                "Sedentario (trabajo de escritorio, poco/nada de ejercicio)": {
+                    "geaf": 1.40, "descripcion": "Trabajo de escritorio, sin ejercicio regular", "pasos": "< 5,000"
+                },
+                "Ligeramente activo (ejercicio ligero/deportes 1-3 días/semana)": {
+                    "geaf": 1.55, "descripcion": "Trabajo sedentario + ejercicio ligero", "pasos": "5,000-7,500"
+                },
+                "Moderadamente activo (ejercicio moderado/deportes 3-5 días/semana)": {
+                    "geaf": 1.70, "descripcion": "Trabajo activo o ejercicio regular", "pasos": "7,500-10,000"
+                },
+                "Muy activo (ejercicio intenso/deportes 6-7 días/semana)": {
+                    "geaf": 1.85, "descripcion": "Ejercicio intenso diario", "pasos": "10,000-12,500"
+                },
+                "Extremadamente activo (ejercicio muy intenso, trabajo físico)": {
+                    "geaf": 2.00, "descripcion": "Ejercicio muy intenso + trabajo físico", "pasos": "> 12,500"
+                }
+            }
             
-            # Mostrar resultados
-            st.markdown("""
-            <div class="results-container">
-                <h2>⚡ Resultados de tu Balance Energético</h2>
-            </div>
-            """, unsafe_allow_html=True)
+            datos_actividad = actividad_factores[nivel_actividad]
+            geaf = datos_actividad["geaf"]
             
-            # Métricas principales
-            col1, col2, col3, col4 = st.columns(4)
+            # PASO 4: Calcular GEE por sesión de entrenamiento
+            gee = masa_magra * 5
+            
+            # PASO 5: Calcular GET con y sin entrenamiento
+            get_con_entrenamiento = ger * geaf + gee
+            get_sin_entrenamiento = ger * geaf
+            
+            # PASO 6: Calcular GET promedio semanal
+            get_promedio = ((get_con_entrenamiento * dias_entrenamiento) + 
+                           (get_sin_entrenamiento * (7 - dias_entrenamiento))) / 7
+            
+            # PASO 7: Determinar FBEO base según % grasa corporal
+            if sexo == "Hombre":
+                if grasa_corporal > 25:
+                    fbeo_base = 0.875  # Déficit para perder grasa
+                elif 18 <= grasa_corporal <= 24:
+                    fbeo_base = 0.975  # Déficit leve
+                elif 12 <= grasa_corporal < 18:
+                    fbeo_base = 1.05   # Superávit leve
+                else:  # < 12%
+                    fbeo_base = 1.125  # Superávit para ganar músculo
+            else:  # Mujer
+                if grasa_corporal > 32:
+                    fbeo_base = 0.875
+                elif 25 <= grasa_corporal <= 31:
+                    fbeo_base = 0.975
+                elif 20 <= grasa_corporal < 25:
+                    fbeo_base = 1.05
+                else:  # < 20%
+                    fbeo_base = 1.125
+            
+            # PASO 8: Calcular puntuaciones de estrés y sueño
+            # PSS-4
+            pss_valores = {
+                "Nunca (0)": 0, "Casi nunca (1)": 1, "A veces (2)": 2, 
+                "Frecuentemente (3)": 3, "Muy frecuentemente (4)": 4,
+                "Nunca (4)": 4, "Casi nunca (3)": 3, "Frecuentemente (1)": 1, 
+                "Muy frecuentemente (0)": 0
+            }
+            
+            pss_total = (pss_valores[pss1] + pss_valores[pss2] + 
+                        pss_valores[pss3] + pss_valores[pss4])
+            estres_alto = pss_total > 13
+            
+            # Calidad del sueño
+            sueno_valores = {
+                "Menos de 5h (1)": 1, "5-6h (2)": 2, "6-7h (3)": 3, 
+                "7-8h (5)": 5, "8-9h (4)": 4, "Más de 9h (2)": 2,
+                "Menos de 15 min (5)": 5, "15-30 min (4)": 4, "30-45 min (3)": 3, 
+                "45-60 min (2)": 2, "Más de 60 min (1)": 1,
+                "Nunca (5)": 5, "1 vez (4)": 4, "2 veces (3)": 3, 
+                "3 veces (2)": 2, "Más de 3 veces (1)": 1,
+                "Excelente (5)": 5, "Buena (4)": 4, "Regular (3)": 3, 
+                "Mala (2)": 2, "Muy mala (1)": 1
+            }
+            
+            sueno_promedio = (sueno_valores[horas_sueno] + sueno_valores[tiempo_dormir] + 
+                             sueno_valores[despertares_nocturnos] + sueno_valores[calidad_percibida]) / 4
+            sueno_malo = sueno_promedio < 3.5
+            
+            # PASO 9: Ajustar FBEO según estrés y sueño (LÓGICA CORREGIDA)
+            ajuste_fbeo = 0
+            
+            if estres_alto and sueno_malo:
+                # Estrés alto + sueño malo = MÁS CONSERVADOR
+                if fbeo_base < 1.0:  # Si está en déficit
+                    ajuste_fbeo = 0.10  # REDUCE el déficit (sube hacia 1.0)
+                else:  # Si está en superávit
+                    ajuste_fbeo = -0.10  # REDUCE el superávit (baja hacia 1.0)
+                    
+            elif estres_alto or sueno_malo:
+                # Solo uno de los dos = MODERADAMENTE CONSERVADOR
+                if fbeo_base < 1.0:  # Si está en déficit
+                    ajuste_fbeo = 0.05  # REDUCE el déficit
+                else:  # Si está en superávit
+                    ajuste_fbeo = -0.05  # REDUCE el superávit
+            
+            # Si ambos están bien (estres_alto = False AND sueno_malo = False):
+            # ajuste_fbeo = 0  --> NO HAY AJUSTE, se mantiene el FBEO original
+            
+            fbeo_ajustado = fbeo_base + ajuste_fbeo
+            
+            # Límites de seguridad para evitar extremos
+            fbeo_ajustado = max(0.80, min(fbeo_ajustado, 1.20))
+            
+            # PASO 10: Ingesta calórica final
+            calorias_totales = get_promedio * fbeo_ajustado
+            
+            # PASO 11: Generar tips personalizados
+            tips_sueno = []
+            tips_estres = []
+            
+            # Tips para mejorar el sueño según puntuación
+            if sueno_malo:
+                if sueno_valores[horas_sueno] <= 3:
+                    tips_sueno.append("🕐 **Prioriza 7-8 horas de sueño:** Tu cuerpo necesita este tiempo para la síntesis proteica y recuperación muscular óptima.")
+                
+                if sueno_valores[tiempo_dormir] <= 2:
+                    tips_sueno.extend([
+                        "🚿 **Ducha caliente pre-sueño:** Toma una ducha caliente 90 minutos antes de dormir para relajar los músculos.",
+                        "🧘 **Meditación nocturna:** Dedica 10 minutos a meditación guiada antes de acostarte.",
+                        "💊 **Considera suplementos:** Melatonina (3-5mg) o L-teanina (200mg) 30 min antes de dormir."
+                    ])
+                
+                if sueno_valores[despertares_nocturnos] <= 2:
+                    tips_sueno.extend([
+                        "💧 **Limita líquidos:** Reduce consumo de líquidos 2 horas antes de dormir.",
+                        "🌡️ **Temperatura óptima:** Mantén tu habitación a 19°C para un sueño profundo.",
+                        "🔇 **Insonorización:** Usa tapones para oídos o ruido blanco para minimizar interrupciones."
+                    ])
+                
+                if sueno_valores[calidad_percibida] <= 2:
+                    tips_sueno.extend([
+                        "📱 **Desconexión digital:** Evita pantallas 1 hora antes de dormir para mantener la melatonina.",
+                        "🛏️ **Revisa tu colchón:** Un colchón inadecuado puede afectar significativamente la calidad del sueño.",
+                        "☕ **Límite de cafeína:** No consumas cafeína después de las 14:00 hrs."
+                    ])
+                
+                tips_sueno.extend([
+                    "⏰ **Horario consistente:** Acuéstate y levántate a la misma hora todos los días.",
+                    "🌞 **Luz matutina:** Exponte a luz brillante en las primeras 2 horas del día.",
+                    "🥗 **Cena balanceada:** Incluye carbohidratos complejos y proteína magra 2-3 horas antes de dormir."
+                ])
+            
+            # Tips para manejar el estrés según puntuación PSS-4
+            if estres_alto:
+                if pss_valores[pss1] >= 3:
+                    tips_estres.extend([
+                        "🎯 **Afrontamiento activo:** Identifica y aborda directamente las causas del estrés en lugar de evitarlas.",
+                        "📝 **Lista de prioridades:** Organiza tareas por importancia para recuperar sensación de control."
+                    ])
+                
+                if pss_valores[pss2] >= 3:
+                    tips_estres.extend([
+                        "💪 **Entrenamiento de fuerza:** El ejercicio regular mejora la confianza y reduce el cortisol.",
+                        "🧘 **Mindfulness diario:** 10 minutos de atención plena fortalecen la resiliencia mental."
+                    ])
+                
+                if pss_valores[pss4] >= 3:
+                    tips_estres.extend([
+                        "👥 **Apoyo social:** Dedica tiempo a conexiones significativas que liberan oxitocina.",
+                        "😄 **Terapia de risa:** Ver comedias o actividades humorísticas reduce fisiológicamente el estrés.",
+                        "🏥 **Considera apoyo profesional:** Un psicólogo puede ofrecer herramientas personalizadas."
+                    ])
+                
+                tips_estres.extend([
+                    "🌿 **Conexión con naturaleza:** Caminatas de 20 min en parques reducen el cortisol.",
+                    "🎵 **Música relajante:** Crea playlists calmantes para momentos de tensión.",
+                    "❄️ **Duchas frías:** Termina tu ducha con 30 segundos de agua fría para fortalecer resiliencia.",
+                    "📓 **Diario de gratitud:** Escribe 3 cosas positivas cada noche antes de dormir.",
+                    "💊 **Suplementos anti-estrés:** Considera Ashwagandha (600mg), Omega-3 (2g) o Magnesio (400mg)."
+                ])
+            
+            # PASO 12: Calcular macronutrientes
+            # Proteínas ajustadas según grasa corporal
+            if sexo == "Hombre":
+                if grasa_corporal > 25:
+                    factor_proteina = 1.8
+                elif 18 <= grasa_corporal <= 24:
+                    factor_proteina = 2.0
+                elif 12 <= grasa_corporal < 18:
+                    factor_proteina = 2.2
+                else:
+                    factor_proteina = 2.4
+            else:
+                if grasa_corporal > 32:
+                    factor_proteina = 1.8
+                elif 25 <= grasa_corporal <= 31:
+                    factor_proteina = 2.0
+                elif 20 <= grasa_corporal < 25:
+                    factor_proteina = 2.2
+                else:
+                    factor_proteina = 2.4
+            
+            proteinas_g_ajustadas = peso * factor_proteina
+            proteinas_g_ajustadas = max(peso * 1.8, min(proteinas_g_ajustadas, peso * 2.4))
+            proteinas_kcal_ajustadas = proteinas_g_ajustadas * 4
+            
+            grasas_kcal_ajustadas = calorias_totales * 0.275
+            grasas_g_ajustadas = grasas_kcal_ajustadas / 9
+            carbs_kcal_ajustadas = calorias_totales - proteinas_kcal_ajustadas - grasas_kcal_ajustadas
+            carbs_g_ajustadas = carbs_kcal_ajustadas / 4
+            
+            # MOSTRAR INFORMACIÓN MÍNIMA AL USUARIO
+            st.success("✅ **¡Evaluación completada con éxito!**")
+            
+            st.info("""
+            📧 **Tu evaluación ha sido enviada a tu entrenador personal.**
+            
+            **¿Qué sigue?**
+            - Tu entrenador revisará tus resultados
+            - Recibirás tu plan nutricional personalizado
+            - Te contactaremos para coordinar tu programa
+            
+            ⏰ **Tiempo estimado de respuesta: 24-48 horas**
+            
+            💡 **Importante:** Mantén tu teléfono disponible para coordinar detalles.
+            """)
+            
+            # Resumen MÍNIMO para el usuario
+            st.markdown("### 📊 Confirmación de Datos")
+            col1, col2, col3 = st.columns(3)
             
             with col1:
-                st.metric("🔥 TMB", f"{tmb:.0f} kcal", "Tasa Metabólica Basal")
+                st.metric("Datos Corporales", "✅ Registrados")
             
             with col2:
-                st.metric("🏃 GEAF", f"{geaf:.2f}", "Factor de Actividad")
+                st.metric("Actividad Física", "✅ Evaluada")
             
             with col3:
-                st.metric("💪 GEE", f"{gee:.0f} kcal", "Gasto por Ejercicio")
+                st.metric("Estrés y Sueño", "✅ Analizados")
             
-            with col4:
-                st.metric("🎯 TDEE", f"{tdee_final:.0f} kcal", "Total Diario")
+            # Mostrar objetivo detectado (información básica)
+            if fbeo_ajustado < 0.95:
+                objetivo = "Pérdida de grasa"
+            elif fbeo_ajustado > 1.05:
+                objetivo = "Ganancia muscular"
+            else:
+                objetivo = "Recomposición corporal"
             
-            # Análisis detallado
-            tab1, tab2, tab3 = st.tabs(["📊 Análisis Completo", "💡 Recomendaciones", "📈 Distribución"])
+            st.metric("Objetivo Detectado", objetivo)
             
-            with tab1:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.markdown("#### 🔍 Desglose del Cálculo")
-                    st.write(f"**TMB (Katch-McArdle):** {tmb:.0f} kcal")
-                    st.write(f"**NEAT + TEF (GEAF):** x{geaf:.2f}")
-                    st.write(f"**Ejercicio (GEE):** +{gee:.0f} kcal")
-                    st.write(f"**TDEE Base:** {tdee_base:.0f} kcal")
-                    
-                    if penalizacion_total > 0:
-                        st.write(f"**Penalización total:** -{penalizacion_total*100:.1f}%")
-                        st.write(f"**TDEE Ajustado:** {tdee_final:.0f} kcal")
-                
-                with col2:
-                    st.markdown("#### ⚠️ Factores de Ajuste")
-                    
-                    if penalizacion_sueno > 0:
-                        st.warning(f"😴 Sueño: -{penalizacion_sueno*100:.0f}% por calidad deficiente")
-                    else:
-                        st.success("😴 Sueño: Calidad óptima")
-                    
-                    if penalizacion_estres > 0:
-                        st.warning(f"🧠 Estrés: -{penalizacion_estres*100:.0f}% por nivel elevado")
-                    else:
-                        st.success("🧠 Estrés: Nivel manejable")
+            st.markdown("""
+            ---
+            ### 🎯 Próximos Pasos
             
-            with tab2:
-                st.markdown("#### 💡 Recomendaciones Personalizadas")
-                
-                if penalizacion_sueno > 0:
-                    st.markdown("""
-                    **🌙 Mejora tu Sueño:**
-                    - Establece un horario fijo para dormir y despertar
-                    - Evita pantallas 1 hora antes de dormir
-                    - Mantén tu habitación fresca y oscura
-                    - Considera suplementación con magnesio o melatonina
-                    """)
-                
-                if penalizacion_estres > 0:
-                    st.markdown("""
-                    **🧘 Manejo del Estrés:**
-                    - Practica técnicas de respiración profunda
-                    - Incorpora 10-15 minutos de meditación diaria
-                    - Considera ejercicio de baja intensidad como yoga
-                    - Evalúa tu carga de trabajo y prioridades
-                    """)
-                
-                # Recomendaciones nutricionales
-                calorias_deficit = tdee_final - 500
-                calorias_superavit = tdee_final + 300
-                
-                st.markdown(f"""
-                **🍽️ Objetivos Nutricionales:**
-                - **Mantenimiento:** {tdee_final:.0f} kcal/día
-                - **Pérdida de grasa:** {calorias_deficit:.0f} kcal/día (-500 kcal)
-                - **Ganancia muscular:** {calorias_superavit:.0f} kcal/día (+300 kcal)
-                """)
+            1. **Espera el contacto** de tu entrenador MUPAI
+            2. **Mantén tu rutina actual** hasta recibir indicaciones
+            3. **Prepárate para comenzar** tu transformación
             
-            with tab3:
-                proteinas = peso * 2.2  # 2.2g por kg
-                grasas_min = tdee_final * 0.25 / 9  # 25% del total
-                grasas_max = tdee_final * 0.35 / 9  # 35% del total
-                
-                st.markdown("#### 📈 Distribución de Macronutrientes Recomendada")
-                
-                col1, col2, col3 = st.columns(3)
-                
-                with col1:
-                    st.metric("🥩 Proteína", f"{proteinas:.0f}g", f"{proteinas*4:.0f} kcal")
-                
-                with col2:
-                    st.metric("🥑 Grasas", f"{grasas_min:.0f}-{grasas_max:.0f}g", f"{grasas_min*9:.0f}-{grasas_max*9:.0f} kcal")
-                
-                with col3:
-                    carbs_min = (tdee_final - proteinas*4 - grasas_max*9) / 4
-                    carbs_max = (tdee_final - proteinas*4 - grasas_min*9) / 4
-                    st.metric("🍠 Carbohidratos", f"{carbs_min:.0f}-{carbs_max:.0f}g", f"{carbs_min*4:.0f}-{carbs_max*4:.0f} kcal")
+            **¿Tienes preguntas urgentes?** Contacta a MUPAI por WhatsApp.
+            """)
             
-            # Enviar email si se solicitó
-            if enviar_email and email_destinatario:
+            # ENVIAR EMAIL COMPLETO SOLO AL ENTRENADOR
+            if not email_destinatario:
+                st.error("⚠️ **Error:** Debes proporcionar un correo electrónico para el seguimiento.")
+            else:
+                from datetime import datetime
+                
+                # EMAIL COMPLETO PARA EL ENTRENADOR
                 contenido_email = f"""
-                RESULTADOS BALANCE ENERGÉTICO ÓPTIMO - MUPAI
-                Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
-                
-                === DATOS PERSONALES ===
-                Sexo: {sexo}
-                Edad: {edad} años
-                Peso: {peso} kg
-                Estatura: {estatura} cm
-                Grasa corporal: {grasa_corporal}%
-                
-                === RESULTADOS PRINCIPALES ===
-                TMB (Katch-McArdle): {tmb:.0f} kcal
-                Factor de Actividad (GEAF): {geaf:.2f}
-                Gasto por Ejercicio (GEE): {gee:.0f} kcal
-                TDEE Base: {tdee_base:.0f} kcal
-                Penalización total: {penalizacion_total*100:.1f}%
-                TDEE FINAL: {tdee_final:.0f} kcal/día
-                
-                === RECOMENDACIONES CALÓRICAS ===
-                Mantenimiento: {tdee_final:.0f} kcal/día
-                Pérdida de grasa: {calorias_deficit:.0f} kcal/día
-                Ganancia muscular: {calorias_superavit:.0f} kcal/día
-                
-                === MACRONUTRIENTES ===
-                Proteína: {proteinas:.0f}g ({proteinas*4:.0f} kcal)
-                Grasas: {grasas_min:.0f}-{grasas_max:.0f}g ({grasas_min*9:.0f}-{grasas_max*9:.0f} kcal)
-                Carbohidratos: {carbs_min:.0f}-{carbs_max:.0f}g ({carbs_min*4:.0f}-{carbs_max*4:.0f} kcal)
-                """
-                enviar_email_resultados(email_destinatario, "Resultados MUPAI - Balance Energético", contenido_email)
+========================================
+📊 NUEVO CLIENTE - EVALUACIÓN FBEO
+========================================
+Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
+Email del cliente: {email_destinatario}
 
+========================================
+👤 PERFIL DEL CLIENTE
+========================================
+Sexo: {sexo}
+Peso: {peso} kg
+Estatura: {estatura} m
+IMC: {peso/(estatura**2):.1f}
+Grasa corporal: {grasa_corporal}%
+Masa magra: {masa_magra:.1f} kg
+
+========================================
+🏃 PERFIL DE ACTIVIDAD FÍSICA
+========================================
+Nivel de actividad: {nivel_actividad}
+Descripción: {datos_actividad['descripcion']}
+Pasos diarios estimados: {datos_actividad['pasos']}
+Factor GEAF aplicado: {geaf}
+Días de entrenamiento semanal: {dias_entrenamiento}
+
+========================================
+😴 EVALUACIÓN DEL SUEÑO
+========================================
+Horas de sueño: {horas_sueno}
+Tiempo para dormir: {tiempo_dormir}
+Despertares nocturnos: {despertares_nocturnos}
+Calidad percibida: {calidad_percibida}
+
+PUNTUACIÓN TOTAL: {sueno_promedio:.1f}/5
+EVALUACIÓN: {'⚠️ CALIDAD DEFICIENTE - Requiere intervención' if sueno_malo else '✅ CALIDAD ADECUADA'}
+
+========================================
+🧠 EVALUACIÓN DEL ESTRÉS (PSS-4)
+========================================
+Pregunta 1 (Control): {pss1}
+Pregunta 2 (Confianza): {pss2}
+Pregunta 3 (Las cosas van bien): {pss3}
+Pregunta 4 (Dificultades acumuladas): {pss4}
+
+PUNTUACIÓN TOTAL PSS-4: {pss_total}/16
+EVALUACIÓN: {'⚠️ ESTRÉS ALTO - Requiere manejo activo' if estres_alto else '✅ ESTRÉS MANEJABLE'}
+
+========================================
+⚡ CÁLCULOS ENERGÉTICOS DETALLADOS
+========================================
+TMB (Katch-McArdle): {tmb:.0f} kcal
+GER (Gasto en reposo): {ger:.0f} kcal
+GEE por sesión: {gee:.0f} kcal
+GET con entrenamiento: {get_con_entrenamiento:.0f} kcal
+GET sin entrenamiento: {get_sin_entrenamiento:.0f} kcal
+GET promedio semanal: {get_promedio:.0f} kcal
+
+========================================
+📊 FACTOR DE BALANCE ENERGÉTICO (FBEO) - ANÁLISIS DETALLADO
+========================================
+FBEO base según {grasa_corporal:.1f}% GC: {fbeo_base:.3f}
+
+EVALUACIÓN DE FACTORES DE RECUPERACIÓN:
+• Estrés (PSS-4): {pss_total}/16 {'- ALTO ⚠️' if estres_alto else '- Normal ✅'}
+• Sueño: {sueno_promedio:.1f}/5 {'- DEFICIENTE ⚠️' if sueno_malo else '- Adecuado ✅'}
+
+LÓGICA DE AJUSTE APLICADA:
+"""
+                
+                if estres_alto and sueno_malo:
+                    contenido_email += f"""• Estrés ALTO + Sueño MALO detectado
+• Ajuste: {'+' if ajuste_fbeo > 0 else ''}{ajuste_fbeo:.2f} ({'Reduce déficit' if fbeo_base < 1.0 else 'Reduce superávit'})
+• Razón: Recuperación comprometida requiere enfoque más conservador"""
+                elif estres_alto or sueno_malo:
+                    factor_problema = "Estrés ALTO" if estres_alto else "Sueño MALO"
+                    contenido_email += f"""• {factor_problema} detectado
+• Ajuste: {'+' if ajuste_fbeo > 0 else ''}{ajuste_fbeo:.2f} ({'Reduce déficit' if fbeo_base < 1.0 else 'Reduce superávit'})
+• Razón: Recuperación parcialmente comprometida"""
+                else:
+                    contenido_email += f"""• Estrés Normal + Sueño Adecuado ✅
+• Ajuste: {ajuste_fbeo:.2f} (Sin modificaciones)
+• Razón: Buena recuperación permite protocolo estándar"""
+                
+                contenido_email += f"""
+
+FBEO FINAL: {fbeo_ajustado:.3f}
+INTERPRETACIÓN: {'DÉFICIT CALÓRICO' if fbeo_ajustado < 0.95 else 'SUPERÁVIT CALÓRICO' if fbeo_ajustado > 1.05 else 'MANTENIMIENTO/RECOMPOSICIÓN'}
+
+ESTRATEGIA NUTRICIONAL:
+{'• Pérdida de grasa con preservación muscular' if fbeo_ajustado < 0.95 else '• Ganancia muscular controlada' if fbeo_ajustado > 1.05 else '• Recomposición corporal (pérdida de grasa + ganancia muscular)'}
+{'• Protocolo conservador por factores de recuperación' if (estres_alto or sueno_malo) else '• Protocolo estándar por buena recuperación'}
+
+========================================
+🍽️ PLAN NUTRICIONAL CALCULADO
+========================================
+CALORÍAS TOTALES: {calorias_totales:.0f} kcal/día
+
+Distribución de Macronutrientes:
+• Proteína: {proteinas_g_ajustadas:.0f}g ({proteinas_kcal_ajustadas:.0f} kcal) - {proteinas_kcal_ajustadas/calorias_totales*100:.0f}%
+  Factor aplicado: {factor_proteina:.1f}g/kg peso corporal
+• Grasas: {grasas_g_ajustadas:.0f}g ({grasas_kcal_ajustadas:.0f} kcal) - {grasas_kcal_ajustadas/calorias_totales*100:.0f}%
+• Carbohidratos: {carbs_g_ajustadas:.0f}g ({carbs_kcal_ajustadas:.0f} kcal) - {carbs_kcal_ajustadas/calorias_totales*100:.0f}%
+
+Requerimientos adicionales:
+• Fibra mínima: {25 if sexo == "Mujer" else 35}g/día
+• Agua mínima: {peso * 35:.0f}ml/día
+
+========================================
+🎯 RECOMENDACIONES ESPECÍFICAS PARA EL CLIENTE
+========================================
+"""
+                
+                # Agregar tips personalizados
+                if sueno_malo and tips_sueno:
+                    contenido_email += "\n😴 ESTRATEGIAS PERSONALIZADAS PARA MEJORAR EL SUEÑO:\n"
+                    for tip in tips_sueno:
+                        contenido_email += f"   {tip}\n"
+                
+                if estres_alto and tips_estres:
+                    contenido_email += "\n🧠 ESTRATEGIAS PERSONALIZADAS PARA MANEJAR EL ESTRÉS:\n"
+                    for tip in tips_estres:
+                        contenido_email += f"   {tip}\n"
+                
+                contenido_email += f"""
+========================================
+📝 NOTAS PARA EL ENTRENADOR
+========================================
+- Cliente evaluado el {datetime.now().strftime('%Y-%m-%d %H:%M')}
+- Requiere seguimiento {'prioritario' if (estres_alto or sueno_malo) else 'estándar'}
+- Contactar en próximas 24-48 horas
+
+========================================
+"""
+                
+                # Enviar SOLO al entrenador (cambiar por tu email real)
+                try:
+                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
+                                          f"NUEVO CLIENTE FBEO - {email_destinatario}", 
+                                          contenido_email)
+                    st.success("✅ Evaluación enviada correctamente al entrenador")
+                except Exception as e:
+                    st.error(f"❌ Error al enviar email: {str(e)}")
 # ==================== CUESTIONARIO PREFERENCIAS ALIMENTARIAS ====================
 elif st.session_state.page == "preferencias_alimentarias":
     st.markdown("""
@@ -638,6 +882,10 @@ elif st.session_state.page == "preferencias_alimentarias":
         <p><strong>Selecciona de cada lista los alimentos que prefieres o estás dispuesto(a) a consumir.</strong></p>
         <p>✅ Marca todos los que apliquen</p>
         <p>🔄 En caso de no tener problema con todos, marca "Todas las anteriores"</p>
+        
+        <h4>🎯 Objetivo</h4>
+        <p>Este cuestionario nos permitirá crear tu <strong>perfil nutricional personalizado</strong> basado en tus gustos 
+        y preferencias reales, garantizando que disfrutes tu plan alimentario.</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1018,17 +1266,20 @@ elif st.session_state.page == "preferencias_alimentarias":
                 ["Menos de $500", "$500-$800", "$800-$1200", "$1200-$1800", "Más de $1800", "Sin límite específico"]
             )
         
-        # Email opcional
+        # EMAIL OBLIGATORIO
         st.markdown("---")
-        enviar_email = st.checkbox("📧 Enviar resultados por email")
-        email_destinatario = ""
-        if enviar_email:
-            email_destinatario = st.text_input("Correo electrónico:", placeholder="tu@email.com")
+        st.markdown("""
+        <div class="questionnaire-container">
+            <h3>📧 Información de Contacto</h3>
+        </div>
+        """, unsafe_allow_html=True)
         
-        submitted = st.form_submit_button("🍽️ Generar Perfil Alimentario Completo", use_container_width=True)
+        email_destinatario = st.text_input("Email para seguimiento (obligatorio):", placeholder="tu@email.com")
+        
+        submitted = st.form_submit_button("🍽️ Enviar Evaluación al Entrenador", use_container_width=True)
         
         if submitted:
-            # Procesar y limpiar las selecciones (remover "Todas las anteriores" si está seleccionado)
+            # Procesar y limpiar las selecciones
             def procesar_seleccion(lista_seleccionada, lista_completa):
                 if "Todas las anteriores" in lista_seleccionada:
                     return [item for item in lista_completa if item != "Todas las anteriores"]
@@ -1043,143 +1294,168 @@ elif st.session_state.page == "preferencias_alimentarias":
             lacteos_grasa_final = procesar_seleccion(lacteos_grasa, lacteos_grasa_opciones)
             grasas_final = procesar_seleccion(grasas, grasas_opciones)
             
-            # Mostrar resultados
-            st.markdown("""
-            <div class="results-container">
-                <h2>📊 Tu Perfil Completo de Preferencias Alimentarias</h2>
-            </div>
-            """, unsafe_allow_html=True)
+            # MOSTRAR INFORMACIÓN MÍNIMA AL USUARIO
+            st.success("✅ **¡Evaluación completada con éxito!**")
             
-            # Crear tabs para organizar mejor los resultados
-            tab1, tab2, tab3 = st.tabs(["🥩 Proteínas y Principales", "🍎 Frutas y Vegetales", "📋 Información Adicional"])
+            st.info("""
+            📧 **Tu evaluación nutricional ha sido enviada a tu entrenador personal.**
             
-            with tab1:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.markdown("### 🥩 Proteínas Magras")
-                    if proteinas_magras_final:
-                        for proteina in proteinas_magras_final[:10]:  # Mostrar solo las primeras 10
-                            st.write(f"✅ {proteina}")
-                        if len(proteinas_magras_final) > 10:
-                            st.write(f"... y {len(proteinas_magras_final) - 10} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
-                    
-                    st.markdown("### 🥓 Proteínas con Grasa")
-                    if proteinas_grasa_final:
-                        for proteina in proteinas_grasa_final[:10]:
-                            st.write(f"✅ {proteina}")
-                        if len(proteinas_grasa_final) > 10:
-                            st.write(f"... y {len(proteinas_grasa_final) - 10} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
-                
-                with col2:
-                    st.markdown("### 🍠 Carbohidratos")
-                    if carbohidratos_final:
-                        for carb in carbohidratos_final[:10]:
-                            st.write(f"✅ {carb}")
-                        if len(carbohidratos_final) > 10:
-                            st.write(f"... y {len(carbohidratos_final) - 10} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
-                    
-                    st.markdown("### 🧀 Lácteos")
-                    lacteos_todos = lacteos_light_final + lacteos_grasa_final
-                    if lacteos_todos:
-                        for lacteo in lacteos_todos[:10]:
-                            st.write(f"✅ {lacteo}")
-                        if len(lacteos_todos) > 10:
-                            st.write(f"... y {len(lacteos_todos) - 10} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
+            **¿Qué sigue?**
+            - Tu entrenador analizará tus preferencias alimentarias
+            - Recibirás un plan nutricional personalizado
+            - Te contactaremos para coordinar tu alimentación
             
-            with tab2:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.markdown("### 🍌 Frutas")
-                    if frutas_final:
-                        for fruta in frutas_final[:15]:
-                            st.write(f"✅ {fruta}")
-                        if len(frutas_final) > 15:
-                            st.write(f"... y {len(frutas_final) - 15} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
-                
-                with col2:
-                    st.markdown("### 🥦 Vegetales")
-                    if vegetales_final:
-                        for vegetal in vegetales_final[:15]:
-                            st.write(f"✅ {vegetal}")
-                        if len(vegetales_final) > 15:
-                            st.write(f"... y {len(vegetales_final) - 15} más")
-                    else:
-                        st.write("❌ Ninguna seleccionada")
-                
-                st.markdown("### 🥑 Grasas Saludables")
-                if grasas_final:
-                    grasas_texto = ", ".join(grasas_final[:10])
-                    if len(grasas_final) > 10:
-                        grasas_texto += f" ... y {len(grasas_final) - 10} más"
-                    st.write(f"✅ {grasas_texto}")
-                else:
-                    st.write("❌ Ninguna seleccionada")
+            ⏰ **Tiempo estimado de respuesta: 24-48 horas**
             
-            with tab3:
-                col1, col2 = st.columns(2)
-                
-                with col1:
-                    st.markdown("### 💊 Suplementos")
-                    st.write(f"**Incluye suplementos:** {'✅ Sí' if incluir_suplementos == 'Sí' else '❌ No'}")
-                    if marcas_preferidas:
-                        st.write(f"**Marcas preferidas:** {marcas_preferidas}")
-                    
-                    st.markdown("### 🕒 Patrones Alimentarios")
-                    st.write(f"**Comidas al día:** {comidas_dia}")
-                    st.write(f"**Frecuencia cocinando:** {cocinar_frecuencia}")
-                    st.write(f"**Horarios de comida:** {horario_comidas}")
-                    st.write(f"**Presupuesto semanal:** {presupuesto_comida}")
-                
-                with col2:
-                    st.markdown("### ➕ Información Adicional")
-                    if alimentos_adicionales:
-                        st.write(f"**Alimentos adicionales:** {alimentos_adicionales}")
-                    
-                    st.markdown("### ⚠️ Alergias/Intolerancias")
-                    if tiene_alergias == "Sí" and alergias_detalle:
-                        st.write(f"**Alergias:** {alergias_detalle}")
-                    else:
-                        st.write("✅ Sin alergias reportadas")
+            💡 **Importante:** Mantén tu teléfono disponible para coordinar detalles.
+            """)
             
-            # Análisis y métricas
+            # Resumen MÍNIMO para el usuario
+            st.markdown("### 📊 Confirmación de Evaluación")
+            col1, col2, col3 = st.columns(3)
+            
             total_categorias = len([x for x in [proteinas_magras_final, proteinas_grasa_final, frutas_final, vegetales_final, carbohidratos_final, lacteos_light_final, lacteos_grasa_final, grasas_final] if x])
             total_alimentos = len(proteinas_magras_final + proteinas_grasa_final + frutas_final + vegetales_final + carbohidratos_final + lacteos_light_final + lacteos_grasa_final + grasas_final)
             
-            st.markdown(f"""
-            <div class="results-container">
-                <h3>🎯 Análisis de tu Perfil Alimentario</h3>
-                <div style="display: flex; justify-content: space-around; margin: 1rem 0;">
-                    <div style="text-align: center;">
-                        <h2 style="color: #000; margin: 0;">{total_categorias}/8</h2>
-                        <p style="margin: 0;">Categorías seleccionadas</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <h2 style="color: #000; margin: 0;">{total_alimentos}</h2>
-                        <p style="margin: 0;">Alimentos totales</p>
-                    </div>
-                    <div style="text-align: center;">
-                        <h2 style="color: #000; margin: 0;">{'🟢' if total_categorias >= 6 else '🟡' if total_categorias >= 4 else '🔴'}</h2>
-                        <p style="margin: 0;">{"Excelente" if total_categorias >= 6 else "Buena" if total_categorias >= 4 else "Limitada"} variedad</p>
-                    </div>
-                </div>
-                <p style="text-align: center; font-size: 1.1rem;">
-                    Este perfil detallado será utilizado para crear tu plan nutricional personalizado con alimentos que realmente disfrutas.
-                </p>
-            </div>
-            """, unsafe_allow_html=True)
+            with col1:
+                st.metric("Categorías Evaluadas", f"{total_categorias}/8")
+            
+            with col2:
+                st.metric("Alimentos Seleccionados", f"{total_alimentos}")
+            
+            with col3:
+                variedad = "Excelente" if total_categorias >= 6 else "Buena" if total_categorias >= 4 else "Limitada"
+                st.metric("Variedad Alimentaria", variedad)
+            
+            st.markdown("""
+            ---
+            ### 🎯 Próximos Pasos
+            
+            1. **Espera el contacto** de tu entrenador MUPAI
+            2. **Mantén tu alimentación actual** hasta recibir indicaciones
+            3. **Prepárate para disfrutar** de tu plan personalizado
+            
+            **¿Tienes preguntas urgentes?** Contacta a MUPAI por WhatsApp.
+            """)
+            
+            # ENVIAR EMAIL COMPLETO SOLO AL ENTRENADOR
+            if not email_destinatario:
+                st.error("⚠️ **Error:** Debes proporcionar un correo electrónico para el seguimiento.")
+            else:
+                from datetime import datetime
+                
+                # EMAIL COMPLETO PARA EL ENTRENADOR
+                contenido_email = f"""
+========================================
+📊 NUEVO CLIENTE - PREFERENCIAS ALIMENTARIAS
+========================================
+Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
+Email del cliente: {email_destinatario}
 
+========================================
+🥩 PROTEÍNAS MAGRAS SELECCIONADAS ({len(proteinas_magras_final)} items)
+========================================
+{', '.join(proteinas_magras_final) if proteinas_magras_final else 'Ninguna seleccionada'}
+
+========================================
+🥓 PROTEÍNAS CON GRASA SELECCIONADAS ({len(proteinas_grasa_final)} items)
+========================================
+{', '.join(proteinas_grasa_final) if proteinas_grasa_final else 'Ninguna seleccionada'}
+
+========================================
+🍌 FRUTAS SELECCIONADAS ({len(frutas_final)} items)
+========================================
+{', '.join(frutas_final) if frutas_final else 'Ninguna seleccionada'}
+
+========================================
+🥦 VEGETALES SELECCIONADOS ({len(vegetales_final)} items)
+========================================
+{', '.join(vegetales_final) if vegetales_final else 'Ninguna seleccionada'}
+
+========================================
+🍠 CARBOHIDRATOS SELECCIONADOS ({len(carbohidratos_final)} items)
+========================================
+{', '.join(carbohidratos_final) if carbohidratos_final else 'Ninguna seleccionada'}
+
+========================================
+🧀 LÁCTEOS BAJOS EN GRASA ({len(lacteos_light_final)} items)
+========================================
+{', '.join(lacteos_light_final) if lacteos_light_final else 'Ninguna seleccionada'}
+
+========================================
+🧀 LÁCTEOS ALTOS EN GRASA ({len(lacteos_grasa_final)} items)
+========================================
+{', '.join(lacteos_grasa_final) if lacteos_grasa_final else 'Ninguna seleccionada'}
+
+========================================
+🥑 GRASAS SALUDABLES ({len(grasas_final)} items)
+========================================
+{', '.join(grasas_final) if grasas_final else 'Ninguna seleccionada'}
+
+========================================
+💊 INFORMACIÓN DE SUPLEMENTOS
+========================================
+Incluye suplementos: {incluir_suplementos}
+Marcas/tipos preferidos: {marcas_preferidas if marcas_preferidas else 'No especificado'}
+
+========================================
+➕ ALIMENTOS ADICIONALES
+========================================
+{alimentos_adicionales if alimentos_adicionales else 'No especificado'}
+
+========================================
+⚠️ ALERGIAS E INTOLERANCIAS
+========================================
+Tiene alergias/intolerancias: {tiene_alergias}
+Detalle: {alergias_detalle if alergias_detalle else 'No especificado'}
+
+========================================
+🕒 PATRONES ALIMENTARIOS
+========================================
+Comidas preferidas al día: {comidas_dia}
+Frecuencia cocinando: {cocinar_frecuencia}
+Horarios de comida: {horario_comidas}
+Presupuesto semanal: {presupuesto_comida}
+
+========================================
+📊 ANÁLISIS NUTRICIONAL
+========================================
+Total de categorías con selecciones: {total_categorias}/8
+Total de alimentos seleccionados: {total_alimentos}
+Variedad alimentaria: {variedad}
+
+INTERPRETACIÓN:
+• Proteínas: {'✅ Buena variedad' if len(proteinas_magras_final + proteinas_grasa_final) >= 10 else '⚠️ Limitada variedad' if len(proteinas_magras_final + proteinas_grasa_final) >= 5 else '🔴 Muy limitada'}
+• Frutas y vegetales: {'✅ Excelente' if len(frutas_final + vegetales_final) >= 15 else '⚠️ Aceptable' if len(frutas_final + vegetales_final) >= 8 else '🔴 Insuficiente'}
+• Carbohidratos: {'✅ Buena variedad' if len(carbohidratos_final) >= 8 else '⚠️ Limitada'}
+• Lácteos: {'✅ Incluye lácteos' if len(lacteos_light_final + lacteos_grasa_final) > 0 else '⚠️ No incluye lácteos'}
+• Grasas: {'✅ Buena variedad' if len(grasas_final) >= 8 else '⚠️ Limitada'}
+
+RECOMENDACIONES PARA EL PLAN:
+• {'Priorizar proteínas magras' if len(proteinas_magras_final) > len(proteinas_grasa_final) else 'Incluir más proteínas magras'}
+• {'Aprovechar la gran variedad de frutas/vegetales' if len(frutas_final + vegetales_final) >= 15 else 'Incorporar gradualmente más frutas/vegetales'}
+• {'Cliente acepta suplementos - considerar proteína en polvo' if incluir_suplementos == 'Sí' else 'Cliente no desea suplementos - plan 100% alimentos'}
+• {'Considerar restricciones: ' + alergias_detalle if tiene_alergias == 'Sí' else 'Sin restricciones alimentarias'}
+
+========================================
+📝 NOTAS PARA EL ENTRENADOR
+========================================
+- Cliente evaluado el {datetime.now().strftime('%Y-%m-%d %H:%M')}
+- Perfil nutricional {'completo' if total_categorias >= 6 else 'parcial'}
+- Prioridad: {'estándar' if total_categorias >= 4 else 'alta (variedad limitada)'}
+- Contactar en próximas 24-48 horas para plan personalizado
+
+========================================
+"""
+                
+                # Enviar SOLO al entrenador
+                try:
+                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
+                                          f"NUEVO CLIENTE PREFERENCIAS - {email_destinatario}", 
+                                          contenido_email)
+                    st.success("✅ Evaluación enviada correctamente al entrenador")
+                except Exception as e:
+                    st.error(f"❌ Error al enviar email: {str(e)}")
 # ==================== CUESTIONARIO ANTOJOS ALIMENTARIOS ====================
 elif st.session_state.page == "antojos_alimentarios":
     st.markdown("""
@@ -1193,8 +1469,8 @@ elif st.session_state.page == "antojos_alimentarios":
     <div class="questionnaire-container">
         <h3>🎯 Objetivo del Cuestionario</h3>
         <p>Este cuestionario tiene como objetivo identificar tu <strong>perfil personal de antojos alimentarios</strong>. 
-        Marca con sinceridad las respuestas correspondientes para cada grupo de alimentos. 
-        Esto nos permitirá adaptar tus planes nutricionales y de entrenamiento de manera más precisa.</p>
+        Responde con sinceridad para cada grupo de alimentos. Esto nos permitirá adaptar tu plan nutricional 
+        considerando tus patrones de antojos y estrategias de manejo.</p>
         
         <h4>📋 Cada sección incluye:</h4>
         <ul>
@@ -1234,7 +1510,6 @@ elif st.session_state.page == "antojos_alimentarios":
             "nombre": "Pan blanco, bolillos, teleras, baguettes",
             "ejemplos": "Bolillo, Telera, Baguette, Pan dulce, Concha, Empanada dulce"
         },
-
         {
             "emoji": "🥤",
             "nombre": "Refrescos y bebidas azucaradas",
@@ -1326,124 +1601,235 @@ elif st.session_state.page == "antojos_alimentarios":
             
             st.markdown("---")
         
-        # Email opcional
-        enviar_email = st.checkbox("📧 Enviar resultados por email")
-        email_destinatario = ""
-        if enviar_email:
-            email_destinatario = st.text_input("Correo electrónico:", placeholder="tu@email.com")
+        # EMAIL OBLIGATORIO
+        st.markdown("""
+        <div class="questionnaire-container">
+            <h3>📧 Información de Contacto</h3>
+        </div>
+        """, unsafe_allow_html=True)
         
-        submitted = st.form_submit_button("🧁 Analizar Perfil de Antojos", use_container_width=True)
+        email_destinatario = st.text_input("Email para seguimiento (obligatorio):", placeholder="tu@email.com")
+        
+        submitted = st.form_submit_button("🧁 Enviar Evaluación al Entrenador", use_container_width=True)
         
         if submitted:
-            # Análisis de resultados
+            # MOSTRAR INFORMACIÓN MÍNIMA AL USUARIO
+            st.success("✅ **¡Evaluación completada con éxito!**")
+            
+            st.info("""
+            📧 **Tu evaluación de antojos ha sido enviada a tu entrenador personal.**
+            
+            **¿Qué sigue?**
+            - Tu entrenador analizará tus patrones de antojos
+            - Recibirás estrategias personalizadas de manejo
+            - Te contactaremos para coordinar tu plan integral
+            
+            ⏰ **Tiempo estimado de respuesta: 24-48 horas**
+            
+            💡 **Importante:** Mantén tu teléfono disponible para coordinar detalles.
+            """)
+            
+            # Análisis BÁSICO para el usuario
+            antojos_frecuentes = [k for k, v in resultados_antojos.items() 
+                                if v['frecuencia'] in ["Frecuentemente (3-4 veces/semana)", "Muy frecuentemente (diario)"]]
+            
+            intensidad_promedio = sum([v['intensidad'] for v in resultados_antojos.values()]) / len(resultados_antojos)
+            
+            antojos_dificiles = [k for k, v in resultados_antojos.items() 
+                               if v['control'] in ["Difícil", "Muy difícil"]]
+            
+            # Resumen MÍNIMO para el usuario
+            st.markdown("### 📊 Confirmación de Evaluación")
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                st.metric("Categorías Evaluadas", "10/10")
+            
+            with col2:
+                st.metric("Antojos Identificados", f"{len(antojos_frecuentes)}")
+            
+            with col3:
+                nivel_riesgo = "Alto" if len(antojos_frecuentes) >= 4 else "Medio" if len(antojos_frecuentes) >= 2 else "Bajo"
+                st.metric("Nivel de Manejo", nivel_riesgo)
+            
             st.markdown("""
-            <div class="results-container">
-                <h2>🧁 Análisis de tu Perfil de Antojos Alimentarios</h2>
-            </div>
-            """, unsafe_allow_html=True)
+            ---
+            ### 🎯 Próximos Pasos
             
-            # Crear tabs para resultados
-            tab1, tab2, tab3 = st.tabs(["📊 Resumen General", "🎯 Análisis Detallado", "💡 Estrategias"])
+            1. **Espera el contacto** de tu entrenador MUPAI
+            2. **Mantén tu alimentación actual** hasta recibir indicaciones
+            3. **Prepárate para aprender** estrategias de manejo efectivas
             
-            with tab1:
-                # Calcular métricas generales
-                antojos_frecuentes = [k for k, v in resultados_antojos.items() 
-                                    if v['frecuencia'] in ["Frecuentemente (3-4 veces/semana)", "Muy frecuentemente (diario)"]]
-                
-                intensidad_promedio = sum([v['intensidad'] for v in resultados_antojos.values()]) / len(resultados_antojos)
-                
-                antojos_dificiles = [k for k, v in resultados_antojos.items() 
-                                   if v['control'] in ["Difícil", "Muy difícil"]]
-                
-                col1, col2, col3, col4 = st.columns(4)
-                
-                with col1:
-                    st.metric("🔥 Antojos Frecuentes", f"{len(antojos_frecuentes)}/10")
-                
-                with col2:
-                    st.metric("💪 Intensidad Promedio", f"{intensidad_promedio:.1f}/10")
-                
-                with col3:
-                    st.metric("⚠️ Difíciles de Controlar", f"{len(antojos_dificiles)}/10")
-                
-                with col4:
-                    nivel_riesgo = "Alto" if len(antojos_frecuentes) >= 4 else "Medio" if len(antojos_frecuentes) >= 2 else "Bajo"
-                    color = "🔴" if nivel_riesgo == "Alto" else "🟡" if nivel_riesgo == "Medio" else "🟢"
-                    st.metric("📈 Nivel de Riesgo", f"{color} {nivel_riesgo}")
-                
-                # Top 3 antojos más problemáticos
-                if antojos_frecuentes:
-                    st.markdown("### 🚨 Antojos Más Frecuentes")
-                    for antojo in antojos_frecuentes[:3]:
-                        datos = resultados_antojos[antojo]
-                        st.markdown(f"""
-                        **{antojo}:** {datos['frecuencia']} | Intensidad: {datos['intensidad']}/10 | 
-                        Control: {datos['control']} | Emoción: {datos['emocion']}
-                        """)
+            **¿Tienes preguntas urgentes?** Contacta a MUPAI por WhatsApp.
+            """)
             
-            with tab2:
-                st.markdown("### 📊 Análisis por Categoría")
+            # ENVIAR EMAIL COMPLETO SOLO AL ENTRENADOR
+            if not email_destinatario:
+                st.error("⚠️ **Error:** Debes proporcionar un correo electrónico para el seguimiento.")
+            else:
+                from datetime import datetime
+                from collections import Counter
                 
-                for categoria, datos in resultados_antojos.items():
-                    if datos['frecuencia'] != "Nunca":
-                        emoji = next(c['emoji'] for c in categorias_antojos_mexicanas if c['nombre'] == categoria)
-                        
-                        with st.expander(f"{emoji} {categoria}"):
-                            col1, col2 = st.columns(2)
-                            
-                            with col1:
-                                st.write(f"**Frecuencia:** {datos['frecuencia']}")
-                                st.write(f"**Momento preferido:** {datos['momento']}")
-                                st.write(f"**Intensidad:** {datos['intensidad']}/10")
-                            
-                            with col2:
-                                st.write(f"**Control:** {datos['control']}")
-                                st.write(f"**Conducta:** {datos['conducta']}")
-                                st.write(f"**Emoción detonante:** {datos['emocion']}")
-            
-            with tab3:
-                st.markdown("### 💡 Estrategias Personalizadas")
-                
-                # Estrategias basadas en emociones más comunes
+                # Calcular análisis detallado
                 emociones_principales = [v['emocion'] for v in resultados_antojos.values() 
                                        if v['frecuencia'] != "Nunca"]
                 emociones_frecuentes = Counter(emociones_principales).most_common(3)
                 
-                if emociones_frecuentes:
-                    st.markdown("#### 🎭 Estrategias por Emociones Detonantes")
-                    
-                    for emocion, frecuencia in emociones_frecuentes:
-                        if emocion == "Estrés":
-                            st.markdown("""
-                            **🧘 Para el Estrés:**
-                            - Practica respiración profunda antes de comer
-                            - Ten snacks saludables preparados (frutas, nueces)
-                            - Implementa 5 minutos de meditación cuando sientas el antojo
-                            """)
-                        elif emocion == "Aburrimiento":
-                            st.markdown("""
-                            **🎯 Para el Aburrimiento:**
-                            - Identifica actividades alternativas (caminar, leer, llamar a un amigo)
-                            - Mantén las manos ocupadas con hobbies
-                            - Planifica comidas y snacks estructurados
-                            """)
-                        elif emocion == "Ansiedad":
-                            st.markdown("""
-                            **😌 Para la Ansiedad:**
-                            - Técnicas de grounding (5 cosas que ves, 4 que escuchas, etc.)
-                            - Infusiones relajantes como manzanilla o té verde
-                            - Ejercicio ligero como yoga o estiramientos
-                            """)
+                momentos_principales = [v['momento'] for v in resultados_antojos.values() 
+                                      if v['frecuencia'] != "Nunca"]
+                momentos_frecuentes = Counter(momentos_principales).most_common(3)
                 
-                # Estrategias generales
-                st.markdown("#### 🛡️ Estrategias Generales")
-                st.markdown("""
-                - **🥗 Sustitución inteligente:** Prepara versiones más saludables de tus antojos
-                - **⏰ Timing estratégico:** Planifica pequeñas porciones en momentos controlados
-                - **💧 Hidratación:** A veces el antojo es sed disfrazada
-                - **😴 Sueño adecuado:** La falta de sueño aumenta antojos de azúcar
-                - **🍽️ Comidas balanceadas:** Proteína y fibra reducen antojos posteriores
-                """)
+                # EMAIL COMPLETO PARA EL ENTRENADOR
+                contenido_email = f"""
+========================================
+📊 NUEVO CLIENTE - ANTOJOS ALIMENTARIOS
+========================================
+Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
+Email del cliente: {email_destinatario}
+
+========================================
+🧁 ANÁLISIS DETALLADO POR CATEGORÍA
+========================================
+"""
+                
+                for categoria, datos in resultados_antojos.items():
+                    emoji = next(c['emoji'] for c in categorias_antojos_mexicanas if c['nombre'] == categoria)
+                    contenido_email += f"""
+{emoji} {categoria.upper()}:
+  • Frecuencia: {datos['frecuencia']}
+  • Momento: {datos['momento']}
+  • Intensidad: {datos['intensidad']}/10
+  • Control: {datos['control']}
+  • Conducta: {datos['conducta']}
+  • Emoción detonante: {datos['emocion']}
+
+"""
+                
+                contenido_email += f"""
+========================================
+📊 RESUMEN EJECUTIVO
+========================================
+Antojos frecuentes ({len(antojos_frecuentes)} categorías):
+{', '.join(antojos_frecuentes) if antojos_frecuentes else 'Ninguno'}
+
+Antojos difíciles de controlar ({len(antojos_dificiles)} categorías):
+{', '.join(antojos_dificiles) if antojos_dificiles else 'Ninguno'}
+
+Intensidad promedio: {intensidad_promedio:.1f}/10
+
+Nivel de riesgo: {nivel_riesgo}
+
+========================================
+🎭 ANÁLISIS DE EMOCIONES DETONANTES
+========================================
+"""
+                
+                if emociones_frecuentes:
+                    for emocion, frecuencia in emociones_frecuentes:
+                        contenido_email += f"• {emocion}: {frecuencia} categorías afectadas\n"
+                else:
+                    contenido_email += "• No se identificaron emociones detonantes significativas\n"
+                
+                contenido_email += f"""
+
+========================================
+⏰ ANÁLISIS DE MOMENTOS DE MAYOR RIESGO
+========================================
+"""
+                
+                if momentos_frecuentes:
+                    for momento, frecuencia in momentos_frecuentes:
+                        contenido_email += f"• {momento}: {frecuencia} categorías afectadas\n"
+                else:
+                    contenido_email += "• No se identificaron momentos de mayor riesgo\n"
+                
+                contenido_email += f"""
+
+========================================
+🎯 RECOMENDACIONES ESPECÍFICAS
+========================================
+"""
+                
+                # Generar recomendaciones basadas en el análisis
+                if len(antojos_frecuentes) >= 4:
+                    contenido_email += "⚠️ PRIORIDAD ALTA - Múltiples antojos frecuentes\n"
+                    contenido_email += "• Implementar estrategias de manejo emocional\n"
+                    contenido_email += "• Planificar comidas estructuradas\n"
+                    contenido_email += "• Considerar sustitutos saludables\n\n"
+                
+                if intensidad_promedio >= 7:
+                    contenido_email += "⚠️ INTENSIDAD ALTA - Antojos muy fuertes\n"
+                    contenido_email += "• Trabajar en técnicas de control de impulsos\n"
+                    contenido_email += "• Identificar triggers específicos\n\n"
+                
+                if emociones_frecuentes:
+                    emocion_principal = emociones_frecuentes[0][0]
+                    if emocion_principal == "Estrés":
+                        contenido_email += "🧘 ENFOQUE: Manejo del estrés\n"
+                        contenido_email += "• Técnicas de respiración y mindfulness\n"
+                        contenido_email += "• Ejercicio regular para reducir cortisol\n"
+                        contenido_email += "• Planificar snacks anti-estrés\n\n"
+                    elif emocion_principal == "Aburrimiento":
+                        contenido_email += "🎯 ENFOQUE: Actividades alternativas\n"
+                        contenido_email += "• Lista de actividades para momentos de aburrimiento\n"
+                        contenido_email += "• Horarios estructurados\n"
+                        contenido_email += "• Hobbies que mantengan las manos ocupadas\n\n"
+                    elif emocion_principal == "Ansiedad":
+                        contenido_email += "😌 ENFOQUE: Manejo de ansiedad\n"
+                        contenido_email += "• Técnicas de grounding\n"
+                        contenido_email += "• Infusiones relajantes\n"
+                        contenido_email += "• Ejercicio de baja intensidad\n\n"
+                
+                contenido_email += f"""
+========================================
+🛡️ ESTRATEGIAS DE INTERVENCIÓN SUGERIDAS
+========================================
+1. SUSTITUCIÓN INTELIGENTE:
+   • Preparar versiones saludables de antojos principales
+   • Tener opciones disponibles en momentos de riesgo
+
+2. CONTROL AMBIENTAL:
+   • Limitar acceso a alimentos problema
+   • Estructurar ambiente alimentario
+
+3. MANEJO EMOCIONAL:
+   • Técnicas específicas para emociones detonantes
+   • Diario de antojos para identificar patrones
+
+4. TIMING ESTRATÉGICO:
+   • Planificar pequeñas porciones en momentos controlados
+   • Evitar restricción extrema que intensifique antojos
+
+5. APOYO NUTRICIONAL:
+   • Comidas balanceadas que reduzcan antojos
+   • Hidratación adecuada
+   • Sueño reparador
+
+========================================
+📝 NOTAS PARA EL ENTRENADOR
+========================================
+- Cliente evaluado el {datetime.now().strftime('%Y-%m-%d %H:%M')}
+- Perfil de antojos {'complejo' if len(antojos_frecuentes) >= 3 else 'moderado' if len(antojos_frecuentes) >= 1 else 'simple'}
+- Prioridad de intervención: {'alta' if len(antojos_frecuentes) >= 4 or intensidad_promedio >= 7 else 'media' if len(antojos_frecuentes) >= 2 else 'baja'}
+- Requiere seguimiento {'semanal' if len(antojos_frecuentes) >= 3 else 'quincenal'}
+- Contactar en próximas 24-48 horas
+
+ALERTAS ESPECIALES:
+{'• Múltiples antojos frecuentes - requiere plan integral' if len(antojos_frecuentes) >= 4 else ''}
+{'• Intensidad muy alta - riesgo de abandono' if intensidad_promedio >= 8 else ''}
+{'• Dificultad de control - necesita apoyo emocional' if len(antojos_dificiles) >= 3 else ''}
+
+========================================
+"""
+                
+                # Enviar SOLO al entrenador
+                try:
+                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
+                                          f"NUEVO CLIENTE ANTOJOS - {email_destinatario}", 
+                                          contenido_email)
+                    st.success("✅ Evaluación enviada correctamente al entrenador")
+                except Exception as e:
+                    st.error(f"❌ Error al enviar email: {str(e)}")
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
