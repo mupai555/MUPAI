@@ -9,7 +9,7 @@ import base64
 from collections import Counter
 from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
-Configuración de la página
+# Configuración de la página
 
 st.set_page_config(
 page_title="MUPAI - Entrenamiento Digital Basado en Ciencia",
