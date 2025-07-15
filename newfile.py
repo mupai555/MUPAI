@@ -884,9 +884,9 @@ Requerimientos adicionales:
                 
                 # Enviar SOLO al entrenador (cambiar por tu email real)
                 try:
-                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
-                                          f"NUEVO CLIENTE FBEO - {email_destinatario}", 
-                                          contenido_email)
+                    enviar_email_resultados("mupaitraining@outlook.com", 
+                      f"NUEVO CLIENTE FBEO - {email_destinatario}", 
+                      contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
                 except Exception as e:
                     st.error(f"❌ Error al enviar email: {str(e)}")
@@ -1471,8 +1471,8 @@ RECOMENDACIONES PARA EL PLAN:
 """
                 
                 # Enviar SOLO al entrenador
-                try:
-                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
+                                try:
+                    enviar_email_resultados("mupaitraining@outlook.com", 
                                           f"NUEVO CLIENTE PREFERENCIAS - {email_destinatario}", 
                                           contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
@@ -1845,8 +1845,8 @@ ALERTAS ESPECIALES:
 """
                 
                 # Enviar SOLO al entrenador
-                try:
-                    enviar_email_resultados("tu_correo_entrenador@gmail.com", 
+                               try:
+                    enviar_email_resultados("mupaitraining@outlook.com", 
                                           f"NUEVO CLIENTE ANTOJOS - {email_destinatario}", 
                                           contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
