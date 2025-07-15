@@ -7,6 +7,7 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import base64
 from collections import Counter
+from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
 # Configuración de la página
 st.set_page_config(
@@ -226,6 +227,9 @@ with st.sidebar:
     
     if st.button("🧁 Antojos Alimentarios", use_container_width=True):
         st.session_state.page = "antojos_alimentarios"
+        
+if st.button("📊 Cuestionario FBEO", use_container_width=True):
+    st.session_state.page = "cuestionario_fbeo"
     
     st.markdown("---")
     
@@ -1452,6 +1456,10 @@ elif st.session_state.page == "contacto":
         <h2>📞 Contacto</h2>
     </div>
     """, unsafe_allow_html=True)
+    # ==================== CUESTIONARIO FBEO ====================
+elif st.session_state.page == "cuestionario_fbeo":
+    mostrar_cuestionario_fbeo()
+
     
     st.markdown("""
     <div class="results-container">
