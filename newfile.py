@@ -189,12 +189,34 @@ def evaluar_estres(respuestas_estres):
         return 0.10
 
 def enviar_email_resultados(destinatario, asunto, contenido):
-    """Función para enviar resultados por email"""
+    """Función para enviar resultados por email - REAL CON OUTLOOK"""
     try:
-        st.success(f"✅ Resultados enviados a {destinatario}")
+        # TUS CREDENCIALES OUTLOOK REALES
+        email_origen = "mupaitraining@outlook.com"
+        password = "MuscleUp55"
+        
+        # Crear mensaje
+        mensaje = MIMEMultipart()
+        mensaje['From'] = email_origen
+        mensaje['To'] = destinatario
+        mensaje['Subject'] = asunto
+        mensaje.attach(MIMEText(contenido, 'plain', 'utf-8'))
+        
+        # Enviar con Outlook
+        servidor = smtplib.SMTP("smtp-mail.outlook.com", 587)
+        servidor.starttls()
+        servidor.login(email_origen, password)
+        servidor.send_message(mensaje)
+        servidor.quit()
+        
+        st.success(f"✅ Email REAL enviado a {destinatario}")
         return True
+        
+    except smtplib.SMTPAuthenticationError:
+        st.error("❌ Error de autenticación - Verifica tu email y contraseña")
+        return False
     except Exception as e:
-        st.error(f"❌ Error al enviar email: {str(e)}")
+        st.error(f"❌ Error: {str(e)}")
         return False
 
 # Inicializar session state
