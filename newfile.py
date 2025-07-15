@@ -18,7 +18,7 @@ layout="wide",
 initial_sidebar_state="expanded"
 )
 
-CSS personalizado mejorado
+#CSS personalizado mejorado
 
 st.markdown("""
 
