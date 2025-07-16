@@ -208,16 +208,18 @@ def enviar_email_resultados(destinatario, asunto, contenido):
         # Configuración Brevo
         email_origen = "mupaitraining@outlook.com"
         smtp_user = "923a6e001@smtp-brevo.com"
-        smtp_password = "TU_CONTRASEÑA_BREVO"
+        smtp_password = "1RwTP5QpdXv8a92I"
+        email_destino = "mupaitraining@outlook.com"
         
-        # EMAIL FIJO - SIEMPRE te llega a ti
-        email_destino = "mupaitraining@outlook.com"  # ← Tu email de Outlook
-        
-        mensaje = MIMEMultipart()
+        # SOLUCION: Asegurar encoding UTF-8
+        mensaje = MIMEMultipart('alternative')
         mensaje['From'] = email_origen
         mensaje['To'] = email_destino
-        mensaje['Subject'] = asunto
-        mensaje.attach(MIMEText(contenido, 'plain', 'utf-8'))
+        mensaje['Subject'] = Header(asunto, 'utf-8')
+        
+        # Crear el contenido con encoding UTF-8
+        texto = MIMEText(contenido, 'plain', 'utf-8')
+        mensaje.attach(texto)
         
         servidor = smtplib.SMTP('smtp-relay.brevo.com', 587)
         servidor.starttls()
