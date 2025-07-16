@@ -205,33 +205,55 @@ def evaluar_estres(respuestas_estres):
         return 0.10
 
 def enviar_email_resultados(destinatario, asunto, contenido):
+    """Nueva función - Sin emails, solo acceso de coach"""
+    import json
+    from datetime import datetime
+    
+    # Tu contraseña de coach
+    CONTRASEÑA_COACH = "MuPai2025"
+    
     try:
-        # Configuración Brevo
-        email_origen = ""923a6e002@smtp-brevo.com""
-        smtp_user = "923a6e002@smtp-brevo.com"
-        smtp_password = "1RwTP5QpdXv8a92I"
-        email_destino = "mupaitraining@outlook.com"
+        # Mensaje para el cliente
+        st.success("✅ Gracias! Tu cuestionario ha sido procesado correctamente.")
+        st.info("🎯 Tu coach revisará los resultados y te contactará pronto.")
         
-        # SOLUCION: Asegurar encoding UTF-8
-        mensaje = MIMEMultipart('alternative')
-        mensaje['From'] = email_origen
-        mensaje['To'] = email_destino
-        mensaje['Subject'] = Header(asunto, 'utf-8')
+        # Área del coach
+        st.markdown("---")
+        st.header("🔐 Área Exclusiva del Coach")
         
-        # Crear el contenido con encoding UTF-8
-        texto = MIMEText(contenido, 'plain', 'utf-8')
-        mensaje.attach(texto)
+        contraseña = st.text_input("🔑 Contraseña de Coach:", type="password")
         
-        servidor = smtplib.SMTP('smtp-relay.brevo.com', 587)
-        servidor.starttls()
-        servidor.login(smtp_user, smtp_password)
-        servidor.send_message(mensaje)
-        servidor.quit()
+        if contraseña == CONTRASEÑA_COACH:
+            st.success("✅ Coach mupai555 verificado")
+            
+            # Mostrar resultados completos
+            st.header("📊 Análisis Completo del Cliente")
+            st.text_area("Resultados:", contenido, height=400)
+            
+            # Datos para descarga
+            datos_completos = {
+                "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "coach": "mupai555",
+                "destinatario": destinatario,
+                "asunto": asunto,
+                "contenido": contenido
+            }
+            
+            # Botón de descarga
+            st.download_button(
+                label="📥 Descargar Análisis Completo",
+                data=json.dumps(datos_completos, ensure_ascii=False, indent=2),
+                file_name=f"analisis_cliente_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                mime="application/json"
+            )
+            
+        elif contraseña:
+            st.error("❌ Acceso denegado. Solo el coach autorizado puede ver los resultados.")
         
         return True
         
     except Exception as e:
-        st.error(f"Error al enviar email: {str(e)}")
+        st.error(f"Error al procesar: {str(e)}")
         return False
         
 # Inicializar session state
