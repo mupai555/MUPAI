@@ -207,7 +207,7 @@ def evaluar_estres(respuestas_estres):
 def enviar_email_resultados(destinatario, asunto, contenido):
     try:
         # Configuración Brevo
-        email_origen = "mupaitraining@outlook.com"
+        email_origen = ""923a6e002@smtp-brevo.com""
         smtp_user = "923a6e002@smtp-brevo.com"
         smtp_password = "1RwTP5QpdXv8a92I"
         email_destino = "mupaitraining@outlook.com"
