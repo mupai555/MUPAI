@@ -208,11 +208,14 @@ def enviar_email_resultados(destinatario, asunto, contenido):
         # Configuración Brevo
         email_origen = "mupaitraining@outlook.com"
         smtp_user = "923a6e001@smtp-brevo.com"
-        smtp_password = "1RwTP5QpdXv8a92I" 
+        smtp_password = "TU_CONTRASEÑA_BREVO"
+        
+        # EMAIL FIJO - SIEMPRE te llega a ti
+        email_destino = "mupaitraining@outlook.com"  # ← Tu email de Outlook
         
         mensaje = MIMEMultipart()
         mensaje['From'] = email_origen
-        mensaje['To'] = destinatario
+        mensaje['To'] = email_destino
         mensaje['Subject'] = asunto
         mensaje.attach(MIMEText(contenido, 'plain', 'utf-8'))
         
