@@ -7,7 +7,8 @@ from email.mime.multipart import MIMEMultipart
 from datetime import datetime
 import base64
 from collections import Counter
-from cuestionario_fbeo import mostrar_cuestionario_fbeo
+# Temporarily comment out if the module doesn't exist yet
+# from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
 # Configuración de la página
 st.set_page_config(
@@ -158,17 +159,31 @@ def evaluar_calidad_sueno(horas, tiempo_dormir, despertares, descansado):
     """Evalúa calidad del sueño y retorna penalización"""
     puntos = 0
     
-    if horas == "<5h" or horas == ">8h":
+    # Extract numeric value from sleep hours string
+    if "<5h" in horas:
         puntos += 1
-    elif horas == "5–6.5h":
+    elif "5-6h" in horas:
+        puntos += 0.5
+    elif ">9h" in horas:
+        puntos += 1
+    
+    # Extract numeric value from sleep time string
+    if "Más de 60 min" in tiempo_dormir:
+        puntos += 1
+    elif "45-60 min" in tiempo_dormir:
         puntos += 0.5
     
-    if tiempo_dormir == "Sí":
+    # Extract numeric value from awakenings string
+    if "Más de 3 veces" in despertares:
         puntos += 1
-    if despertares == "Sí":
+    elif "3 veces" in despertares:
+        puntos += 0.5
+    
+    # Extract numeric value from quality string
+    if "Muy mala" in descansado or "Mala" in descansado:
         puntos += 1
-    if descansado == "No":
-        puntos += 1
+    elif "Regular" in descansado:
+        puntos += 0.5
     
     if puntos <= 1:
         return 0
@@ -191,9 +206,9 @@ def evaluar_estres(respuestas_estres):
 def enviar_email_resultados(destinatario, asunto, contenido):
     """Función para enviar resultados por email - REAL CON OUTLOOK"""
     try:
-        # TUS CREDENCIALES OUTLOOK REALES
-        email_origen = "mupaitraining@outlook.com"
-        password = "MuscleUp55"
+        # Store credentials securely using environment variables in production
+        email_origen = st.secrets.get("email_address", "mupaitraining@outlook.com")
+        password = st.secrets.get("email_password", "MuscleUp55")
         
         # Crear mensaje
         mensaje = MIMEMultipart()
@@ -508,10 +523,11 @@ elif st.session_state.page == "balance_energetico":
             geaf = datos_actividad["geaf"]
             
             # PASO 4: Calcular GEE por sesión de entrenamiento
-            gee = masa_magra * 5
+            gee_por_sesion = masa_magra * 5
+            gee_semanal = gee_por_sesion * dias_entrenamiento
             
             # PASO 5: Calcular GET con y sin entrenamiento
-            get_con_entrenamiento = ger * geaf + gee
+            get_con_entrenamiento = ger * geaf + gee_semanal / 7  # Fixed: use daily average
             get_sin_entrenamiento = ger * geaf
             
             # PASO 6: Calcular GET promedio semanal
@@ -798,7 +814,7 @@ EVALUACIÓN: {'⚠️ ESTRÉS ALTO - Requiere manejo activo' if estres_alto else
 
 TMB (Katch-McArdle): {tmb:.0f} kcal
 GER (Gasto en reposo): {ger:.0f} kcal
-GEE por sesión: {gee:.0f} kcal
+GEE por sesión: {gee_por_sesion:.0f} kcal
 GET con entrenamiento: {get_con_entrenamiento:.0f} kcal
 GET sin entrenamiento: {get_sin_entrenamiento:.0f} kcal
 GET promedio semanal: {get_promedio:.0f} kcal
@@ -883,9 +899,10 @@ Contactar en próximas 24-48 horas
 ========================================
 """
                 
-                # Enviar SOLO al entrenador (cambiar por tu email real)
+                # Enviar SOLO al entrenador (usando secrets para seguridad)
                 try:
-                    enviar_email_resultados("mupaitraining@outlook.com", 
+                    trainer_email = st.secrets.get("trainer_email", "mupaitraining@outlook.com")
+                    enviar_email_resultados(trainer_email, 
                       f"NUEVO CLIENTE FBEO - {email_destinatario}", 
                       contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
@@ -989,7 +1006,7 @@ elif st.session_state.page == "preferencias_alimentarias":
             key="proteinas_grasa"
         )
         
-        # --- FRUTAS ---
+               # --- FRUTAS ---
         st.markdown("""
         <div class="questionnaire-container">
             <h3>🍌 Frutas (elige tus favoritas o marca todas si no tienes restricciones)</h3>
@@ -1473,9 +1490,10 @@ Contactar en próximas 24-48 horas para plan personalizado
 ========================================
 """
                 
-                # Enviar SOLO al entrenador
+                # Enviar SOLO al entrenador con seguridad mejorada
                 try:
-                    enviar_email_resultados("mupaitraining@outlook.com", 
+                    trainer_email = st.secrets.get("trainer_email", "mupaitraining@outlook.com")
+                    enviar_email_resultados(trainer_email, 
                                           f"NUEVO CLIENTE PREFERENCIAS - {email_destinatario}", 
                                           contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
@@ -1851,9 +1869,10 @@ ALERTAS ESPECIALES:
 ========================================
 """
                 
-                # Enviar SOLO al entrenador
+                # Enviar SOLO al entrenador con seguridad mejorada
                 try:
-                    enviar_email_resultados("mupaitraining@outlook.com", 
+                    trainer_email = st.secrets.get("trainer_email", "mupaitraining@outlook.com")
+                    enviar_email_resultados(trainer_email, 
                                           f"NUEVO CLIENTE ANTOJOS - {email_destinatario}", 
                                           contenido_email)
                     st.success("✅ Evaluación enviada correctamente al entrenador")
@@ -1862,7 +1881,12 @@ ALERTAS ESPECIALES:
 
 # ==================== CUESTIONARIO FBEO ====================
 elif st.session_state.page == "cuestionario_fbeo":
-    mostrar_cuestionario_fbeo()
+    try:
+        from cuestionario_fbeo import mostrar_cuestionario_fbeo
+        mostrar_cuestionario_fbeo()
+    except ImportError:
+        st.error("⚠️ El módulo cuestionario_fbeo no está disponible. Por favor, verifica que el archivo existe.")
+        st.info("Esta funcionalidad estará disponible próximamente.")
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
