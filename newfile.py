@@ -204,10 +204,10 @@ def evaluar_estres(respuestas_estres):
         return 0.10
 
 def enviar_email_resultados(destinatario, asunto, contenido):
-    """Función FINAL que enviará los correos correctamente"""
+    """Versión corregida con el servidor correcto"""
     try:
         email_origen = "mupaitraining@outlook.com"
-        password = "akfwqkscmjooasru"  # Tu contraseña de aplicación
+        password = "akfwqkscmjooasru"
         
         # Crear mensaje
         mensaje = MIMEMultipart()
@@ -216,9 +216,11 @@ def enviar_email_resultados(destinatario, asunto, contenido):
         mensaje['Subject'] = asunto
         mensaje.attach(MIMEText(contenido, 'plain', 'utf-8'))
         
-        # Conectar y enviar
-        servidor = smtplib.SMTP('smtp-mail.outlook.com', 587)
+        # IMPORTANTE: Usar el servidor correcto
+        servidor = smtplib.SMTP('smtp.office365.com', 587)
+        servidor.ehlo()
         servidor.starttls()
+        servidor.ehlo()
         servidor.login(email_origen, password)
         servidor.send_message(mensaje)
         servidor.quit()
