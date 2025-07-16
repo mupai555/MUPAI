@@ -287,9 +287,6 @@ with st.sidebar:
     if st.button("🧁 Antojos Alimentarios", use_container_width=True):
         st.session_state.page = "antojos_alimentarios"
     
-    if st.button("📊 Cuestionario FBEO", use_container_width=True):
-        st.session_state.page = "cuestionario_fbeo"
-    
     st.markdown("---")
     
     if st.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
@@ -1900,15 +1897,6 @@ ALERTAS ESPECIALES:
                     st.success("✅ Evaluación enviada correctamente al entrenador")
                 except Exception as e:
                     st.error(f"❌ Error al enviar email: {str(e)}")
-
-# ==================== CUESTIONARIO FBEO ====================
-elif st.session_state.page == "cuestionario_fbeo":
-    try:
-        from cuestionario_fbeo import mostrar_cuestionario_fbeo
-        mostrar_cuestionario_fbeo()
-    except ImportError:
-        st.error("⚠️ El módulo cuestionario_fbeo no está disponible. Por favor, verifica que el archivo existe.")
-        st.info("Esta funcionalidad estará disponible próximamente.")
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
