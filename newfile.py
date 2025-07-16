@@ -204,24 +204,21 @@ def evaluar_estres(respuestas_estres):
         return 0.10
 
 def enviar_email_resultados(destinatario, asunto, contenido):
-    """Versión corregida con el servidor correcto"""
     try:
+        # Configuración Brevo
         email_origen = "mupaitraining@outlook.com"
-        password = "akfwqkscmjooasru"
+        smtp_user = "923a6e001@smtp-brevo.com"
+        smtp_password = "1RwTP5QpdXv8a92I" 
         
-        # Crear mensaje
         mensaje = MIMEMultipart()
         mensaje['From'] = email_origen
         mensaje['To'] = destinatario
         mensaje['Subject'] = asunto
         mensaje.attach(MIMEText(contenido, 'plain', 'utf-8'))
         
-        # IMPORTANTE: Usar el servidor correcto
-        servidor = smtplib.SMTP('smtp.office365.com', 587)
-        servidor.ehlo()
+        servidor = smtplib.SMTP('smtp-relay.brevo.com', 587)
         servidor.starttls()
-        servidor.ehlo()
-        servidor.login(email_origen, password)
+        servidor.login(smtp_user, smtp_password)
         servidor.send_message(mensaje)
         servidor.quit()
         
