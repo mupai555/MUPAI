@@ -774,11 +774,13 @@ def main():
         
         # FRI impact explanation
         if fri["factor"] < 0.90:
+            fri_adjustment_percent = (1 - fri["factor"]) * 100
             st.markdown(f"""
             <div class="warning-container">
                 <h4>⚠️ Impacto del FRI</h4>
-                <p>Tu Factor de Recuperación Inteligente indica que tus objetivos energéticos serán ajustados 
-                automáticamente en un <strong>{(1-fri['factor'])*100:.0f}%</strong> para optimizar tu recuperación.</p>
+                <p>Tu Factor de Recuperación Inteligente indica que la severidad de tus objetivos energéticos será 
+                reducida automáticamente en un <strong>{fri_adjustment_percent:.0f}%</strong> para optimizar tu recuperación.</p>
+                <p>Esto significa que tanto los déficits como los superávits serán menos agresivos para permitir una mejor recuperación.</p>
             </div>
             """, unsafe_allow_html=True)
         
@@ -810,10 +812,16 @@ def main():
             goal = determine_automatic_goal(bf_adjusted, gender, training_days)
             
             # Apply FRI and goal adjustment to calculate final calories
+            # FRI adjustment reduces the severity of both deficits and surpluses
+            fri_adjustment = 1 - fri["factor"]
             if goal["adjustment"] < 0:  # Deficit
-                final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
+                # For deficits, FRI adjustment reduces severity (makes less negative)
+                final_adjustment = goal["adjustment"] + fri_adjustment
             else:  # Surplus
-                final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
+                # For surplus, FRI adjustment reduces severity (makes less positive)
+                final_adjustment = goal["adjustment"] - fri_adjustment
+            
+            final_calories = get_total * (1 + final_adjustment)
             
             # =============================================================================
             # MACRONUTRIENT ALLOCATION
@@ -880,19 +888,18 @@ def main():
             
             with col1:
                 st.metric("Calorías Objetivo", f"{final_calories:.0f} kcal/día")
-                st.caption(f"Incluye ajuste por FRI ({fri['factor']:.2f})")
+                st.caption(f"Ajuste total: {final_adjustment*100:+.1f}%")
             
             with col2:
-                adjustment_total = goal["adjustment"] * fri["factor"]
-                if adjustment_total < 0:
-                    st.metric("Tipo de Ajuste", "Déficit Calórico")
-                    st.caption(f"Reducción: {abs(adjustment_total)*100:.1f}%")
-                elif adjustment_total > 0:
-                    st.metric("Tipo de Ajuste", "Superávit Calórico")
-                    st.caption(f"Aumento: {adjustment_total*100:.1f}%")
+                st.metric("Calorías Ajustadas por FRI", f"{final_calories:.0f} kcal/día")
+                st.caption(f"Ajuste final: {final_adjustment*100:+.1f}%")
+                
+                # Show the adjustment breakdown
+                fri_adjustment_percent = (1 - fri["factor"]) * 100
+                if goal["adjustment"] < 0:
+                    st.caption(f"Déficit base: {goal['adjustment']*100:.1f}% → Ajustado por FRI: {final_adjustment*100:.1f}%")
                 else:
-                    st.metric("Tipo de Ajuste", "Mantenimiento")
-                    st.caption("Sin ajuste calórico")
+                    st.caption(f"Superávit base: {goal['adjustment']*100:.1f}% → Ajustado por FRI: {final_adjustment*100:.1f}%")
             
             # Macronutrient allocation
             st.markdown("### 🍽️ Asignación Inteligente de Macronutrientes")
@@ -933,6 +940,11 @@ def main():
             st.markdown("### 🔬 Justificación Científica de Macronutrientes")
             
             st.markdown(f"""
+            **Ajuste Energético Total:**
+            - Objetivo base: {goal["adjustment"]*100:+.1f}% ({goal["description"]})
+            - Ajuste por FRI: {(1-fri["factor"])*100:.1f}% (reducción de severidad)
+            - Ajuste final: {final_adjustment*100:+.1f}%
+            
             **Proteína ({macros["protein_g"]/weight:.1f} g/kg):**
             - Objetivo {goal["goal"]}: Factor {macros["protein_g"]/weight:.1f} g/kg aplicado
             - Optimizado para {goal["description"].lower()}
@@ -947,6 +959,19 @@ def main():
             - Calculado por diferencia energética
             - Optimizado para rendimiento en entrenamiento
             - Ajustado según demanda energética y objetivo corporal
+            """)
+            
+            # Add FRI explanation
+            st.markdown("### 🧠 Explicación del Ajuste por FRI")
+            st.markdown(f"""
+            El Factor de Recuperación Inteligente (FRI) ajusta la severidad de los objetivos calóricos para optimizar la recuperación:
+            
+            - **Nivel FRI:** {fri["level"]} (Factor: {fri["factor"]:.2f})
+            - **Ajuste aplicado:** {(1-fri["factor"])*100:.1f}% de reducción en la severidad
+            - **Lógica:** Cuando la recuperación está comprometida, se reduce la agresividad del déficit o superávit
+            - **Resultado:** {"Déficit menos severo" if final_adjustment < 0 else "Superávit menos agresivo" if final_adjustment > 0 else "Mantenimiento"}
+            
+            Esta metodología permite mejores resultados a largo plazo al priorizar la recuperación y adherencia al plan nutricional.
             """)
             
             # Warnings and recommendations
@@ -978,7 +1003,7 @@ def main():
                     bf_adjusted, lean_mass, ffmi, activity_level, occupation, training_minutes, 
                     training_days, daily_steps, ger_final, ger_method, geaf, gee_daily, 
                     get_total, sleep_score, stress_score, fri, goal, final_calories, 
-                    macros, warnings
+                    final_adjustment, macros, warnings
                 )
                 
                 st.text_area("Análisis Completo del Cliente:", report, height=400)
@@ -1020,8 +1045,11 @@ def generate_complete_report(full_name, email, age, gender, weight, height, bf_m
                            bf_original, bf_adjusted, lean_mass, ffmi, activity_level, 
                            occupation, training_minutes, training_days, daily_steps, 
                            ger_final, ger_method, geaf, gee_daily, get_total, sleep_score, 
-                           stress_score, fri, goal, final_calories, macros, warnings):
+                           stress_score, fri, goal, final_calories, final_adjustment, 
+                           macros, warnings):
     """Generate complete report for coach."""
+    
+    fri_adjustment = 1 - fri["factor"]
     
     report = f"""
 ========================================
@@ -1085,18 +1113,26 @@ Clasificación: {"Elevado" if stress_score >= 10 else "Manejable"}
 Nivel FRI: {fri["level"]}
 Factor: {fri["factor"]:.2f}
 Descripción: {fri["description"]}
+Ajuste aplicado: {fri_adjustment*100:.1f}% (reducción de severidad)
 
 ========================================
-🎯 OBJETIVO AUTOMÁTICO
+🎯 OBJETIVO AUTOMÁTICO Y AJUSTE FINAL
 ========================================
 Objetivo: {goal["goal"]}
-Ajuste: {goal["adjustment"]*100:+.1f}%
+Ajuste base: {goal["adjustment"]*100:+.1f}%
 Justificación: {goal["description"]}
+
+CÁLCULO DEL AJUSTE FINAL:
+- Ajuste base: {goal["adjustment"]*100:+.1f}%
+- Ajuste FRI: {fri_adjustment*100:+.1f}% (reducción de severidad)
+- Ajuste final: {final_adjustment*100:+.1f}%
+- Lógica: {"Déficit reducido por FRI" if goal["adjustment"] < 0 else "Superávit reducido por FRI" if goal["adjustment"] > 0 else "Mantenimiento"}
 
 ========================================
 🍽️ ASIGNACIÓN DE MACRONUTRIENTES
 ========================================
 Calorías Totales: {final_calories:.0f} kcal
+Ajuste final aplicado: {final_adjustment*100:+.1f}%
 
 Proteína: {macros["protein_g"]:.0f}g ({macros["protein_g"]/weight:.1f} g/kg)
          {macros["protein_kcal"]:.0f} kcal ({macros["protein_kcal"]/final_calories*100:.1f}%)
@@ -1129,6 +1165,12 @@ Contactar en: 24-48 horas
 ALERTAS ESPECIALES:
 {"• Recuperación comprometida - revisar hábitos de sueño y estrés" if fri["level"] in ["Regular", "Deficiente", "Crítico"] else "• Sin alertas especiales"}
 {"• Composición corporal requiere atención prioritaria" if (gender == "Masculino" and (bf_adjusted > 25 or bf_adjusted < 10)) or (gender == "Femenino" and (bf_adjusted > 32 or bf_adjusted < 16)) else ""}
+
+EXPLICACIÓN TÉCNICA DEL AJUSTE FRI:
+La nueva lógica reduce la severidad de los ajustes calóricos cuando la recuperación está comprometida:
+- Si el ajuste base es un déficit de -X%, el FRI lo reduce a -(X-ajuste_FRI)%
+- Si el ajuste base es un superávit de +X%, el FRI lo reduce a +(X-ajuste_FRI)%
+- Esto permite mejor adherencia y recuperación a largo plazo
 
 ========================================
 """
