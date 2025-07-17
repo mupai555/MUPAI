@@ -1,0 +1,76 @@
+# MUPAI - Archivos a excluir del control de versiones
+
+# Secrets y configuración sensible
+.streamlit/secrets.toml
+secrets.toml
+*.env
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+/tmp/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Streamlit
+.streamlit/config.toml
+
+# Archivos de backup
+*.bak
+*.backup
+
+# Archivos de datos sensibles
+*.json
+*.csv
+*.xlsx
+*.xls
+
+# Imágenes de prueba (mantener solo las necesarias)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+!LOGO.png

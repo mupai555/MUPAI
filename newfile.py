@@ -18,23 +18,14 @@ import json
 from datetime import datetime
 from typing import Dict, Tuple, Any
 import math
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 
 # =============================================================================
 # CONFIGURATION AND CONSTANTS
 # =============================================================================
-
-# Configure Streamlit page
-st.set_page_config(
-    page_title="MUPAI - Cuestionario Avanzado de Balance Energético",
-    page_icon="⚡",
-    layout="wide",
-    initial_sidebar_state="expanded"
-)
-
-# Coach credentials
-COACH_PASSWORD = "MuPai2025"
-COACH_EMAIL = "mupaitraining@outlook.com"
 
 # Scientific constants
 PROTEIN_KCAL_PER_G = 4
@@ -788,232 +779,260 @@ def main():
         
         submitted = st.form_submit_button("🚀 Generar Análisis Completo y Asignación de Macronutrientes", 
                                          type="primary", use_container_width=True)
+    
+    if submitted:
+        # Validación
+        if not full_name:
+            st.error("❌ **Error:** El nombre completo es obligatorio")
+            return
         
-        if submitted:
-            # Validation
-            if not full_name:
-                st.error("❌ **Error:** El nombre completo es obligatorio")
-                return
-            
-            if not email:
-                st.error("❌ **Error:** El correo electrónico es obligatorio")
-                return
-            
-            if not legal_acceptance:
-                st.error("❌ **Error:** Debes aceptar los términos y condiciones")
-                return
-            
-            # =============================================================================
-            # AUTOMATIC GOAL DETERMINATION
-            # =============================================================================
-            
-            goal = determine_automatic_goal(bf_adjusted, gender, training_days)
-            
-            # Apply FRI and goal adjustment to calculate final calories
-            if goal["adjustment"] < 0:  # Deficit
-                final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
-            else:  # Surplus
-                final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
-            
-            # =============================================================================
-            # MACRONUTRIENT ALLOCATION
-            # =============================================================================
-            
-            macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender)
-            
-            # =============================================================================
-            # GENERATE WARNINGS
-            # =============================================================================
-            
-            warnings = generate_warnings(fri, goal, bf_adjusted, gender)
-            
-            # =============================================================================
-            # RESULTS DISPLAY
-            # =============================================================================
-            
-            st.markdown("---")
-            st.markdown("""
-            <div class="results-container">
-                <h2>📊 RESULTADOS DEL ANÁLISIS COMPLETO</h2>
-                <p>Evaluación científica personalizada con asignación inteligente de macronutrientes</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # User summary
-            st.markdown("### 👤 Resumen de Datos Procesados")
-            
-            col1, col2, col3, col4 = st.columns(4)
-            
-            with col1:
-                st.metric("Composición Corporal", f"{bf_adjusted:.1f}% GC")
-                st.caption(f"Ajustado por método {bf_method}")
-            
-            with col2:
-                st.metric("FFMI", f"{ffmi:.1f}")
-                st.caption("Índice de masa libre de grasa")
-            
-            with col3:
-                st.metric("GET", f"{get_total:.0f} kcal")
-                st.caption("Gasto energético total")
-            
-            with col4:
-                st.metric("Nivel FRI", fri["level"])
-                st.caption(f"Factor: {fri['factor']:.2f}")
-            
-            # Automatic goal determination
-            st.markdown("### 🎯 Objetivo Corporal Automático")
-            
+        if not email:
+            st.error("❌ **Error:** El correo electrónico es obligatorio")
+            return
+        
+        if not legal_acceptance:
+            st.error("❌ **Error:** Debes aceptar los términos y condiciones")
+            return
+        
+        # =============================================================================
+        # AUTOMATIC GOAL DETERMINATION
+        # =============================================================================
+        
+        goal = determine_automatic_goal(bf_adjusted, gender, training_days)
+        
+        # Apply FRI and goal adjustment to calculate final calories
+        if goal["adjustment"] < 0:  # Deficit
+            final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
+        else:  # Surplus
+            final_calories = get_total * (1 + goal["adjustment"]) * fri["factor"]
+        
+        # =============================================================================
+        # MACRONUTRIENT ALLOCATION
+        # =============================================================================
+        
+        macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender)
+        
+        # =============================================================================
+        # GENERATE WARNINGS
+        # =============================================================================
+        
+        warnings = generate_warnings(fri, goal, bf_adjusted, gender)
+        
+        # =============================================================================
+        # PREPARE DATA FOR EMAIL
+        # =============================================================================
+        
+        datos_balance = {
+            "timestamp": datetime.now().isoformat(),
+            "datos_personales": {
+                "nombre": full_name,
+                "email": email,
+                "edad": age,
+                "genero": gender
+            },
+            "composicion_corporal": {
+                "peso": weight,
+                "estatura": height,
+                "metodo_bf": bf_method,
+                "bf_original": bf_original,
+                "bf_ajustado": bf_adjusted,
+                "masa_magra": lean_mass,
+                "ffmi": ffmi
+            },
+            "actividad_fisica": {
+                "nivel_actividad": activity_level,
+                "ocupacion": occupation,
+                "minutos_entrenamiento": training_minutes,
+                "dias_entrenamiento": training_days,
+                "pasos_diarios": daily_steps
+            },
+            "calculos_energeticos": {
+                "ger_final": ger_final,
+                "ger_metodo": ger_method,
+                "geaf": geaf,
+                "gee_diario": gee_daily,
+                "get_total": get_total
+            },
+            "evaluacion_sueno": {
+                "horas_sueno": sleep_hours,
+                "tiempo_dormirse": time_to_sleep,
+                "despertares": night_awakenings,
+                "calidad_sueno": sleep_quality,
+                "puntuacion_pittsburgh": sleep_score
+            },
+            "evaluacion_estres": {
+                "pss1": pss1,
+                "pss2": pss2,
+                "pss3": pss3,
+                "pss4": pss4,
+                "puntuacion_pss4": stress_score
+            },
+            "fri": fri,
+            "objetivo_automatico": goal,
+            "calorias_finales": final_calories,
+            "macronutrientes": macros,
+            "advertencias": warnings
+        }
+        
+        # Enviar por email
+        if enviar_email_balance_energetico(datos_balance):
+            st.success("✅ ¡Análisis enviado exitosamente al equipo de nutrición!")
+        else:
+            st.warning("⚠️ El análisis se completó pero hubo un problema al enviar el email. Los resultados se muestran a continuación.")
+        
+        # =============================================================================
+        # RESULTS DISPLAY
+        # =============================================================================
+        
+        st.markdown("---")
+        st.markdown("""
+        <div class="results-container">
+            <h2>📊 RESULTADOS DEL ANÁLISIS COMPLETO</h2>
+            <p>Evaluación científica personalizada con asignación inteligente de macronutrientes</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # User summary
+        st.markdown("### 👤 Resumen de Datos Procesados")
+        
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric("Composición Corporal", f"{bf_adjusted:.1f}% GC")
+            st.caption(f"Ajustado por método {bf_method}")
+        
+        with col2:
+            st.metric("FFMI", f"{ffmi:.1f}")
+            st.caption("Índice de masa libre de grasa")
+        
+        with col3:
+            st.metric("GET", f"{get_total:.0f} kcal")
+            st.caption("Gasto energético total")
+        
+        with col4:
+            st.metric("Nivel FRI", fri["level"])
+            st.caption(f"Factor: {fri['factor']:.2f}")
+        
+        # Automatic goal determination
+        st.markdown("### 🎯 Objetivo Corporal Automático")
+        
+        st.markdown(f"""
+        <div class="metric-card">
+            <h3>🏆 Objetivo Determinado: {goal["goal"]}</h3>
+            <p><strong>Justificación Científica:</strong> {goal["description"]}</p>
+            <p><strong>Ajuste Calórico:</strong> {goal["adjustment"]*100:+.1f}%</p>
+            <p><strong>Metodología:</strong> Basado en porcentaje de grasa corporal ({bf_adjusted:.1f}%), 
+            género ({gender}), y nivel de entrenamiento ({training_days} días/semana)</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Final caloric target
+        st.markdown("### ⚡ Objetivo Energético Final")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.metric("Calorías Objetivo", f"{final_calories:.0f} kcal/día")
+            st.caption(f"Incluye ajuste por FRI ({fri['factor']:.2f})")
+        
+        with col2:
+            adjustment_total = goal["adjustment"] * fri["factor"]
+            if adjustment_total < 0:
+                st.metric("Tipo de Ajuste", "Déficit Calórico")
+                st.caption(f"Reducción: {abs(adjustment_total)*100:.1f}%")
+            elif adjustment_total > 0:
+                st.metric("Tipo de Ajuste", "Superávit Calórico")
+                st.caption(f"Aumento: {adjustment_total*100:.1f}%")
+            else:
+                st.metric("Tipo de Ajuste", "Mantenimiento")
+                st.caption("Sin ajuste calórico")
+        
+        # Macronutrient allocation
+        st.markdown("### 🍽️ Asignación Inteligente de Macronutrientes")
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
             st.markdown(f"""
             <div class="metric-card">
-                <h3>🏆 Objetivo Determinado: {goal["goal"]}</h3>
-                <p><strong>Justificación Científica:</strong> {goal["description"]}</p>
-                <p><strong>Ajuste Calórico:</strong> {goal["adjustment"]*100:+.1f}%</p>
-                <p><strong>Metodología:</strong> Basado en porcentaje de grasa corporal ({bf_adjusted:.1f}%), 
-                género ({gender}), y nivel de entrenamiento ({training_days} días/semana)</p>
+                <h4>🥩 Proteína</h4>
+                <h3>{macros["protein_g"]:.0f}g</h3>
+                <p>{macros["protein_kcal"]:.0f} kcal ({macros["protein_kcal"]/final_calories*100:.1f}%)</p>
+                <p><strong>{macros["protein_g"]/weight:.1f} g/kg</strong></p>
             </div>
             """, unsafe_allow_html=True)
-            
-            # Final caloric target
-            st.markdown("### ⚡ Objetivo Energético Final")
-            
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                st.metric("Calorías Objetivo", f"{final_calories:.0f} kcal/día")
-                st.caption(f"Incluye ajuste por FRI ({fri['factor']:.2f})")
-            
-            with col2:
-                adjustment_total = goal["adjustment"] * fri["factor"]
-                if adjustment_total < 0:
-                    st.metric("Tipo de Ajuste", "Déficit Calórico")
-                    st.caption(f"Reducción: {abs(adjustment_total)*100:.1f}%")
-                elif adjustment_total > 0:
-                    st.metric("Tipo de Ajuste", "Superávit Calórico")
-                    st.caption(f"Aumento: {adjustment_total*100:.1f}%")
-                else:
-                    st.metric("Tipo de Ajuste", "Mantenimiento")
-                    st.caption("Sin ajuste calórico")
-            
-            # Macronutrient allocation
-            st.markdown("### 🍽️ Asignación Inteligente de Macronutrientes")
-            
-            col1, col2, col3 = st.columns(3)
-            
-            with col1:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <h4>🥩 Proteína</h4>
-                    <h3>{macros["protein_g"]:.0f}g</h3>
-                    <p>{macros["protein_kcal"]:.0f} kcal ({macros["protein_kcal"]/final_calories*100:.1f}%)</p>
-                    <p><strong>{macros["protein_g"]/weight:.1f} g/kg</strong></p>
-                </div>
-                """, unsafe_allow_html=True)
-            
-            with col2:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <h4>🥑 Grasas</h4>
-                    <h3>{macros["fat_g"]:.0f}g</h3>
-                    <p>{macros["fat_kcal"]:.0f} kcal ({macros["fat_kcal"]/final_calories*100:.1f}%)</p>
-                    <p><strong>{macros["fat_g"]/weight:.1f} g/kg</strong></p>
-                </div>
-                """, unsafe_allow_html=True)
-            
-            with col3:
-                st.markdown(f"""
-                <div class="metric-card">
-                    <h4>🍞 Carbohidratos</h4>
-                    <h3>{macros["carbs_g"]:.0f}g</h3>
-                    <p>{macros["carbs_kcal"]:.0f} kcal ({macros["carbs_kcal"]/final_calories*100:.1f}%)</p>
-                    <p><strong>{macros["carbs_g"]/weight:.1f} g/kg</strong></p>
-                </div>
-                """, unsafe_allow_html=True)
-            
-            # Scientific rationale
-            st.markdown("### 🔬 Justificación Científica de Macronutrientes")
-            
+        
+        with col2:
             st.markdown(f"""
-            **Proteína ({macros["protein_g"]/weight:.1f} g/kg):**
-            - Objetivo {goal["goal"]}: Factor {macros["protein_g"]/weight:.1f} g/kg aplicado
-            - Optimizado para {goal["description"].lower()}
-            - Rango científico: {"2.2-2.6 g/kg" if goal["goal"] == "Definición" else "2.0-2.4 g/kg" if goal["goal"] == "Recomposición" else "1.8-2.0 g/kg"}
+            <div class="metric-card">
+                <h4>🥑 Grasas</h4>
+                <h3>{macros["fat_g"]:.0f}g</h3>
+                <p>{macros["fat_kcal"]:.0f} kcal ({macros["fat_kcal"]/final_calories*100:.1f}%)</p>
+                <p><strong>{macros["fat_g"]/weight:.1f} g/kg</strong></p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f"""
+            <div class="metric-card">
+                <h4>🍞 Carbohidratos</h4>
+                <h3>{macros["carbs_g"]:.0f}g</h3>
+                <p>{macros["carbs_kcal"]:.0f} kcal ({macros["carbs_kcal"]/final_calories*100:.1f}%)</p>
+                <p><strong>{macros["carbs_g"]/weight:.1f} g/kg</strong></p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        # Scientific rationale
+        st.markdown("### 🔬 Justificación Científica de Macronutrientes")
+        
+        st.markdown(f"""
+        **Proteína ({macros["protein_g"]/weight:.1f} g/kg):**
+        - Objetivo {goal["goal"]}: Factor {macros["protein_g"]/weight:.1f} g/kg aplicado
+        - Optimizado para {goal["description"].lower()}
+        - Rango científico: {"2.2-2.6 g/kg" if goal["goal"] == "Definición" else "2.0-2.4 g/kg" if goal["goal"] == "Recomposición" else "1.8-2.0 g/kg"}
+        
+        **Grasas ({macros["fat_g"]/weight:.1f} g/kg):**
+        - Ajuste por objetivo: {goal["goal"]}
+        - Optimizado para salud hormonal y saciedad
+        - Rango científico: {"0.8-1.0 g/kg" if goal["goal"] == "Definición" else "0.9-1.2 g/kg" if goal["goal"] == "Recomposición" else "1.0-1.2 g/kg"}
+        
+        **Carbohidratos ({macros["carbs_g"]/weight:.1f} g/kg):**
+        - Calculado por diferencia energética
+        - Optimizado para rendimiento en entrenamiento
+        - Ajustado según demanda energética y objetivo corporal
+        """)
+        
+        # Warnings and recommendations
+        if warnings:
+            st.markdown("### ⚠️ Advertencias y Recomendaciones Automáticas")
             
-            **Grasas ({macros["fat_g"]/weight:.1f} g/kg):**
-            - Ajuste por objetivo: {goal["goal"]}
-            - Optimizado para salud hormonal y saciedad
-            - Rango científico: {"0.8-1.0 g/kg" if goal["goal"] == "Definición" else "0.9-1.2 g/kg" if goal["goal"] == "Recomposición" else "1.0-1.2 g/kg"}
-            
-            **Carbohidratos ({macros["carbs_g"]/weight:.1f} g/kg):**
-            - Calculado por diferencia energética
-            - Optimizado para rendimiento en entrenamiento
-            - Ajustado según demanda energética y objetivo corporal
-            """)
-            
-            # Warnings and recommendations
-            if warnings:
-                st.markdown("### ⚠️ Advertencias y Recomendaciones Automáticas")
-                
-                for warning in warnings:
-                    st.markdown(f"""
-                    <div class="warning-container">
-                        <p>{warning}</p>
-                    </div>
-                    """, unsafe_allow_html=True)
-            
-            # =============================================================================
-            # COACH AREA
-            # =============================================================================
-            
-            st.markdown("---")
-            st.markdown("### 🔐 Área Exclusiva del Coach")
-            
-            coach_password = st.text_input("Contraseña del Coach:", type="password")
-            
-            if coach_password == COACH_PASSWORD:
-                st.success("✅ Coach MUPAI verificado")
-                
-                # Generate complete report
-                report = generate_complete_report(
-                    full_name, email, age, gender, weight, height, bf_method, bf_original, 
-                    bf_adjusted, lean_mass, ffmi, activity_level, occupation, training_minutes, 
-                    training_days, daily_steps, ger_final, ger_method, geaf, gee_daily, 
-                    get_total, sleep_score, stress_score, fri, goal, final_calories, 
-                    macros, warnings
-                )
-                
-                st.text_area("Análisis Completo del Cliente:", report, height=400)
-                
-                # Download button
-                st.download_button(
-                    label="📥 Descargar Análisis Completo",
-                    data=report,
-                    file_name=f"analisis_completo_{full_name.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
-                    mime="text/plain"
-                )
-                
-            elif coach_password:
-                st.error("❌ Acceso denegado. Solo el coach autorizado puede ver los resultados.")
-            
-            # User confirmation
-            st.markdown("---")
-            st.markdown("### ✅ Confirmación para el Cliente")
-            
-            st.success("🎉 **¡Análisis completado exitosamente!**")
-            
-            st.info(f"""
-            **Estimado/a {full_name}:**
-            
-            Tu evaluación avanzada de balance energético ha sido procesada con éxito utilizando las metodologías científicas más actualizadas.
-            
-            **Próximos pasos:**
-            1. Tu coach MUPAI revisará estos resultados detalladamente
-            2. Recibirás un plan nutricional personalizado basado en este análisis
-            3. Se programará seguimiento según tus necesidades específicas
-            
-            **Tiempo estimado de contacto:** 24-48 horas
-            
-            **Recordatorio:** Mantén tu rutina actual hasta recibir las indicaciones personalizadas del coach.
-            """)
+            for warning in warnings:
+                st.markdown(f"""
+                <div class="warning-container">
+                    <p>{warning}</p>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        # User confirmation
+        st.markdown("---")
+        st.markdown("### ✅ Confirmación para el Cliente")
+        
+        st.success("🎉 **¡Análisis completado exitosamente!**")
+        
+        st.info(f"""
+        **Estimado/a {full_name}:**
+        
+        Tu evaluación avanzada de balance energético ha sido procesada con éxito utilizando las metodologías científicas más actualizadas.
+        
+        **Próximos pasos:**
+        1. Tu coach MUPAI revisará estos resultados detalladamente
+        2. Recibirás un plan nutricional personalizado basado en este análisis
+        3. Se programará seguimiento según tus necesidades específicas
+        
+        **Tiempo estimado de contacto:** 24-48 horas
+        
+        **Recordatorio:** Mantén tu rutina actual hasta recibir las indicaciones personalizadas del coach.
+        """)
 
 
 def generate_complete_report(full_name, email, age, gender, weight, height, bf_method, 
@@ -1134,6 +1153,73 @@ ALERTAS ESPECIALES:
 """
     
     return report
+
+
+def enviar_email_balance_energetico(datos):
+    """Envía el cuestionario de balance energético por email"""
+    try:
+        # Configuración SMTP desde secrets
+        smtp_server = st.secrets.get("smtp_server", "smtp.zoho.com")
+        smtp_port = st.secrets.get("smtp_port", 587)
+        email_usuario = st.secrets.get("email_usuario", "")
+        email_password = st.secrets.get("email_password", "")
+        email_destino = st.secrets.get("email_destino", "administracion@muscleupgym.fitness")
+        
+        if not email_usuario or not email_password:
+            st.error("❌ Configuración de email no disponible")
+            return False
+        
+        # Crear mensaje
+        mensaje = MIMEMultipart()
+        mensaje["From"] = email_usuario
+        mensaje["To"] = email_destino
+        mensaje["Subject"] = f"MUPAI - Cuestionario de Balance Energético Avanzado - {datos['datos_personales']['nombre']}"
+        
+        # Generar reporte completo
+        reporte_completo = generate_complete_report(
+            datos['datos_personales']['nombre'],
+            datos['datos_personales']['email'],
+            datos['datos_personales']['edad'],
+            datos['datos_personales']['genero'],
+            datos['composicion_corporal']['peso'],
+            datos['composicion_corporal']['estatura'],
+            datos['composicion_corporal']['metodo_bf'],
+            datos['composicion_corporal']['bf_original'],
+            datos['composicion_corporal']['bf_ajustado'],
+            datos['composicion_corporal']['masa_magra'],
+            datos['composicion_corporal']['ffmi'],
+            datos['actividad_fisica']['nivel_actividad'],
+            datos['actividad_fisica']['ocupacion'],
+            datos['actividad_fisica']['minutos_entrenamiento'],
+            datos['actividad_fisica']['dias_entrenamiento'],
+            datos['actividad_fisica']['pasos_diarios'],
+            datos['calculos_energeticos']['ger_final'],
+            datos['calculos_energeticos']['ger_metodo'],
+            datos['calculos_energeticos']['geaf'],
+            datos['calculos_energeticos']['gee_diario'],
+            datos['calculos_energeticos']['get_total'],
+            datos['evaluacion_sueno']['puntuacion_pittsburgh'],
+            datos['evaluacion_estres']['puntuacion_pss4'],
+            datos['fri'],
+            datos['objetivo_automatico'],
+            datos['calorias_finales'],
+            datos['macronutrientes'],
+            datos['advertencias']
+        )
+        
+        mensaje.attach(MIMEText(reporte_completo, "plain"))
+        
+        # Enviar email
+        with smtplib.SMTP(smtp_server, smtp_port) as servidor:
+            servidor.starttls()
+            servidor.login(email_usuario, email_password)
+            servidor.send_message(mensaje)
+        
+        return True
+        
+    except Exception as e:
+        st.error(f"Error al enviar email: {str(e)}")
+        return False
 
 
 # =============================================================================
