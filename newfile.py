@@ -204,6 +204,306 @@ def evaluar_estres(respuestas_estres):
     else:
         return 0.10
 
+# ==================== NUEVAS FUNCIONES PARA CUESTIONARIO AVANZADO ====================
+
+def ajustar_grasa_corporal(porcentaje_grasa, metodo_medicion, sexo, numero_pliegues=None):
+    """
+    Ajusta automáticamente el porcentaje de grasa corporal según el método de medición
+    """
+    if metodo_medicion == "DEXA":
+        return porcentaje_grasa  # DEXA es la referencia, no necesita ajuste
+    
+    elif metodo_medicion == "BIA":
+        # Ajustes para BIA según rangos
+        if sexo == "Masculino":
+            if porcentaje_grasa < 15:
+                return porcentaje_grasa + 2.5
+            elif porcentaje_grasa < 25:
+                return porcentaje_grasa + 1.8
+            else:
+                return porcentaje_grasa + 1.2
+        else:  # Femenino
+            if porcentaje_grasa < 20:
+                return porcentaje_grasa + 3.0
+            elif porcentaje_grasa < 30:
+                return porcentaje_grasa + 2.2
+            else:
+                return porcentaje_grasa + 1.5
+    
+    elif metodo_medicion == "Fórmula Naval":
+        # Ajustes para Fórmula Naval
+        if sexo == "Masculino":
+            if porcentaje_grasa < 15:
+                return porcentaje_grasa + 1.5
+            elif porcentaje_grasa < 25:
+                return porcentaje_grasa + 1.0
+            else:
+                return porcentaje_grasa + 0.5
+        else:  # Femenino
+            if porcentaje_grasa < 20:
+                return porcentaje_grasa + 2.0
+            elif porcentaje_grasa < 30:
+                return porcentaje_grasa + 1.5
+            else:
+                return porcentaje_grasa + 1.0
+    
+    elif metodo_medicion == "Antropometría":
+        # Ajustes según número de pliegues
+        if numero_pliegues == 3:
+            return porcentaje_grasa + 2.0
+        elif numero_pliegues == 4:
+            return porcentaje_grasa + 1.5
+        elif numero_pliegues == 7:
+            return porcentaje_grasa + 1.0
+        else:
+            return porcentaje_grasa + 1.8  # Valor por defecto
+    
+    return porcentaje_grasa
+
+def calcular_ffmi(peso, estatura, porcentaje_grasa):
+    """
+    Calcula el Fat-Free Mass Index (FFMI)
+    """
+    masa_magra = peso * (1 - porcentaje_grasa / 100)
+    ffmi = masa_magra / (estatura ** 2)
+    return ffmi
+
+def calcular_factor_actividad(nivel_actividad, sexo):
+    """
+    Calcula el factor de actividad específico por género
+    """
+    factores = {
+        "Sedentario": {"Masculino": 1.40, "Femenino": 1.35},
+        "Ligeramente activo": {"Masculino": 1.55, "Femenino": 1.50},
+        "Moderadamente activo": {"Masculino": 1.70, "Femenino": 1.65},
+        "Muy activo": {"Masculino": 1.85, "Femenino": 1.80},
+        "Extremadamente activo": {"Masculino": 2.00, "Femenino": 1.95}
+    }
+    
+    return factores.get(nivel_actividad, {}).get(sexo, 1.40)
+
+def evaluar_pittsburgh(horas_sueno, tiempo_dormir, despertares, calidad_percibida):
+    """
+    Evalúa la calidad del sueño usando escala Pittsburgh abreviada (0-16)
+    """
+    # Mapeo de respuestas a puntuaciones
+    horas_map = {
+        "Más de 9h": 0, "8-9h": 1, "7-8h": 2, "6-7h": 3, "5-6h": 4, "Menos de 5h": 5
+    }
+    
+    tiempo_map = {
+        "Menos de 15 min": 0, "15-30 min": 1, "30-45 min": 2, "45-60 min": 3, "Más de 60 min": 4
+    }
+    
+    despertares_map = {
+        "Nunca": 0, "1 vez": 1, "2 veces": 2, "3 veces": 3, "Más de 3 veces": 4
+    }
+    
+    calidad_map = {
+        "Excelente": 0, "Buena": 1, "Regular": 2, "Mala": 3, "Muy mala": 4
+    }
+    
+    puntuacion = (horas_map.get(horas_sueno, 3) + 
+                  tiempo_map.get(tiempo_dormir, 2) + 
+                  despertares_map.get(despertares, 1) + 
+                  calidad_map.get(calidad_percibida, 2))
+    
+    return puntuacion
+
+def evaluar_pss4(respuesta1, respuesta2, respuesta3, respuesta4):
+    """
+    Evalúa estrés usando PSS-4 con ítems invertidos 2 y 3
+    """
+    # Mapeo de respuestas a puntuaciones
+    normal_map = {
+        "Nunca": 0, "Casi nunca": 1, "A veces": 2, "Frecuentemente": 3, "Muy frecuentemente": 4
+    }
+    
+    # Ítems invertidos (2 y 3)
+    invertido_map = {
+        "Nunca": 4, "Casi nunca": 3, "A veces": 2, "Frecuentemente": 1, "Muy frecuentemente": 0
+    }
+    
+    puntuacion = (normal_map.get(respuesta1, 2) + 
+                  invertido_map.get(respuesta2, 2) + 
+                  invertido_map.get(respuesta3, 2) + 
+                  normal_map.get(respuesta4, 2))
+    
+    return puntuacion
+
+def calcular_fri(puntuacion_sueno, puntuacion_estres):
+    """
+    Calcula el Factor de Recuperación Inteligente (FRI)
+    """
+    puntuacion_total = puntuacion_sueno + puntuacion_estres
+    
+    if puntuacion_total <= 6:
+        return {"nivel": "Excelente", "factor": 1.0, "descripcion": "Recuperación óptima"}
+    elif puntuacion_total <= 12:
+        return {"nivel": "Bueno", "factor": 0.95, "descripcion": "Recuperación adecuada"}
+    elif puntuacion_total <= 18:
+        return {"nivel": "Regular", "factor": 0.90, "descripcion": "Recuperación comprometida"}
+    elif puntuacion_total <= 24:
+        return {"nivel": "Deficiente", "factor": 0.85, "descripcion": "Recuperación muy comprometida"}
+    else:
+        return {"nivel": "Crítico", "factor": 0.80, "descripcion": "Recuperación crítica"}
+
+def determinar_objetivo_automatico(porcentaje_grasa, sexo, nivel_entrenamiento):
+    """
+    Determina automáticamente el objetivo según tabla de criterios
+    """
+    if sexo == "Masculino":
+        if porcentaje_grasa > 25:
+            return {"objetivo": "Definición", "deficit": 0.125, "descripcion": "Pérdida de grasa prioritaria"}
+        elif 18 <= porcentaje_grasa <= 25:
+            return {"objetivo": "Definición", "deficit": 0.075, "descripcion": "Pérdida de grasa moderada"}
+        elif 12 <= porcentaje_grasa < 18:
+            return {"objetivo": "Recomposición", "deficit": 0.025, "descripcion": "Recomposición corporal"}
+        else:  # < 12%
+            return {"objetivo": "Volumen", "surplus": 0.125, "descripcion": "Ganancia muscular"}
+    else:  # Femenino
+        if porcentaje_grasa > 32:
+            return {"objetivo": "Definición", "deficit": 0.125, "descripcion": "Pérdida de grasa prioritaria"}
+        elif 25 <= porcentaje_grasa <= 32:
+            return {"objetivo": "Definición", "deficit": 0.075, "descripcion": "Pérdida de grasa moderada"}
+        elif 20 <= porcentaje_grasa < 25:
+            return {"objetivo": "Recomposición", "deficit": 0.025, "descripcion": "Recomposición corporal"}
+        else:  # < 20%
+            return {"objetivo": "Volumen", "surplus": 0.125, "descripcion": "Ganancia muscular"}
+
+def calcular_macronutrientes_avanzados(calorias_totales, peso, objetivo, sexo):
+    """
+    Calcula macronutrientes con distribución inteligente según objetivo
+    """
+    # Proteína ajustada por objetivo
+    if objetivo == "Definición":
+        factor_proteina = 2.6
+    elif objetivo == "Recomposición":
+        factor_proteina = 2.2
+    else:  # Volumen
+        factor_proteina = 1.8
+    
+    proteina_g = peso * factor_proteina
+    proteina_kcal = proteina_g * 4
+    
+    # Grasa ajustada por objetivo
+    if objetivo == "Definición":
+        factor_grasa = 0.8
+    elif objetivo == "Recomposición":
+        factor_grasa = 1.0
+    else:  # Volumen
+        factor_grasa = 1.2
+    
+    grasa_g = peso * factor_grasa
+    grasa_kcal = grasa_g * 9
+    
+    # Carbohidratos por diferencia
+    carbs_kcal = calorias_totales - proteina_kcal - grasa_kcal
+    carbs_g = carbs_kcal / 4
+    
+    return {
+        "proteina_g": proteina_g,
+        "proteina_kcal": proteina_kcal,
+        "grasa_g": grasa_g,
+        "grasa_kcal": grasa_kcal,
+        "carbs_g": carbs_g,
+        "carbs_kcal": carbs_kcal
+    }
+
+def generar_reporte_completo(datos_usuario, calculos, fri, objetivo, macronutrientes):
+    """
+    Genera reporte completo detallado para el coach
+    """
+    reporte = f"""
+========================================
+📊 NUEVO CLIENTE - EVALUACIÓN AVANZADA
+========================================
+
+📅 Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
+👤 Cliente: {datos_usuario.get('nombre', 'N/A')}
+📧 Email: {datos_usuario.get('email', 'N/A')}
+
+========================================
+🆔 DATOS PERSONALES
+========================================
+Edad: {datos_usuario.get('edad', 'N/A')} años
+Sexo: {datos_usuario.get('sexo', 'N/A')}
+
+========================================
+🧍‍♂️ COMPOSICIÓN CORPORAL
+========================================
+Peso: {datos_usuario.get('peso', 'N/A')} kg
+Estatura: {datos_usuario.get('estatura', 'N/A')} cm
+IMC: {calculos.get('imc', 'N/A'):.1f}
+Método BF: {datos_usuario.get('metodo_bf', 'N/A')}
+BF original: {datos_usuario.get('bf_original', 'N/A')}%
+BF ajustado: {datos_usuario.get('bf_ajustado', 'N/A')}%
+Masa magra: {calculos.get('masa_magra', 'N/A'):.1f} kg
+FFMI: {calculos.get('ffmi', 'N/A'):.1f}
+
+========================================
+🏃‍♂️ ACTIVIDAD FÍSICA
+========================================
+Nivel: {datos_usuario.get('nivel_actividad', 'N/A')}
+Ocupación: {datos_usuario.get('ocupacion', 'N/A')}
+Entrenamiento: {datos_usuario.get('minutos_entrenamiento', 'N/A')} min x {datos_usuario.get('dias_entrenamiento', 'N/A')} días
+Pasos diarios: {datos_usuario.get('pasos_diarios', 'N/A')}
+
+========================================
+⚡ CÁLCULOS ENERGÉTICOS
+========================================
+GER: {calculos.get('ger', 'N/A'):.0f} kcal
+GEAF: {calculos.get('geaf', 'N/A'):.2f}
+GEE: {calculos.get('gee', 'N/A'):.0f} kcal
+GET: {calculos.get('get', 'N/A'):.0f} kcal
+
+========================================
+💤 EVALUACIÓN DE SUEÑO
+========================================
+Puntuación Pittsburgh: {calculos.get('puntuacion_sueno', 'N/A')}/16
+Clasificación: {calculos.get('clasificacion_sueno', 'N/A')}
+
+========================================
+😖 EVALUACIÓN DE ESTRÉS
+========================================
+Puntuación PSS-4: {calculos.get('puntuacion_estres', 'N/A')}/16
+Clasificación: {calculos.get('clasificacion_estres', 'N/A')}
+
+========================================
+🧠 FACTOR DE RECUPERACIÓN INTELIGENTE
+========================================
+Nivel FRI: {fri.get('nivel', 'N/A')}
+Factor: {fri.get('factor', 'N/A')}
+Descripción: {fri.get('descripcion', 'N/A')}
+
+========================================
+🎯 OBJETIVO AUTOMÁTICO
+========================================
+Objetivo: {objetivo.get('objetivo', 'N/A')}
+Descripción: {objetivo.get('descripcion', 'N/A')}
+Ajuste calórico: {objetivo.get('deficit', objetivo.get('surplus', 0)):.1%}
+
+========================================
+🍽️ MACRONUTRIENTES AVANZADOS
+========================================
+Calorías totales: {calculos.get('calorias_finales', 'N/A'):.0f} kcal
+
+Proteína: {macronutrientes.get('proteina_g', 'N/A'):.0f}g ({macronutrientes.get('proteina_kcal', 'N/A'):.0f} kcal)
+Grasas: {macronutrientes.get('grasa_g', 'N/A'):.0f}g ({macronutrientes.get('grasa_kcal', 'N/A'):.0f} kcal)
+Carbohidratos: {macronutrientes.get('carbs_g', 'N/A'):.0f}g ({macronutrientes.get('carbs_kcal', 'N/A'):.0f} kcal)
+
+========================================
+📝 NOTAS PARA EL COACH
+========================================
+Prioridad: {calculos.get('prioridad', 'Estándar')}
+Seguimiento: {calculos.get('seguimiento', 'Rutinario')}
+Contactar en: 24-48 horas
+
+========================================
+"""
+    
+    return reporte
+
 def enviar_email_resultados(destinatario, asunto, contenido):
     """Nueva función - Sin emails, solo acceso de coach"""
     import json
@@ -428,508 +728,314 @@ if st.session_state.page == "inicio":
 elif st.session_state.page == "balance_energetico":
     st.markdown("""
     <div class="section-header">
-        <h2>🧮 Cálculo del Factor de Balance Energético Óptimo (FBEO)</h2>
+        <h2>🧮 Cuestionario Científico Avanzado - Balance Energético Óptimo</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
         <h3>🎯 Objetivo</h3>
-        <p>Esta sección permite estimar la <strong>ingesta calórica personalizada</strong> según tu composición corporal, 
-        actividad física, frecuencia de entrenamiento, calidad de la dieta, y estado de recuperación fisiológica 
-        (estrés y sueño). Se define automáticamente si debes estar en déficit, mantenimiento o superávit calórico.</p>
+        <p>Evaluación científicamente fundamentada que integra <strong>composición corporal, actividad física, 
+        calidad del sueño, estrés percibido y factor de recuperación inteligente</strong> para determinar 
+        automáticamente tu objetivo nutricional y plan de macronutrientes personalizado.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    with st.form("balance_energetico_form"):
-        st.subheader("📋 Datos Antropométricos")
+    with st.form("balance_energetico_avanzado"):
+        # =================  DATOS PERSONALES INICIALES =================
+        st.subheader("🆔 Datos Personales Iniciales")
         col1, col2 = st.columns(2)
         
         with col1:
-            sexo = st.selectbox("Sexo", ["Hombre", "Mujer"])
-            peso = st.number_input("Peso (kg)", min_value=30.0, max_value=200.0, value=70.0, step=0.1)
-            estatura = st.number_input("Estatura (m)", min_value=1.0, max_value=2.5, value=1.70, step=0.01)
-        
+            nombre_completo = st.text_input("Nombre completo*", placeholder="Tu nombre completo")
+            email_destinatario = st.text_input("Correo electrónico*", placeholder="tu@email.com")
+            edad = st.number_input("Edad*", min_value=16, max_value=80, value=25)
+            
         with col2:
-            grasa_corporal = st.number_input("Porcentaje de grasa corporal (%)", min_value=5.0, max_value=50.0, value=20.0, step=0.1)
-            masa_magra = peso * (1 - grasa_corporal/100)
-            st.info(f"Masa magra calculada: {masa_magra:.1f} kg")
+            sexo = st.selectbox("Sexo*", ["Masculino", "Femenino"])
+            st.markdown("")
+            st.markdown("")
+            condiciones_aceptadas = st.checkbox("Acepto los términos y condiciones y autorizo el procesamiento de mis datos*")
         
-        st.subheader("🏃 Actividad Física")
+        # =================  SECCIÓN 1: COMPOSICIÓN CORPORAL =================
+        st.subheader("🧍‍♂️ Sección 1: Composición Corporal")
         col1, col2 = st.columns(2)
         
         with col1:
-            nivel_actividad = st.selectbox("Nivel de actividad diaria", [
-                "Sedentario (trabajo de escritorio, poco/nada de ejercicio)",
-                "Ligeramente activo (ejercicio ligero/deportes 1-3 días/semana)",
-                "Moderadamente activo (ejercicio moderado/deportes 3-5 días/semana)",
-                "Muy activo (ejercicio intenso/deportes 6-7 días/semana)",
-                "Extremadamente activo (ejercicio muy intenso, trabajo físico)"
+            estatura = st.number_input("Estatura (cm)*", min_value=140, max_value=220, value=170)
+            peso = st.number_input("Peso (kg)*", min_value=40.0, max_value=200.0, value=70.0, step=0.1)
+            metodo_bf = st.selectbox("Método de medición de grasa corporal*", [
+                "DEXA", "BIA", "Fórmula Naval", "Antropometría"
             ])
-        
+            
         with col2:
-            dias_entrenamiento = st.number_input("Días de entrenamiento de fuerza por semana", min_value=0, max_value=7, value=3)
+            grasa_corporal_original = st.number_input("Porcentaje de grasa corporal (%)*", 
+                                                     min_value=5.0, max_value=50.0, value=20.0, step=0.1)
+            
+            if metodo_bf == "Antropometría":
+                numero_pliegues = st.selectbox("Número de pliegues", [3, 4, 7])
+            else:
+                numero_pliegues = None
+            
+            # Aplicar corrección automática
+            grasa_corporal_ajustada = ajustar_grasa_corporal(
+                grasa_corporal_original, metodo_bf, sexo, numero_pliegues
+            )
+            
+            if grasa_corporal_ajustada != grasa_corporal_original:
+                st.info(f"💡 **Ajuste automático aplicado:** {grasa_corporal_original}% → {grasa_corporal_ajustada:.1f}%")
+                st.caption(f"Corrección por método {metodo_bf}")
+            
+            # Cálculos automáticos
+            masa_magra = peso * (1 - grasa_corporal_ajustada/100)
+            ffmi = calcular_ffmi(peso, estatura/100, grasa_corporal_ajustada)
+            
+            st.metric("Masa Magra", f"{masa_magra:.1f} kg")
+            st.metric("FFMI", f"{ffmi:.1f}")
         
-        st.subheader("😴 Evaluación del Sueño")
+        # =================  SECCIÓN 2: ACTIVIDAD FÍSICA Y GET =================
+        st.subheader("🏃‍♂️ Sección 2: Nivel de Actividad y GET")
         col1, col2 = st.columns(2)
         
         with col1:
-            horas_sueno = st.selectbox("¿Cuántas horas duermes por noche?", [
-                "Menos de 5h (1)", "5-6h (2)", "6-7h (3)", "7-8h (5)", "8-9h (4)", "Más de 9h (2)"
+            nivel_actividad = st.selectbox("Nivel de actividad diaria*", [
+                "Sedentario", "Ligeramente activo", "Moderadamente activo", 
+                "Muy activo", "Extremadamente activo"
             ])
-            tiempo_dormir = st.selectbox("¿Cuánto tardas en quedarte dormido?", [
-                "Menos de 15 min (5)", "15-30 min (4)", "30-45 min (3)", "45-60 min (2)", "Más de 60 min (1)"
+            
+            ocupacion = st.selectbox("Ocupación/Trabajo*", [
+                "Oficina/Escritorio", "Trabajo de pie", "Trabajo activo", 
+                "Trabajo físico pesado", "Estudiante", "Jubilado/Pensionado"
             ])
-        
+            
+            minutos_entrenamiento = st.number_input("Minutos de entrenamiento por sesión*", 
+                                                   min_value=0, max_value=180, value=60)
+            
         with col2:
-            despertares_nocturnos = st.selectbox("¿Cuántas veces te despiertas por noche?", [
-                "Nunca (5)", "1 vez (4)", "2 veces (3)", "3 veces (2)", "Más de 3 veces (1)"
+            dias_entrenamiento = st.number_input("Días de entrenamiento por semana*", 
+                                               min_value=0, max_value=7, value=4)
+            
+            pasos_diarios = st.selectbox("Pasos diarios promedio*", [
+                "< 5,000", "5,000-7,500", "7,500-10,000", "10,000-12,500", "> 12,500"
             ])
-            calidad_percibida = st.selectbox("¿Cómo percibes la calidad de tu sueño?", [
-                "Excelente (5)", "Buena (4)", "Regular (3)", "Mala (2)", "Muy mala (1)"
+            
+            # Cálculos automáticos
+            geaf = calcular_factor_actividad(nivel_actividad, sexo)
+            
+            # GER usando Katch-McArdle
+            tmb = 370 + (21.6 * masa_magra)
+            ger = tmb * 1.15  # ETA fijo personalizado por coach
+            
+            # GEE por entrenamiento
+            gee_por_sesion = masa_magra * (minutos_entrenamiento / 60) * 7
+            gee_semanal = gee_por_sesion * dias_entrenamiento
+            
+            # GET final
+            get_total = (ger * geaf) + (gee_semanal / 7)
+            
+            st.metric("GER", f"{ger:.0f} kcal")
+            st.metric("GET", f"{get_total:.0f} kcal")
+        
+        # =================  SECCIÓN 3: CALIDAD DEL SUEÑO =================
+        st.subheader("💤 Sección 3: Calidad del Sueño (Pittsburgh abreviado)")
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            horas_sueno = st.selectbox("¿Cuántas horas duermes por noche?*", [
+                "Más de 9h", "8-9h", "7-8h", "6-7h", "5-6h", "Menos de 5h"
+            ])
+            
+            tiempo_dormir = st.selectbox("¿Cuánto tardas en quedarte dormido?*", [
+                "Menos de 15 min", "15-30 min", "30-45 min", "45-60 min", "Más de 60 min"
+            ])
+            
+        with col2:
+            despertares_nocturnos = st.selectbox("¿Cuántas veces te despiertas por noche?*", [
+                "Nunca", "1 vez", "2 veces", "3 veces", "Más de 3 veces"
+            ])
+            
+            calidad_percibida = st.selectbox("¿Cómo percibes la calidad de tu sueño?*", [
+                "Excelente", "Buena", "Regular", "Mala", "Muy mala"
             ])
         
-        st.subheader("🧠 Evaluación del Estrés (PSS-4)")
+        # Calcular puntuación Pittsburgh
+        puntuacion_sueno = evaluar_pittsburgh(horas_sueno, tiempo_dormir, despertares_nocturnos, calidad_percibida)
+        
+        if puntuacion_sueno >= 10:
+            st.warning(f"⚠️ **Puntuación sueño: {puntuacion_sueno}/16** - Calidad deficiente detectada")
+        else:
+            st.success(f"✅ **Puntuación sueño: {puntuacion_sueno}/16** - Calidad adecuada")
+        
+        # =================  SECCIÓN 4: ESTRÉS PERCIBIDO =================
+        st.subheader("😖 Sección 4: Estrés Percibido (PSS-4)")
         st.markdown("**En el último mes, ¿con qué frecuencia...**")
         
         col1, col2 = st.columns(2)
         
         with col1:
-            pss1 = st.selectbox("¿Has sentido que no podías controlar las cosas importantes de tu vida?", [
-                "Nunca (0)", "Casi nunca (1)", "A veces (2)", "Frecuentemente (3)", "Muy frecuentemente (4)"
+            pss1 = st.selectbox("¿Has sentido que no podías controlar las cosas importantes de tu vida?*", [
+                "Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"
             ])
-            pss2 = st.selectbox("¿Te has sentido confiado/a sobre tu capacidad para manejar tus problemas personales?", [
-                "Nunca (4)", "Casi nunca (3)", "A veces (2)", "Frecuentemente (1)", "Muy frecuentemente (0)"
+            
+            pss2 = st.selectbox("¿Te has sentido confiado/a sobre tu capacidad para manejar tus problemas personales?*", [
+                "Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"
             ])
-        
+            
         with col2:
-            pss3 = st.selectbox("¿Has sentido que las cosas van como tú quieres?", [
-                "Nunca (4)", "Casi nunca (3)", "A veces (2)", "Frecuentemente (1)", "Muy frecuentemente (0)"
+            pss3 = st.selectbox("¿Has sentido que las cosas van como tú quieres?*", [
+                "Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"
             ])
-            pss4 = st.selectbox("¿Has sentido que las dificultades se acumulan tanto que no puedes superarlas?", [
-                "Nunca (0)", "Casi nunca (1)", "A veces (2)", "Frecuentemente (3)", "Muy frecuentemente (4)"
+            
+            pss4 = st.selectbox("¿Has sentido que las dificultades se acumulan tanto que no puedes superarlas?*", [
+                "Nunca", "Casi nunca", "A veces", "Frecuentemente", "Muy frecuentemente"
             ])
         
-        st.subheader("📧 Información de Contacto")
-        email_destinatario = st.text_input("Email para seguimiento", placeholder="tu@email.com")
+        # Calcular puntuación PSS-4
+        puntuacion_estres = evaluar_pss4(pss1, pss2, pss3, pss4)
         
-        submitted = st.form_submit_button("🚀 Calcular FBEO", type="primary")
+        if puntuacion_estres >= 10:
+            st.warning(f"⚠️ **Puntuación estrés: {puntuacion_estres}/16** - Nivel alto detectado")
+        else:
+            st.success(f"✅ **Puntuación estrés: {puntuacion_estres}/16** - Nivel manejable")
+        
+        # =================  EVALUACIÓN FRI =================
+        fri = calcular_fri(puntuacion_sueno, puntuacion_estres)
+        
+        st.subheader("🧠 Factor de Recuperación Inteligente (FRI)")
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.metric("Nivel FRI", fri["nivel"])
+        with col2:
+            st.metric("Factor", f"{fri['factor']:.2f}")
+        with col3:
+            st.metric("Descripción", fri["descripcion"])
+        
+        # Penalización energética si es necesario
+        if puntuacion_sueno >= 10:
+            get_total *= 0.95  # Penalización por sueño deficiente
+            st.info("💡 **Ajuste aplicado:** Penalización energética por sueño deficiente")
+        
+        submitted = st.form_submit_button("🚀 Generar Análisis Completo", type="primary")
         
         if submitted:
-            # PASO 1: Calcular TMB usando Katch-McArdle
-            tmb = 370 + (21.6 * masa_magra)
+            # Validaciones
+            if not nombre_completo:
+                st.error("❌ **Error:** El nombre completo es obligatorio")
+                st.stop()
             
-            # PASO 2: Calcular GER
-            ger = tmb * 1.1
+            if not email_destinatario:
+                st.error("❌ **Error:** El correo electrónico es obligatorio")
+                st.stop()
             
-            # PASO 3: Determinar GEAF según nivel de actividad
-            actividad_factores = {
-                "Sedentario (trabajo de escritorio, poco/nada de ejercicio)": {
-                    "geaf": 1.40, "descripcion": "Trabajo de escritorio, sin ejercicio regular", "pasos": "< 5,000"
-                },
-                "Ligeramente activo (ejercicio ligero/deportes 1-3 días/semana)": {
-                    "geaf": 1.55, "descripcion": "Trabajo sedentario + ejercicio ligero", "pasos": "5,000-7,500"
-                },
-                "Moderadamente activo (ejercicio moderado/deportes 3-5 días/semana)": {
-                    "geaf": 1.70, "descripcion": "Trabajo activo o ejercicio regular", "pasos": "7,500-10,000"
-                },
-                "Muy activo (ejercicio intenso/deportes 6-7 días/semana)": {
-                    "geaf": 1.85, "descripcion": "Ejercicio intenso diario", "pasos": "10,000-12,500"
-                },
-                "Extremadamente activo (ejercicio muy intenso, trabajo físico)": {
-                    "geaf": 2.00, "descripcion": "Ejercicio muy intenso + trabajo físico", "pasos": "> 12,500"
-                }
-            }
+            if not condiciones_aceptadas:
+                st.error("❌ **Error:** Debes aceptar los términos y condiciones")
+                st.stop()
             
-            datos_actividad = actividad_factores[nivel_actividad]
-            geaf = datos_actividad["geaf"]
+            # =================  DETERMINACIÓN AUTOMÁTICA DEL OBJETIVO =================
+            objetivo = determinar_objetivo_automatico(grasa_corporal_ajustada, sexo, dias_entrenamiento)
             
-            # PASO 4: Calcular GEE por sesión de entrenamiento
-            gee_por_sesion = masa_magra * 5
-            gee_semanal = gee_por_sesion * dias_entrenamiento
-            
-            # PASO 5: Calcular GET con y sin entrenamiento
-            get_con_entrenamiento = ger * geaf + gee_semanal / 7  # Fixed: use daily average
-            get_sin_entrenamiento = ger * geaf
-            
-            # PASO 6: Calcular GET promedio semanal
-            get_promedio = ((get_con_entrenamiento * dias_entrenamiento) + 
-                           (get_sin_entrenamiento * (7 - dias_entrenamiento))) / 7
-            
-            # PASO 7: Determinar FBEO base según % grasa corporal
-            if sexo == "Hombre":
-                if grasa_corporal > 25:
-                    fbeo_base = 0.875  # Déficit para perder grasa
-                elif 18 <= grasa_corporal <= 24:
-                    fbeo_base = 0.975  # Déficit leve
-                elif 12 <= grasa_corporal < 18:
-                    fbeo_base = 1.05   # Superávit leve
-                else:  # < 12%
-                    fbeo_base = 1.125  # Superávit para ganar músculo
-            else:  # Mujer
-                if grasa_corporal > 32:
-                    fbeo_base = 0.875
-                elif 25 <= grasa_corporal <= 31:
-                    fbeo_base = 0.975
-                elif 20 <= grasa_corporal < 25:
-                    fbeo_base = 1.05
-                else:  # < 20%
-                    fbeo_base = 1.125
-            
-            # PASO 8: Calcular puntuaciones de estrés y sueño
-            # PSS-4
-            pss_valores = {
-                "Nunca (0)": 0, "Casi nunca (1)": 1, "A veces (2)": 2, 
-                "Frecuentemente (3)": 3, "Muy frecuentemente (4)": 4,
-                "Nunca (4)": 4, "Casi nunca (3)": 3, "Frecuentemente (1)": 1, 
-                "Muy frecuentemente (0)": 0
-            }
-            
-            pss_total = (pss_valores[pss1] + pss_valores[pss2] + 
-                        pss_valores[pss3] + pss_valores[pss4])
-            estres_alto = pss_total > 13
-            
-            # Calidad del sueño
-            sueno_valores = {
-                "Menos de 5h (1)": 1, "5-6h (2)": 2, "6-7h (3)": 3, 
-                "7-8h (5)": 5, "8-9h (4)": 4, "Más de 9h (2)": 2,
-                "Menos de 15 min (5)": 5, "15-30 min (4)": 4, "30-45 min (3)": 3, 
-                "45-60 min (2)": 2, "Más de 60 min (1)": 1,
-                "Nunca (5)": 5, "1 vez (4)": 4, "2 veces (3)": 3, 
-                "3 veces (2)": 2, "Más de 3 veces (1)": 1,
-                "Excelente (5)": 5, "Buena (4)": 4, "Regular (3)": 3, 
-                "Mala (2)": 2, "Muy mala (1)": 1
-            }
-            
-            sueno_promedio = (sueno_valores[horas_sueno] + sueno_valores[tiempo_dormir] + 
-                             sueno_valores[despertares_nocturnos] + sueno_valores[calidad_percibida]) / 4
-            sueno_malo = sueno_promedio < 3.5
-            
-            # PASO 9: Ajustar FBEO según estrés y sueño (LÓGICA CORREGIDA)
-            ajuste_fbeo = 0
-            
-            if estres_alto and sueno_malo:
-                # Estrés alto + sueño malo = MÁS CONSERVADOR
-                if fbeo_base < 1.0:  # Si está en déficit
-                    ajuste_fbeo = 0.10  # REDUCE el déficit (sube hacia 1.0)
-                else:  # Si está en superávit
-                    ajuste_fbeo = -0.10  # REDUCE el superávit (baja hacia 1.0)
-                    
-            elif estres_alto or sueno_malo:
-                # Solo uno de los dos = MODERADAMENTE CONSERVADOR
-                if fbeo_base < 1.0:  # Si está en déficit
-                    ajuste_fbeo = 0.05  # REDUCE el déficit
-                else:  # Si está en superávit
-                    ajuste_fbeo = -0.05  # REDUCE el superávit
-            
-            # Si ambos están bien (estres_alto = False AND sueno_malo = False):
-            # ajuste_fbeo = 0  --> NO HAY AJUSTE, se mantiene el FBEO original
-            
-            fbeo_ajustado = fbeo_base + ajuste_fbeo
-            
-            # Límites de seguridad para evitar extremos
-            fbeo_ajustado = max(0.80, min(fbeo_ajustado, 1.20))
-            
-            # PASO 10: Ingesta calórica final
-            calorias_totales = get_promedio * fbeo_ajustado
-            
-            # PASO 11: Generar tips personalizados
-            tips_sueno = []
-            tips_estres = []
-            
-            # Tips para mejorar el sueño según puntuación
-            if sueno_malo:
-                if sueno_valores[horas_sueno] <= 3:
-                    tips_sueno.append("🕐 **Prioriza 7-8 horas de sueño:** Tu cuerpo necesita este tiempo para la síntesis proteica y recuperación muscular óptima.")
-                
-                if sueno_valores[tiempo_dormir] <= 2:
-                    tips_sueno.extend([
-                        "🚿 **Ducha caliente pre-sueño:** Toma una ducha caliente 90 minutos antes de dormir para relajar los músculos.",
-                        "🧘 **Meditación nocturna:** Dedica 10 minutos a meditación guiada antes de acostarte.",
-                        "💊 **Considera suplementos:** Melatonina (3-5mg) o L-teanina (200mg) 30 min antes de dormir."
-                    ])
-                
-                if sueno_valores[despertares_nocturnos] <= 2:
-                    tips_sueno.extend([
-                        "💧 **Limita líquidos:** Reduce consumo de líquidos 2 horas antes de dormir.",
-                        "🌡️ **Temperatura óptima:** Mantén tu habitación a 19°C para un sueño profundo.",
-                        "🔇 **Insonorización:** Usa tapones para oídos o ruido blanco para minimizar interrupciones."
-                    ])
-                
-                if sueno_valores[calidad_percibida] <= 2:
-                    tips_sueno.extend([
-                        "📱 **Desconexión digital:** Evita pantallas 1 hora antes de dormir para mantener la melatonina.",
-                        "🛏️ **Revisa tu colchón:** Un colchón inadecuado puede afectar significativamente la calidad del sueño.",
-                        "☕ **Límite de cafeína:** No consumas cafeína después de las 14:00 hrs."
-                    ])
-                
-                tips_sueno.extend([
-                    "⏰ **Horario consistente:** Acuéstate y levántate a la misma hora todos los días.",
-                    "🌞 **Luz matutina:** Exponte a luz brillante en las primeras 2 horas del día.",
-                    "🥗 **Cena balanceada:** Incluye carbohidratos complejos y proteína magra 2-3 horas antes de dormir."
-                ])
-            
-            # Tips para manejar el estrés según puntuación PSS-4
-            if estres_alto:
-                if pss_valores[pss1] >= 3:
-                    tips_estres.extend([
-                        "🎯 **Afrontamiento activo:** Identifica y aborda directamente las causas del estrés en lugar de evitarlas.",
-                        "📝 **Lista de prioridades:** Organiza tareas por importancia para recuperar sensación de control."
-                    ])
-                
-                if pss_valores[pss2] >= 3:
-                    tips_estres.extend([
-                        "💪 **Entrenamiento de fuerza:** El ejercicio regular mejora la confianza y reduce el cortisol.",
-                        "🧘 **Mindfulness diario:** 10 minutos de atención plena fortalecen la resiliencia mental."
-                    ])
-                
-                if pss_valores[pss4] >= 3:
-                    tips_estres.extend([
-                        "👥 **Apoyo social:** Dedica tiempo a conexiones significativas que liberan oxitocina.",
-                        "😄 **Terapia de risa:** Ver comedias o actividades humorísticas reduce fisiológicamente el estrés.",
-                        "🏥 **Considera apoyo profesional:** Un psicólogo puede ofrecer herramientas personalizadas."
-                    ])
-                
-                tips_estres.extend([
-                    "🌿 **Conexión con naturaleza:** Caminatas de 20 min en parques reducen el cortisol.",
-                    "🎵 **Música relajante:** Crea playlists calmantes para momentos de tensión.",
-                    "❄️ **Duchas frías:** Termina tu ducha con 30 segundos de agua fría para fortalecer resiliencia.",
-                    "📓 **Diario de gratitud:** Escribe 3 cosas positivas cada noche antes de dormir.",
-                    "💊 **Suplementos anti-estrés:** Considera Ashwagandha (600mg), Omega-3 (2g) o Magnesio (400mg)."
-                ])
-            
-            # PASO 12: Calcular macronutrientes
-            # Proteínas ajustadas según grasa corporal
-            if sexo == "Hombre":
-                if grasa_corporal > 25:
-                    factor_proteina = 1.8
-                elif 18 <= grasa_corporal <= 24:
-                    factor_proteina = 2.0
-                elif 12 <= grasa_corporal < 18:
-                    factor_proteina = 2.2
-                else:
-                    factor_proteina = 2.4
+            # Aplicar FRI y calcular calorías finales
+            if "deficit" in objetivo:
+                calorias_finales = get_total * (1 - objetivo["deficit"]) * fri["factor"]
+            elif "surplus" in objetivo:
+                calorias_finales = get_total * (1 + objetivo["surplus"]) * fri["factor"]
             else:
-                if grasa_corporal > 32:
-                    factor_proteina = 1.8
-                elif 25 <= grasa_corporal <= 31:
-                    factor_proteina = 2.0
-                elif 20 <= grasa_corporal < 25:
-                    factor_proteina = 2.2
-                else:
-                    factor_proteina = 2.4
+                calorias_finales = get_total * fri["factor"]
             
-            proteinas_g_ajustadas = peso * factor_proteina
-            proteinas_g_ajustadas = max(peso * 1.8, min(proteinas_g_ajustadas, peso * 2.4))
-            proteinas_kcal_ajustadas = proteinas_g_ajustadas * 4
+            # =================  MACRONUTRIENTES AVANZADOS =================
+            macronutrientes = calcular_macronutrientes_avanzados(
+                calorias_finales, peso, objetivo["objetivo"], sexo
+            )
             
-            grasas_kcal_ajustadas = calorias_totales * 0.275
-            grasas_g_ajustadas = grasas_kcal_ajustadas / 9
-            carbs_kcal_ajustadas = calorias_totales - proteinas_kcal_ajustadas - grasas_kcal_ajustadas
-            carbs_g_ajustadas = carbs_kcal_ajustadas / 4
-            
-            # MOSTRAR INFORMACIÓN MÍNIMA AL USUARIO
-            st.success("✅ **¡Evaluación completada con éxito!**")
+            # =================  MOSTRAR RESULTADOS AL USUARIO =================
+            st.success("✅ **¡Análisis completado exitosamente!**")
             
             st.info("""
-            📧 **Tu evaluación ha sido enviada a tu entrenador personal.**
+            📧 **Tu evaluación completa ha sido enviada a tu entrenador MUPAI.**
             
-            **¿Qué sigue?**
-            - Tu entrenador revisará tus resultados
-            - Recibirás tu plan nutricional personalizado
-            - Te contactaremos para coordinar tu programa
+            **Próximos pasos:**
+            - Revisión detallada por parte del equipo técnico
+            - Plan nutricional personalizado
+            - Seguimiento y ajustes continuos
             
-            ⏰ **Tiempo estimado de respuesta: 24-48 horas**
-            
-            💡 **Importante:** Mantén tu teléfono disponible para coordinar detalles.
+            ⏰ **Tiempo de respuesta: 24-48 horas**
             """)
             
-            # Resumen MÍNIMO para el usuario
-            st.markdown("### 📊 Confirmación de Datos")
-            col1, col2, col3 = st.columns(3)
+            # Resumen para el usuario
+            st.markdown("### 📊 Resumen de tu Evaluación")
+            col1, col2, col3, col4 = st.columns(4)
             
             with col1:
-                st.metric("Datos Corporales", "✅ Registrados")
-            
+                st.metric("Composición Corporal", f"{grasa_corporal_ajustada:.1f}% GC")
             with col2:
-                st.metric("Actividad Física", "✅ Evaluada")
-            
+                st.metric("FFMI", f"{ffmi:.1f}")
             with col3:
-                st.metric("Estrés y Sueño", "✅ Analizados")
+                st.metric("Nivel FRI", fri["nivel"])
+            with col4:
+                st.metric("Objetivo", objetivo["objetivo"])
             
-            # Mostrar objetivo detectado (información básica)
-            if fbeo_ajustado < 0.95:
-                objetivo = "Pérdida de grasa"
-            elif fbeo_ajustado > 1.05:
-                objetivo = "Ganancia muscular"
-            else:
-                objetivo = "Recomposición corporal"
+            # =================  GENERAR REPORTE COMPLETO =================
+            datos_usuario = {
+                "nombre": nombre_completo,
+                "email": email_destinatario,
+                "edad": edad,
+                "sexo": sexo,
+                "peso": peso,
+                "estatura": estatura,
+                "metodo_bf": metodo_bf,
+                "bf_original": grasa_corporal_original,
+                "bf_ajustado": grasa_corporal_ajustada,
+                "nivel_actividad": nivel_actividad,
+                "ocupacion": ocupacion,
+                "minutos_entrenamiento": minutos_entrenamiento,
+                "dias_entrenamiento": dias_entrenamiento,
+                "pasos_diarios": pasos_diarios
+            }
             
-            st.metric("Objetivo Detectado", objetivo)
+            calculos = {
+                "imc": peso / ((estatura/100) ** 2),
+                "masa_magra": masa_magra,
+                "ffmi": ffmi,
+                "tmb": tmb,
+                "ger": ger,
+                "geaf": geaf,
+                "gee": gee_semanal,
+                "get": get_total,
+                "calorias_finales": calorias_finales,
+                "puntuacion_sueno": puntuacion_sueno,
+                "puntuacion_estres": puntuacion_estres,
+                "clasificacion_sueno": "Deficiente" if puntuacion_sueno >= 10 else "Adecuada",
+                "clasificacion_estres": "Alto" if puntuacion_estres >= 10 else "Manejable",
+                "prioridad": "Prioritario" if (puntuacion_sueno >= 10 or puntuacion_estres >= 10) else "Estándar",
+                "seguimiento": "Inmediato" if fri["nivel"] in ["Deficiente", "Crítico"] else "Rutinario"
+            }
             
+            # Generar reporte completo
+            reporte_completo = generar_reporte_completo(datos_usuario, calculos, fri, objetivo, macronutrientes)
+            
+            # Enviar al coach
+            try:
+                trainer_email = st.secrets.get("trainer_email", "mupaitraining@outlook.com")
+                enviar_email_resultados(trainer_email, 
+                  f"EVALUACIÓN AVANZADA - {nombre_completo}", 
+                  reporte_completo)
+                st.success("✅ Reporte enviado correctamente al equipo técnico")
+            except Exception as e:
+                st.error(f"❌ Error al enviar reporte: {str(e)}")
+            
+            # Mostrar próximos pasos
             st.markdown("""
             ---
             ### 🎯 Próximos Pasos
             
-            1. **Espera el contacto** de tu entrenador MUPAI
-            2. **Mantén tu rutina actual** hasta recibir indicaciones
-            3. **Prepárate para comenzar** tu transformación
+            1. **Revisión técnica** de tu evaluación completa
+            2. **Elaboración** de tu plan nutricional personalizado
+            3. **Contacto directo** para coordinar inicio del programa
+            4. **Seguimiento continuo** y ajustes según evolución
             
-            **¿Tienes preguntas urgentes?** Contacta a MUPAI por WhatsApp.
+            **¿Dudas urgentes?** Contacta a MUPAI Training.
             """)
-            
-            # ENVIAR EMAIL COMPLETO SOLO AL ENTRENADOR
-            if not email_destinatario:
-                st.error("⚠️ **Error:** Debes proporcionar un correo electrónico para el seguimiento.")
-            else:
-                # EMAIL COMPLETO PARA EL ENTRENADOR
-                contenido_email = f"""
-========================================
-📊 NUEVO CLIENTE - EVALUACIÓN FBEO
-
-Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M')}
-Email del cliente: {email_destinatario}
-
-========================================
-👤 PERFIL DEL CLIENTE
-
-Sexo: {sexo}
-Peso: {peso} kg
-Estatura: {estatura} m
-IMC: {peso/(estatura**2):.1f}
-Grasa corporal: {grasa_corporal}%
-Masa magra: {masa_magra:.1f} kg
-
-========================================
-🏃 PERFIL DE ACTIVIDAD FÍSICA
-
-Nivel de actividad: {nivel_actividad}
-Descripción: {datos_actividad['descripcion']}
-Pasos diarios estimados: {datos_actividad['pasos']}
-Factor GEAF aplicado: {geaf}
-Días de entrenamiento semanal: {dias_entrenamiento}
-
-========================================
-😴 EVALUACIÓN DEL SUEÑO
-
-Horas de sueño: {horas_sueno}
-Tiempo para dormir: {tiempo_dormir}
-Despertares nocturnos: {despertares_nocturnos}
-Calidad percibida: {calidad_percibida}
-
-PUNTUACIÓN TOTAL: {sueno_promedio:.1f}/5
-EVALUACIÓN: {'⚠️ CALIDAD DEFICIENTE - Requiere intervención' if sueno_malo else '✅ CALIDAD ADECUADA'}
-
-========================================
-🧠 EVALUACIÓN DEL ESTRÉS (PSS-4)
-
-Pregunta 1 (Control): {pss1}
-Pregunta 2 (Confianza): {pss2}
-Pregunta 3 (Las cosas van bien): {pss3}
-Pregunta 4 (Dificultades acumuladas): {pss4}
-
-PUNTUACIÓN TOTAL PSS-4: {pss_total}/16
-EVALUACIÓN: {'⚠️ ESTRÉS ALTO - Requiere manejo activo' if estres_alto else '✅ ESTRÉS MANEJABLE'}
-
-========================================
-⚡ CÁLCULOS ENERGÉTICOS DETALLADOS
-
-TMB (Katch-McArdle): {tmb:.0f} kcal
-GER (Gasto en reposo): {ger:.0f} kcal
-GEE por sesión: {gee_por_sesion:.0f} kcal
-GET con entrenamiento: {get_con_entrenamiento:.0f} kcal
-GET sin entrenamiento: {get_sin_entrenamiento:.0f} kcal
-GET promedio semanal: {get_promedio:.0f} kcal
-
-========================================
-📊 FACTOR DE BALANCE ENERGÉTICO (FBEO) - ANÁLISIS DETALLADO
-
-FBEO base según {grasa_corporal:.1f}% GC: {fbeo_base:.3f}
-
-EVALUACIÓN DE FACTORES DE RECUPERACIÓN:
-• Estrés (PSS-4): {pss_total}/16 {'- ALTO ⚠️' if estres_alto else '- Normal ✅'}
-• Sueño: {sueno_promedio:.1f}/5 {'- DEFICIENTE ⚠️' if sueno_malo else '- Adecuado ✅'}
-
-LÓGICA DE AJUSTE APLICADA:
-"""
-                
-                if estres_alto and sueno_malo:
-                    contenido_email += f"""• Estrés ALTO + Sueño MALO detectado
-• Ajuste: {'+' if ajuste_fbeo > 0 else ''}{ajuste_fbeo:.2f} ({'Reduce déficit' if fbeo_base < 1.0 else 'Reduce superávit'})
-• Razón: Recuperación comprometida requiere enfoque más conservador"""
-                elif estres_alto or sueno_malo:
-                    factor_problema = "Estrés ALTO" if estres_alto else "Sueño MALO"
-                    contenido_email += f"""• {factor_problema} detectado
-• Ajuste: {'+' if ajuste_fbeo > 0 else ''}{ajuste_fbeo:.2f} ({'Reduce déficit' if fbeo_base < 1.0 else 'Reduce superávit'})
-• Razón: Recuperación parcialmente comprometida"""
-                else:
-                    contenido_email += f"""• Estrés Normal + Sueño Adecuado ✅
-• Ajuste: {ajuste_fbeo:.2f} (Sin modificaciones)
-• Razón: Buena recuperación permite protocolo estándar"""
-                
-                contenido_email += f"""
-
-FBEO FINAL: {fbeo_ajustado:.3f}
-INTERPRETACIÓN: {'DÉFICIT CALÓRICO' if fbeo_ajustado < 0.95 else 'SUPERÁVIT CALÓRICO' if fbeo_ajustado > 1.05 else 'MANTENIMIENTO/RECOMPOSICIÓN'}
-
-ESTRATEGIA NUTRICIONAL:
-{'• Pérdida de grasa con preservación muscular' if fbeo_ajustado < 0.95 else '• Ganancia muscular controlada' if fbeo_ajustado > 1.05 else '• Recomposición corporal (pérdida de grasa + ganancia muscular)'}
-{'• Protocolo conservador por factores de recuperación' if (estres_alto or sueno_malo) else '• Protocolo estándar por buena recuperación'}
-
-========================================
-🍽️ PLAN NUTRICIONAL CALCULADO
-
-CALORÍAS TOTALES: {calorias_totales:.0f} kcal/día
-
-Distribución de Macronutrientes:
-• Proteína: {proteinas_g_ajustadas:.0f}g ({proteinas_kcal_ajustadas:.0f} kcal) - {proteinas_kcal_ajustadas/calorias_totales*100:.0f}%
-Factor aplicado: {factor_proteina:.1f}g/kg peso corporal
-• Grasas: {grasas_g_ajustadas:.0f}g ({grasas_kcal_ajustadas:.0f} kcal) - {grasas_kcal_ajustadas/calorias_totales*100:.0f}%
-• Carbohidratos: {carbs_g_ajustadas:.0f}g ({carbs_kcal_ajustadas:.0f} kcal) - {carbs_kcal_ajustadas/calorias_totales*100:.0f}%
-
-Requerimientos adicionales:
-• Fibra mínima: {25 if sexo == "Mujer" else 35}g/día
-• Agua mínima: {peso * 35:.0f}ml/día
-
-========================================
-🎯 RECOMENDACIONES ESPECÍFICAS PARA EL CLIENTE
-
-"""
-                
-                # Agregar tips personalizados
-                if sueno_malo and tips_sueno:
-                    contenido_email += "\n😴 ESTRATEGIAS PERSONALIZADAS PARA MEJORAR EL SUEÑO:\n"
-                    for tip in tips_sueno:
-                        contenido_email += f"   {tip}\n"
-                
-                if estres_alto and tips_estres:
-                    contenido_email += "\n🧠 ESTRATEGIAS PERSONALIZADAS PARA MANEJAR EL ESTRÉS:\n"
-                    for tip in tips_estres:
-                        contenido_email += f"   {tip}\n"
-                
-                contenido_email += f"""
-
-========================================
-📝 NOTAS PARA EL ENTRENADOR
-
-Cliente evaluado el {datetime.now().strftime('%Y-%m-%d %H:%M')}
-
-Requiere seguimiento {'prioritario' if (estres_alto or sueno_malo) else 'estándar'}
-
-Contactar en próximas 24-48 horas
-
-========================================
-"""
-                
-                # Enviar SOLO al entrenador (usando secrets para seguridad)
-                try:
-                    trainer_email = st.secrets.get("trainer_email", "mupaitraining@outlook.com")
-                    enviar_email_resultados(trainer_email, 
-                      f"NUEVO CLIENTE FBEO - {email_destinatario}", 
-                      contenido_email)
-                    st.success("✅ Evaluación enviada correctamente al entrenador")
-                except Exception as e:
-                    st.error(f"❌ Error al enviar email: {str(e)}")
 
 # ==================== CUESTIONARIO PREFERENCIAS ALIMENTARIAS ====================
 elif st.session_state.page == "preferencias_alimentarias":
