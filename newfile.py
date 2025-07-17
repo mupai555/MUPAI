@@ -483,6 +483,16 @@ Objetivo: {objetivo.get('objetivo', 'N/A')}
 Descripción: {objetivo.get('descripcion', 'N/A')}
 Ajuste calórico: {objetivo.get('deficit', objetivo.get('surplus', 0)):.1%}
 
+PROTEÍNA (g/kg):
+- Déficit: 2.2 - 2.6 g/kg
+- Recomposición: 2.0 - 2.4 g/kg
+- Superávit: 1.8 - 2.0 g/kg
+
+GRASA (g/kg):
+- Déficit: 0.8 - 1.0 g/kg
+- Recomposición: 0.9 - 1.2 g/kg
+- Superávit: 1.0 - 1.2 g/kg
+
 ========================================
 🍽️ MACRONUTRIENTES AVANZADOS
 ========================================
@@ -944,6 +954,22 @@ elif st.session_state.page == "balance_energetico":
             macronutrientes = calcular_macronutrientes_avanzados(
                 calorias_finales, peso, objetivo["objetivo"], sexo
             )
+            
+            # Mostrar información de proteínas y grasas
+            st.markdown("### 🍽️ Guía de Macronutrientes")
+            st.markdown("""
+            **PROTEÍNA (g/kg):**
+            - Déficit: 2.2 - 2.6 g/kg
+            - Recomposición: 2.0 - 2.4 g/kg
+            - Superávit: 1.8 - 2.0 g/kg
+            
+            **GRASA (g/kg):**
+            - Déficit: 0.8 - 1.0 g/kg
+            - Recomposición: 0.9 - 1.2 g/kg
+            - Superávit: 1.0 - 1.2 g/kg
+            """)
+            
+            st.markdown("---")
             
             # =================  MOSTRAR RESULTADOS AL USUARIO =================
             st.success("✅ **¡Análisis completado exitosamente!**")
