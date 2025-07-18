@@ -308,3 +308,10 @@ elif authentication_status:
 
     # --- PIE DE PÁGINA ---
     pie_streamlit()
+
+# ---------- DISPLAY YOUR OWN CODE ----------
+st.markdown("---")
+st.header("Código fuente de la app")
+with open(__file__, "r", encoding="utf-8") as f:
+    code = f.read()
+st.code(code, language="python")
