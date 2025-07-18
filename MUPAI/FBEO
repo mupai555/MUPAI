@@ -10,7 +10,6 @@ import streamlit_authenticator as stauth
 # ---------- AUTENTICACIÓN ----------
 AUTH_USERS = [
     {"name": "Cliente de Prueba", "username": "cliente", "password": "$2b$12$YIYx/NsEqCwN6qF8y8s9Zep9Q7Ax8i5CQZp2pPj1KkDLiB9yFZqZa"},  # contraseña: "mupai2025"
-    # Puedes agregar más usuarios aquí si quieres
 ]
 names = [u["name"] for u in AUTH_USERS]
 usernames = [u["username"] for u in AUTH_USERS]
@@ -34,7 +33,7 @@ st.markdown("""
     .stAlert, .stSuccess, .stInfo, .stWarning, .stError {border-radius: 8px;}
     </style>
     <div class="logo-container">
-        <img src="logo_mupai.png" class="logo-img" alt="MUPAI Logo">
+        <img src="LOGO (1).png" class="logo-img" alt="MUPAI Logo">
     </div>
 """, unsafe_allow_html=True)
 
@@ -93,7 +92,7 @@ def render_tabla(tabla):
 # ---------- PDF CON PIE DE PÁGINA Y LOGO ----------
 class PDFConPie(FPDF):
     def header(self):
-        self.image("logo_mupai.png", x=60, y=8, w=90)
+        self.image("LOGO (1).png", x=60, y=8, w=90)
         self.ln(30)
     def footer(self):
         self.set_y(-15)
@@ -243,8 +242,6 @@ elif authentication_status:
                 nivel_ffmi = "Elite (Natty max)"
             else:
                 nivel_ffmi = "Posible uso de anabólicos"
-
-        # Puedes agregar más cálculos a continuación y añadirlos al resumen
 
         usuario = {
             "Nombre": nombre,
