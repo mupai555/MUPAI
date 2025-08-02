@@ -19,28 +19,34 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# CSS personalizado mejorado
+# CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
+    /* Tema principal: Negro, amarillo mostaza, blanco */
+    .stApp > div:first-child {
+        background-color: #000000;
+    }
+    
     .main-header {  
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);  
+        background: #000000;  
         padding: 2rem;  
         border-radius: 15px;  
         text-align: center;  
         margin-bottom: 2rem;  
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);  
+        box-shadow: 0 4px 15px rgba(255,204,0,0.3);  
+        border: 2px solid #FFCC00;
     }  
       
     .main-header h1 {  
-        color: #000;  
+        color: #FFCC00;  
         font-size: 3rem;  
         font-weight: bold;  
         margin: 0;  
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);  
+        text-shadow: 2px 2px 4px rgba(255,204,0,0.5);  
     }  
       
     .main-header p {  
-        color: #000;  
+        color: #FFFFFF;  
         font-size: 1.3rem;  
         margin: 0.5rem 0 0 0;  
         font-weight: 500;  
@@ -54,16 +60,18 @@ st.markdown("""
         margin: 1.5rem 0;  
         text-align: center;  
         font-weight: bold;  
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);  
+        box-shadow: 0 3px 10px rgba(255,204,0,0.2);  
+        border: 1px solid #FFCC00;
     }  
       
     .questionnaire-container {  
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
         padding: 1.5rem;  
         border-radius: 12px;  
         border-left: 5px solid #FFCC00;  
         margin: 1rem 0;  
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);  
+        box-shadow: 0 2px 8px rgba(255,204,0,0.1);  
+        color: #FFFFFF;
     }  
       
     .results-container {  
@@ -76,31 +84,33 @@ st.markdown("""
     }  
       
     .metric-card {  
-        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
         padding: 1.5rem;  
         border-radius: 12px;  
-        box-shadow: 0 3px 12px rgba(0,0,0,0.1);  
+        box-shadow: 0 3px 12px rgba(255,204,0,0.1);  
         border-left: 6px solid #FFCC00;  
         margin: 1rem 0;  
         transition: transform 0.2s ease;  
+        color: #FFFFFF;
     }  
       
     .metric-card:hover {  
         transform: translateY(-2px);  
-        box-shadow: 0 5px 20px rgba(0,0,0,0.15);  
+        box-shadow: 0 5px 20px rgba(255,204,0,0.2);  
     }  
       
     .corporate-section {  
-        background: linear-gradient(135deg, #f1f3f4 0%, #ffffff 100%);  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
         padding: 2rem;  
         border-radius: 15px;  
         margin: 1.5rem 0;  
         border: 2px solid #FFCC00;  
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);  
+        box-shadow: 0 4px 15px rgba(255,204,0,0.1);  
+        color: #FFFFFF;
     }  
       
     .corporate-section h3 {  
-        color: #000;  
+        color: #FFCC00;  
         border-bottom: 3px solid #FFCC00;  
         padding-bottom: 0.5rem;  
         margin-bottom: 1rem;  
@@ -109,17 +119,35 @@ st.markdown("""
     .logo-container {  
         text-align: center;  
         padding: 2rem;  
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);  
+        background: #000000;  
         border-radius: 15px;  
         margin-bottom: 2rem;  
+        border: 2px solid #FFCC00;
+        box-shadow: 0 4px 15px rgba(255,204,0,0.2);
     }  
+    
+    .logo-img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+        border: 3px solid #FFCC00;
+        transition: transform 0.3s ease;
+        object-fit: cover;
+    }
+    
+    .logo-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 35px rgba(255,204,0,0.6);
+    }
       
     .professional-profile {  
-        background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
         padding: 2rem;  
         border-radius: 15px;  
         border-left: 6px solid #FFCC00;  
         margin: 1rem 0;  
+        color: #FFFFFF;
     }  
       
     .achievement-badge {  
@@ -131,7 +159,32 @@ st.markdown("""
         margin: 0.2rem;  
         font-weight: bold;  
         font-size: 0.9rem;  
-    }  
+    }
+    
+    /* Estilos para texto en elementos principales */
+    .stMarkdown {
+        color: #FFFFFF;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg {
+        background-color: #1a1a1a;
+    }
+    
+    /* Botones del sidebar */
+    .stButton > button {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+        color: #000000;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+    
+    .stButton > button:hover {
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(255,204,0,0.3);
+    }
 </style>  
 """, unsafe_allow_html=True)
 
@@ -572,102 +625,62 @@ def enviar_email_resultados(destinatario, asunto, contenido):
 if 'page' not in st.session_state:
     st.session_state.page = "inicio"
 
-# Sidebar con navegación mejorada
-with st.sidebar:
-    # Modern header with centered logo for Muscle Up Gym
-    st.markdown("""
-    <div class="logo-container">
-        <div style='text-align: center; padding: 1rem;'>
-            <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" 
-                 style='width: 80px; height: 80px; border-radius: 50%; margin-bottom: 1rem; box-shadow: 0 4px 8px rgba(0,0,0,0.2);'>
-        </div>
-        <h1 style='color: #000; margin: 0; font-size: 2.2rem; text-align: center;'>💪 MUSCLE UP GYM</h1>
-        <p style='color: #000; font-size: 1rem; margin: 0.5rem 0 0 0; text-align: center; font-weight: 600;'>Transformando Vidas</p>
-        <p style='color: #000; font-size: 0.9rem; margin: 0; text-align: center;'>Fuerza • Resistencia • Bienestar</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Planes y Costos
-    st.markdown("### 💰 Planes y Membresías")
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;'>
-        <h4 style='color: #000; margin-bottom: 0.5rem;'>🏋️ Plan Básico</h4>
-        <p style='color: #666; font-size: 0.9rem; margin: 0;'>$799/mes</p>
-        <p style='color: #666; font-size: 0.8rem;'>Acceso al gym + asesoría básica</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;'>
-        <h4 style='color: #000; margin-bottom: 0.5rem;'>⭐ Plan Premium</h4>
-        <p style='color: #000; font-size: 0.9rem; margin: 0; font-weight: bold;'>$1,299/mes</p>
-        <p style='color: #000; font-size: 0.8rem;'>Entrenamiento personalizado + nutrición</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #000 0%, #333 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;'>
-        <h4 style='color: #FFCC00; margin-bottom: 0.5rem;'>👑 Plan Elite</h4>
-        <p style='color: #FFCC00; font-size: 0.9rem; margin: 0; font-weight: bold;'>$1,899/mes</p>
-        <p style='color: #FFF; font-size: 0.8rem;'>Todo incluido + seguimiento 24/7</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Proceso de Compra
-    st.markdown("### 🛒 ¿Cómo Empezar?")
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%); padding: 1rem; border-radius: 10px;'>
-        <ol style='color: #000; font-size: 0.9rem; padding-left: 1rem;'>
-            <li>📞 Contáctanos por WhatsApp</li>
-            <li>📅 Agenda tu evaluación gratuita</li>
-            <li>💪 Elige tu plan ideal</li>
-            <li>🎯 ¡Comienza tu transformación!</li>
-        </ol>
-        <p style='color: #666; font-size: 0.8rem; margin-top: 1rem; text-align: center;'>
-            💳 Aceptamos tarjetas, transferencias y pagos mensuales
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    # Navegación principal
-    if st.button("🏠 Inicio", use_container_width=True):
-        st.session_state.page = "inicio"
-    
-    st.markdown("### 📋 Cuestionarios Especializados")
-    
-    if st.button("⚡ Balance Energético Óptimo", use_container_width=True):
-        st.session_state.page = "balance_energetico"
-    
-    if st.button("🍽️ Patrones y Preferencias Alimenticias", use_container_width=True):
-        st.session_state.page = "preferencias_alimentarias"
-    
-    if st.button("🧁 Antojos Alimentarios", use_container_width=True):
-        st.session_state.page = "antojos_alimentarios"
-    
-    st.markdown("---")
-    
-    if st.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
-        st.session_state.page = "about"
-    
-    if st.button("📞 Contacto", use_container_width=True):
-        st.session_state.page = "contacto"
+# Barra lateral con planes y costos
+st.sidebar.markdown("""
+## 🏋️‍♂️ Planes y Costos Muscle Up Gym
+
+| Plan                                    | Costo      | Beneficios principales                                        |
+|------------------------------------------|------------|---------------------------------------------------------------|
+| Alimentación Personalizada               | $350 MXN   | Plan semanal, adaptado a tus objetivos y gustos               |
+| Entrenamiento Personalizado              | $350 MXN   | Rutina semanal, adaptada a tus horarios y nivel               |
+| Entrenamiento + Nutrición (combinado)    | $600 MXN   | Ambos servicios, seguimiento y asesoría directa               |
+""")
+
+st.sidebar.markdown("""
+### 🛒 ¿Cómo adquirir tu plan?
+
+1. **Realiza la transferencia bancaria:**
+   <br>
+   <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png', 'rb').read()).decode()) + """" alt="Cuenta bancaria Muscle Up Gym" style="max-width:320px;border-radius:12px;">
+   <br>
+2. Envía tu comprobante por correo y WhatsApp.
+3. Agenda tu medición inicial (presencial o virtual).
+4. Llena los cuestionarios en la web.
+5. Recibe tu plan personalizado en 3 a 5 días hábiles.
+""", unsafe_allow_html=True)
+
+# Navegación principal
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 📋 Navegación")
+
+if st.sidebar.button("🏠 Inicio", use_container_width=True):
+    st.session_state.page = "inicio"
+
+st.sidebar.markdown("### 📋 Cuestionarios Especializados")
+
+if st.sidebar.button("⚡ Balance Energético Óptimo", use_container_width=True):
+    st.session_state.page = "balance_energetico"
+
+if st.sidebar.button("🍽️ Patrones y Preferencias Alimenticias", use_container_width=True):
+    st.session_state.page = "preferencias_alimentarias"
+
+if st.sidebar.button("🧁 Antojos Alimentarios", use_container_width=True):
+    st.session_state.page = "antojos_alimentarios"
+
+st.sidebar.markdown("---")
+
+if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
+    st.session_state.page = "about"
+
+if st.sidebar.button("📞 Contacto", use_container_width=True):
+    st.session_state.page = "contacto"
 
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
-    # Página de inicio con header moderno y logo centrado
+    # Encabezado moderno con logo centrado
     st.markdown("""
-    <div class="main-header" style='text-align: center;'>
-        <div style='margin-bottom: 1.5rem;'>
-            <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" 
-                 style='width: 120px; height: 120px; border-radius: 50%; margin-bottom: 1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.3);'>
-        </div>
-        <h1>💪 MUSCLE UP GYM</h1>
-        <p>Transformando Vidas a Través del Fitness y el Bienestar Integral</p>
-        <p style='font-size: 1.1rem; margin-top: 1rem; font-weight: 500;'>Fuerza • Resistencia • Bienestar • Comunidad</p>
+    <div class="logo-container">
+        <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" class="logo-img" alt="Muscle Up Gym Logo">
     </div>
     """, unsafe_allow_html=True)
     
@@ -1539,143 +1552,37 @@ elif st.session_state.page == "contacto":
     </div>
     """, unsafe_allow_html=True)
     
-    # Sección de contacto renovada para Muscle Up Gym - using simplified structure
+    # Sección de contacto renovada
     st.markdown("""
-    <div class="results-container">
-        <div style='text-align: center; margin-bottom: 2rem;'>
-            <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" 
-                 style='width: 100px; height: 100px; border-radius: 50%; margin-bottom: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2);'>
-            <h3>💪 MUSCLE UP GYM</h3>
-            <p style='font-size: 1.1rem; font-weight: 600;'>Transformando Vidas a Través del Fitness</p>
-        </div>
-    </div>
+    ### 📞 Contacto Muscle Up Gym
+
+    - **Correo:** [administracion@muscleupgym.fitness](mailto:administracion@muscleupgym.fitness)
+    - **WhatsApp:** [8662580594](https://wa.me/528662580594)
+    - **Facebook:** [Muscle Up Gym](https://www.facebook.com/share/16WtR5TLw5/)
+    - **Instagram:** [@mup_lindavista](https://www.instagram.com/mup_lindavista?igsh=MWVhaHBvMmxib3hweQ==) | [@erickmuscleup](https://www.instagram.com/erickmuscleup?igsh=MXZrZ2l0bmZ3MGtleQ==)
+    - **Sitio Web:** [www.muscleupgym.fitness](https://www.muscleupgym.fitness)
+
+    &gt; ¡Agenda tu cita y recibe asesoría profesional!
     """, unsafe_allow_html=True)
-    
-    # Contact Information using columns
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 1.5rem; border-radius: 15px; border-left: 6px solid #FFCC00; margin-bottom: 1rem;'>
-            <h4 style='color: #000; margin-bottom: 1rem;'>📧 Información de Contacto</h4>
-            <p style='margin: 0.5rem 0;'><strong>Email:</strong> info@muscleupgym.com</p>
-            <p style='margin: 0.5rem 0;'><strong>Email Nutrición:</strong> nutricion@muscleupgym.com</p>
-            <p style='margin: 0.5rem 0;'><strong>Teléfono:</strong> +52 (81) 1234-5678</p>
-            <p style='margin: 0.5rem 0;'><strong>Sitio Web:</strong> www.muscleupgym.com</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); padding: 1.5rem; border-radius: 15px; color: white; margin-bottom: 1rem;'>
-            <h4 style='color: white; margin-bottom: 1rem;'>📱 WhatsApp</h4>
-            <p style='margin: 0.5rem 0; font-weight: bold;'>+52 (81) 9876-5432</p>
-            <p style='margin: 0.5rem 0; font-size: 0.9rem;'>Horario: Lunes a Domingo</p>
-            <p style='margin: 0.5rem 0; font-size: 0.9rem;'>6:00 AM - 10:00 PM</p>
-        </div>
-        """, unsafe_allow_html=True)
-        st.markdown("[💬 Enviar Mensaje WhatsApp](https://wa.me/528198765432)", unsafe_allow_html=True)
-    
-    # Social Media Section
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 15px; color: white; margin: 1rem 0;'>
-        <h4 style='color: white; margin-bottom: 1rem; text-align: center;'>🌐 Síguenos en Redes Sociales</h4>
-        <p style='text-align: center; margin-top: 1rem; font-size: 0.9rem;'>¡Únete a nuestra comunidad fitness!</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Social Media Links
-    col1, col2, col3, col4 = st.columns(4)
-    with col1:
-        st.markdown("[📘 Facebook](https://facebook.com/muscleupgym)")
-    with col2:
-        st.markdown("[📷 Instagram](https://instagram.com/muscleupgym)")
-    with col3:
-        st.markdown("[🎵 TikTok](https://tiktok.com/@muscleupgym)")
-    with col4:
-        st.markdown("[📺 YouTube](https://youtube.com/@muscleupgym)")
-    
-    # Hours and Location
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); padding: 1.5rem; border-radius: 15px; color: #000; margin: 1rem 0;'>
-            <h4 style='color: #000; margin-bottom: 1rem;'>🕐 Horarios de Atención</h4>
-            <p style='margin: 0.3rem 0;'><strong>Lunes a Viernes:</strong> 5:00 AM - 11:00 PM</p>
-            <p style='margin: 0.3rem 0;'><strong>Sábados:</strong> 6:00 AM - 10:00 PM</p>
-            <p style='margin: 0.3rem 0;'><strong>Domingos:</strong> 7:00 AM - 9:00 PM</p>
-            <p style='margin: 0.3rem 0; font-size: 0.9rem; margin-top: 1rem;'>📞 <strong>Emergencias:</strong> 24/7</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style='background: linear-gradient(135deg, #2C3E50 0%, #34495E 100%); padding: 1.5rem; border-radius: 15px; color: white; margin: 1rem 0;'>
-            <h4 style='color: #FFCC00; margin-bottom: 1rem;'>📍 Nuestra Ubicación</h4>
-            <p style='margin: 0.5rem 0;'>Av. Revolución #1234</p>
-            <p style='margin: 0.5rem 0;'>Col. Moderna</p>
-            <p style='margin: 0.5rem 0;'>Monterrey, N.L. 64720</p>
-            <p style='margin: 0.5rem 0; font-size: 0.9rem; margin-top: 1rem;'>🚗 Estacionamiento gratuito</p>
-            <p style='margin: 0.5rem 0; font-size: 0.9rem;'>🚌 Cerca del transporte público</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Services Section
-    st.markdown("""
-    <div style='background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%); padding: 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; margin: 1rem 0;'>
-        <h4 style='color: #000; margin-bottom: 1rem; text-align: center;'>✨ Nuestros Servicios</h4>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2, col3, col4 = st.columns(4)
-    
-    with col1:
-        st.markdown("""
-        <div style='text-align: center; padding: 1rem;'>
-            <p style='font-size: 3rem; margin: 0;'>🏋️‍♀️</p>
-            <p style='font-weight: bold; margin: 0.5rem 0;'>Entrenamiento Personal</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style='text-align: center; padding: 1rem;'>
-            <p style='font-size: 3rem; margin: 0;'>🥗</p>
-            <p style='font-weight: bold; margin: 0.5rem 0;'>Asesoría Nutricional</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div style='text-align: center; padding: 1rem;'>
-            <p style='font-size: 3rem; margin: 0;'>🧘‍♀️</p>
-            <p style='font-weight: bold; margin: 0.5rem 0;'>Clases Grupales</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col4:
-        st.markdown("""
-        <div style='text-align: center; padding: 1rem;'>
-            <p style='font-size: 3rem; margin: 0;'>💪</p>
-            <p style='font-weight: bold; margin: 0.5rem 0;'>Área de Pesas</p>
-        </div>
-        """, unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 10px;">
-    <h3 style="color: #000; margin-bottom: 1rem;">💪 MUSCLE UP GYM - Transformando Vidas</h3>
-    <p style="color: #666; margin-bottom: 0.5rem;">Tu gimnasio de confianza en <strong>Monterrey, Nuevo León</strong></p>
-    <p style="color: #666; margin-bottom: 1rem;">Fuerza • Resistencia • Bienestar • Comunidad</p>
-    <div style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
-        <a href="https://facebook.com/muscleupgym" target="_blank" style="color: #4267B2; text-decoration: none;">📘 Facebook</a>
-        <a href="https://instagram.com/muscleupgym" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
-        <a href="https://wa.me/528198765432" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
-        <a href="mailto:info@muscleupgym.com" style="color: #EA4335; text-decoration: none;">📧 Email</a>
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 10px; border: 1px solid #FFCC00;">
+    <div style='margin-bottom: 1rem;'>
+        <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" 
+             style='width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 15px rgba(255,204,0,0.3);'>
     </div>
-    <p style="color: #888; font-size: 0.9rem;">© 2025 Muscle Up Gym. Todos los derechos reservados.</p>
-    <p style="color: #888; font-size: 0.8rem;">Comprometidos con tu salud y bienestar integral</p>
+    <h3 style="color: #FFCC00; margin-bottom: 1rem;">💪 MUSCLE UP GYM</h3>
+    <p style="color: #FFFFFF; margin-bottom: 0.5rem;">Tu gimnasio de confianza</p>
+    <p style="color: #FFFFFF; margin-bottom: 1rem;">Fuerza • Resistencia • Bienestar • Comunidad</p>
+    <div style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
+        <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="color: #4267B2; text-decoration: none;">📘 Facebook</a>
+        <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
+        <a href="https://wa.me/528662580594" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
+        <a href="mailto:administracion@muscleupgym.fitness" style="color: #EA4335; text-decoration: none;">📧 Email</a>
+    </div>
+    <p style="color: #CCCCCC; font-size: 0.9rem;">© 2025 Muscle Up Gym. Todos los derechos reservados.</p>
+    <p style="color: #CCCCCC; font-size: 0.8rem;">Comprometidos con tu salud y bienestar integral</p>
 </div>
 """, unsafe_allow_html=True)
