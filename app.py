@@ -594,6 +594,159 @@ ALERTAS ESPECIALES:
 def main():
     """Main questionnaire interface."""
     
+    # =============================================================================
+    # SIDEBAR - PLANES Y TARIFAS
+    # =============================================================================
+    
+    with st.sidebar:
+        st.markdown("""
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2>📋 Planes y Tarifas</h2>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Nutrition Plan
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 100%); 
+                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: #000;">
+            <h4>🍽️ Plan de Nutrición Personalizada – 6 semanas</h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
+                <li>Evaluación inicial (bioimpedancia + cuestionarios)</li>
+                <li>6 menús adaptados (calorías, macros, micronutrientes, preferencias)</li>
+                <li>Evaluación final con medición corporal</li>
+                <li>Ajustes desde $150 MXN | Menús extra desde $100 MXN</li>
+            </ul>
+            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio: $750 MXN</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Training Plan
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); 
+                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: white;">
+            <h4>💪 Plan de Entrenamiento Personalizado – 8 semanas</h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
+                <li>Evaluación inicial con Designing Your Training</li>
+                <li>Plan personalizado en volumen, frecuencia, intensidad</li>
+                <li>Entrega profesional en PDF</li>
+                <li>Evaluación final de progresos</li>
+            </ul>
+            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio: $850 MXN</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Combined Plan
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%); 
+                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: white;">
+            <h4>🔥 Plan Combinado – Entrenamiento + Nutrición</h4>
+            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
+                <li>Incluye ambos planes completos</li>
+                <li>Evaluación inicial y final con bioimpedancia</li>
+                <li>Integración total entre dieta y entrenamiento</li>
+            </ul>
+            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio único: $1,500 MXN</h3>
+            <p style="text-align: center; font-weight: bold; background: rgba(255,255,255,0.2); 
+                      padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem;">
+                🎁 Ahorro: $100 MXN
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Purchase Process
+        st.markdown("""
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; 
+                    border-left: 5px solid #FFCC00; color: #000;">
+            <h4>📝 Mecánica de Adquisición:</h4>
+            <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                <li>Selecciona el plan que mejor se adapte a ti</li>
+                <li>Realiza la transferencia a la tarjeta bancaria</li>
+                <li>Programa tu medición corporal (en Muscle Up Gym o por tu cuenta si eres foráneo)</li>
+                <li>Se autoriza el acceso a los cuestionarios para personalizar tu plan</li>
+                <li>Tras contestar los cuestionarios, el plan se entrega en 3 a 5 días hábiles</li>
+            </ol>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Bank Card Image
+        try:
+            from PIL import Image
+            bank_card_image = Image.open("Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png")
+            st.image(bank_card_image, caption="Tarjeta Bancaria para Transferencias", width=300)
+        except:
+            st.info("💳 Imagen de tarjeta bancaria disponible para transferencias")
+    
+    # =============================================================================
+    # ABOUT THE PROFESSIONAL SECTION
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: #f5f5f5; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
+        <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">
+            👨‍⚕️ Acerca del Profesional
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Professional info layout
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        try:
+            from PIL import Image
+            personal_photo = Image.open("Diseño sin título_20250728_062559_0000.png")
+            st.image(personal_photo, width=300)
+        except:
+            st.info("👤 Foto profesional")
+    
+    with col2:
+        st.markdown("""
+        <div style="padding: 1rem; background: #f5f5f5; border-radius: 10px;">
+            <h3>Información Académica y Profesional</h3>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        **Certificaciones Profesionales:**
+        - Especialista en Nutrición Deportiva
+        - Entrenador Personal Certificado
+        - Especialista en Composición Corporal
+        - Diseño de Programas de Entrenamiento Personalizado
+        
+        **Experiencia:**
+        - Más de 500 clientes transformados
+        - Especialización en recomposición corporal
+        - Metodología científica basada en evidencia
+        - Seguimiento personalizado y detallado
+        
+        **Enfoque:**
+        Aplicación de metodologías científicas actualizadas para la optimización 
+        del balance energético y la composición corporal, con seguimiento 
+        personalizado y ajustes constantes según los progresos individuales.
+        """)
+    
+    # Achievements image
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            from PIL import Image
+            achievements_image = Image.open("20250728_220454.jpg")
+            st.image(achievements_image, caption="Logros y Certificaciones Profesionales", width=500)
+        except:
+            st.info("🏆 Imagen de logros profesionales")
+    
+    # Main Logo
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            from PIL import Image
+            logo = Image.open("LOGO.png")
+            st.image(logo, width=400)
+        except:
+            st.info("🏢 Logo MUPAI")
+    
     # Header
     st.markdown("""
     <div class="main-header">
