@@ -17,7 +17,7 @@ def load_banking_image_base64():
     Loads the banking data image and returns it as base64 encoded string.
     Returns a fallback message if the image file is not found.
     """
-    banking_image_path = '/home/runner/work/MUPAI/MUPAI/Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png'
+    banking_image_path = 'Copia de Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png'
     
     try:
         with open(banking_image_path, 'rb') as f:
@@ -46,6 +46,23 @@ def load_banking_image_base64():
             </p>
         </div>
         '''
+
+def load_logo_image_base64():
+    """
+    Loads the logo image and returns it as base64 encoded string.
+    Returns a fallback message if the image file is not found.
+    """
+    logo_image_path = 'LOGO.png'
+    
+    try:
+        with open(logo_image_path, 'rb') as f:
+            image_data = f.read()
+            encoded_image = base64.b64encode(image_data).decode()
+            return f'data:image/png;base64,{encoded_image}'
+    except FileNotFoundError:
+        return None
+    except Exception as e:
+        return None
 
 # Configuración de la página
 st.set_page_config(
@@ -714,11 +731,22 @@ if st.sidebar.button("📞 Contacto", use_container_width=True):
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
     # Encabezado moderno con logo centrado
-    st.markdown("""
-    <div class="logo-container">
-        <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" class="logo-img" alt="Muscle Up Gym Logo">
-    </div>
-    """, unsafe_allow_html=True)
+    logo_base64 = load_logo_image_base64()
+    if logo_base64:
+        st.markdown(f"""
+        <div class="logo-container">
+            <img src="{logo_base64}" class="logo-img" alt="Muscle Up Gym Logo">
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div class="logo-container">
+            <div style="padding: 20px; background-color: #ffe6e6; border: 2px solid #ff9999; border-radius: 8px; text-align: center;">
+                <h4 style="color: #cc0000; margin: 0;">⚠️ Logo no disponible</h4>
+                <p style="color: #666; margin: 5px 0 0 0;">MUSCLE UP GYM</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Sección de Misión, Visión y Políticas
     tab1, tab2, tab3, tab4 = st.tabs(["🎯 Misión", "🔮 Visión", "📋 Política", "📘 Política del Servicio"])
@@ -1603,11 +1631,16 @@ elif st.session_state.page == "contacto":
 
 # Footer
 st.markdown("---")
-st.markdown("""
+logo_base64_footer = load_logo_image_base64()
+if logo_base64_footer:
+    footer_logo_html = f'<img src="{logo_base64_footer}" style=\'width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 15px rgba(255,204,0,0.3);\'>'
+else:
+    footer_logo_html = '<div style="width: 60px; height: 60px; border-radius: 50%; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold;">MUP</div>'
+
+st.markdown(f"""
 <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 10px; border: 1px solid #FFCC00;">
     <div style='margin-bottom: 1rem;'>
-        <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/LOGO.png', 'rb').read()).decode()) + """" 
-             style='width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 15px rgba(255,204,0,0.3);'>
+        {footer_logo_html}
     </div>
     <h3 style="color: #FFCC00; margin-bottom: 1rem;">💪 MUSCLE UP GYM</h3>
     <p style="color: #FFFFFF; margin-bottom: 0.5rem;">Tu gimnasio de confianza</p>
