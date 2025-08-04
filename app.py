@@ -18,6 +18,8 @@ import json
 from datetime import datetime
 from typing import Dict, Tuple, Any
 import math
+import base64
+import os
 
 
 # =============================================================================
@@ -106,6 +108,46 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+
+# =============================================================================
+# UTILITY FUNCTIONS
+# =============================================================================
+
+def get_base64_of_image(image_path: str) -> str:
+    """
+    Convert image file to base64 string for embedding in HTML.
+    
+    Args:
+        image_path: Path to the image file
+    
+    Returns:
+        Base64 encoded string of the image
+    """
+    try:
+        with open(image_path, "rb") as img_file:
+            return base64.b64encode(img_file.read()).decode()
+    except Exception as e:
+        st.error(f"Error loading image {image_path}: {e}")
+        return ""
+
+def create_image_html(image_path: str, alt_text: str, max_width: int = 400) -> str:
+    """
+    Create HTML img tag with base64 encoded image.
+    
+    Args:
+        image_path: Path to the image file
+        alt_text: Alt text for the image
+        max_width: Maximum width in pixels
+    
+    Returns:
+        HTML img tag string
+    """
+    base64_image = get_base64_of_image(image_path)
+    if base64_image:
+        file_extension = os.path.splitext(image_path)[1].lower()
+        mime_type = "image/jpeg" if file_extension in ['.jpg', '.jpeg'] else "image/png"
+        return f'<img src="data:{mime_type};base64,{base64_image}" alt="{alt_text}" style="max-width: {max_width}px; height: auto; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">'
+    return f'<p>❌ Error loading {alt_text}</p>'
 
 # =============================================================================
 # CORE SCIENTIFIC CALCULATIONS
@@ -592,89 +634,148 @@ ALERTAS ESPECIALES:
 # =============================================================================
 
 def main():
-    """Main questionnaire interface."""
+    """Main application interface with page navigation."""
     
     # =============================================================================
-    # SIDEBAR - PLANES Y TARIFAS
+    # SIDEBAR NAVIGATION
     # =============================================================================
     
     with st.sidebar:
         st.markdown("""
         <div style="text-align: center; margin-bottom: 2rem;">
-            <h2>📋 Planes y Tarifas</h2>
+            <h2>🏠 Navegación</h2>
         </div>
         """, unsafe_allow_html=True)
         
-        # Nutrition Plan
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 100%); 
-                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: #000;">
-            <h4>🍽️ Plan de Nutrición Personalizada – 6 semanas</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
-                <li>Evaluación inicial (bioimpedancia + cuestionarios)</li>
-                <li>6 menús adaptados (calorías, macros, micronutrientes, preferencias)</li>
-                <li>Evaluación final con medición corporal</li>
-                <li>Ajustes desde $150 MXN | Menús extra desde $100 MXN</li>
-            </ul>
-            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio: $750 MXN</h3>
-        </div>
-        """, unsafe_allow_html=True)
+        # Page navigation
+        page = st.selectbox(
+            "Selecciona una sección:",
+            ["🏠 Cuestionario Principal", "💰 Planes y Tarifas"],
+            index=0
+        )
         
-        # Training Plan
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); 
-                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: white;">
-            <h4>💪 Plan de Entrenamiento Personalizado – 8 semanas</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
-                <li>Evaluación inicial con Designing Your Training</li>
-                <li>Plan personalizado en volumen, frecuencia, intensidad</li>
-                <li>Entrega profesional en PDF</li>
-                <li>Evaluación final de progresos</li>
-            </ul>
-            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio: $850 MXN</h3>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Combined Plan
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%); 
-                    padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem; color: white;">
-            <h4>🔥 Plan Combinado – Entrenamiento + Nutrición</h4>
-            <ul style="margin: 0.5rem 0; padding-left: 1rem;">
-                <li>Incluye ambos planes completos</li>
-                <li>Evaluación inicial y final con bioimpedancia</li>
-                <li>Integración total entre dieta y entrenamiento</li>
-            </ul>
-            <h3 style="text-align: center; margin-top: 1rem;">💰 Precio único: $1,500 MXN</h3>
-            <p style="text-align: center; font-weight: bold; background: rgba(255,255,255,0.2); 
-                      padding: 0.5rem; border-radius: 5px; margin-top: 0.5rem;">
-                🎁 Ahorro: $100 MXN
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Purchase Process
-        st.markdown("""
-        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; 
-                    border-left: 5px solid #FFCC00; color: #000;">
-            <h4>📝 Mecánica de Adquisición:</h4>
-            <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
-                <li>Selecciona el plan que mejor se adapte a ti</li>
-                <li>Realiza la transferencia a la tarjeta bancaria</li>
-                <li>Programa tu medición corporal (en Muscle Up Gym o por tu cuenta si eres foráneo)</li>
-                <li>Se autoriza el acceso a los cuestionarios para personalizar tu plan</li>
-                <li>Tras contestar los cuestionarios, el plan se entrega en 3 a 5 días hábiles</li>
-            </ol>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        # Bank Card Image
+        st.markdown("---")
+    
+    # =============================================================================
+    # PAGE ROUTING
+    # =============================================================================
+    
+    if page == "💰 Planes y Tarifas":
+        show_plans_page()
+    else:
+        show_main_questionnaire()
+
+
+def show_plans_page():
+    """Display the plans and pricing page."""
+    
+    # Main Logo
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            from PIL import Image
+            logo = Image.open("LOGO.png")
+            st.image(logo, width=400)
+        except:
+            st.info("🏢 Logo MUPAI")
+    
+    # Header
+    st.markdown("""
+    <div class="main-header">
+        <h1>💰 PLANES Y TARIFAS</h1>
+        <p>Servicios Profesionales de Nutrición y Entrenamiento Personalizado</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # PLANS AND PRICING CONTENT
+    # =============================================================================
+    
+    # Nutrition Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: #000;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>🍽️ Plan de Nutrición Personalizada – 6 semanas</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Evaluación inicial (bioimpedancia + cuestionarios)</li>
+            <li>6 menús adaptados (calorías, macros, micronutrientes, preferencias)</li>
+            <li>Evaluación final con medición corporal</li>
+            <li>Ajustes desde $150 MXN | Menús extra desde $100 MXN</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(0,0,0,0.1); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio: $750 MXN</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Training Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>💪 Plan de Entrenamiento Personalizado – 8 semanas</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Evaluación inicial con Designing Your Training</li>
+            <li>Plan personalizado en volumen, frecuencia, intensidad</li>
+            <li>Entrega profesional en PDF</li>
+            <li>Evaluación final de progresos</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.2); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio: $850 MXN</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Combined Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>🔥 Plan Combinado – Entrenamiento + Nutrición</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Incluye ambos planes completos</li>
+            <li>Evaluación inicial y final con bioimpedancia</li>
+            <li>Integración total entre dieta y entrenamiento</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.3); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio único: $1,500 MXN</h2>
+        <p style="text-align: center; font-weight: bold; background: rgba(255,255,255,0.2); 
+                  padding: 1rem; border-radius: 10px; margin-top: 1rem; font-size: 1.2rem;">
+            🎁 Ahorro: $100 MXN
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Purchase Process
+    st.markdown("""
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; 
+                border-left: 5px solid #FFCC00; color: #000; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>📝 Mecánica de Adquisición:</h2>
+        <ol style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Selecciona el plan que mejor se adapte a ti</li>
+            <li>Realiza la transferencia a la tarjeta bancaria</li>
+            <li>Programa tu medición corporal (en Muscle Up Gym o por tu cuenta si eres foráneo)</li>
+            <li>Se autoriza el acceso a los cuestionarios para personalizar tu plan</li>
+            <li>Tras contestar los cuestionarios, el plan se entrega en 3 a 5 días hábiles</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Bank Card Image
+    st.markdown("### 💳 Información de Transferencia")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
         try:
             from PIL import Image
             bank_card_image = Image.open("Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png")
-            st.image(bank_card_image, caption="Tarjeta Bancaria para Transferencias", width=300)
+            st.image(bank_card_image, caption="Tarjeta Bancaria para Transferencias", width=500)
         except:
             st.info("💳 Imagen de tarjeta bancaria disponible para transferencias")
+
+
+def show_main_questionnaire():
+    """Display the main questionnaire interface."""
     
     # =============================================================================
     # ABOUT THE PROFESSIONAL SECTION
@@ -688,24 +789,48 @@ def main():
     </div>
     """, unsafe_allow_html=True)
     
-    # Professional info layout
+    # Professional photos section - showing both required images before biography
+    st.markdown("### 📸 Presentación Profesional")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("#### Foto Profesional")
+        # Professional photo using base64
+        professional_photo_html = create_image_html(
+            "20250802_100455.png", 
+            "Foto Profesional", 
+            400
+        )
+        st.markdown(professional_photo_html, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("#### Diploma y Certificaciones")
+        # Certificate/diploma using base64
+        certificate_html = create_image_html(
+            "20250728_220454.jpg", 
+            "Diploma y Certificaciones Profesionales", 
+            400
+        )
+        st.markdown(certificate_html, unsafe_allow_html=True)
+    
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    
+    # Professional biography and information
+    st.markdown("### 📋 Información Académica y Profesional")
+    
     col1, col2 = st.columns([1, 2])
     
     with col1:
+        # Additional professional image (existing one)
         try:
             from PIL import Image
             personal_photo = Image.open("Diseño sin título_20250728_062559_0000.png")
-            st.image(personal_photo, width=300)
+            st.image(personal_photo, width=300, caption="Imagen Profesional Adicional")
         except:
-            st.info("👤 Foto profesional")
+            st.info("👤 Foto profesional adicional")
     
     with col2:
-        st.markdown("""
-        <div style="padding: 1rem; background: #f5f5f5; border-radius: 10px;">
-            <h3>Información Académica y Profesional</h3>
-        </div>
-        """, unsafe_allow_html=True)
-        
         st.markdown("""
         **Certificaciones Profesionales:**
         - Especialista en Nutrición Deportiva
@@ -724,17 +849,6 @@ def main():
         del balance energético y la composición corporal, con seguimiento 
         personalizado y ajustes constantes según los progresos individuales.
         """)
-    
-    # Achievements image
-    st.markdown("<br>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        try:
-            from PIL import Image
-            achievements_image = Image.open("20250728_220454.jpg")
-            st.image(achievements_image, caption="Logros y Certificaciones Profesionales", width=500)
-        except:
-            st.info("🏆 Imagen de logros profesionales")
     
     # Main Logo
     st.markdown("<br>", unsafe_allow_html=True)
