@@ -8,8 +8,44 @@ from email.header import Header
 from datetime import datetime
 import base64
 from collections import Counter
+import os
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
+
+def load_banking_image_base64():
+    """
+    Loads the banking data image and returns it as base64 encoded string.
+    Returns a fallback message if the image file is not found.
+    """
+    banking_image_path = '/home/runner/work/MUPAI/MUPAI/Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png'
+    
+    try:
+        with open(banking_image_path, 'rb') as f:
+            image_data = f.read()
+            encoded_image = base64.b64encode(image_data).decode()
+            return f'<img src="data:image/png;base64,{encoded_image}" alt="Cuenta bancaria Muscle Up Gym" style="max-width:320px;border-radius:12px;">'
+    except FileNotFoundError:
+        return '''
+        <div style="padding: 15px; background-color: #ffe6e6; border: 2px solid #ff9999; border-radius: 8px; text-align: center; max-width: 320px; margin: 10px 0;">
+            <h4 style="color: #cc0000; margin: 0 0 10px 0; font-size: 16px;">⚠️ Imagen de datos bancarios no disponible</h4>
+            <p style="color: #666; margin: 0 0 10px 0; font-size: 14px;">Por favor contacta directamente para obtener los datos bancarios:</p>
+            <p style="color: #000; font-weight: bold; margin: 0; font-size: 14px;">
+                📧 administracion@muscleupgym.fitness<br>
+                📱 WhatsApp: 8662580594
+            </p>
+        </div>
+        '''
+    except Exception as e:
+        return f'''
+        <div style="padding: 15px; background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; text-align: center; max-width: 320px; margin: 10px 0;">
+            <h4 style="color: #856404; margin: 0 0 10px 0; font-size: 16px;">⚠️ Error al cargar datos bancarios</h4>
+            <p style="color: #666; margin: 0 0 10px 0; font-size: 14px;">Contacta directamente para obtener la información de pago:</p>
+            <p style="color: #000; font-weight: bold; margin: 0; font-size: 14px;">
+                📧 administracion@muscleupgym.fitness<br>
+                📱 WhatsApp: 8662580594
+            </p>
+        </div>
+        '''
 
 # Configuración de la página
 st.set_page_config(
@@ -641,7 +677,7 @@ st.sidebar.markdown("""
 
 1. **Realiza la transferencia bancaria:**
    <br>
-   <img src="data:image/png;base64,""" + str(base64.b64encode(open('/home/runner/work/MUPAI/MUPAI/Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png', 'rb').read()).decode()) + """" alt="Cuenta bancaria Muscle Up Gym" style="max-width:320px;border-radius:12px;">
+   """ + load_banking_image_base64() + """
    <br>
 2. Envía tu comprobante por correo y WhatsApp.
 3. Agenda tu medición inicial (presencial o virtual).
