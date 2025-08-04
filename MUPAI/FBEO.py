@@ -32,10 +32,36 @@ st.markdown("""
     .stButton>button:hover {background: #fff; color: #ffb300;}
     .stAlert, .stSuccess, .stInfo, .stWarning, .stError {border-radius: 8px;}
     </style>
-    <div class="logo-container">
-        <img src="LOGO (1).png" class="logo-img" alt="MUPAI Logo">
-    </div>
 """, unsafe_allow_html=True)
+
+# Try to load and display logo with error handling
+try:
+    import os
+    logo_path = "../LOGO.png"  # Relative path from MUPAI subdirectory
+    if os.path.exists(logo_path):
+        st.markdown(f"""
+        <div class="logo-container">
+            <img src="{logo_path}" class="logo-img" alt="MUPAI Logo">
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div class="logo-container">
+            <div style="padding: 20px; background-color: #333; border: 2px solid #ffb300; border-radius: 8px; text-align: center;">
+                <h4 style="color: #ffb300; margin: 0;">⚠️ Logo no disponible</h4>
+                <p style="color: #fff; margin: 5px 0 0 0;">MUPAI Training</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+except Exception as e:
+    st.markdown("""
+    <div class="logo-container">
+        <div style="padding: 20px; background-color: #333; border: 2px solid #ffb300; border-radius: 8px; text-align: center;">
+            <h4 style="color: #ffb300; margin: 0;">⚠️ Error al cargar logo</h4>
+            <p style="color: #fff; margin: 5px 0 0 0;">MUPAI Training</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ---------- PIE DE PÁGINA STREAMLIT ----------
 def pie_streamlit():
@@ -92,7 +118,21 @@ def render_tabla(tabla):
 # ---------- PDF CON PIE DE PÁGINA Y LOGO ----------
 class PDFConPie(FPDF):
     def header(self):
-        self.image("LOGO (1).png", x=60, y=8, w=90)
+        import os
+        logo_path = "../LOGO.png"  # Relative path from MUPAI subdirectory
+        try:
+            if os.path.exists(logo_path):
+                self.image(logo_path, x=60, y=8, w=90)
+            else:
+                # Fallback: draw a text-based logo
+                self.set_font('Arial', 'B', 16)
+                self.set_text_color(255, 179, 0)  # Orange color
+                self.cell(0, 20, 'MUPAI TRAINING', 0, 1, 'C')
+        except Exception as e:
+            # Fallback: draw a text-based logo
+            self.set_font('Arial', 'B', 16)
+            self.set_text_color(255, 179, 0)  # Orange color
+            self.cell(0, 20, 'MUPAI TRAINING', 0, 1, 'C')
         self.ln(30)
     def footer(self):
         self.set_y(-15)
