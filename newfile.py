@@ -1565,6 +1565,20 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
+    st.markdown("""
+    <div style="background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin: 15px 0;">
+        <h4 style="color: #856404; margin: 0 0 10px 0;">📋 Instrucciones de Pago</h4>
+        <p style="color: #856404; margin: 0 0 10px 0; font-size: 16px;">
+            <strong>Paso importante:</strong> Después de realizar la transferencia del monto exacto, 
+            debes enviar el comprobante de pago a:
+        </p>
+        <ul style="color: #856404; margin: 0; font-size: 16px; font-weight: bold;">
+            <li>📱 <strong>WhatsApp/Teléfono:</strong> 8662580594</li>
+            <li>📧 <strong>Correo:</strong> administracion@muscleupgym.fitness</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Imagen de la tarjeta bancaria
     st.markdown("### 💳 Información de Transferencia")
     st.markdown("""
@@ -1586,7 +1600,11 @@ elif st.session_state.page == "planes_costos":
         <h3>🍽️ Plan de Nutrición Personalizada</h3>
         <p><strong>Duración:</strong> 6 semanas</p>
         <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
@@ -1610,7 +1628,11 @@ elif st.session_state.page == "planes_costos":
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
         <p><strong>Duración:</strong> 8 semanas</p>
         <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
@@ -1634,7 +1656,11 @@ elif st.session_state.page == "planes_costos":
         <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
         <p><strong>Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas</p>
         <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
@@ -1730,7 +1756,11 @@ elif st.session_state.page == "planes_costos":
     <div class="questionnaire-container">
         <h3>🎯 Cuestionarios Según Tu Plan</h3>
         <p>Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios:</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
         <h4>📊 Para TODOS los planes:</h4>
         <ul>
             <li><strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal</li>
@@ -1822,7 +1852,7 @@ elif st.session_state.page == "contacto":
     - **Instagram:** [@mup_lindavista](https://www.instagram.com/mup_lindavista?igsh=MWVhaHBvMmxib3hweQ==) | [@erickmuscleup](https://www.instagram.com/erickmuscleup?igsh=MXZrZ2l0bmZ3MGtleQ==)
     - **Sitio Web:** [www.muscleupgym.fitness](https://www.muscleupgym.fitness)
 
-    &gt; ¡Agenda tu cita y recibe asesoría profesional!
+    > ¡Agenda tu cita y recibe asesoría profesional!
     """, unsafe_allow_html=True)
 
 # Footer
