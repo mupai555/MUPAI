@@ -1600,7 +1600,11 @@ elif st.session_state.page == "planes_costos":
         <h3>🍽️ Plan de Nutrición Personalizada</h3>
         <p><strong>Duración:</strong> 6 semanas</p>
         <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
@@ -1624,7 +1628,11 @@ elif st.session_state.page == "planes_costos":
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
         <p><strong>Duración:</strong> 8 semanas</p>
         <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
@@ -1648,7 +1656,11 @@ elif st.session_state.page == "planes_costos":
         <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
         <p><strong>Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas</p>
         <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
@@ -1744,7 +1756,11 @@ elif st.session_state.page == "planes_costos":
     <div class="questionnaire-container">
         <h3>🎯 Cuestionarios Según Tu Plan</h3>
         <p>Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios:</p>
-        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
         <h4>📊 Para TODOS los planes:</h4>
         <ul>
             <li><strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal</li>
