@@ -1796,44 +1796,13 @@ elif st.session_state.page == "planes_costos":
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
-    st.markdown("""
-    <div class="section-header">
-        <h2>👨‍🎓 Acerca del Profesional</h2>
-    </div>
-    """, unsafe_allow_html=True)
+    # Display only two centered images without any text or headers
     
-    st.markdown("""
-    <div class="professional-profile">
-        <h3>🎓 Erick Francisco De Luna Hernández</h3>
-        <p><strong>Maestría en Fuerza y Acondicionamiento</strong></p>
-        <p><strong>Ciencias del Ejercicio - UANL</strong></p>
-        
-        <h4>🏆 Especialidades:</h4>
-        <ul>
-            <li>Entrenamiento basado en evidencia científica</li>
-            <li>Periodización del entrenamiento</li>
-            <li>Nutrición deportiva y composición corporal</li>
-            <li>Análisis biomecánico del movimiento</li>
-            <li>Programas de recomposición corporal</li>
-        </ul>
-        
-        <h4>📚 Formación Académica:</h4>
-        <ul>
-            <li>Maestría en Ciencias del Ejercicio - UANL</li>
-            <li>Certificación en Fuerza y Acondicionamiento</li>
-            <li>Especialización en Nutrición Deportiva</li>
-            <li>Cursos avanzados en Biomecánica</li>
-        </ul>
-        
-        <h4>💼 Experiencia Profesional:</h4>
-        <ul>
-            <li>+5 años en entrenamiento personalizado</li>
-            <li>Desarrollo de programas digitales de fitness</li>
-            <li>Consultoría nutricional especializada</li>
-            <li>Investigación en ciencias del ejercicio</li>
-        </ul>
-    </div>
-    """, unsafe_allow_html=True)
+    # First image - large and centered
+    st.image("Copia de Anfitrión_20250809_125513_0000.png", use_container_width=True)
+    
+    # Second image - centered below the first one
+    st.image("20250728_220454.jpg", use_container_width=True)
 
 elif st.session_state.page == "contacto":
     st.markdown("""
