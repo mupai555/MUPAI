@@ -778,77 +778,34 @@ def show_main_questionnaire():
     """Display the main questionnaire interface."""
     
     # =============================================================================
-    # ABOUT THE PROFESSIONAL SECTION
+    # ABOUT ME SECTION
     # =============================================================================
     
     st.markdown("""
     <div style="background: #f5f5f5; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
         <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">
-            👨‍⚕️ Acerca del Profesional
+            👨‍⚕️ Acerca de mí
         </h2>
     </div>
     """, unsafe_allow_html=True)
     
-    # Professional photos section - showing both required images before biography
-    st.markdown("### 📸 Presentación Profesional")
+    # Main professional image - large and centered
+    st.markdown("<div style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
+    main_image_html = create_image_html(
+        "Copia de Anfitrión_20250809_125513_0000.png", 
+        "Imagen Principal Profesional", 
+        800  # Large width for main focal image
+    )
+    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{main_image_html}</div>", unsafe_allow_html=True)
     
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("#### Foto Profesional")
-        # Professional photo using base64
-        professional_photo_html = create_image_html(
-            "20250802_100455.png", 
-            "Foto Profesional", 
-            400
-        )
-        st.markdown(professional_photo_html, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("#### Diploma y Certificaciones")
-        # Certificate/diploma using base64
-        certificate_html = create_image_html(
-            "20250728_220454.jpg", 
-            "Diploma y Certificaciones Profesionales", 
-            400
-        )
-        st.markdown(certificate_html, unsafe_allow_html=True)
-    
-    st.markdown("<br><br>", unsafe_allow_html=True)
-    
-    # Professional biography and information
-    st.markdown("### 📋 Información Académica y Profesional")
-    
-    col1, col2 = st.columns([1, 2])
-    
-    with col1:
-        # Additional professional image (existing one)
-        try:
-            from PIL import Image
-            personal_photo = Image.open("Diseño sin título_20250728_062559_0000.png")
-            st.image(personal_photo, width=300, caption="Imagen Profesional Adicional")
-        except:
-            st.info("👤 Foto profesional adicional")
-    
-    with col2:
-        st.markdown("""
-        **Certificaciones Profesionales:**
-        - Especialista en Nutrición Deportiva
-        - Entrenador Personal Certificado
-        - Especialista en Composición Corporal
-        - Diseño de Programas de Entrenamiento Personalizado
-        
-        **Experiencia:**
-        - Más de 500 clientes transformados
-        - Especialización en recomposición corporal
-        - Metodología científica basada en evidencia
-        - Seguimiento personalizado y detallado
-        
-        **Enfoque:**
-        Aplicación de metodologías científicas actualizadas para la optimización 
-        del balance energético y la composición corporal, con seguimiento 
-        personalizado y ajustes constantes según los progresos individuales.
-        """)
+    # Secondary image - centered below the main one
+    secondary_image_html = create_image_html(
+        "20250728_220454.jpg", 
+        "Imagen Secundaria Profesional", 
+        600  # Slightly smaller but still prominent
+    )
+    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{secondary_image_html}</div>", unsafe_allow_html=True)
+    st.markdown("</div>", unsafe_allow_html=True)
     
     # Main Logo
     st.markdown("<br>", unsafe_allow_html=True)
