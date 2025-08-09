@@ -678,29 +678,7 @@ def enviar_email_resultados(destinatario, asunto, contenido):
 if 'page' not in st.session_state:
     st.session_state.page = "inicio"
 
-# Barra lateral con planes y costos
-st.sidebar.markdown("""
-## 🏋️‍♂️ Planes y Costos Muscle Up Gym
 
-| Plan                                    | Costo      | Beneficios principales                                        |
-|------------------------------------------|------------|---------------------------------------------------------------|
-| Alimentación Personalizada               | $350 MXN   | Plan semanal, adaptado a tus objetivos y gustos               |
-| Entrenamiento Personalizado              | $350 MXN   | Rutina semanal, adaptada a tus horarios y nivel               |
-| Entrenamiento + Nutrición (combinado)    | $600 MXN   | Ambos servicios, seguimiento y asesoría directa               |
-""")
-
-st.sidebar.markdown("""
-### 🛒 ¿Cómo adquirir tu plan?
-
-1. **Realiza la transferencia bancaria:**
-   <br>
-   """ + load_banking_image_base64() + """
-   <br>
-2. Envía tu comprobante por correo y WhatsApp.
-3. Agenda tu medición inicial (presencial o virtual).
-4. Llena los cuestionarios en la web.
-5. Recibe tu plan personalizado en 3 a 5 días hábiles.
-""", unsafe_allow_html=True)
 
 # Navegación principal
 st.sidebar.markdown("---")
@@ -708,6 +686,9 @@ st.sidebar.markdown("### 📋 Navegación")
 
 if st.sidebar.button("🏠 Inicio", use_container_width=True):
     st.session_state.page = "inicio"
+
+if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
+    st.session_state.page = "planes_costos"
 
 st.sidebar.markdown("### 📋 Cuestionarios Especializados")
 
@@ -1567,6 +1548,221 @@ elif st.session_state.page == "antojos_alimentarios":
         if submitted:
             st.success("✅ **¡Evaluación completada con éxito!**")
             st.info("📧 **Tu evaluación de antojos será enviada a tu entrenador personal.**")
+
+# ==================== PÁGINA DE PLANES Y COSTOS ====================
+elif st.session_state.page == "planes_costos":
+    st.markdown("""
+    <div class="section-header">
+        <h2>💸 Planes y Costos</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>🎯 Primer Paso: Elije el Plan Adecuado</h3>
+        <p>El primer paso para transformar tu físico y salud es <strong>elegir el plan que mejor se adapte a tus objetivos</strong>. 
+        Una vez seleccionado, realiza la transferencia del monto exacto a la tarjeta bancaria que se muestra a continuación.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Imagen de la tarjeta bancaria
+    st.markdown("### 💳 Información de Transferencia")
+    st.markdown("""
+    <div style="text-align: center; margin: 2rem 0;">
+    """ + load_banking_image_base64() + """
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Planes detallados
+    st.markdown("""
+    <div class="section-header">
+        <h2>📋 Nuestros Planes Profesionales</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan 1: Nutrición Personalizada
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🍽️ Plan de Nutrición Personalizada</h3>
+        <p><strong>Duración:</strong> 6 semanas</p>
+        <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
+        
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $450 MXN</li>
+        </ul>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Evaluación inicial completa con bioimpedancia</li>
+            <li>6 menús semanales adaptados (calorías, macros, micronutrientes)</li>
+            <li>Personalización según preferencias alimentarias</li>
+            <li>Evaluación final con medición corporal</li>
+            <li>Ajustes adicionales desde $150 MXN</li>
+            <li>Menús extra desde $100 MXN</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan 2: Entrenamiento Personalizado
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>💪 Plan de Entrenamiento Personalizado</h3>
+        <p><strong>Duración:</strong> 8 semanas</p>
+        <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
+        
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $450 MXN</li>
+        </ul>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Evaluación inicial con cuestionario "Designing Your Training"</li>
+            <li>Plan personalizado en volumen, frecuencia e intensidad</li>
+            <li>Adaptación a tu horario y nivel de experiencia</li>
+            <li>Entrega profesional en formato PDF</li>
+            <li>Evaluación final de progresos</li>
+            <li>Progresiones y variaciones incluidas</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan 3: Plan Combinado
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
+        <p><strong>Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas</p>
+        <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
+        
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $800 MXN</li>
+        </ul>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Ambos planes completos (nutrición + entrenamiento)</li>
+            <li>Evaluación inicial y final con bioimpedancia</li>
+            <li>Integración total entre dieta y entrenamiento</li>
+            <li>Seguimiento coordinado de progreso</li>
+            <li><strong>Ahorro de $100 MXN (internos) o $100 MXN (externos)</strong></li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Mecánica de adquisición
+    st.markdown("""
+    <div class="section-header">
+        <h2>📝 Mecánica de Adquisición - Paso a Paso</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>🔄 Proceso Completo de Adquisición</h3>
+        <ol style="font-size: 1.1rem; line-height: 1.8;">
+            <li><strong>Selección del Plan:</strong> Elige el plan que mejor se adapte a tus objetivos y presupuesto</li>
+            <li><strong>Transferencia Bancaria:</strong> Realiza la transferencia del monto exacto a la cuenta mostrada arriba</li>
+            <li><strong>Envío de Comprobante:</strong> Envía tu comprobante de pago por:
+                <ul>
+                    <li>📧 Correo: administracion@muscleupgym.fitness</li>
+                    <li>📱 WhatsApp: 8662580594</li>
+                </ul>
+            </li>
+            <li><strong>Programación de Medición:</strong> Agenda tu medición corporal inicial (ver detalles abajo)</li>
+            <li><strong>Acceso a Cuestionarios:</strong> Se autoriza el acceso a los cuestionarios especializados</li>
+            <li><strong>Llenado de Cuestionarios:</strong> Completa los cuestionarios correspondientes a tu plan</li>
+            <li><strong>Entrega del Plan:</strong> Recibe tu plan personalizado en 3 a 5 días hábiles</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Explicación sobre medición corporal
+    st.markdown("""
+    <div class="section-header">
+        <h2>📏 Medición Corporal</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="metric-card">
+            <h3>🏠 Usuarios Internos (Miembros del Gym)</h3>
+            <p><strong>Ubicación:</strong> Instalaciones de Muscle Up Gym</p>
+            <p><strong>Equipo:</strong> Bioimpedancia profesional</p>
+            <p><strong>Incluye:</strong></p>
+            <ul>
+                <li>Medición con bioimpedancia</li>
+                <li>Antropometría completa</li>
+                <li>Asesoría presencial</li>
+                <li>Programación de cita incluida</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="metric-card">
+            <h3>🌍 Usuarios Externos (Foráneos)</h3>
+            <p><strong>Modalidad:</strong> Por cuenta propia</p>
+            <p><strong>Requerimiento:</strong> Medición local</p>
+            <p><strong>Incluye:</strong></p>
+            <ul>
+                <li>Guía detallada para medición</li>
+                <li>Recomendaciones de equipos</li>
+                <li>Asesoría virtual incluida</li>
+                <li>Validación de datos por el profesional</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Direccionamiento a cuestionarios
+    st.markdown("""
+    <div class="section-header">
+        <h2>📝 Acceso a Cuestionarios Especializados</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>🎯 Cuestionarios Según Tu Plan</h3>
+        <p>Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios:</p>
+        
+        <h4>📊 Para TODOS los planes:</h4>
+        <ul>
+            <li><strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal</li>
+        </ul>
+        <h4>🍽️ Para planes de ALIMENTACIÓN:</h4>
+        <ul>
+            <li><strong>FOOD PREFERENCES:</strong> Análisis detallado de patrones y preferencias alimentarias</li>
+            <li><strong>FOOD CRAVINGS:</strong> Evaluación de antojos alimentarios (versión población mexicana)</li>
+        </ul>
+        <h4>💪 Para planes de ENTRENAMIENTO:</h4>
+        <ul>
+            <li><strong>DESIGNING YOUR TRAINING:</strong> Cuestionario especializado para diseño de rutinas de entrenamiento</li>
+        </ul>
+        <h4>🔥 Para plan COMBINADO:</h4>
+        <ul>
+            <li><strong>TODOS los cuestionarios anteriores</strong> para una evaluación integral completa</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Nota final
+    st.markdown("""
+    <div class="results-container">
+        <h3>⏰ Tiempo de Entrega</h3>
+        <p style="font-size: 1.2rem; text-align: center; margin: 0;">
+            <strong>Los planes se entregan de 3 a 5 días hábiles</strong> tras completar la medición corporal y los cuestionarios correspondientes.
+        </p>
+        <p style="text-align: center; margin-top: 1rem;">
+            💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
