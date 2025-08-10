@@ -1607,8 +1607,8 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $450 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $550 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $700 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
@@ -1616,7 +1616,6 @@ elif st.session_state.page == "planes_costos":
             <li>6 menús semanales adaptados (calorías, macros, micronutrientes)</li>
             <li>Personalización según preferencias alimentarias</li>
             <li>Evaluación final con medición corporal</li>
-            <li>Ajustes adicionales desde $150 MXN</li>
             <li>Menús extra desde $100 MXN</li>
         </ul>
     </div>
@@ -1635,8 +1634,8 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $350 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $450 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $650 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $800 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
@@ -1663,8 +1662,8 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $800 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $1050 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $1350 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
