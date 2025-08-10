@@ -690,16 +690,16 @@ if st.sidebar.button("🏠 Inicio", use_container_width=True):
 if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
     st.session_state.page = "planes_costos"
 
-st.sidebar.markdown("### 📋 Cuestionarios Especializados")
+st.sidebar.markdown("### 🧪 TEST MUPAI")
 
-if st.sidebar.button("⚡ Balance Energético Óptimo", use_container_width=True):
-    st.session_state.page = "balance_energetico"
+if st.sidebar.button("BODY AND ENERGY", use_container_width=True):
+    st.session_state.page = "body_and_energy"
 
-if st.sidebar.button("🍽️ Patrones y Preferencias Alimenticias", use_container_width=True):
-    st.session_state.page = "preferencias_alimentarias"
+if st.sidebar.button("FOOD PREFERENCES", use_container_width=True):
+    st.session_state.page = "food_preferences"
 
-if st.sidebar.button("🧁 Antojos Alimentarios", use_container_width=True):
-    st.session_state.page = "antojos_alimentarios"
+if st.sidebar.button("DESIGNING YOUR TRAINING", use_container_width=True):
+    st.session_state.page = "designing_training"
 
 st.sidebar.markdown("---")
 
@@ -1790,6 +1790,46 @@ elif st.session_state.page == "planes_costos":
         <p style="text-align: center; margin-top: 1rem;">
             💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
         </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ==================== NUEVAS PÁGINAS TEST MUPAI ====================
+elif st.session_state.page == "body_and_energy":
+    st.markdown("""
+    <div class="section-header">
+        <h2>BODY AND ENERGY</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>Pronto disponible.</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
+elif st.session_state.page == "food_preferences":
+    st.markdown("""
+    <div class="section-header">
+        <h2>FOOD PREFERENCES</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>Pronto disponible.</h3>
+    </div>
+    """, unsafe_allow_html=True)
+
+elif st.session_state.page == "designing_training":
+    st.markdown("""
+    <div class="section-header">
+        <h2>DESIGNING YOUR TRAINING</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>Pronto disponible.</h3>
     </div>
     """, unsafe_allow_html=True)
 
