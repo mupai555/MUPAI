@@ -1616,7 +1616,7 @@ elif st.session_state.page == "planes_costos":
             <li>6 menús semanales adaptados (calorías, macros, micronutrientes)</li>
             <li>Personalización según preferencias alimentarias</li>
             <li>Evaluación final con medición corporal</li>
-            <li>Menús extra desde $100 MXN</li>
+            <li>Menús extra desde $100 (internos) $150 (externos) MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -1671,7 +1671,7 @@ elif st.session_state.page == "planes_costos":
             <li>Evaluación inicial y final con bioimpedancia</li>
             <li>Integración total entre dieta y entrenamiento</li>
             <li>Seguimiento coordinado de progreso</li>
-            <li><strong>Ahorro de $100 MXN (internos) o $100 MXN (externos)</strong></li>
+            <li><strong>Ahorro de $150 MXN (internos) o $150 MXN (externos)</strong></li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
