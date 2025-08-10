@@ -637,39 +637,270 @@ def main():
     """Main application interface with page navigation."""
     
     # =============================================================================
-    # SIDEBAR NAVIGATION
+    # MAIN NAVIGATION WITH TABS
     # =============================================================================
     
-    with st.sidebar:
+    # Create main tabs for navigation
+    tab1, tab2, tab3 = st.tabs(["🏠 Inicio", "📊 Cuestionario", "ℹ️ Sobre MUPAI"])
+    
+    with tab1:
+        show_home_page()
+    
+    with tab2:
+        show_main_questionnaire()
+    
+    with tab3:
+        show_about_page()
+
+
+def show_home_page():
+    """Display the action-oriented home page."""
+    
+    # =============================================================================
+    # HERO SECTION WITH LOGO AND CTA
+    # =============================================================================
+    
+    # Logo Section - Large and Prominent
+    st.markdown("<br>", unsafe_allow_html=True)
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            from PIL import Image
+            logo = Image.open("LOGO.png")
+            st.image(logo, width=500)
+        except:
+            st.markdown("""
+            <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); border-radius: 15px;">
+                <h1 style="color: #000; font-size: 3rem; margin: 0;">🏢 MUPAI</h1>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Hero Header with CTA
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; margin-bottom: 3rem;
+                box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
+        <h1 style="color: #000; font-size: 3rem; font-weight: bold; margin-bottom: 1rem;
+                   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            ⚡ Transforma Tu Composición Corporal
+        </h1>
+        <h2 style="color: #333; font-size: 1.5rem; margin-bottom: 2rem; font-weight: 400;">
+            Sistema Científico Avanzado de Balance Energético y Macronutrientes
+        </h2>
+        <p style="color: #444; font-size: 1.2rem; margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+            Obtén un análisis personalizado basado en ciencia para alcanzar tus objetivos de composición corporal 
+            con precisión y resultados garantizados.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # CALL TO ACTION SECTION
+    # =============================================================================
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🚀 ¡COMENZAR EVALUACIÓN AHORA!", type="primary", use_container_width=True):
+            st.session_state.switch_to_questionnaire = True
+            st.rerun()
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Secondary CTA
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("💰 Ver Planes y Precios", use_container_width=True):
+            st.session_state.show_plans = True
+            st.rerun()
+    
+    # =============================================================================
+    # BENEFITS SECTION
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="margin: 3rem 0;">
+        <h2 style="text-align: center; color: #333; font-size: 2.5rem; margin-bottom: 2rem;">
+            🎯 ¿Por Qué Elegir MUPAI?
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Benefits cards
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
         st.markdown("""
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <h2>🏠 Navegación</h2>
+        <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+                    padding: 2rem; border-radius: 15px; color: white; height: 300px;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.1); text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🔬</div>
+            <h3 style="margin-bottom: 1rem;">Ciencia Avanzada</h3>
+            <p>Evaluación basada en las metodologías científicas más actualizadas:
+            Mifflin-St Jeor, Katch-McArdle, Pittsburgh Sleep Quality, PSS-4 Stress Scale.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+                    padding: 2rem; border-radius: 15px; color: white; height: 300px;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.1); text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">🎯</div>
+            <h3 style="margin-bottom: 1rem;">100% Personalizado</h3>
+            <p>Análisis único basado en tu composición corporal, actividad física, 
+            calidad de sueño, nivel de estrés y objetivos específicos.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+                    padding: 2rem; border-radius: 15px; color: white; height: 300px;
+                    box-shadow: 0 6px 20px rgba(0,0,0,0.1); text-align: center;">
+            <div style="font-size: 4rem; margin-bottom: 1rem;">📊</div>
+            <h3 style="margin-bottom: 1rem;">Resultados Precisos</h3>
+            <p>Asignación inteligente de macronutrientes con Factor de Recuperación 
+            Inteligente (FRI) y determinación automática de objetivos.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    
+    # =============================================================================
+    # HOW IT WORKS SECTION
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0;
+                border-left: 5px solid #FFCC00; box-shadow: 0 6px 20px rgba(0,0,0,0.1);">
+        <h2 style="text-align: center; color: #333; font-size: 2.5rem; margin-bottom: 3rem;">
+            🔍 ¿Cómo Funciona?
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Process steps
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #FFCC00;">
+            <h3 style="color: #FFCC00; margin-bottom: 1rem;">
+                <span style="background: #FFCC00; color: #000; padding: 0.5rem; border-radius: 50%; margin-right: 1rem;">1</span>
+                Evaluación Integral
+            </h3>
+            <p style="color: #555; font-size: 1.1rem;">
+                Completa un cuestionario científico avanzado que evalúa tu composición corporal, 
+                actividad física, calidad de sueño y nivel de estrés.
+            </p>
         </div>
         """, unsafe_allow_html=True)
         
-        # Page navigation
-        page = st.selectbox(
-            "Selecciona una sección:",
-            ["🏠 Cuestionario Principal", "💰 Planes y Tarifas"],
-            index=0
-        )
+        st.markdown("""
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #74b9ff;">
+            <h3 style="color: #74b9ff; margin-bottom: 1rem;">
+                <span style="background: #74b9ff; color: #fff; padding: 0.5rem; border-radius: 50%; margin-right: 1rem;">3</span>
+                Plan Personalizado
+            </h3>
+            <p style="color: #555; font-size: 1.1rem;">
+                Recibe un plan de macronutrientes completamente personalizado con 
+                justificación científica y recomendaciones específicas.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #00b894;">
+            <h3 style="color: #00b894; margin-bottom: 1rem;">
+                <span style="background: #00b894; color: #fff; padding: 0.5rem; border-radius: 50%; margin-right: 1rem;">2</span>
+                Análisis Científico
+            </h3>
+            <p style="color: #555; font-size: 1.1rem;">
+                Nuestro sistema aplica algoritmos avanzados para calcular tu gasto energético 
+                total y determinar automáticamente tu objetivo corporal óptimo.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
         
-        st.markdown("---")
+        st.markdown("""
+        <div style="background: white; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-left: 4px solid #fd79a8;">
+            <h3 style="color: #fd79a8; margin-bottom: 1rem;">
+                <span style="background: #fd79a8; color: #fff; padding: 0.5rem; border-radius: 50%; margin-right: 1rem;">4</span>
+                Seguimiento Profesional
+            </h3>
+            <p style="color: #555; font-size: 1.1rem;">
+                Nuestro coach MUPAI revisa tus resultados y te contacta en 24-48 horas 
+                para el seguimiento y ajustes necesarios.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
     
     # =============================================================================
-    # PAGE ROUTING
+    # PROFESSIONAL SHOWCASE
     # =============================================================================
     
-    if page == "💰 Planes y Tarifas":
-        show_plans_page()
-    else:
-        show_main_questionnaire()
-
-
-def show_plans_page():
-    """Display the plans and pricing page."""
+    st.markdown("""
+    <div style="margin: 3rem 0;">
+        <h2 style="text-align: center; color: #333; font-size: 2.5rem; margin-bottom: 2rem;">
+            👨‍⚕️ Tu Coach Profesional
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
     
-    # Main Logo
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
+        main_image_html = create_image_html(
+            "Copia de Anfitrión_20250809_125513_0000.png", 
+            "Coach Profesional MUPAI", 
+            400
+        )
+        st.markdown(f"<div style='text-align: center; margin: 2rem 0;'>{main_image_html}</div>", unsafe_allow_html=True)
+    
+    with col2:
+        secondary_image_html = create_image_html(
+            "20250728_220454.jpg", 
+            "Entrenamiento Profesional", 
+            400
+        )
+        st.markdown(f"<div style='text-align: center; margin: 2rem 0;'>{secondary_image_html}</div>", unsafe_allow_html=True)
+    
+    # =============================================================================
+    # FINAL CTA
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; margin: 3rem 0;
+                color: white; box-shadow: 0 8px 25px rgba(0,0,0,0.2);">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; margin-bottom: 1rem;">
+            🏆 ¡Comienza Tu Transformación Hoy!
+        </h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; opacity: 0.9;">
+            Únete a cientos de personas que ya han transformado su composición corporal con MUPAI
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        if st.button("🚀 ¡EMPEZAR AHORA - ES GRATIS!", type="primary", use_container_width=True):
+            st.session_state.switch_to_questionnaire = True
+            st.rerun()
+
+
+def show_about_page():
+    """Display the About MUPAI page with institutional information."""
+    
+    # Logo
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -682,132 +913,161 @@ def show_plans_page():
     
     # Header
     st.markdown("""
-    <div class="main-header">
-        <h1>💰 PLANES Y TARIFAS</h1>
-        <p>Servicios Profesionales de Nutrición y Entrenamiento Personalizado</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # =============================================================================
-    # PLANS AND PRICING CONTENT
-    # =============================================================================
-    
-    # Nutrition Plan
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 100%); 
-                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: #000;
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
+                padding: 2rem; border-radius: 15px; text-align: center; margin-bottom: 2rem;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2>🍽️ Plan de Nutrición Personalizada – 6 semanas</h2>
-        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
-            <li>Evaluación inicial (bioimpedancia + cuestionarios)</li>
-            <li>6 menús adaptados (calorías, macros, micronutrientes, preferencias)</li>
-            <li>Evaluación final con medición corporal</li>
-            <li>Ajustes desde $150 MXN | Menús extra desde $100 MXN</li>
-        </ul>
-        <h2 style="text-align: center; margin-top: 2rem; background: rgba(0,0,0,0.1); 
-                   padding: 1rem; border-radius: 10px;">💰 Precio: $750 MXN</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Training Plan
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); 
-                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2>💪 Plan de Entrenamiento Personalizado – 8 semanas</h2>
-        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
-            <li>Evaluación inicial con Designing Your Training</li>
-            <li>Plan personalizado en volumen, frecuencia, intensidad</li>
-            <li>Entrega profesional en PDF</li>
-            <li>Evaluación final de progresos</li>
-        </ul>
-        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.2); 
-                   padding: 1rem; border-radius: 10px;">💰 Precio: $850 MXN</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Combined Plan
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%); 
-                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2>🔥 Plan Combinado – Entrenamiento + Nutrición</h2>
-        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
-            <li>Incluye ambos planes completos</li>
-            <li>Evaluación inicial y final con bioimpedancia</li>
-            <li>Integración total entre dieta y entrenamiento</li>
-        </ul>
-        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.3); 
-                   padding: 1rem; border-radius: 10px;">💰 Precio único: $1,500 MXN</h2>
-        <p style="text-align: center; font-weight: bold; background: rgba(255,255,255,0.2); 
-                  padding: 1rem; border-radius: 10px; margin-top: 1rem; font-size: 1.2rem;">
-            🎁 Ahorro: $100 MXN
+        <h1 style="color: #000; font-size: 2.5rem; font-weight: bold; margin: 0;
+                   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            ℹ️ Sobre MUPAI
+        </h1>
+        <p style="color: #333; font-size: 1.2rem; margin-top: 1rem;">
+            Conoce nuestra misión, visión y compromiso contigo
         </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Purchase Process
+    # =============================================================================
+    # MISSION
+    # =============================================================================
+    
     st.markdown("""
-    <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; 
-                border-left: 5px solid #FFCC00; color: #000; margin-bottom: 2rem;
+    <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+                padding: 2rem; border-radius: 15px; color: white; margin-bottom: 2rem;
                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-        <h2>📝 Mecánica de Adquisición:</h2>
-        <ol style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
-            <li>Selecciona el plan que mejor se adapte a ti</li>
-            <li>Realiza la transferencia a la tarjeta bancaria</li>
-            <li>Programa tu medición corporal (en Muscle Up Gym o por tu cuenta si eres foráneo)</li>
-            <li>Se autoriza el acceso a los cuestionarios para personalizar tu plan</li>
-            <li>Tras contestar los cuestionarios, el plan se entrega en 3 a 5 días hábiles</li>
-        </ol>
+        <h2 style="margin-bottom: 1rem;">🎯 Nuestra Misión</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            En MUPAI, nos dedicamos a democratizar el acceso a la nutrición deportiva científica 
+            y personalizada. Nuestra misión es proporcionar herramientas avanzadas de evaluación 
+            nutricional basadas en evidencia científica para que cada persona pueda alcanzar sus 
+            objetivos de composición corporal de manera segura, efectiva y sostenible.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.6; margin-top: 1rem;">
+            Creemos que la nutrición personalizada no debe ser un privilegio, sino un derecho 
+            accesible para todos aquellos que buscan mejorar su salud y rendimiento físico.
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Bank Card Image
-    st.markdown("### 💳 Información de Transferencia")
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        try:
-            from PIL import Image
-            bank_card_image = Image.open("Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png")
-            st.image(bank_card_image, caption="Tarjeta Bancaria para Transferencias", width=500)
-        except:
-            st.info("💳 Imagen de tarjeta bancaria disponible para transferencias")
+    # =============================================================================
+    # VISION
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+                padding: 2rem; border-radius: 15px; color: white; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">🔮 Nuestra Visión</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            Ser la plataforma líder en Latinoamérica para la evaluación científica avanzada del 
+            balance energético y asignación inteligente de macronutrientes, reconocida por la 
+            precisión de nuestros algoritmos y la efectividad de nuestros resultados.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.6; margin-top: 1rem;">
+            Aspiramos a transformar la forma en que las personas abordan su nutrición deportiva, 
+            reemplazando las aproximaciones genéricas con soluciones verdaderamente personalizadas 
+            que consideren la individualidad bioquímica, fisiológica y de estilo de vida de cada usuario.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # INSTITUTIONAL POLICY
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+                padding: 2rem; border-radius: 15px; color: white; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2 style="margin-bottom: 1rem;">📋 Política Institucional</h2>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            MUPAI se compromete a mantener los más altos estándares de excelencia científica y 
+            ética profesional en todos nuestros servicios. Nuestras evaluaciones se basan 
+            exclusivamente en metodologías validadas por la literatura científica peer-reviewed.
+        </p>
+        <h3 style="margin-top: 1.5rem; margin-bottom: 1rem;">Principios Fundamentales:</h3>
+        <ul style="font-size: 1.1rem; line-height: 1.6;">
+            <li><strong>Evidencia Científica:</strong> Todas nuestras metodologías están respaldadas por investigación científica actual y validada.</li>
+            <li><strong>Transparencia:</strong> Proporcionamos justificación científica completa para cada recomendación.</li>
+            <li><strong>Individualización:</strong> Cada evaluación es única y considera múltiples factores biológicos y de estilo de vida.</li>
+            <li><strong>Actualización Continua:</strong> Nuestros algoritmos se actualizan regularmente con los últimos avances científicos.</li>
+            <li><strong>Confidencialidad:</strong> Toda la información personal se maneja con estricta confidencialidad y seguridad.</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # SERVICE POLICY
+    # =============================================================================
+    
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+                padding: 2rem; border-radius: 15px; color: #333; margin-bottom: 2rem;
+                border-left: 5px solid #FFCC00; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2 style="color: #333; margin-bottom: 1rem;">⚖️ Política del Servicio</h2>
+        
+        <h3 style="color: #FFCC00; margin-top: 1.5rem; margin-bottom: 1rem;">Alcance del Servicio</h3>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            MUPAI proporciona evaluaciones científicas para optimización del balance energético y 
+            asignación de macronutrientes con fines de mejora de la composición corporal y rendimiento 
+            deportivo. Nuestros servicios son complementarios y no sustituyen el consejo médico profesional.
+        </p>
+        
+        <h3 style="color: #FFCC00; margin-top: 1.5rem; margin-bottom: 1rem;">Limitaciones y Advertencias</h3>
+        <ul style="font-size: 1.1rem; line-height: 1.6;">
+            <li>Nuestras evaluaciones son para personas sanas entre 16-80 años sin condiciones médicas especiales.</li>
+            <li>Los resultados requieren supervisión profesional para implementación segura.</li>
+            <li>No proporcionamos diagnósticos médicos ni tratamientos para condiciones de salud.</li>
+            <li>Se requiere consulta médica previa si existe cualquier condición de salud diagnosticada.</li>
+        </ul>
+        
+        <h3 style="color: #FFCC00; margin-top: 1.5rem; margin-bottom: 1rem;">Responsabilidades del Usuario</h3>
+        <ul style="font-size: 1.1rem; line-height: 1.6;">
+            <li>Proporcionar información precisa y completa en todas las evaluaciones.</li>
+            <li>Implementar las recomendaciones bajo supervisión profesional apropiada.</li>
+            <li>Notificar cualquier cambio significativo en el estado de salud.</li>
+            <li>Seguir las pautas de seguridad y las advertencias proporcionadas.</li>
+        </ul>
+        
+        <h3 style="color: #FFCC00; margin-top: 1.5rem; margin-bottom: 1rem;">Garantías del Servicio</h3>
+        <ul style="font-size: 1.1rem; line-height: 1.6;">
+            <li>Análisis basado en las metodologías científicas más actualizadas.</li>
+            <li>Contacto profesional en 24-48 horas posterior a la evaluación.</li>
+            <li>Soporte técnico durante todo el proceso de evaluación.</li>
+            <li>Revisión y ajustes según evolución del usuario.</li>
+        </ul>
+        
+        <h3 style="color: #FFCC00; margin-top: 1.5rem; margin-bottom: 1rem;">Contacto Profesional</h3>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            <strong>Email:</strong> mupaitraining@outlook.com<br>
+            <strong>Tiempo de respuesta:</strong> 24-48 horas<br>
+            <strong>Disponibilidad:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # PLANS SECTION
+    # =============================================================================
+    
+    show_plans_page()
 
 
 def show_main_questionnaire():
     """Display the main questionnaire interface."""
     
-    # =============================================================================
-    # ABOUT ME SECTION
-    # =============================================================================
+    # Check if user came from home page CTA
+    if hasattr(st.session_state, 'switch_to_questionnaire') and st.session_state.switch_to_questionnaire:
+        st.session_state.switch_to_questionnaire = False
+        st.success("🎉 ¡Perfecto! Comencemos con tu evaluación científica personalizada.")
+        st.markdown("---")
     
-    st.markdown("""
-    <div style="background: #f5f5f5; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
-        <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">
-            👨‍⚕️ Acerca de mí
-        </h2>
-    </div>
-    """, unsafe_allow_html=True)
+    # Check if user wants to see plans
+    if hasattr(st.session_state, 'show_plans') and st.session_state.show_plans:
+        st.session_state.show_plans = False
+        show_plans_page()
+        return
     
-    # Main professional image - large and centered
-    st.markdown("<div style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
-    main_image_html = create_image_html(
-        "Copia de Anfitrión_20250809_125513_0000.png", 
-        "Imagen Principal Profesional", 
-        800  # Large width for main focal image
-    )
-    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{main_image_html}</div>", unsafe_allow_html=True)
-    
-    # Secondary image - centered below the main one
-    secondary_image_html = create_image_html(
-        "20250728_220454.jpg", 
-        "Imagen Secundaria Profesional", 
-        600  # Slightly smaller but still prominent
-    )
-    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{secondary_image_html}</div>", unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
-    
-    # Main Logo
+    # Logo
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
@@ -820,9 +1080,16 @@ def show_main_questionnaire():
     
     # Header
     st.markdown("""
-    <div class="main-header">
-        <h1>⚡ CUESTIONARIO AVANZADO DE BALANCE ENERGÉTICO ÓPTIMO</h1>
-        <p>Sistema Científico Inteligente para Asignación de Macronutrientes</p>
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
+                padding: 2rem; border-radius: 15px; text-align: center; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h1 style="color: #000; font-size: 2.5rem; font-weight: bold; margin: 0;
+                   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            ⚡ CUESTIONARIO AVANZADO DE BALANCE ENERGÉTICO
+        </h1>
+        <p style="color: #333; font-size: 1.2rem; margin-top: 1rem;">
+            Sistema Científico Inteligente para Asignación de Macronutrientes
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -1358,6 +1625,110 @@ def show_main_questionnaire():
             
             **Recordatorio:** Mantén tu rutina actual hasta recibir las indicaciones personalizadas del coach.
             """)
+
+
+def show_plans_page():
+    """Display the plans and pricing page."""
+    
+    # Header
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
+                padding: 2rem; border-radius: 15px; text-align: center; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h1 style="color: #000; font-size: 2.5rem; font-weight: bold; margin: 0;
+                   text-shadow: 2px 2px 4px rgba(0,0,0,0.1);">
+            💰 PLANES Y TARIFAS
+        </h1>
+        <p style="color: #333; font-size: 1.2rem; margin-top: 1rem;">
+            Servicios Profesionales de Nutrición y Entrenamiento Personalizado
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # =============================================================================
+    # PLANS AND PRICING CONTENT
+    # =============================================================================
+    
+    # Nutrition Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: #000;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>🍽️ Plan de Nutrición Personalizada – 6 semanas</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Evaluación inicial (bioimpedancia + cuestionarios)</li>
+            <li>6 menús adaptados (calorías, macros, micronutrientes, preferencias)</li>
+            <li>Evaluación final con medición corporal</li>
+            <li>Ajustes desde $150 MXN | Menús extra desde $100 MXN</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(0,0,0,0.1); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio: $750 MXN</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Training Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>💪 Plan de Entrenamiento Personalizado – 8 semanas</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Evaluación inicial con Designing Your Training</li>
+            <li>Plan personalizado en volumen, frecuencia, intensidad</li>
+            <li>Entrega profesional en PDF</li>
+            <li>Evaluación final de progresos</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.2); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio: $850 MXN</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Combined Plan
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #ff7675 0%, #fd79a8 100%); 
+                padding: 2rem; border-radius: 15px; margin-bottom: 2rem; color: white;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>🔥 Plan Combinado – Entrenamiento + Nutrición</h2>
+        <ul style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Incluye ambos planes completos</li>
+            <li>Evaluación inicial y final con bioimpedancia</li>
+            <li>Integración total entre dieta y entrenamiento</li>
+        </ul>
+        <h2 style="text-align: center; margin-top: 2rem; background: rgba(255,255,255,0.3); 
+                   padding: 1rem; border-radius: 10px;">💰 Precio único: $1,500 MXN</h2>
+        <p style="text-align: center; font-weight: bold; background: rgba(255,255,255,0.2); 
+                  padding: 1rem; border-radius: 10px; margin-top: 1rem; font-size: 1.2rem;">
+            🎁 Ahorro: $100 MXN
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Purchase Process
+    st.markdown("""
+    <div style="background: #f8f9fa; padding: 2rem; border-radius: 15px; 
+                border-left: 5px solid #FFCC00; color: #000; margin-bottom: 2rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+        <h2>📝 Mecánica de Adquisición:</h2>
+        <ol style="margin: 1rem 0; padding-left: 2rem; font-size: 1.1rem;">
+            <li>Selecciona el plan que mejor se adapte a ti</li>
+            <li>Realiza la transferencia a la tarjeta bancaria</li>
+            <li>Programa tu medición corporal (en Muscle Up Gym o por tu cuenta si eres foráneo)</li>
+            <li>Se autoriza el acceso a los cuestionarios para personalizar tu plan</li>
+            <li>Tras contestar los cuestionarios, el plan se entrega en 3 a 5 días hábiles</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Bank Card Image
+    st.markdown("### 💳 Información de Transferencia")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        try:
+            from PIL import Image
+            bank_card_image = Image.open("Copia de Copia de Copia de Copia de Copia de Tarjeta GYM_20250715_074925_0000.png")
+            st.image(bank_card_image, caption="Tarjeta Bancaria para Transferencias", width=500)
+        except:
+            st.info("💳 Imagen de tarjeta bancaria disponible para transferencias")
 
 
 # =============================================================================
