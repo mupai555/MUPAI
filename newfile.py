@@ -258,11 +258,100 @@ st.markdown("""
         border-color: #FFCC00;
     }
     
+    /* Professional About Section */
+    .professional-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-left: 5px solid #FFCC00;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .professional-header h2 {
+        color: #333;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    /* Contact Section */
+    .contact-section {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFE066 50%, #FFF2A6 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 2rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .contact-title {
+        color: #000;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-description {
+        color: #333;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+    
+    .contact-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin: 1.5rem 0;
+    }
+    
+    .contact-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        font-size: 2.5rem;
+        color: white;
+    }
+    
+    .contact-icon:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        text-decoration: none;
+        color: white;
+    }
+    
+    .contact-icon.whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    }
+    
+    .contact-icon.email {
+        background: linear-gradient(135deg, #EA4335 0%, #D33B2C 100%);
+    }
+    
+    .contact-icon.facebook {
+        background: linear-gradient(135deg, #1877F2 0%, #0C63D4 100%);
+    }
+    
+    .contact-icon.instagram {
+        background: linear-gradient(135deg, #E4405F 0%, #C13584 100%);
+    }
+    
     /* Enhanced sidebar styling for premium experience */
     .css-1d391kg, .stSidebar > div:first-child {
         background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
         border-right: 3px solid #FFCC00;
         box-shadow: 3px 0 15px rgba(255,204,0,0.2);
+        padding-top: 1rem !important;
     }
     
     /* Sidebar content styling */
@@ -274,6 +363,18 @@ st.markdown("""
         border-bottom: 2px solid #FFCC00;
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    /* Special styling for professional section title */
+    .css-1d391kg .stMarkdown h3:first-of-type {
+        color: #FFD700;
+        font-size: 1.2rem;
+        background: rgba(255,204,0,0.1);
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 2px solid #FFCC00;
+        margin-bottom: 1.5rem;
     }
     
     /* Enhanced sidebar buttons */
@@ -298,6 +399,85 @@ st.markdown("""
         transform: translateY(-2px) scale(1.03);
         box-shadow: 0 8px 20px rgba(255,204,0,0.5);
         border-color: #FFD700;
+    }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .professional-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .contact-section {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem;
+        }
+        
+        .contact-description {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icons {
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 2rem;
+        }
+        
+        /* Make images more responsive on mobile */
+        .professional-images img {
+            max-width: 100% !important;
+            height: auto;
+        }
+        
+        /* Enhanced sidebar for mobile */
+        .css-1d391kg, .stSidebar > div:first-child {
+            padding-top: 0.5rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .professional-header {
+            padding: 1rem;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.3rem;
+        }
+        
+        .contact-section {
+            padding: 1rem;
+        }
+        
+        .contact-title {
+            font-size: 1.3rem;
+        }
+        
+        .contact-description {
+            font-size: 0.9rem;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+        }
+        
+        .contact-icons {
+            gap: 0.8rem;
+        }
     }
     
     /* Mobile responsive design */
@@ -848,7 +1028,15 @@ if 'page' not in st.session_state:
 
 
 
-# Navegación principal
+# Navegación principal - reorganizada con profesional y contacto arriba
+st.sidebar.markdown("### 👨‍🎓 SOBRE EL PROFESIONAL Y CONTACTO")
+
+if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
+    st.session_state.page = "about"
+
+if st.sidebar.button("📞 Contacto", use_container_width=True):
+    st.session_state.page = "contacto"
+
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 📋 Navegación")
 
@@ -873,12 +1061,6 @@ if st.sidebar.button("DESIGNING YOUR TRAINING", use_container_width=True):
     st.session_state.page = "designing_training"
 
 st.sidebar.markdown("---")
-
-if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
-    st.session_state.page = "about"
-
-if st.sidebar.button("📞 Contacto", use_container_width=True):
-    st.session_state.page = "contacto"
 
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
@@ -2290,32 +2472,97 @@ elif st.session_state.page == "designing_training":
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
-    # Display only two centered images without any text or headers
-    
-    # First image - large and centered
-    st.image("Copia de Anfitrión_20250809_125513_0000.png", use_container_width=True)
-    
-    # Second image - centered below the first one
-    st.image("20250728_220454.jpg", use_container_width=True)
-
-elif st.session_state.page == "contacto":
+    # Professional header with subtitle
     st.markdown("""
-    <div class="section-header">
-        <h2>📞 Contacto</h2>
+    <div class="professional-header">
+        <h2>SOBRE EL PROFESIONAL Y CONTACTO</h2>
+        <p style="margin-top: 1rem; color: #666; font-size: 1rem;">👨‍⚕️ Acerca del Profesional</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Sección de contacto renovada
+    # Main professional image - large and centered with responsive styling
+    st.markdown("<div class='professional-images' style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
+    
+    # First image - large and centered using Streamlit image
+    try:
+        from PIL import Image
+        main_image = Image.open("Copia de Anfitrión_20250809_125513_0000.png")
+        st.image(main_image, caption="Imagen Principal Profesional", width=800)
+    except:
+        st.info("🏢 Imagen Principal del Profesional")
+    
+    # Second image - centered below the first one  
+    try:
+        secondary_image = Image.open("20250728_220454.jpg")
+        st.image(secondary_image, caption="Imagen Secundaria Profesional", width=600)
+    except:
+        st.info("📸 Imagen Secundaria del Profesional")
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+
+elif st.session_state.page == "contacto":
+    # Contact section with responsive styling
     st.markdown("""
-    ### 📞 Contacto Muscle Up Gym
-
-    - **Correo:** [administracion@muscleupgym.fitness](mailto:administracion@muscleupgym.fitness)
-    - **WhatsApp:** [8662580594](https://wa.me/528662580594)
-    - **Facebook:** [Muscle Up Gym](https://www.facebook.com/share/16WtR5TLw5/)
-    - **Instagram:** [@mup_lindavista](https://www.instagram.com/mup_lindavista?igsh=MWVhaHBvMmxib3hweQ==) | [@erickmuscleup](https://www.instagram.com/erickmuscleup?igsh=MXZrZ2l0bmZ3MGtleQ==)
-    - **Sitio Web:** [www.muscleupgym.fitness](https://www.muscleupgym.fitness)
-
-    > ¡Agenda tu cita y recibe asesoría profesional!
+    <div class="contact-section">
+        <h2 class="contact-title">💬 CONTACTO</h2>
+        <p class="contact-description">Da clic para comunicarte en el medio que necesites</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Contact icons using responsive layout
+    st.markdown("""
+    <div class="contact-icons">
+        <a href="https://wa.me/528662580594" target="_blank" style="text-decoration: none;">
+            <div class="contact-icon whatsapp">
+                📱
+            </div>
+        </a>
+        <a href="mailto:administracion@muscleupgym.fitness" style="text-decoration: none;">
+            <div class="contact-icon email">
+                📧
+            </div>
+        </a>
+        <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="text-decoration: none;">
+            <div class="contact-icon facebook">
+                📘
+            </div>
+        </a>
+        <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="text-decoration: none;">
+            <div class="contact-icon instagram">
+                📷
+            </div>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <p style="color: #333; font-size: 0.9rem; font-style: italic;">
+            Respuesta garantizada en 24-48 horas
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Información de contacto detallada
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 2rem; border-radius: 15px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFCC00; text-align: center; margin-bottom: 1.5rem;">📞 Información de Contacto Muscle Up Gym</h3>
+        <div style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8;">
+            <p><strong style="color: #FFCC00;">📧 Correo:</strong> administracion@muscleupgym.fitness</p>
+            <p><strong style="color: #FFCC00;">📱 WhatsApp:</strong> 8662580594</p>
+            <p><strong style="color: #FFCC00;">📘 Facebook:</strong> Muscle Up Gym</p>
+            <p><strong style="color: #FFCC00;">📷 Instagram:</strong> @mup_lindavista | @erickmuscleup</p>
+            <p><strong style="color: #FFCC00;">🌐 Sitio Web:</strong> www.muscleupgym.fitness</p>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; 
+                    background: rgba(255,204,0,0.1); border-radius: 10px;">
+            <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.2rem;">
+                ¡Agenda tu cita y recibe asesoría profesional!
+            </p>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
 
 # Footer
