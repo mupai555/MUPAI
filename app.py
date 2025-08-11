@@ -105,6 +105,164 @@ st.markdown("""
         border-left: 4px solid #FFCC00;
         margin: 0.5rem 0;
     }
+    
+    /* Professional About Section */
+    .professional-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 2rem;
+        border-left: 5px solid #FFCC00;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .professional-header h2 {
+        color: #333;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin: 0;
+    }
+    
+    /* Contact Section */
+    .contact-section {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFE066 50%, #FFF2A6 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        margin: 2rem 0;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .contact-title {
+        color: #000;
+        font-size: 1.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    
+    .contact-description {
+        color: #333;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        font-weight: 500;
+    }
+    
+    .contact-icons {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        margin: 1.5rem 0;
+    }
+    
+    .contact-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        font-size: 2.5rem;
+        color: white;
+    }
+    
+    .contact-icon:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        text-decoration: none;
+        color: white;
+    }
+    
+    .contact-icon.whatsapp {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    }
+    
+    .contact-icon.email {
+        background: linear-gradient(135deg, #EA4335 0%, #D33B2C 100%);
+    }
+    
+    .contact-icon.facebook {
+        background: linear-gradient(135deg, #1877F2 0%, #0C63D4 100%);
+    }
+    
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+        .professional-header {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.5rem;
+        }
+        
+        .contact-section {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem;
+        }
+        
+        .contact-description {
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icons {
+            gap: 1rem;
+        }
+        
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 2rem;
+        }
+        
+        /* Make images more responsive on mobile */
+        .professional-images img {
+            max-width: 100% !important;
+            height: auto;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .professional-header {
+            padding: 1rem;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.3rem;
+        }
+        
+        .contact-section {
+            padding: 1rem;
+        }
+        
+        .contact-title {
+            font-size: 1.3rem;
+        }
+        
+        .contact-description {
+            font-size: 0.9rem;
+        }
+        
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            font-size: 1.8rem;
+        }
+        
+        .contact-icons {
+            gap: 0.8rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -782,15 +940,14 @@ def show_main_questionnaire():
     # =============================================================================
     
     st.markdown("""
-    <div style="background: #f5f5f5; padding: 2rem; border-radius: 15px; margin-bottom: 2rem;">
-        <h2 style="text-align: center; color: #333; margin-bottom: 2rem;">
-            👨‍⚕️ Acerca de mí
-        </h2>
+    <div class="professional-header">
+        <h2>SOBRE EL PROFESIONAL Y CONTACTO</h2>
+        <p style="margin-top: 1rem; color: #666; font-size: 1rem;">👨‍⚕️ Acerca de mí</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Main professional image - large and centered
-    st.markdown("<div style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
+    st.markdown("<div class='professional-images' style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
     main_image_html = create_image_html(
         "Copia de Anfitrión_20250809_125513_0000.png", 
         "Imagen Principal Profesional", 
@@ -806,6 +963,64 @@ def show_main_questionnaire():
     )
     st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{secondary_image_html}</div>", unsafe_allow_html=True)
     st.markdown("</div>", unsafe_allow_html=True)
+    
+    # =============================================================================
+    # CONTACT SECTION
+    # =============================================================================
+    
+    st.markdown("""
+    <div class="contact-section">
+        <h2 class="contact-title">💬 CONTACTO</h2>
+        <p class="contact-description">Da clic para comunicarte en el medio que necesites</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Contact icons using columns for better control
+    col1, col2, col3, col4, col5 = st.columns([1, 1, 1, 1, 1])
+    
+    with col2:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="https://wa.me/message/YOUR_WHATSAPP_NUMBER" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon whatsapp" style="margin: 0 auto;">
+                    📱
+                </div>
+                <p style="color: #25D366; font-weight: bold; margin-top: 0.5rem; font-size: 0.9rem;">WhatsApp</p>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="mailto:mupaitraining@outlook.com" style="text-decoration: none;">
+                <div class="contact-icon email" style="margin: 0 auto;">
+                    📧
+                </div>
+                <p style="color: #EA4335; font-weight: bold; margin-top: 0.5rem; font-size: 0.9rem;">Email</p>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+        <div style="text-align: center;">
+            <a href="https://facebook.com/YOUR_FACEBOOK_PAGE" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon facebook" style="margin: 0 auto;">
+                    📘
+                </div>
+                <p style="color: #1877F2; font-weight: bold; margin-top: 0.5rem; font-size: 0.9rem;">Facebook</p>
+            </a>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <p style="color: #333; font-size: 0.9rem; font-style: italic;">
+            Respuesta garantizada en 24-48 horas
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Main Logo
     st.markdown("<br>", unsafe_allow_html=True)
