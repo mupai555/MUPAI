@@ -2241,6 +2241,9 @@ elif st.session_state.page == "body_and_energy":
                 <p style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.1rem;">
                     Evaluación Avanzada de Balance Energético y Composición Corporal
                 </p>
+                <p style="margin: 0.5rem 0 0 0; color: #000; font-size: 1.2rem; font-weight: bold;">
+                    👆 Da clic aquí para acceder
+                </p>
             </div>
         </a>
     </div>
@@ -2263,6 +2266,9 @@ elif st.session_state.page == "food_preferences":
                 </h2>
                 <p style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.1rem;">
                     Análisis Detallado de Patrones y Preferencias Alimentarias
+                </p>
+                <p style="margin: 0.5rem 0 0 0; color: #000; font-size: 1.2rem; font-weight: bold;">
+                    👆 Da clic aquí para acceder
                 </p>
             </div>
         </a>
@@ -2316,25 +2322,22 @@ elif st.session_state.page == "contacto":
 st.markdown("---")
 logo_base64_footer = load_logo_image_base64()
 if logo_base64_footer:
-    footer_logo_html = f'<img src="{logo_base64_footer}" style=\'width: 60px; height: 60px; border-radius: 50%; box-shadow: 0 4px 15px rgba(255,204,0,0.3);\'>'
+    footer_logo_html = f'<img src="{logo_base64_footer}" style=\'width: 120px; height: 120px; object-fit: contain;\'>'
 else:
-    footer_logo_html = '<div style="width: 60px; height: 60px; border-radius: 50%; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold;">MUP</div>'
+    footer_logo_html = '<div style="width: 120px; height: 120px; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 2rem;">MUPAI</div>'
 
 st.markdown(f"""
 <div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 10px; border: 1px solid #FFCC00;">
-    <div style='margin-bottom: 1rem;'>
+    <div style='margin-bottom: 1.5rem;'>
         {footer_logo_html}
     </div>
-    <h3 style="color: #FFCC00; margin-bottom: 1rem;">💪 MUSCLE UP GYM</h3>
-    <p style="color: #FFFFFF; margin-bottom: 0.5rem;">Tu gimnasio de confianza</p>
-    <p style="color: #FFFFFF; margin-bottom: 1rem;">Fuerza • Resistencia • Bienestar • Comunidad</p>
     <div style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
         <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="color: #4267B2; text-decoration: none;">📘 Facebook</a>
         <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
         <a href="https://wa.me/528662580594" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
         <a href="mailto:administracion@muscleupgym.fitness" style="color: #EA4335; text-decoration: none;">📧 Email</a>
+        <a href="https://muscleupgym.fitness/planes" target="_blank" style="color: #FFCC00; text-decoration: none;">🌐 Planes Matriz</a>
     </div>
-    <p style="color: #CCCCCC; font-size: 0.9rem;">© 2025 Muscle Up Gym. Todos los derechos reservados.</p>
-    <p style="color: #CCCCCC; font-size: 0.8rem;">Comprometidos con tu salud y bienestar integral</p>
+    <p style="color: #CCCCCC; font-size: 0.9rem;">© 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence</p>
 </div>
 """, unsafe_allow_html=True)
