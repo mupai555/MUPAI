@@ -263,6 +263,99 @@ st.markdown("""
             gap: 0.8rem;
         }
     }
+    
+    /* Sidebar Compact Spacing Optimization */
+    /* Target main sidebar container */
+    .css-1d391kg {
+        padding-top: 1rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    
+    .css-1d391kg .stSelectbox {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .css-1d391kg h2 {
+        margin-bottom: 0.5rem !important;
+        margin-top: 0.5rem !important;
+    }
+    
+    .css-1d391kg .stSelectbox > div {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .css-1d391kg hr {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* More specific sidebar selectors */
+    .css-1cypcdb {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+    }
+    
+    .css-1cypcdb h2 {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Selectbox specific spacing */
+    .css-1cypcdb .stSelectbox {
+        margin-top: 0.3rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .css-1cypcdb .stSelectbox > label {
+        margin-bottom: 0.3rem !important;
+    }
+    
+    /* Separator line spacing */
+    .css-1cypcdb .element-container {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* More robust sidebar targeting using multiple selectors */
+    [data-testid="stSidebar"] {
+        padding-top: 0.5rem !important;
+    }
+    
+    [data-testid="stSidebar"] h2 {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+        padding-top: 0 !important;
+        padding-bottom: 0.3rem !important;
+    }
+    
+    [data-testid="stSidebar"] .stSelectbox {
+        margin-top: 0.3rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    [data-testid="stSidebar"] .stSelectbox > label {
+        margin-bottom: 0.2rem !important;
+        padding-bottom: 0.2rem !important;
+    }
+    
+    [data-testid="stSidebar"] hr {
+        margin-top: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    [data-testid="stSidebar"] .element-container {
+        margin-bottom: 0.3rem !important;
+        padding-bottom: 0.3rem !important;
+    }
+    
+    /* Additional universal sidebar spacing reduction */
+    .css-1lcbmhc, .css-1siy2j7, .css-12ttj6m {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.3rem !important;
+        margin-top: 0.3rem !important;
+        margin-bottom: 0.3rem !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
