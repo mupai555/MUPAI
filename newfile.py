@@ -1028,17 +1028,8 @@ if 'page' not in st.session_state:
 
 
 
-# Navegación principal - reorganizada con profesional y contacto arriba
-st.sidebar.markdown("### 👨‍🎓 SOBRE EL PROFESIONAL Y CONTACTO")
-
-if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
-    st.session_state.page = "about"
-
-if st.sidebar.button("📞 Contacto", use_container_width=True):
-    st.session_state.page = "contacto"
-
-st.sidebar.markdown("---")
-st.sidebar.markdown("### 📋 Navegación")
+# Navegación principal - reorganizada según requerimientos
+st.sidebar.markdown("### 📋 NAVEGACIÓN")
 
 if st.sidebar.button("🏠 Inicio", use_container_width=True):
     st.session_state.page = "inicio"
@@ -1049,6 +1040,16 @@ if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
 if st.sidebar.button("🏢 ¿Quiénes somos?", use_container_width=True):
     st.session_state.page = "quienes_somos"
 
+st.sidebar.markdown("---")
+st.sidebar.markdown("### 👨‍🎓 SOBRE EL PROFESIONAL Y CONTACTO")
+
+if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
+    st.session_state.page = "about"
+
+if st.sidebar.button("📞 Contacto", use_container_width=True):
+    st.session_state.page = "contacto"
+
+st.sidebar.markdown("---")
 st.sidebar.markdown("### 🧪 TEST MUPAI")
 
 if st.sidebar.button("BODY AND ENERGY", use_container_width=True):
