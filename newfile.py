@@ -237,6 +237,175 @@ st.markdown("""
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(255,204,0,0.3);
     }
+    
+    /* Attractive button styles for external links */
+    .attractive-button {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFF2A6 100%);
+        padding: 2rem 3rem;
+        border-radius: 20px;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+        border: 3px solid #FFD700;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 600px;
+        margin: 0 auto;
+        display: block;
+    }
+    
+    .attractive-button:hover {
+        transform: translateY(-3px) scale(1.02);
+        box-shadow: 0 12px 35px rgba(255,204,0,0.6);
+        border-color: #FFCC00;
+    }
+    
+    /* Enhanced sidebar styling for premium experience */
+    .css-1d391kg, .stSidebar > div:first-child {
+        background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+        border-right: 3px solid #FFCC00;
+        box-shadow: 3px 0 15px rgba(255,204,0,0.2);
+    }
+    
+    /* Sidebar content styling */
+    .css-1d391kg .stMarkdown h3 {
+        color: #FFCC00;
+        font-size: 1.4rem;
+        font-weight: bold;
+        text-shadow: 1px 1px 3px rgba(255,204,0,0.5);
+        border-bottom: 2px solid #FFCC00;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Enhanced sidebar buttons */
+    .css-1d391kg .stButton > button {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+        color: #000000;
+        border: 2px solid #FFCC00;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 1.1rem;
+        padding: 0.75rem 1.5rem;
+        margin: 0.3rem 0;
+        box-shadow: 0 4px 12px rgba(255,204,0,0.3);
+        transition: all 0.3s ease;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .css-1d391kg .stButton > button:hover {
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%);
+        transform: translateY(-2px) scale(1.03);
+        box-shadow: 0 8px 20px rgba(255,204,0,0.5);
+        border-color: #FFD700;
+    }
+    
+    /* Mobile responsive design */
+    @media (max-width: 768px) {
+        .main-header {
+            padding: 1.5rem 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .main-header h1 {
+            font-size: 2rem;
+        }
+        
+        .main-header p {
+            font-size: 1rem;
+        }
+        
+        .attractive-button {
+            padding: 1.5rem 2rem;
+            margin: 2rem 1rem;
+        }
+        
+        .attractive-button h2 {
+            font-size: 1.4rem !important;
+        }
+        
+        .attractive-button p {
+            font-size: 1rem !important;
+        }
+        
+        .corporate-section, .questionnaire-container, .metric-card {
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .css-1d391kg .stButton > button {
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
+        }
+        
+        .css-1d391kg .stMarkdown h3 {
+            font-size: 1.2rem;
+        }
+        
+        /* Prevent column misalignments on small screens */
+        .stColumns {
+            flex-direction: column;
+        }
+        
+        .stColumn {
+            width: 100% !important;
+            margin-bottom: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .main-header {
+            padding: 1rem 0.5rem;
+        }
+        
+        .main-header h1 {
+            font-size: 1.6rem;
+        }
+        
+        .attractive-button {
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0.5rem;
+        }
+        
+        .attractive-button h2 {
+            font-size: 1.2rem !important;
+        }
+        
+        .attractive-button p {
+            font-size: 0.9rem !important;
+        }
+        
+        .corporate-section, .questionnaire-container, .metric-card {
+            padding: 0.8rem;
+            margin: 0.3rem 0;
+        }
+        
+        .css-1d391kg .stButton > button {
+            font-size: 0.9rem;
+            padding: 0.5rem 0.8rem;
+        }
+        
+        .css-1d391kg .stMarkdown h3 {
+            font-size: 1rem;
+        }
+    }
+    
+    /* High contrast mode for better visibility */
+    @media (prefers-contrast: high) {
+        .css-1d391kg .stButton > button {
+            border-width: 3px;
+            font-weight: 900;
+        }
+        
+        .css-1d391kg .stMarkdown h3 {
+            text-shadow: 2px 2px 4px rgba(255,204,0,0.8);
+        }
+        
+        .attractive-button {
+            border-width: 4px;
+            box-shadow: 0 10px 30px rgba(255,204,0,0.6);
+        }
+    }
 </style>  
 """, unsafe_allow_html=True)
 
@@ -2061,9 +2230,19 @@ elif st.session_state.page == "body_and_energy":
     </div>
     """, unsafe_allow_html=True)
     
+    # Attractive centered button linking to MUPAI Digital Training Science
     st.markdown("""
-    <div class="questionnaire-container">
-        <h3>Pronto disponible.</h3>
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="https://mupai-digital-training-science-fbeo.streamlit.app/" target="_blank" style="text-decoration: none;">
+            <div class="attractive-button">
+                <h2 style="margin: 0; color: #000; font-size: 1.8rem; font-weight: bold;">
+                    ⚡ ACCEDER A BODY AND ENERGY
+                </h2>
+                <p style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.1rem;">
+                    Evaluación Avanzada de Balance Energético y Composición Corporal
+                </p>
+            </div>
+        </a>
     </div>
     """, unsafe_allow_html=True)
 
@@ -2074,9 +2253,19 @@ elif st.session_state.page == "food_preferences":
     </div>
     """, unsafe_allow_html=True)
     
+    # Attractive centered button linking to Patrones Alimentarios
     st.markdown("""
-    <div class="questionnaire-container">
-        <h3>Pronto disponible.</h3>
+    <div style="text-align: center; margin: 3rem 0;">
+        <a href="https://patronesalimentarios.streamlit.app/" target="_blank" style="text-decoration: none;">
+            <div class="attractive-button">
+                <h2 style="margin: 0; color: #000; font-size: 1.8rem; font-weight: bold;">
+                    🍽️ ACCEDER A FOOD PREFERENCES
+                </h2>
+                <p style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.1rem;">
+                    Análisis Detallado de Patrones y Preferencias Alimentarias
+                </p>
+            </div>
+        </a>
     </div>
     """, unsafe_allow_html=True)
 
