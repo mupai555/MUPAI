@@ -304,28 +304,28 @@ st.markdown("""
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1.5rem;
+        gap: 2rem;
         flex-wrap: wrap;
-        margin: 1.5rem 0;
+        margin: 2rem 0;
     }
     
     .contact-icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 80px;
-        height: 80px;
+        width: 100px;
+        height: 100px;
         border-radius: 50%;
         text-decoration: none;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        font-size: 2.5rem;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        font-size: 3rem;
         color: white;
     }
     
     .contact-icon:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        transform: translateY(-8px) scale(1.05);
+        box-shadow: 0 12px 30px rgba(0,0,0,0.4);
         text-decoration: none;
         color: white;
     }
@@ -346,35 +346,52 @@ st.markdown("""
         background: linear-gradient(135deg, #E4405F 0%, #C13584 100%);
     }
     
+    .contact-icon.website {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+        color: #000000;
+    }
+    
     /* Enhanced sidebar styling for premium experience */
     .css-1d391kg, .stSidebar > div:first-child {
         background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
         border-right: 3px solid #FFCC00;
         box-shadow: 3px 0 15px rgba(255,204,0,0.2);
-        padding-top: 1rem !important;
+        padding-top: 0.5rem !important;
+    }
+    
+    /* Compact sidebar separators */
+    .css-1d391kg hr {
+        margin: 0.5rem 0 !important;
+        border-color: #FFCC00;
+        opacity: 0.3;
+    }
+    
+    /* Reduce spacing in sidebar markdown elements */
+    .css-1d391kg .stMarkdown {
+        margin-bottom: 0.5rem !important;
     }
     
     /* Sidebar content styling */
     .css-1d391kg .stMarkdown h3 {
         color: #FFCC00;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         font-weight: bold;
         text-shadow: 1px 1px 3px rgba(255,204,0,0.5);
         border-bottom: 2px solid #FFCC00;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1rem;
+        padding-bottom: 0.3rem;
+        margin-bottom: 0.8rem;
         text-align: center;
     }
     
     /* Special styling for professional section title */
     .css-1d391kg .stMarkdown h3:first-of-type {
         color: #FFD700;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         background: rgba(255,204,0,0.1);
-        padding: 0.8rem;
+        padding: 0.6rem;
         border-radius: 8px;
         border: 2px solid #FFCC00;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
     
     /* Enhanced sidebar buttons */
@@ -384,9 +401,9 @@ st.markdown("""
         border: 2px solid #FFCC00;
         border-radius: 12px;
         font-weight: bold;
-        font-size: 1.1rem;
-        padding: 0.75rem 1.5rem;
-        margin: 0.3rem 0;
+        font-size: 1rem;
+        padding: 0.5rem 1rem;
+        margin: 0.2rem 0;
         box-shadow: 0 4px 12px rgba(255,204,0,0.3);
         transition: all 0.3s ease;
         width: 100%;
@@ -431,9 +448,9 @@ st.markdown("""
         }
         
         .contact-icon {
-            width: 70px;
-            height: 70px;
-            font-size: 2rem;
+            width: 80px;
+            height: 80px;
+            font-size: 2.2rem;
         }
         
         /* Make images more responsive on mobile */
@@ -470,9 +487,9 @@ st.markdown("""
         }
         
         .contact-icon {
-            width: 60px;
-            height: 60px;
-            font-size: 1.8rem;
+            width: 70px;
+            height: 70px;
+            font-size: 2rem;
         }
         
         .contact-icons {
@@ -2514,26 +2531,46 @@ elif st.session_state.page == "contacto":
     # Contact icons using responsive layout
     st.markdown("""
     <div class="contact-icons">
-        <a href="https://wa.me/528662580594" target="_blank" style="text-decoration: none;">
-            <div class="contact-icon whatsapp">
-                📱
-            </div>
-        </a>
-        <a href="mailto:administracion@muscleupgym.fitness" style="text-decoration: none;">
-            <div class="contact-icon email">
-                📧
-            </div>
-        </a>
-        <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="text-decoration: none;">
-            <div class="contact-icon facebook">
-                📘
-            </div>
-        </a>
-        <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="text-decoration: none;">
-            <div class="contact-icon instagram">
-                📷
-            </div>
-        </a>
+        <div style="text-align: center;">
+            <a href="https://wa.me/528662580594" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon whatsapp">
+                    📱
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">WhatsApp</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="mailto:administracion@muscleupgym.fitness" style="text-decoration: none;">
+                <div class="contact-icon email">
+                    📧
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Email</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon facebook">
+                    📘
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Facebook</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon instagram">
+                    📷
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Instagram</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://muscleupgym.fitness/planes" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon website">
+                    🌐
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Página web matriz</p>
+        </div>
     </div>
     """, unsafe_allow_html=True)
     
