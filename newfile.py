@@ -180,17 +180,16 @@ st.markdown("""
     }  
     
     .logo-img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
+        max-width: 400px;
+        width: 100%;
+        height: auto;
         box-shadow: 0 8px 25px rgba(255,204,0,0.4);
-        border: 3px solid #FFCC00;
         transition: transform 0.3s ease;
-        object-fit: cover;
+        object-fit: contain;
     }
     
     .logo-img:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
         box-shadow: 0 12px 35px rgba(255,204,0,0.6);
     }
       
@@ -690,6 +689,9 @@ if st.sidebar.button("🏠 Inicio", use_container_width=True):
 if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
     st.session_state.page = "planes_costos"
 
+if st.sidebar.button("🏢 ¿Quiénes somos?", use_container_width=True):
+    st.session_state.page = "quienes_somos"
+
 st.sidebar.markdown("### 🧪 TEST MUPAI")
 
 if st.sidebar.button("BODY AND ENERGY", use_container_width=True):
@@ -711,93 +713,93 @@ if st.sidebar.button("📞 Contacto", use_container_width=True):
 
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
-    # Encabezado moderno con logo centrado
+    # Logo grande y centrado sin marco circular
     logo_base64 = load_logo_image_base64()
     if logo_base64:
         st.markdown(f"""
         <div class="logo-container">
-            <img src="{logo_base64}" class="logo-img" alt="Muscle Up Gym Logo">
+            <img src="{logo_base64}" class="logo-img" alt="MUPAI Logo">
         </div>
         """, unsafe_allow_html=True)
     else:
         st.markdown("""
         <div class="logo-container">
-            <div style="padding: 20px; background-color: #ffe6e6; border: 2px solid #ff9999; border-radius: 8px; text-align: center;">
-                <h4 style="color: #cc0000; margin: 0;">⚠️ Logo no disponible</h4>
-                <p style="color: #666; margin: 5px 0 0 0;">MUSCLE UP GYM</p>
+            <div style="padding: 30px; background-color: #333; border: 2px solid #FFCC00; border-radius: 15px; text-align: center;">
+                <h1 style="color: #FFCC00; margin: 0; font-size: 4rem;">💪 MUPAI</h1>
+                <p style="color: #FFFFFF; margin: 10px 0 0 0; font-size: 1.5rem;">Muscle Up AI</p>
             </div>
         </div>
         """, unsafe_allow_html=True)
     
-    # Sección de Misión, Visión y Políticas
-    tab1, tab2, tab3, tab4 = st.tabs(["🎯 Misión", "🔮 Visión", "📋 Política", "📘 Política del Servicio"])
+    # Título de bienvenida
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 2rem 0; border: 2px solid #FFCC00; 
+                box-shadow: 0 4px 15px rgba(255,204,0,0.3);">
+        <h1 style="color: #FFCC00; font-size: 3.5rem; font-weight: bold; 
+                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);">
+            🎯 Bienvenido a MUPAI
+        </h1>
+        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 2rem; font-weight: 500;">
+            Tu Transformación Física Basada en Ciencia e Inteligencia Artificial
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.6; max-width: 900px; 
+                  margin: 0 auto;">
+            <strong>MUPAI</strong> revoluciona el entrenamiento digital combinando 
+            <strong style="color: #FFCC00;">ciencia deportiva avanzada</strong>, 
+            <strong style="color: #FFCC00;">inteligencia artificial</strong> y 
+            <strong style="color: #FFCC00;">personalización extrema</strong> para 
+            llevarte a tu máximo potencial físico de manera segura, efectiva y sostenible.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Sección del profesional/encargado
+    st.markdown("""
+    <div class="section-header">
+        <h2>👨‍🎓 Nuestro Profesional Especializado</h2>
+    </div>
+    """, unsafe_allow_html=True)
     
-    with tab1:
+    col1, col2 = st.columns([1, 1])
+    
+    with col1:
         st.markdown("""
-        <div class="corporate-section">
-            <h3>🎯 Nuestra Misión</h3>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Hacer accesible el <strong>entrenamiento basado en ciencia</strong>, proporcionando planes completamente personalizados 
-                a través de herramientas digitales respaldadas por <strong>inteligencia artificial</strong>, datos precisos y la 
-                investigación más actualizada en ciencias del ejercicio.
+        <div class="professional-profile">
+            <h3 style="color: #FFCC00; font-size: 2rem; margin-bottom: 1rem;">
+                🏆 Coach Erick - MUPAI Training
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;">
+                <strong>Especialista en Entrenamiento Digital Basado en Ciencia</strong><br>
+                Certificado en fisiología del ejercicio y nutrición deportiva avanzada.
             </p>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Nos enfocamos en promover el <strong>desarrollo integral</strong> de nuestros usuarios y su bienestar físico y mental.
+            <div style="margin-bottom: 1.5rem;">
+                <div class="achievement-badge">🎯 +5 años experiencia</div>
+                <div class="achievement-badge">🔬 Ciencias del Ejercicio</div>
+                <div class="achievement-badge">🥇 Nutrición Deportiva</div>
+                <div class="achievement-badge">🤖 IA Aplicada</div>
+            </div>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                Experto en transformación corporal mediante metodologías científicas avanzadas, 
+                especializado en <strong style="color: #FFCC00;">balance energético inteligente</strong> 
+                y <strong style="color: #FFCC00;">asignación de macronutrientes personalizada</strong>. 
+                Pionero en la aplicación de IA para optimización de resultados físicos.
             </p>
         </div>
         """, unsafe_allow_html=True)
     
-    with tab2:
-        st.markdown("""
-        <div class="corporate-section">
-            <h3>🔮 Nuestra Visión</h3>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Convertirnos en uno de los <strong>máximos referentes a nivel global</strong> en entrenamiento digital personalizado, 
-                aprovechando las nuevas tecnologías para hacer más accesible el fitness basado en ciencia.
-            </p>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Aspiramos a <strong>transformar la experiencia del entrenamiento físico</strong>, integrando inteligencia artificial, 
-                investigación científica y herramientas digitales avanzadas que permitan a cualquier persona alcanzar su máximo potencial.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with tab3:
-        st.markdown("""
-        <div class="corporate-section">
-            <h3>📋 Nuestra Política</h3>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                En MUPAI, nuestra política está fundamentada en el <strong>compromiso con la excelencia</strong>, la ética y 
-                el servicio centrado en el usuario.
-            </p>
-            <p style="font-size: 1.1rem; line-height: 1.6;">
-                Actuamos con <strong>responsabilidad y transparencia</strong> para ofrecer soluciones tecnológicas que integren 
-                ciencia, personalización y accesibilidad, contribuyendo al bienestar integral de quienes confían en nosotros.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with tab4:
-        st.markdown("""
-        <div class="corporate-section">
-            <h3>📘 Política del Servicio</h3>
-            <p style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 1rem;">
-                En MUPAI, guiamos nuestras acciones por los siguientes principios:
-            </p>
-            <ul style="font-size: 1rem; line-height: 1.8;">
-                <li><strong>🔬 Diseñamos entrenamientos digitales</strong> que combinan personalización, datos confiables y ciencia del ejercicio.</li>
-                <li><strong>💻 Aprovechamos la tecnología</strong> para ofrecer un servicio accesible y adaptable a las necesidades de cada usuario.</li>
-                <li><strong>🔒 Respetamos y protegemos la privacidad</strong> de los datos personales, garantizando su uso responsable.</li>
-                <li><strong>🚀 Innovamos de forma continua</strong> para mejorar la experiencia y los resultados de nuestros usuarios.</li>
-                <li><strong>🤝 Promovemos valores</strong> como el esfuerzo, la constancia y el respeto en cada interacción, fomentando un ambiente de crecimiento y bienestar.</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Resto de la página de inicio con servicios, etc.
+    with col2:
+        # Aquí se muestran las imágenes del profesional
+        st.image("Copia de Anfitrión_20250809_125513_0000.png", caption="Coach Erick - Especialista MUPAI", use_container_width=True)
+
+    # Servicios principales con precios destacados
     st.markdown("""
     <div class="section-header">
         <h2>🚀 Nuestros Servicios Especializados</h2>
+        <p style="font-size: 1.3rem; color: #FFFFFF; text-align: center; margin-top: 1rem;">
+            Planes diseñados científicamente para maximizar tus resultados
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -805,45 +807,303 @@ if st.session_state.page == "inicio":
     
     with col1:
         st.markdown("""
-        <div class="metric-card">
-            <h3>⚡ Balance Energético Óptimo</h3>
-            <p>Cálculo personalizado de tu ingesta calórica ideal usando fórmulas científicas avanzadas como Katch-McArdle, evaluando tu composición corporal, nivel de actividad, calidad del sueño y estrés.</p>
-            <ul style="font-size: 0.9rem;">
-                <li>📊 TMB personalizada</li>
-                <li>🏃 Gasto energético por ejercicio</li>
-                <li>😴 Evaluación del sueño</li>
-                <li>🧠 Análisis de estrés</li>
-            </ul>
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
+                    border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);
+                    text-align: center; min-height: 450px; display: flex; flex-direction: column;">
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🍽️</div>
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+                Nutrición Personalizada
+            </h3>
+            <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
+                        margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
+                💰 $550 - $700 MXN
+            </div>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
+                <strong>Duración:</strong> 6 semanas<br><br>
+                • Evaluación inicial con bioimpedancia<br>
+                • 6 menús semanales adaptados<br>
+                • Personalización por preferencias<br>
+                • Macronutrientes científicos<br>
+                • Evaluación final completa<br>
+                • Menús extra disponibles
+            </p>
+            <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0;">
+                    ✨ Perfecto para optimizar tu alimentación
+                </p>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     
     with col2:
         st.markdown("""
-        <div class="metric-card">
-            <h3>🍽️ Preferencias Alimentarias</h3>
-            <p>Análisis detallado de tus gustos alimentarios con más de 150 opciones organizadas en 8 categorías nutricionales para crear tu perfil alimentario personalizado.</p>
-            <ul style="font-size: 0.9rem;">
-                <li>🥩 Proteínas especializadas</li>
-                <li>🍌 Frutas y vegetales</li>
-                <li>🧀 Lácteos variados</li>
-                <li>🕒 Patrones alimentarios</li>
-            </ul>
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
+                    border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);
+                    text-align: center; min-height: 450px; display: flex; flex-direction: column;">
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">💪</div>
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+                Entrenamiento Personalizado
+            </h3>
+            <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
+                        margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
+                💰 $650 - $800 MXN
+            </div>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
+                <strong>Duración:</strong> 8 semanas<br><br>
+                • Evaluación "Designing Your Training"<br>
+                • Plan personalizado volumen/intensidad<br>
+                • Adaptación a tu horario y nivel<br>
+                • Entrega profesional en PDF<br>
+                • Progresiones incluidas<br>
+                • Evaluación final de progresos
+            </p>
+            <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0;">
+                    🔥 Ideal para maximizar tu rendimiento
+                </p>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     
     with col3:
         st.markdown("""
-        <div class="metric-card">
-            <h3>🧁 Antojos Alimentarios</h3>
-            <p>Evaluación especializada para población mexicana que analiza 10 categorías de antojos con contexto cultural, identificando patrones emocionales y estrategias de control.</p>
-            <ul style="font-size: 0.9rem;">
-                <li>🇲🇽 Adaptado a México</li>
-                <li>🎭 Análisis emocional</li>
-                <li>📊 Patrones de comportamiento</li>
-                <li>💡 Estrategias personalizadas</li>
-            </ul>
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
+                    border: 3px solid #FFD700; box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+                    text-align: center; min-height: 450px; display: flex; flex-direction: column;
+                    position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 0; right: 0; background: #FFD700; 
+                        color: #000; padding: 0.5rem 1rem; font-weight: bold; 
+                        transform: rotate(45deg); transform-origin: 100% 0%;">
+                🌟 POPULAR
+            </div>
+            <div style="font-size: 3.5rem; margin-bottom: 1rem;">🔥</div>
+            <h3 style="color: #FFD700; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+                Plan Combinado
+            </h3>
+            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
+                        color: #000; padding: 1rem; border-radius: 10px; 
+                        margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
+                💰 $1,050 - $1,350 MXN
+                <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
+            </div>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
+                <strong>Lo mejor de ambos mundos</strong><br><br>
+                • Nutrición + Entrenamiento integrados<br>
+                • Evaluación inicial y final completa<br>
+                • Sinergia total entre dieta y ejercicio<br>
+                • Seguimiento coordinado<br>
+                • Resultados optimizados<br>
+                • Máximo ahorro económico
+            </p>
+            <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
+                <p style="color: #FFD700; font-weight: bold; margin: 0;">
+                    ⭐ La solución completa más efectiva
+                </p>
+            </div>
         </div>
         """, unsafe_allow_html=True)
+
+    # Llamada a la acción final
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 3rem 0; color: #000; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
+            🎯 ¡Comienza Tu Transformación Hoy!
+        </h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; font-weight: 500;">
+            Únete a cientos de personas que ya han transformado su físico con MUPAI
+        </p>
+        <div style="background: #000; color: #FFCC00; padding: 1.5rem; border-radius: 15px; 
+                    font-size: 1.2rem; font-weight: bold; display: inline-block;">
+            📧 administracion@muscleupgym.fitness<br>
+            📱 WhatsApp: 8662580594
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ==================== PÁGINA ¿QUIÉNES SOMOS? ====================
+elif st.session_state.page == "quienes_somos":
+    # Logo institucional
+    logo_base64 = load_logo_image_base64()
+    if logo_base64:
+        st.markdown(f"""
+        <div class="logo-container">
+            <img src="{logo_base64}" class="logo-img" alt="MUPAI Logo">
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div class="logo-container">
+            <div style="padding: 30px; background-color: #333; border: 2px solid #FFCC00; border-radius: 15px; text-align: center;">
+                <h1 style="color: #FFCC00; margin: 0; font-size: 4rem;">💪 MUPAI</h1>
+                <p style="color: #FFFFFF; margin: 10px 0 0 0; font-size: 1.5rem;">Muscle Up AI</p>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # Título principal
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 2rem 0; border: 2px solid #FFCC00; 
+                box-shadow: 0 4px 15px rgba(255,204,0,0.3);">
+        <h1 style="color: #FFCC00; font-size: 3.5rem; font-weight: bold; 
+                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);">
+            🏢 ¿Quiénes Somos?
+        </h1>
+        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 0; font-weight: 500;">
+            Conoce la filosofía y valores que nos impulsan
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Misión
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            🎯 Nuestra Misión
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 1.5rem; text-align: center;">
+            Hacer accesible el <strong style="color: #FFCC00;">entrenamiento basado en ciencia</strong>, 
+            proporcionando planes completamente personalizados a través de herramientas digitales 
+            respaldadas por <strong style="color: #FFCC00;">inteligencia artificial</strong>, 
+            datos precisos y la investigación más actualizada en ciencias del ejercicio.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Nos enfocamos en promover el <strong style="color: #FFCC00;">desarrollo integral</strong> 
+            de nuestros usuarios y su bienestar físico y mental, democratizando el acceso a 
+            soluciones nutricionales y de entrenamiento de clase mundial.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Visión
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            🔮 Nuestra Visión
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 1.5rem; text-align: center;">
+            Convertirnos en uno de los <strong style="color: #FFCC00;">máximos referentes a nivel global</strong> 
+            en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más 
+            accesible el fitness basado en ciencia.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Aspiramos a <strong style="color: #FFCC00;">transformar la experiencia del entrenamiento físico</strong>, 
+            integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas 
+            que permitan a cualquier persona alcanzar su máximo potencial físico de manera segura y sostenible.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Política Institucional
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            📋 Nuestra Política Institucional
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 2rem; text-align: center;">
+            En MUPAI, nuestra política está fundamentada en el <strong style="color: #FFCC00;">compromiso con la excelencia</strong>, 
+            la ética y el servicio centrado en el usuario.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Actuamos con <strong style="color: #FFCC00;">responsabilidad y transparencia</strong> para ofrecer 
+            soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo 
+            al bienestar integral de quienes confían en nosotros.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Política del Servicio
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            📘 Política del Servicio
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.8; margin-bottom: 2rem; text-align: center;">
+            En MUPAI, guiamos nuestras acciones por los siguientes principios fundamentales:
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🔬 Ciencia y Evidencia</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio 
+                    respaldada por investigación peer-reviewed.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">💻 Tecnología Avanzada</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Aprovechamos la tecnología e inteligencia artificial para ofrecer un servicio accesible 
+                    y adaptable a las necesidades de cada usuario.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🔒 Privacidad y Seguridad</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Respetamos y protegemos la privacidad de los datos personales, garantizando su uso 
+                    responsable bajo los más altos estándares de seguridad.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🚀 Innovación Continua</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios, 
+                    manteniéndonos a la vanguardia tecnológica.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🤝 Valores Fundamentales</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, 
+                    fomentando un ambiente de crecimiento y bienestar.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">⭐ Compromiso Total</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Mantenemos un compromiso inquebrantable con la excelencia, proporcionando resultados 
+                    medibles y transformaciones reales en nuestros usuarios.
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Llamada a la acción
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 3rem 0; color: #000; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
+            🤝 ¡Únete a la Revolución MUPAI!
+        </h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; font-weight: 500;">
+            Descubre por qué somos la elección de miles de personas que buscan transformar su físico con ciencia
+        </p>
+        <div style="background: #000; color: #FFCC00; padding: 1.5rem; border-radius: 15px; 
+                    font-size: 1.2rem; font-weight: bold; display: inline-block;">
+            📧 administracion@muscleupgym.fitness<br>
+            📱 WhatsApp: 8662580594
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 # ==================== CUESTIONARIO BALANCE ENERGÉTICO ====================
 elif st.session_state.page == "balance_energetico":
     st.markdown("""
