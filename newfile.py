@@ -363,6 +363,18 @@ st.markdown("""
         border-bottom: 2px solid #FFCC00;
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
+        text-align: center;
+    }
+    
+    /* Special styling for professional section title */
+    .css-1d391kg .stMarkdown h3:first-of-type {
+        color: #FFD700;
+        font-size: 1.2rem;
+        background: rgba(255,204,0,0.1);
+        padding: 0.8rem;
+        border-radius: 8px;
+        border: 2px solid #FFCC00;
+        margin-bottom: 1.5rem;
     }
     
     /* Enhanced sidebar buttons */
@@ -2471,23 +2483,20 @@ elif st.session_state.page == "about":
     # Main professional image - large and centered with responsive styling
     st.markdown("<div class='professional-images' style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
     
-    # First image - large and centered
-    st.markdown("""
-    <div style='display: flex; justify-content: center; margin: 2rem 0;'>
-        <img src="Copia de Anfitrión_20250809_125513_0000.png" alt="Imagen Principal Profesional" 
-             style="max-width: 800px; width: 100%; height: auto; border-radius: 10px; 
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-    </div>
-    """, unsafe_allow_html=True)
+    # First image - large and centered using Streamlit image
+    try:
+        from PIL import Image
+        main_image = Image.open("Copia de Anfitrión_20250809_125513_0000.png")
+        st.image(main_image, caption="Imagen Principal Profesional", width=800)
+    except:
+        st.info("🏢 Imagen Principal del Profesional")
     
     # Second image - centered below the first one  
-    st.markdown("""
-    <div style='display: flex; justify-content: center; margin: 2rem 0;'>
-        <img src="20250728_220454.jpg" alt="Imagen Secundaria Profesional" 
-             style="max-width: 600px; width: 100%; height: auto; border-radius: 10px; 
-                    box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
-    </div>
-    """, unsafe_allow_html=True)
+    try:
+        secondary_image = Image.open("20250728_220454.jpg")
+        st.image(secondary_image, caption="Imagen Secundaria Profesional", width=600)
+    except:
+        st.info("📸 Imagen Secundaria del Profesional")
     
     st.markdown("</div>", unsafe_allow_html=True)
 
