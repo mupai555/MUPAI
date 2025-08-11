@@ -1098,9 +1098,9 @@ if st.session_state.page == "inicio":
         <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.6; max-width: 900px; 
                   margin: 0 auto;">
             <strong>MUPAI</strong> revoluciona el entrenamiento digital combinando 
-            <strong style="color: #FFCC00;">ciencia deportiva avanzada</strong>, 
+            <strong style="color: #FFCC00;">ciencias del ejercicio actualizada</strong>, 
             <strong style="color: #FFCC00;">inteligencia artificial</strong> y 
-            <strong style="color: #FFCC00;">personalización extrema</strong> para 
+            <strong style="color: #FFCC00;">personalización optimizada</strong> para 
             llevarte a tu máximo potencial físico de manera segura, efectiva y sostenible.
         </p>
     </div>
@@ -1122,8 +1122,9 @@ if st.session_state.page == "inicio":
                 🏆 Coach Erick - MUPAI Training
             </h3>
             <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                <strong>Especialista en Entrenamiento Digital Basado en Ciencia</strong><br>
-                Certificado en fisiología del ejercicio y nutrición deportiva avanzada.
+                <strong>Especialista en Entrenamiento de Fuerza, Acondicionamiento, Ganancia de Masa Muscular y Perdida de Grasa 
+                Basado en Ciencia</strong><br>
+                Especialista en fisiología del ejercicio y nutrición deportiva avanzada.
             </p>
             <div style="margin-bottom: 1.5rem;">
                 <div class="achievement-badge">🎯 +5 años experiencia</div>
