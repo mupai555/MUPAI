@@ -1123,8 +1123,8 @@ if st.session_state.page == "inicio":
                 🏆 Coach Erick - MUPAI Training
             </h3>
             <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;">
-                <strong>Especialista en Entrenamiento de Fuerza, Acondicionamiento, Ganancia de Masa Muscular y Perdida de Grasa 
-                Basado en Ciencia</strong><br>
+                <strong>Especialista en Entrenamiento de Fuerza, Acondicionamiento, Ganancia de Masa Muscular y Pérdida de Grasa 
+                Basado en Ciencias del Ejercicio y la Salud.</strong><br>
                 Especialista en fisiología del ejercicio y nutrición deportiva avanzada.
             </p>
             <div style="margin-bottom: 1.5rem;">
