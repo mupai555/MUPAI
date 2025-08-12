@@ -50,6 +50,69 @@ ETA_FACTOR = 1.15  # Thermic Effect of Activity
 
 st.markdown("""
 <style>
+    /* Navigation Banner */
+    .navigation-banner {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: center;
+        color: #000;
+        position: relative;
+        z-index: 100;
+    }
+    
+    .navigation-banner h3 {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #000;
+    }
+    
+    .navigation-banner p {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #333;
+        line-height: 1.4;
+    }
+    
+    .navigation-banner .emoji {
+        font-size: 1.3rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Mobile responsiveness for banner */
+    @media (max-width: 768px) {
+        .navigation-banner {
+            padding: 0.8rem 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .navigation-banner h3 {
+            font-size: 1rem;
+        }
+        
+        .navigation-banner p {
+            font-size: 0.9rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .navigation-banner {
+            padding: 0.7rem 0.8rem;
+        }
+        
+        .navigation-banner h3 {
+            font-size: 0.95rem;
+        }
+        
+        .navigation-banner p {
+            font-size: 0.85rem;
+        }
+    }
+    
     .main-header {
         background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
         padding: 2rem;
@@ -122,6 +185,101 @@ st.markdown("""
         font-size: 1.8rem;
         font-weight: bold;
         margin: 0;
+    }
+    
+    /* Professional Images Container - Always Stacked and Centered */
+    .professional-images {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin: 2rem auto;
+        text-align: center;
+        max-width: 100%;
+    }
+    
+    .professional-images img {
+        max-width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        margin: 0 auto !important;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Ensure images are properly sized on different devices */
+    .professional-images .main-image {
+        max-width: 800px;
+        width: 100%;
+    }
+    
+    .professional-images .secondary-image {
+        max-width: 600px;
+        width: 100%;
+    }
+    
+    /* Plans Information Banner */
+    .plans-info-banner {
+        background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 50%, #6c5ce7 100%);
+        padding: 2rem;
+        border-radius: 15px;
+        margin: 2rem 0;
+        color: white;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        border-left: 5px solid #0984e3;
+    }
+    
+    .plans-info-banner h3 {
+        margin: 0 0 1rem 0;
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .plans-info-banner p {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 500;
+        line-height: 1.5;
+        color: #f1f2f6;
+    }
+    
+    .plans-info-banner .emoji {
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+    }
+    
+    /* Mobile responsiveness for plans banner */
+    @media (max-width: 768px) {
+        .plans-info-banner {
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .plans-info-banner h3 {
+            font-size: 1.2rem;
+        }
+        
+        .plans-info-banner p {
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .plans-info-banner {
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .plans-info-banner h3 {
+            font-size: 1.1rem;
+        }
+        
+        .plans-info-banner p {
+            font-size: 0.9rem;
+        }
     }
     
     /* Contact Section */
@@ -201,6 +359,19 @@ st.markdown("""
             font-size: 1.5rem;
         }
         
+        .professional-images {
+            gap: 1.5rem;
+            margin: 1.5rem auto;
+        }
+        
+        .professional-images .main-image {
+            max-width: 100%;
+        }
+        
+        .professional-images .secondary-image {
+            max-width: 100%;
+        }
+        
         .contact-section {
             padding: 1.5rem;
             margin: 1.5rem 0;
@@ -224,12 +395,6 @@ st.markdown("""
             height: 70px;
             font-size: 2rem;
         }
-        
-        /* Make images more responsive on mobile */
-        .professional-images img {
-            max-width: 100% !important;
-            height: auto;
-        }
     }
     
     @media (max-width: 480px) {
@@ -239,6 +404,11 @@ st.markdown("""
         
         .professional-header h2 {
             font-size: 1.3rem;
+        }
+        
+        .professional-images {
+            gap: 1rem;
+            margin: 1rem auto;
         }
         
         .contact-section {
@@ -363,6 +533,26 @@ st.markdown("""
 # =============================================================================
 # UTILITY FUNCTIONS
 # =============================================================================
+
+def display_navigation_banner():
+    """Display the navigation banner that promotes sidebar usage."""
+    st.markdown("""
+    <div class="navigation-banner">
+        <h3><span class="emoji">👉</span>¡Descubre todos los menús y detalles de MUPAI!</h3>
+        <p>Haz clic en el ícono <strong>☰</strong> (esquina superior izquierda) para desplegar el menú lateral y acceder a todos los menús y la información detallada de MUPAI.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
+
+def display_plans_info_banner():
+    """Display the plans information banner on the home page."""
+    st.markdown("""
+    <div class="plans-info-banner">
+        <h3><span class="emoji">📋</span>¿Quieres conocer todos los detalles y el proceso para adquirir un plan?</h3>
+        <p>Consulta el menú lateral <strong>"Planes y Costos"</strong> para ver información detallada de cada plan y la mecánica de adquisición paso a paso.</p>
+    </div>
+    """, unsafe_allow_html=True)
+
 
 def get_base64_of_image(image_path: str) -> str:
     """
@@ -920,6 +1110,9 @@ def main():
 def show_plans_page():
     """Display the plans and pricing page."""
     
+    # Navigation banner
+    display_navigation_banner()
+    
     # Main Logo
     st.markdown("<br>", unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 2, 1])
@@ -1028,6 +1221,9 @@ def show_plans_page():
 def show_main_questionnaire():
     """Display the main questionnaire interface."""
     
+    # Navigation banner
+    display_navigation_banner()
+    
     # =============================================================================
     # ABOUT ME SECTION
     # =============================================================================
@@ -1039,14 +1235,16 @@ def show_main_questionnaire():
     </div>
     """, unsafe_allow_html=True)
     
+    # Professional images - stacked, centered, and responsive
+    st.markdown("<div class='professional-images'>", unsafe_allow_html=True)
+    
     # Main professional image - large and centered
-    st.markdown("<div class='professional-images' style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
     main_image_html = create_image_html(
         "Copia de Anfitrión_20250809_125513_0000.png", 
         "Imagen Principal Profesional", 
         800  # Large width for main focal image
     )
-    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{main_image_html}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='main-image'>{main_image_html}</div>", unsafe_allow_html=True)
     
     # Secondary image - centered below the main one
     secondary_image_html = create_image_html(
@@ -1054,7 +1252,8 @@ def show_main_questionnaire():
         "Imagen Secundaria Profesional", 
         600  # Slightly smaller but still prominent
     )
-    st.markdown(f"<div style='display: flex; justify-content: center; margin: 2rem 0;'>{secondary_image_html}</div>", unsafe_allow_html=True)
+    st.markdown(f"<div class='secondary-image'>{secondary_image_html}</div>", unsafe_allow_html=True)
+    
     st.markdown("</div>", unsafe_allow_html=True)
     
     # =============================================================================
@@ -1133,6 +1332,9 @@ def show_main_questionnaire():
         <p>Sistema Científico Inteligente para Asignación de Macronutrientes</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Plans information banner
+    display_plans_info_banner()
     
     # Main questionnaire form
     with st.form("advanced_energy_balance_form"):
