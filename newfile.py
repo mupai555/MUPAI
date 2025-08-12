@@ -422,6 +422,10 @@ st.markdown("""
     /* ENHANCED MOBILE RESPONSIVE STYLES FOR PERFECT MOBILE EXPERIENCE */
     /* ========================================================================== */
     
+    /* ========================================================================== */
+    /* MOBILE FIXES FOR SPECIFIC ISSUES - ADDED FOR ISSUE RESOLUTION */
+    /* ========================================================================== */
+    
     /* Global responsive image styling */
     img {
         max-width: 100% !important;
@@ -438,11 +442,15 @@ st.markdown("""
         object-fit: contain !important;
     }
     
-    /* Professional images responsive */
-    .professional-images img {
+    /* MOBILE FIX: Professional images always responsive */
+    /* Ensures all images in professional section are properly responsive */
+    .professional-images img, 
+    .stImage img, 
+    [data-testid="stImage"] img,
+    img {
         max-width: 100% !important;
         height: auto !important;
-        object-fit: cover !important;
+        object-fit: contain !important;
         border-radius: 15px;
     }
     
@@ -840,6 +848,112 @@ st.markdown("""
         
         .corporate-section, .questionnaire-container, .metric-card {
             padding: 0.6rem !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* MOBILE FIXES FOR SPECIFIC ISSUES - TARGETED SOLUTIONS */
+    /* ========================================================================== */
+    
+    /* MOBILE FIX 1: Black and Yellow Contact Tags - Adaptive styling */
+    @media (max-width: 768px) {
+        /* Contact section black and yellow tags - Email and WhatsApp */
+        div[style*="background: #000; color: #FFCC00"] {
+            max-width: 90% !important;
+            padding: 1rem !important;
+            font-size: 1rem !important;
+            margin: 0 auto !important;
+            text-align: center !important;
+            border-radius: 10px !important;
+        }
+        
+        /* Contact information sections */
+        div[style*="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"] {
+            padding: 1.5rem 1rem !important;
+            margin: 1rem 0.5rem !important;
+        }
+    }
+    
+    /* MOBILE FIX 2: Service Policy Grid - Single Column Layout */
+    @media (max-width: 768px) {
+        /* Service Policy 6-box grid - Force single column */
+        div[style*="display: grid; grid-template-columns: 1fr 1fr"] {
+            display: grid !important;
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+            margin-top: 1rem !important;
+        }
+        
+        /* Individual policy boxes - Reduced padding and margins */
+        div[style*="background: rgba(255,204,0,0.1); padding: 2rem"] {
+            padding: 1rem !important;
+            margin-bottom: 1rem !important;
+            border-radius: 10px !important;
+        }
+        
+        /* Policy box headings */
+        div[style*="background: rgba(255,204,0,0.1)"] h4 {
+            font-size: 1.1rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+        
+        /* Policy box content */
+        div[style*="background: rgba(255,204,0,0.1)"] p {
+            font-size: 0.95rem !important;
+            line-height: 1.5 !important;
+        }
+    }
+    
+    /* MOBILE FIX 3: Contact Icons - Improved spacing and sizing */
+    @media (max-width: 768px) {
+        .contact-icons {
+            gap: 1rem !important;
+            padding: 1rem 0.5rem !important;
+        }
+        
+        .contact-icon {
+            width: 70px !important;
+            height: 70px !important;
+            font-size: 2rem !important;
+            margin: 0.5rem !important;
+        }
+        
+        /* Contact section title and description */
+        .contact-title {
+            font-size: 1.4rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .contact-description {
+            font-size: 1rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+    }
+    
+    /* MOBILE FIX 4: Ultra-small mobile devices (480px and below) */
+    @media (max-width: 480px) {
+        /* Contact tags - Even more compact */
+        div[style*="background: #000; color: #FFCC00"] {
+            font-size: 0.9rem !important;
+            padding: 0.8rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Policy boxes - Ultra compact */
+        div[style*="background: rgba(255,204,0,0.1); padding: 2rem"] {
+            padding: 0.8rem !important;
+        }
+        
+        /* Policy headings - Smaller text */
+        div[style*="background: rgba(255,204,0,0.1)"] h4 {
+            font-size: 1rem !important;
+        }
+        
+        /* Contact icons - Smaller for tiny screens */
+        .contact-icon {
+            width: 60px !important;
+            height: 60px !important;
+            font-size: 1.8rem !important;
         }
     }
 </style>  
