@@ -852,6 +852,90 @@ st.markdown("""
     }
     
     /* ========================================================================== */
+    /* PROFESSIONAL BANNER STYLES */
+    /* ========================================================================== */
+    
+    .professional-banner {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFF2A6 100%);
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        margin: 1rem 0 2rem 0;
+        border: 2px solid #FFD700;
+        box-shadow: 0 6px 20px rgba(255,204,0,0.4);
+        text-align: center;
+        color: #000;
+        font-weight: 500;
+        animation: subtle-pulse 3s ease-in-out infinite;
+    }
+    
+    .professional-banner h4 {
+        color: #000;
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+    
+    .professional-banner p {
+        color: #333;
+        margin: 0;
+        font-size: 1.1rem;
+        line-height: 1.5;
+    }
+    
+    .sidebar-icon {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #000;
+        background: rgba(0,0,0,0.1);
+        padding: 0.2rem 0.5rem;
+        border-radius: 8px;
+        display: inline-block;
+        margin: 0 0.3rem;
+    }
+    
+    @keyframes subtle-pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+    
+    /* Mobile responsive banner */
+    @media (max-width: 768px) {
+        .professional-banner {
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0 1.5rem 0;
+            border-radius: 12px;
+        }
+        
+        .professional-banner h4 {
+            font-size: 1.1rem;
+        }
+        
+        .professional-banner p {
+            font-size: 1rem;
+        }
+        
+        .sidebar-icon {
+            font-size: 1.2rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .professional-banner {
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0 1rem 0;
+        }
+        
+        .professional-banner h4 {
+            font-size: 1rem;
+        }
+        
+        .professional-banner p {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+    }
+
+    /* ========================================================================== */
     /* MOBILE FIXES FOR SPECIFIC ISSUES - TARGETED SOLUTIONS */
     /* ========================================================================== */
     
@@ -958,6 +1042,22 @@ st.markdown("""
     }
 </style>  
 """, unsafe_allow_html=True)
+
+
+def mostrar_banner_profesional():
+    """
+    Displays a professional banner encouraging users to access the sidebar menu.
+    Visible on all pages and devices.
+    """
+    st.markdown("""
+    <div class="professional-banner">
+        <h4>👉 ¡Descubre Todo el Contenido de MUPAI!</h4>
+        <p>
+            Haz clic en el ícono <span class="sidebar-icon">☰</span> en la esquina superior izquierda 
+            para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 # Funciones de cálculo
@@ -1453,6 +1553,9 @@ if st.session_state.page == "inicio":
         </div>
         """, unsafe_allow_html=True)
     
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Título de bienvenida
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
@@ -1515,6 +1618,22 @@ if st.session_state.page == "inicio":
     with col2:
         # Aquí se muestran las imágenes del profesional
         st.image("Copia de Anfitrión_20250809_125513_0000.png", caption="Coach Erick - Especialista MUPAI", use_container_width=True)
+
+    # Plans notice - directing to sidebar menu
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2rem; border-radius: 15px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.4);
+                text-align: center; color: #000;">
+        <h3 style="color: #000; font-size: 1.6rem; margin-bottom: 1rem; font-weight: bold;">
+            📋 ¿Quieres conocer todos los detalles y el proceso para adquirir un plan?
+        </h3>
+        <p style="color: #333; font-size: 1.2rem; line-height: 1.6; margin: 0; font-weight: 500;">
+            Consulta el menú lateral <strong>'Planes y Costos'</strong> para ver información detallada 
+            y la mecánica de adquisición paso a paso.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Servicios principales con precios destacados
     st.markdown("""
@@ -1650,6 +1769,9 @@ if st.session_state.page == "inicio":
 
 # ==================== PÁGINA ¿QUIÉNES SOMOS? ====================
 elif st.session_state.page == "quienes_somos":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Logo institucional
     logo_base64 = load_logo_image_base64()
     if logo_base64:
@@ -1829,6 +1951,9 @@ elif st.session_state.page == "quienes_somos":
     """, unsafe_allow_html=True)
 # ==================== CUESTIONARIO BALANCE ENERGÉTICO ====================
 elif st.session_state.page == "balance_energetico":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>🧮 Cuestionario Científico Avanzado - Balance Energético Óptimo</h2>
@@ -2534,6 +2659,9 @@ elif st.session_state.page == "antojos_alimentarios":
 
 # ==================== PÁGINA DE PLANES Y COSTOS ====================
 elif st.session_state.page == "planes_costos":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>💸 Planes y Costos</h2>
@@ -2778,6 +2906,9 @@ elif st.session_state.page == "planes_costos":
 
 # ==================== NUEVAS PÁGINAS TEST MUPAI ====================
 elif st.session_state.page == "body_and_energy":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>BODY AND ENERGY</h2>
@@ -2804,6 +2935,9 @@ elif st.session_state.page == "body_and_energy":
     """, unsafe_allow_html=True)
 
 elif st.session_state.page == "food_preferences":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>FOOD PREFERENCES</h2>
@@ -2844,6 +2978,9 @@ elif st.session_state.page == "designing_training":
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Professional header with subtitle
     st.markdown("""
     <div class="professional-header">
@@ -2852,27 +2989,32 @@ elif st.session_state.page == "about":
     </div>
     """, unsafe_allow_html=True)
     
-    # Main professional image - large and centered with responsive styling
-    st.markdown("<div class='professional-images' style='text-align: center; margin: 2rem 0;'>", unsafe_allow_html=True)
+    # Main professional images - improved responsive styling
+    st.markdown("""
+    <div class='professional-images' style='text-align: center; margin: 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;'>
+    """, unsafe_allow_html=True)
     
-    # First image - large and centered using Streamlit image
+    # First image - responsive with max width
     try:
         from PIL import Image
         main_image = Image.open("Copia de Anfitrión_20250809_125513_0000.png")
-        st.image(main_image, caption="Imagen Principal Profesional", width=800)
+        st.image(main_image, caption="Imagen Principal Profesional", use_container_width=True)
     except:
         st.info("🏢 Imagen Principal del Profesional")
     
-    # Second image - centered below the first one  
+    # Second image - responsive with max width
     try:
         secondary_image = Image.open("20250728_220454.jpg")
-        st.image(secondary_image, caption="Imagen Secundaria Profesional", width=600)
+        st.image(secondary_image, caption="Imagen Secundaria Profesional", use_container_width=True)
     except:
         st.info("📸 Imagen Secundaria del Profesional")
     
     st.markdown("</div>", unsafe_allow_html=True)
 
 elif st.session_state.page == "contacto":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Contact section with responsive styling
     st.markdown("""
     <div class="contact-section">
