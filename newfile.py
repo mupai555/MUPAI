@@ -418,150 +418,236 @@ st.markdown("""
         border-color: #FFD700;
     }
     
-    /* Mobile Responsive Styles */
-    @media (max-width: 768px) {
-        .professional-header {
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .professional-header h2 {
-            font-size: 1.5rem;
-        }
-        
-        .contact-section {
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-        }
-        
-        .contact-title {
-            font-size: 1.5rem;
-        }
-        
-        .contact-description {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .contact-icons {
-            gap: 1rem;
-        }
-        
-        .contact-icon {
-            width: 80px;
-            height: 80px;
-            font-size: 2.2rem;
-        }
-        
-        /* Make images more responsive on mobile */
-        .professional-images img {
-            max-width: 100% !important;
-            height: auto;
-        }
-        
-        /* Enhanced sidebar for mobile */
-        .css-1d391kg, .stSidebar > div:first-child {
-            padding-top: 0.5rem !important;
-        }
+    /* ========================================================================== */
+    /* ENHANCED MOBILE RESPONSIVE STYLES FOR PERFECT MOBILE EXPERIENCE */
+    /* ========================================================================== */
+    
+    /* Global responsive image styling */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block;
     }
     
-    @media (max-width: 480px) {
-        .professional-header {
-            padding: 1rem;
-        }
-        
-        .professional-header h2 {
-            font-size: 1.3rem;
-        }
-        
-        .contact-section {
-            padding: 1rem;
-        }
-        
-        .contact-title {
-            font-size: 1.3rem;
-        }
-        
-        .contact-description {
-            font-size: 0.9rem;
-        }
-        
-        .contact-icon {
-            width: 70px;
-            height: 70px;
-            font-size: 2rem;
-        }
-        
-        .contact-icons {
-            gap: 0.8rem;
-        }
+    /* Enhanced logo responsiveness */
+    .logo-img {
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
     }
     
-    /* Mobile responsive design */
+    /* Professional images responsive */
+    .professional-images img {
+        max-width: 100% !important;
+        height: auto !important;
+        object-fit: cover !important;
+        border-radius: 15px;
+    }
+    
+    /* Ensure text wrapping for long content */
+    * {
+        word-wrap: break-word !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Mobile First Approach - Tablet and Mobile */
     @media (max-width: 768px) {
-        .main-header {
-            padding: 1.5rem 1rem;
-            margin-bottom: 1rem;
-        }
-        
-        .main-header h1 {
-            font-size: 2rem;
-        }
-        
-        .main-header p {
-            font-size: 1rem;
-        }
-        
-        .attractive-button {
-            padding: 1.5rem 2rem;
-            margin: 2rem 1rem;
-        }
-        
-        .attractive-button h2 {
-            font-size: 1.4rem !important;
-        }
-        
-        .attractive-button p {
-            font-size: 1rem !important;
-        }
-        
-        .corporate-section, .questionnaire-container, .metric-card {
-            padding: 1rem;
-            margin: 0.5rem 0;
-        }
-        
-        .css-1d391kg .stButton > button {
-            font-size: 1rem;
-            padding: 0.6rem 1rem;
-        }
-        
-        .css-1d391kg .stMarkdown h3 {
-            font-size: 1.2rem;
-        }
-        
-        /* Prevent column misalignments on small screens */
+        /* Force column stacking */
         .stColumns {
-            flex-direction: column;
+            flex-direction: column !important;
+            gap: 1rem !important;
         }
         
         .stColumn {
             width: 100% !important;
-            margin-bottom: 1rem;
+            max-width: 100% !important;
+            margin-bottom: 1rem !important;
+            padding: 0 0.5rem !important;
         }
-    }
-    
-    @media (max-width: 480px) {
+        
+        /* Header responsive adjustments */
         .main-header {
-            padding: 1rem 0.5rem;
+            padding: 1.5rem 1rem !important;
+            margin-bottom: 1rem !important;
+            border-radius: 10px !important;
         }
         
         .main-header h1 {
-            font-size: 1.6rem;
+            font-size: 2rem !important;
+            line-height: 1.2 !important;
         }
         
+        .main-header p {
+            font-size: 1rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Professional header responsive */
+        .professional-header {
+            padding: 1.5rem 1rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.5rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        /* Contact section responsive */
+        .contact-section {
+            padding: 1.5rem 1rem !important;
+            margin: 1.5rem 0.5rem !important;
+        }
+        
+        .contact-title {
+            font-size: 1.5rem !important;
+        }
+        
+        .contact-description {
+            font-size: 1rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        .contact-icons {
+            gap: 1rem !important;
+            flex-wrap: wrap !important;
+            justify-content: center !important;
+        }
+        
+        .contact-icon {
+            width: 80px !important;
+            height: 80px !important;
+            font-size: 2.2rem !important;
+            margin: 0.5rem !important;
+        }
+        
+        /* Button responsive adjustments */
         .attractive-button {
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0.5rem;
+            padding: 1.5rem 1rem !important;
+            margin: 1.5rem 0.5rem !important;
+            max-width: calc(100% - 1rem) !important;
+            border-radius: 15px !important;
+        }
+        
+        .attractive-button h2 {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        .attractive-button p {
+            font-size: 1rem !important;
+            line-height: 1.4 !important;
+        }
+        
+        /* Cards and sections responsive */
+        .corporate-section, .questionnaire-container, .metric-card {
+            padding: 1rem !important;
+            margin: 0.5rem 0 !important;
+            border-radius: 10px !important;
+            max-width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        .professional-profile {
+            padding: 1.5rem 1rem !important;
+            margin: 1rem 0 !important;
+        }
+        
+        .results-container {
+            padding: 1.5rem 1rem !important;
+            margin: 1rem 0 !important;
+        }
+        
+        /* Logo container responsive */
+        .logo-container {
+            padding: 1.5rem 1rem !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        /* Sidebar responsive */
+        .css-1d391kg .stButton > button {
+            font-size: 0.9rem !important;
+            padding: 0.6rem 1rem !important;
+            width: 100% !important;
+            margin: 0.2rem 0 !important;
+        }
+        
+        .css-1d391kg .stMarkdown h3 {
+            font-size: 1.1rem !important;
+            text-align: center !important;
+        }
+        
+        /* Enhanced sidebar for mobile */
+        .css-1d391kg, .stSidebar > div:first-child {
+            padding: 0.5rem !important;
+        }
+        
+        /* Achievement badges responsive */
+        .achievement-badge {
+            font-size: 0.8rem !important;
+            padding: 0.4rem 0.8rem !important;
+            margin: 0.2rem !important;
+            display: inline-block !important;
+        }
+    }
+    
+    /* Mobile Phone Specific - Extra Small Screens */
+    @media (max-width: 480px) {
+        /* Header ultra-mobile adjustments */
+        .main-header {
+            padding: 1rem 0.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .main-header h1 {
+            font-size: 1.6rem !important;
+        }
+        
+        .main-header p {
+            font-size: 0.9rem !important;
+        }
+        
+        /* Professional header ultra-mobile */
+        .professional-header {
+            padding: 1rem 0.5rem !important;
+        }
+        
+        .professional-header h2 {
+            font-size: 1.3rem !important;
+        }
+        
+        /* Contact section ultra-mobile */
+        .contact-section {
+            padding: 1rem 0.5rem !important;
+            margin: 1rem 0.25rem !important;
+        }
+        
+        .contact-title {
+            font-size: 1.3rem !important;
+        }
+        
+        .contact-description {
+            font-size: 0.9rem !important;
+        }
+        
+        .contact-icon {
+            width: 70px !important;
+            height: 70px !important;
+            font-size: 2rem !important;
+        }
+        
+        .contact-icons {
+            gap: 0.8rem !important;
+        }
+        
+        /* Button ultra-mobile adjustments */
+        .attractive-button {
+            padding: 1rem 0.8rem !important;
+            margin: 1rem 0.25rem !important;
+            max-width: calc(100% - 0.5rem) !important;
         }
         
         .attractive-button h2 {
@@ -572,35 +658,188 @@ st.markdown("""
             font-size: 0.9rem !important;
         }
         
+        /* Cards ultra-mobile */
         .corporate-section, .questionnaire-container, .metric-card {
-            padding: 0.8rem;
-            margin: 0.3rem 0;
+            padding: 0.8rem 0.6rem !important;
+            margin: 0.3rem 0 !important;
         }
         
+        .professional-profile {
+            padding: 1rem 0.8rem !important;
+        }
+        
+        .results-container {
+            padding: 1rem 0.8rem !important;
+        }
+        
+        /* Logo container ultra-mobile */
+        .logo-container {
+            padding: 1rem 0.5rem !important;
+        }
+        
+        /* Sidebar ultra-mobile */
         .css-1d391kg .stButton > button {
-            font-size: 0.9rem;
-            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem !important;
+            padding: 0.5rem 0.8rem !important;
         }
         
         .css-1d391kg .stMarkdown h3 {
-            font-size: 1rem;
+            font-size: 1rem !important;
+        }
+        
+        /* Achievement badges ultra-mobile */
+        .achievement-badge {
+            font-size: 0.7rem !important;
+            padding: 0.3rem 0.6rem !important;
+        }
+        
+        /* Column adjustments for ultra-mobile */
+        .stColumn {
+            padding: 0 0.25rem !important;
         }
     }
     
     /* High contrast mode for better visibility */
     @media (prefers-contrast: high) {
         .css-1d391kg .stButton > button {
-            border-width: 3px;
-            font-weight: 900;
+            border-width: 3px !important;
+            font-weight: 900 !important;
         }
         
         .css-1d391kg .stMarkdown h3 {
-            text-shadow: 2px 2px 4px rgba(255,204,0,0.8);
+            text-shadow: 2px 2px 4px rgba(255,204,0,0.8) !important;
         }
         
         .attractive-button {
-            border-width: 4px;
-            box-shadow: 0 10px 30px rgba(255,204,0,0.6);
+            border-width: 4px !important;
+            box-shadow: 0 10px 30px rgba(255,204,0,0.6) !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* COMPREHENSIVE MOBILE RESPONSIVENESS BLOCK - FINAL OPTIMIZATIONS */
+    /* ========================================================================== */
+    
+    /* Universal mobile responsiveness reset */
+    @media screen and (max-width: 768px) {
+        /* Prevent horizontal overflow */
+        body, html, .stApp {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }
+        
+        /* Universal container responsiveness */
+        .main .block-container {
+            padding: 1rem 0.5rem !important;
+            max-width: 100% !important;
+        }
+        
+        /* Universal image responsiveness with object-fit */
+        img, .stImage > div > img {
+            max-width: 100% !important;
+            width: auto !important;
+            height: auto !important;
+            object-fit: contain !important;
+            border-radius: 10px !important;
+        }
+        
+        /* Force all columns to stack vertically */
+        [data-testid="column"] {
+            width: 100% !important;
+            min-width: 100% !important;
+            flex: none !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        /* Prevent button and card overflow */
+        .stButton, .stSelectbox, .stTextInput, .stNumberInput {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        
+        .stButton > button {
+            width: 100% !important;
+            max-width: 100% !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+        }
+        
+        /* Universal text wrapping */
+        p, span, div, h1, h2, h3, h4, h5, h6 {
+            word-wrap: break-word !important;
+            word-break: break-word !important;
+            overflow-wrap: break-word !important;
+            hyphens: auto !important;
+        }
+        
+        /* Responsive spacing */
+        .stMarkdown {
+            padding: 0 0.5rem !important;
+        }
+        
+        /* Mobile form elements */
+        .stForm {
+            padding: 1rem 0.5rem !important;
+        }
+        
+        /* Mobile metrics */
+        [data-testid="metric-container"] {
+            padding: 0.5rem !important;
+            margin: 0.25rem 0 !important;
+        }
+        
+        /* Mobile tabs */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 0.5rem !important;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            padding: 0.5rem !important;
+            font-size: 0.9rem !important;
+        }
+    }
+    
+    /* Extra small mobile devices */
+    @media screen and (max-width: 480px) {
+        .main .block-container {
+            padding: 0.5rem 0.25rem !important;
+        }
+        
+        [data-testid="column"] {
+            margin-bottom: 0.5rem !important;
+        }
+        
+        .stMarkdown {
+            padding: 0 0.25rem !important;
+        }
+        
+        .stForm {
+            padding: 0.8rem 0.25rem !important;
+        }
+        
+        [data-testid="metric-container"] {
+            padding: 0.3rem !important;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            padding: 0.3rem !important;
+            font-size: 0.8rem !important;
+        }
+    }
+    
+    /* Landscape mobile optimization */
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+        .main-header {
+            padding: 0.8rem !important;
+        }
+        
+        .main-header h1 {
+            font-size: 1.4rem !important;
+        }
+        
+        .corporate-section, .questionnaire-container, .metric-card {
+            padding: 0.6rem !important;
         }
     }
 </style>  
