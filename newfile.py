@@ -2149,9 +2149,398 @@ def mostrar_body_and_energy():
 
     # Continuar solo si los datos personales están completos
     if st.session_state.get("body_energy_datos_completos", False):
-        # Aquí continuaría el resto del cuestionario...
-        st.success("✅ ¡Datos personales completados!")
-        st.info("🚧 El resto del cuestionario se está completando. Continuará en la siguiente actualización.")
+        # ==================== BLOQUE 1: DATOS ANTROPOMÉTRICOS ====================
+        with st.expander("📊 **Paso 1: Composición Corporal y Antropometría**", expanded=True):
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                # Ensure peso has a valid default
+                peso_default = 70.0
+                peso_value = st.session_state.get("body_energy_peso", peso_default)
+                if peso_value == '' or peso_value is None or peso_value == 0:
+                    peso_value = peso_default
+                peso = st.number_input(
+                    "⚖️ Peso corporal (kg)",
+                    min_value=30.0,
+                    max_value=200.0,
+                    value=safe_float(peso_value, peso_default),
+                    step=0.1,
+                    key="body_energy_peso",
+                    help="Peso en ayunas, sin ropa"
+                )
+            with col2:
+                # Ensure estatura has a valid default
+                estatura_default = 170
+                estatura_value = st.session_state.get("body_energy_estatura", estatura_default)
+                if estatura_value == '' or estatura_value is None or estatura_value == 0:
+                    estatura_value = estatura_default
+                estatura = st.number_input(
+                    "📏 Estatura (cm)",
+                    min_value=120,
+                    max_value=220,
+                    value=safe_int(estatura_value, estatura_default),
+                    key="body_energy_estatura",
+                    help="Medida sin zapatos"
+                )
+            with col3:
+                metodo_grasa = st.selectbox(
+                    "📊 Método de medición de grasa",
+                    ["Omron HBF-516 (BIA)", "InBody 270 (BIA profesional)", "Bod Pod (Pletismografía)", "DEXA (Gold Standard)"],
+                    key="body_energy_metodo_grasa",
+                    help="Método usado para medir tu porcentaje de grasa corporal"
+                )
+
+            # Segunda fila
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                grasa_corporal_default = 15.0
+                grasa_corporal_value = st.session_state.get("body_energy_grasa_corporal", grasa_corporal_default)
+                grasa_corporal = st.number_input(
+                    "🧮 % Grasa corporal",
+                    min_value=3.0,
+                    max_value=50.0,
+                    value=safe_float(grasa_corporal_value, grasa_corporal_default),
+                    step=0.1,
+                    key="body_energy_grasa_corporal",
+                    help="Porcentaje de grasa corporal medido"
+                )
+            
+            # Calcular valores derivados si tenemos datos completos
+            if peso > 0 and estatura > 0 and grasa_corporal > 0:
+                # Corregir porcentaje de grasa según método
+                grasa_corregida = corregir_porcentaje_grasa(grasa_corporal, metodo_grasa, sexo)
+                
+                # Calcular composición corporal
+                mlg = calcular_mlg(peso, grasa_corregida)
+                tmb = calcular_tmb_cunningham(mlg)
+                ffmi = calcular_ffmi(mlg, estatura)
+                nivel_ffmi = clasificar_ffmi(ffmi, sexo)
+                
+                # Mostrar resultados
+                with col2:
+                    st.metric("🔥 TMB (Cunningham)", f"{tmb:.0f} kcal", "Tasa metabólica basal")
+                with col3:
+                    st.metric("💪 FFMI", f"{ffmi:.2f}", f"Nivel: {nivel_ffmi}")
+                
+                # Información adicional
+                st.markdown(f"""
+                **📊 Análisis de Composición Corporal:**
+                - **Grasa corregida (DEXA equivalente):** {grasa_corregida:.1f}%
+                - **Masa libre de grasa:** {mlg:.1f} kg
+                - **Masa grasa:** {peso - mlg:.1f} kg
+                """)
+                
+                # Guardar valores calculados en session state
+                st.session_state.body_energy_grasa_corregida = grasa_corregida
+                st.session_state.body_energy_mlg = mlg
+                st.session_state.body_energy_tmb = tmb
+                st.session_state.body_energy_ffmi = ffmi
+                st.session_state.body_energy_nivel_ffmi = nivel_ffmi
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # ==================== BLOQUE 2: EXPERIENCIA Y RENDIMIENTO ====================
+        with st.expander("💪 **Paso 2: Experiencia de Entrenamiento**", expanded=True):
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            
+            experiencia = st.selectbox(
+                "¿Cuál es tu experiencia en entrenamiento de fuerza?",
+                [
+                    "Principiante (0-6 meses)",
+                    "Principiante avanzado (6-18 meses)",
+                    "Intermedio (1.5-3 años)",
+                    "Intermedio avanzado (3-5 años)",
+                    "Avanzado (5+ años)"
+                ],
+                key="body_energy_experiencia"
+            )
+            
+            st.markdown("### 🏋️ Evaluación Funcional")
+            st.markdown("Indica tus mejores marcas en los siguientes ejercicios:")
+            
+            # Referencias funcionales mejoradas
+            referencias_funcionales = {
+                "Hombre": {
+                    "Flexiones": {"tipo": "reps", "niveles": [("Bajo", 10), ("Promedio", 20), ("Bueno", 35), ("Avanzado", 50)]},
+                    "Dominadas": {"tipo": "reps", "niveles": [("Bajo", 2), ("Promedio", 5), ("Bueno", 10), ("Avanzado", 15)]},
+                    "Plancha": {"tipo": "tiempo", "niveles": [("Bajo", 20), ("Promedio", 40), ("Bueno", 60), ("Avanzado", 90)]},
+                },
+                "Mujer": {
+                    "Flexiones": {"tipo": "reps", "niveles": [("Bajo", 2), ("Promedio", 8), ("Bueno", 15), ("Avanzado", 25)]},
+                    "Dominadas": {"tipo": "reps", "niveles": [("Bajo", 0), ("Promedio", 1), ("Bueno", 3), ("Avanzado", 5)]},
+                    "Plancha": {"tipo": "tiempo", "niveles": [("Bajo", 15), ("Promedio", 30), ("Bueno", 50), ("Avanzado", 70)]},
+                }
+            }
+            
+            ejercicios_data = {}
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                ejercicios_data["Flexiones"] = st.number_input(
+                    "Flexiones (repeticiones)",
+                    min_value=0,
+                    max_value=100,
+                    value=st.session_state.get("body_energy_flexiones", 0),
+                    key="body_energy_flexiones"
+                )
+            
+            with col2:
+                ejercicios_data["Dominadas"] = st.number_input(
+                    "Dominadas (repeticiones)",
+                    min_value=0,
+                    max_value=50,
+                    value=st.session_state.get("body_energy_dominadas", 0),
+                    key="body_energy_dominadas"
+                )
+            
+            with col3:
+                ejercicios_data["Plancha"] = st.number_input(
+                    "Plancha (segundos)",
+                    min_value=0,
+                    max_value=300,
+                    value=st.session_state.get("body_energy_plancha", 0),
+                    key="body_energy_plancha"
+                )
+            
+            # Evaluar nivel en cada ejercicio
+            niveles_ejercicios = {}
+            for ejercicio, valor in ejercicios_data.items():
+                if valor > 0:
+                    refs = referencias_funcionales[sexo][ejercicio]["niveles"]
+                    for nivel, umbral in refs:
+                        if valor >= umbral:
+                            niveles_ejercicios[ejercicio] = nivel
+                        else:
+                            break
+                    if ejercicio not in niveles_ejercicios:
+                        niveles_ejercicios[ejercicio] = "Bajo"
+                else:
+                    niveles_ejercicios[ejercicio] = "Sin datos"
+            
+            # Mostrar evaluación
+            if any(valor > 0 for valor in ejercicios_data.values()):
+                st.markdown("### 📊 Evaluación de tu rendimiento:")
+                for ejercicio, nivel in niveles_ejercicios.items():
+                    valor = ejercicios_data[ejercicio]
+                    if valor > 0:
+                        unidad = "reps" if ejercicio != "Plancha" else "seg"
+                        st.write(f"**{ejercicio}:** {valor} {unidad} → **{nivel}**")
+            
+            # Guardar datos de ejercicios
+            st.session_state.body_energy_ejercicios_data = ejercicios_data
+            st.session_state.body_energy_niveles_ejercicios = niveles_ejercicios
+            st.session_state.body_energy_experiencia_texto = experiencia
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # ==================== BLOQUE 3: ACTIVIDAD FÍSICA DIARIA ====================
+        with st.expander("🚶 **Paso 3: Nivel de Actividad Física Diaria**", expanded=True):
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            st.markdown("### 📊 Evalúa tu actividad física fuera del ejercicio planificado")
+
+            def obtener_geaf(nivel_text):
+                """Devuelve el factor de actividad física (GEAF) según el nivel."""
+                valores = {
+                    "Sedentario": 1.00,
+                    "Moderadamente-activo": 1.11,
+                    "Activo": 1.25,
+                    "Muy-activo": 1.45
+                }
+                return valores.get(nivel_text, 1.00)
+            
+            # Opciones para el usuario
+            opciones_radio = [
+                "Sedentario (trabajo de oficina, <5,000 pasos/día)",
+                "Moderadamente-activo (trabajo mixto, 5,000-10,000 pasos/día)",
+                "Activo (trabajo físico, 10,000-12,500 pasos/día)",
+                "Muy-activo (trabajo muy físico, >12,500 pasos/día)"
+            ]
+            
+            nivel_actividad = st.radio(
+                "Selecciona el nivel que mejor te describe:",
+                opciones_radio,
+                key="body_energy_nivel_actividad",
+                help="No incluyas el ejercicio planificado, solo tu actividad diaria habitual"
+            )
+
+            # Extraer el texto base del nivel seleccionado
+            nivel_actividad_text = nivel_actividad.split('(')[0].strip()
+            
+            # Factores de actividad según nivel seleccionado
+            geaf = obtener_geaf(nivel_actividad_text)
+            st.session_state.body_energy_geaf = geaf
+            
+            # Mensaje resumen
+            st.success(
+                f"✅ **Tu nivel de actividad física diaria: {nivel_actividad_text}**\n\n"
+                f"- Factor GEAF: **{geaf}**\n"
+                f"- Esto multiplicará tu gasto energético basal en un {(geaf-1)*100:.0f}%"
+            )
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # ==================== BLOQUE 4: ENTRENAMIENTO DE FUERZA ====================
+        with st.expander("🏋️ **Paso 4: Entrenamiento de Fuerza**", expanded=True):
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            st.markdown("### 💪 Frecuencia de entrenamiento de fuerza")
+
+            dias_fuerza = st.slider(
+                "¿Cuántos días por semana entrenas con pesas/resistencia?",
+                min_value=0, max_value=7, value=3,
+                key="body_energy_dias_fuerza",
+                help="Solo cuenta entrenamientos de fuerza, no cardio"
+            )
+            
+            # Determinar gasto calórico por sesión según experiencia
+            experiencia_nivel_map = {
+                "Principiante (0-6 meses)": ("principiante", 300),
+                "Principiante avanzado (6-18 meses)": ("intermedio", 350),
+                "Intermedio (1.5-3 años)": ("intermedio", 350),
+                "Intermedio avanzado (3-5 años)": ("avanzado", 400),
+                "Avanzado (5+ años)": ("avanzado", 400)
+            }
+            
+            experiencia_actual = st.session_state.get("body_energy_experiencia_texto", "Intermedio (1.5-3 años)")
+            nivel_entrenamiento, kcal_sesion = experiencia_nivel_map.get(experiencia_actual, ("intermedio", 350))
+            
+            gee_semanal = dias_fuerza * kcal_sesion
+            gee_prom_dia = gee_semanal / 7
+
+            st.session_state.body_energy_kcal_sesion = kcal_sesion
+            st.session_state.body_energy_gee_semanal = gee_semanal
+            st.session_state.body_energy_gee_prom_dia = gee_prom_dia
+            st.session_state.body_energy_nivel_entrenamiento = nivel_entrenamiento
+
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Días/semana", f"{dias_fuerza} días", "Sin entrenar" if dias_fuerza == 0 else "Activo")
+            with col2:
+                st.metric("Gasto/sesión", f"{kcal_sesion} kcal", f"Nivel {nivel_entrenamiento}")
+            with col3:
+                st.metric("Promedio diario", f"{gee_prom_dia:.0f} kcal/día", f"Total: {gee_semanal} kcal/sem")
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # ==================== RESULTADO FINAL ====================
+        if all(k in st.session_state for k in ['body_energy_tmb', 'body_energy_geaf', 'body_energy_gee_prom_dia']):
+            with st.expander("📈 **RESULTADO FINAL: Tu Plan Nutricional**", expanded=True):
+                st.markdown('<div class="content-card">', unsafe_allow_html=True)
+                
+                # Obtener valores calculados
+                tmb = st.session_state.body_energy_tmb
+                geaf = st.session_state.body_energy_geaf
+                gee_prom_dia = st.session_state.body_energy_gee_prom_dia
+                grasa_corregida = st.session_state.body_energy_grasa_corregida
+                
+                # Calcular ETA automáticamente
+                if grasa_corregida <= 10 and sexo == "Hombre":
+                    eta = 1.15
+                    eta_desc = "ETA alto (muy magro, ≤10% grasa)"
+                elif grasa_corregida <= 20 and sexo == "Mujer":
+                    eta = 1.15
+                    eta_desc = "ETA alto (muy magra, ≤20% grasa)"
+                elif grasa_corregida <= 20 and sexo == "Hombre":
+                    eta = 1.12
+                    eta_desc = "ETA medio (magro, 11-20% grasa)"
+                elif grasa_corregida <= 30 and sexo == "Mujer":
+                    eta = 1.12
+                    eta_desc = "ETA medio (normal, 21-30% grasa)"
+                else:
+                    eta = 1.10
+                    eta_desc = f"ETA estándar (>{20 if sexo == 'Hombre' else 30}% grasa)"
+                
+                # Cálculo del gasto energético total
+                GE = tmb * geaf * eta + gee_prom_dia
+                
+                # Determinar fase nutricional
+                if sexo == "Hombre":
+                    if grasa_corregida < 10:
+                        fase = "Superávit recomendado: 10-15%"
+                        porcentaje = 12.5
+                    elif grasa_corregida <= 18:
+                        fase = "Mantenimiento"
+                        porcentaje = 0
+                    else:
+                        deficit_valor = min(30, max(20, int((grasa_corregida - 18) * 2 + 20)))
+                        porcentaje = -deficit_valor
+                        fase = f"Déficit recomendado: {deficit_valor}%"
+                else:  # Mujer
+                    if grasa_corregida < 16:
+                        fase = "Superávit recomendado: 10%"
+                        porcentaje = 10
+                    elif grasa_corregida <= 23:
+                        fase = "Mantenimiento"
+                        porcentaje = 0
+                    else:
+                        deficit_valor = min(30, max(20, int((grasa_corregida - 23) * 2 + 20)))
+                        porcentaje = -deficit_valor
+                        fase = f"Déficit recomendado: {deficit_valor}%"
+
+                fbeo = 1 + porcentaje / 100
+                ingesta_calorica = GE * fbeo
+                
+                # Calcular macronutrientes
+                proteina_g = round(peso * 1.8, 1)
+                proteina_kcal = proteina_g * 4
+                
+                # Grasas: 40% TMB, entre 20-40% de calorías totales
+                grasa_ideal_kcal = tmb * 0.40
+                grasa_min_kcal = ingesta_calorica * 0.20
+                grasa_max_kcal = ingesta_calorica * 0.40
+                grasa_kcal = min(max(grasa_ideal_kcal, grasa_min_kcal), grasa_max_kcal)
+                grasa_g = round(grasa_kcal / 9, 1)
+                
+                # Carbohidratos: resto de calorías
+                carbo_kcal = ingesta_calorica - proteina_kcal - grasa_kcal
+                carbo_g = round(carbo_kcal / 4, 1)
+                
+                # Mostrar resultados
+                st.markdown("### 🎯 Tu Plan Nutricional Personalizado")
+                
+                col1, col2, col3, col4 = st.columns(4)
+                with col1:
+                    st.metric("🔥 Calorías", f"{ingesta_calorica:.0f} kcal/día", 
+                             f"{ingesta_calorica/peso:.1f} kcal/kg")
+                with col2:
+                    st.metric("🥩 Proteína", f"{proteina_g} g", 
+                             f"{proteina_g/peso:.2f} g/kg")
+                with col3:
+                    st.metric("🥑 Grasas", f"{grasa_g} g", 
+                             f"{round(grasa_kcal/ingesta_calorica*100)}%")
+                with col4:
+                    st.metric("🍞 Carbohidratos", f"{carbo_g} g", 
+                             f"{round(carbo_kcal/ingesta_calorica*100)}%")
+                
+                # Desglose detallado
+                st.markdown("### 🧮 Desglose del cálculo")
+                with st.expander("Ver cálculo detallado", expanded=False):
+                    st.code(f"""
+Gasto Energético Total (GE) = TMB × GEAF × ETA + GEE
+GE = {tmb:.0f} × {geaf} × {eta} + {gee_prom_dia:.0f} = {GE:.0f} kcal
+
+Factor de Balance Energético (FBEO) = 1 + (porcentaje/100)
+FBEO = 1 + ({porcentaje}/100) = {fbeo:.2f}
+
+Ingesta Calórica = GE × FBEO
+Ingesta = {GE:.0f} × {fbeo:.2f} = {ingesta_calorica:.0f} kcal/día
+
+Distribución de macronutrientes:
+- Proteína: {proteina_g}g ({proteina_kcal:.0f} kcal) = {round(proteina_kcal/ingesta_calorica*100, 1)}%
+- Grasas: {grasa_g}g ({grasa_kcal:.0f} kcal) = {round(grasa_kcal/ingesta_calorica*100, 1)}%
+- Carbohidratos: {carbo_g}g ({carbo_kcal:.0f} kcal) = {round(carbo_kcal/ingesta_calorica*100, 1)}%
+""")
+                
+                # Guardar resultados en session state
+                st.session_state.body_energy_GE = GE
+                st.session_state.body_energy_ingesta_calorica = ingesta_calorica
+                st.session_state.body_energy_fase = fase
+                st.session_state.body_energy_proteina_g = proteina_g
+                st.session_state.body_energy_grasa_g = grasa_g
+                st.session_state.body_energy_carbo_g = carbo_g
+                
+                st.markdown('</div>', unsafe_allow_html=True)
+        
+        st.success("✅ ¡Evaluación BODY AND ENERGY completada!")
     
     # Botón para regresar al inicio
     st.markdown("---")
