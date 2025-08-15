@@ -9,8 +9,679 @@ from datetime import datetime
 import base64
 from collections import Counter
 import os
+import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
+
+# ==================== BODY AND ENERGY INTEGRATION FUNCTIONS ====================
+def validate_name_body_energy(name):
+    """
+    Valida que el nombre tenga al menos dos palabras.
+    Retorna (es_válido, mensaje_error)
+    """
+    if not name or not name.strip():
+        return False, "El nombre es obligatorio"
+    
+    # Limpiar espacios extra y dividir en palabras
+    words = name.strip().split()
+    
+    if len(words) < 2:
+        return False, "El nombre debe contener al menos dos palabras (nombre y apellido)"
+    
+    # Verificar que cada palabra tenga al menos 2 caracteres y solo contenga letras y espacios
+    for word in words:
+        if len(word) < 2:
+            return False, "Cada palabra del nombre debe tener al menos 2 caracteres"
+        if not re.match(r'^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+$', word):
+            return False, "El nombre solo puede contener letras y espacios"
+    
+    return True, ""
+
+def validate_phone_body_energy(phone):
+    """
+    Valida que el teléfono tenga exactamente 10 dígitos.
+    Retorna (es_válido, mensaje_error)
+    """
+    if not phone or not phone.strip():
+        return False, "El teléfono es obligatorio"
+    
+    # Limpiar espacios y caracteres especiales
+    clean_phone = re.sub(r'[^0-9]', '', phone.strip())
+    
+    if len(clean_phone) != 10:
+        return False, "El teléfono debe tener exactamente 10 dígitos"
+    
+    # Verificar que todos sean dígitos
+    if not clean_phone.isdigit():
+        return False, "El teléfono solo puede contener números"
+    
+    return True, ""
+
+def validate_email_body_energy(email):
+    """
+    Valida que el email tenga formato estándar.
+    Retorna (es_válido, mensaje_error)
+    """
+    if not email or not email.strip():
+        return False, "El email es obligatorio"
+    
+    # Patrón regex para email estándar
+    email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    
+    if not re.match(email_pattern, email.strip()):
+        return False, "El email debe tener un formato válido (ejemplo: usuario@dominio.com)"
+    
+    return True, ""
+
+def crear_tarjeta_body_energy(titulo, contenido, tipo="info"):
+    colores = {
+        "info": "var(--mupai-yellow)",
+        "success": "var(--mupai-success)",
+        "warning": "var(--mupai-warning)",
+        "danger": "var(--mupai-danger)"
+    }
+    color = colores.get(tipo, "var(--mupai-yellow)")
+    return f"""
+    <div class="content-card" style="border-left-color: {color};">
+        <h3 style="margin-bottom: 1rem;">{titulo}</h3>
+        <div>{contenido}</div>
+    </div>
+    """
+
+def safe_float_body_energy(value, default=0.0):
+    """Safely convert value to float, handling empty strings and None."""
+    try:
+        if value == '' or value is None:
+            return float(default)
+        return float(value)
+    except (ValueError, TypeError):
+        return float(default)
+
+def safe_int_body_energy(value, default=0):
+    """Safely convert value to int, handling empty strings and None."""
+    try:
+        if value == '' or value is None:
+            return int(default)
+        return int(value)
+    except (ValueError, TypeError):
+        return int(default)
+
+def calcular_tmb_cunningham_body_energy(mlg):
+    """Calcula el TMB usando la fórmula de Cunningham."""
+    try:
+        mlg = float(mlg)
+    except (TypeError, ValueError):
+        mlg = 0.0
+    return 370 + (21.6 * mlg)
+
+def calcular_mlg_body_energy(peso, porcentaje_grasa):
+    """Calcula la Masa Libre de Grasa."""
+    try:
+        peso = float(peso)
+        porcentaje_grasa = float(porcentaje_grasa)
+    except (TypeError, ValueError):
+        peso = 0.0
+        porcentaje_grasa = 0.0
+    return peso * (1 - porcentaje_grasa / 100)
+
+def corregir_porcentaje_grasa_body_energy(medido, metodo, sexo):
+    """
+    Corrige el porcentaje de grasa según el método de medición.
+    Si el método es Omron, ajusta con tablas especializadas por sexo.
+    Si InBody, aplica factor.
+    Si BodPod, aplica factor por sexo.
+    Si DEXA, devuelve el valor medido.
+    """
+    try:
+        medido = float(medido)
+    except (TypeError, ValueError):
+        medido = 0.0
+
+    if metodo == "Omron HBF-516 (BIA)":
+        # Tablas especializadas por sexo para conversión Omron→DEXA
+        if sexo == "Hombre":
+            tabla = {
+                5: 2.8, 6: 3.8, 7: 4.8, 8: 5.8, 9: 6.8,
+                10: 7.8, 11: 8.8, 12: 9.8, 13: 10.8, 14: 11.8,
+                15: 13.8, 16: 14.8, 17: 15.8, 18: 16.8, 19: 17.8,
+                20: 20.8, 21: 21.8, 22: 22.8, 23: 23.8, 24: 24.8,
+                25: 27.3, 26: 28.3, 27: 29.3, 28: 30.3, 29: 31.3,
+                30: 33.8, 31: 34.8, 32: 35.8, 33: 36.8, 34: 37.8,
+                35: 40.3, 36: 41.3, 37: 42.3, 38: 43.3, 39: 44.3,
+                40: 45.3
+            }
+        else:  # Mujer
+            tabla = {
+                5: 2.2, 6: 3.2, 7: 4.2, 8: 5.2, 9: 6.2,
+                10: 7.2, 11: 8.2, 12: 9.2, 13: 10.2, 14: 11.2,
+                15: 13.2, 16: 14.2, 17: 15.2, 18: 16.2, 19: 17.2,
+                20: 20.2, 21: 21.2, 22: 22.2, 23: 23.2, 24: 24.2,
+                25: 26.7, 26: 27.7, 27: 28.7, 28: 29.7, 29: 30.7,
+                30: 33.2, 31: 34.2, 32: 35.2, 33: 36.2, 34: 37.2,
+                35: 39.7, 36: 40.7, 37: 41.7, 38: 42.7, 39: 43.7,
+                40: 44.7
+            }
+        
+        grasa_redondeada = int(round(medido))
+        grasa_redondeada = min(max(grasa_redondeada, 5), 40)
+        return tabla.get(grasa_redondeada, medido)
+    elif metodo == "InBody 270 (BIA profesional)":
+        return medido * 1.02
+    elif metodo == "Bod Pod (Pletismografía)":
+        factor = 1.0 if sexo == "Mujer" else 1.03
+        return medido * factor
+    else:  # DEXA (Gold Standard) u otros
+        return medido
+
+def calcular_ffmi_body_energy(mlg, estatura_cm):
+    """Calcula el FFMI y lo normaliza a 1.80m de estatura."""
+    try:
+        mlg = float(mlg)
+        estatura_m = float(estatura_cm) / 100
+    except (TypeError, ValueError):
+        mlg = 0.0
+        estatura_m = 1.80
+    if estatura_m <= 0:
+        estatura_m = 1.80
+    ffmi = mlg / (estatura_m ** 2)
+    ffmi_normalizado = ffmi + 6.3 * (1.8 - estatura_m)
+    return ffmi_normalizado
+
+def clasificar_ffmi_body_energy(ffmi, sexo):
+    """Clasifica el FFMI según sexo."""
+    try:
+        ffmi = float(ffmi)
+    except (TypeError, ValueError):
+        ffmi = 0.0
+    if sexo == "Hombre":
+        limites = [(18, "Bajo"), (20, "Promedio"), (22, "Bueno"), (25, "Avanzado"), (100, "Élite")]
+    else:
+        limites = [(15, "Bajo"), (17, "Promedio"), (19, "Bueno"), (21, "Avanzado"), (100, "Élite")]
+    for limite, clasificacion in limites:
+        if ffmi < limite:
+            return clasificacion
+    return "Élite"
+
+def calcular_edad_metabolica_body_energy(edad_cronologica, porcentaje_grasa, sexo):
+    """Calcula la edad metabólica ajustada por % de grasa."""
+    try:
+        edad_cronologica = float(edad_cronologica)
+        porcentaje_grasa = float(porcentaje_grasa)
+    except (TypeError, ValueError):
+        edad_cronologica = 18
+        porcentaje_grasa = 0.0
+    if sexo == "Hombre":
+        grasa_ideal = 15
+    else:
+        grasa_ideal = 22
+    diferencia_grasa = porcentaje_grasa - grasa_ideal
+    ajuste_edad = diferencia_grasa * 0.3
+    edad_metabolica = edad_cronologica + ajuste_edad
+    return max(18, min(80, round(edad_metabolica)))
+
+def obtener_geaf_body_energy(nivel):
+    """Devuelve el factor de actividad física (GEAF) según el nivel."""
+    valores = {
+        "Sedentario": 1.00,
+        "Moderadamente-activo": 1.11,
+        "Activo": 1.25,
+        "Muy-activo": 1.45
+    }
+    return valores.get(nivel, 1.00)
+
+def enviar_email_resumen_body_energy(contenido, nombre_cliente, email_cliente, fecha, edad, telefono):
+    """Envía el email con el resumen completo de la evaluación."""
+    try:
+        email_origen = "administracion@muscleupgym.fitness"
+        email_destino = "administracion@muscleupgym.fitness"
+        password = st.secrets.get("zoho_password", "TU_PASSWORD_AQUI")
+
+        msg = MIMEMultipart()
+        msg['From'] = email_origen
+        msg['To'] = email_destino
+        msg['Subject'] = f"Resumen evaluación MUPAI - {nombre_cliente} ({fecha})"
+
+        msg.attach(MIMEText(contenido, 'plain'))
+
+        server = smtplib.SMTP('smtp.zoho.com', 587)
+        server.starttls()
+        server.login(email_origen, password)
+        server.send_message(msg)
+        server.quit()
+
+        return True
+    except Exception as e:
+        st.error(f"Error al enviar email: {str(e)}")
+        return False
+
+# ==================== MAIN BODY AND ENERGY FUNCTION ====================
+def mostrar_body_and_energy():
+    """Función principal del módulo BODY AND ENERGY integrado desde el archivo original"""
+    
+    # CSS específico para BODY AND ENERGY (adaptado del archivo original)
+    st.markdown("""
+    <style>
+    :root {
+        --mupai-yellow: #F4C430;
+        --mupai-dark-yellow: #DAA520;
+        --mupai-black: #181A1B;
+        --mupai-gray: #232425;
+        --mupai-light-gray: #EDEDED;
+        --mupai-white: #FFFFFF;
+        --mupai-success: #27AE60;
+        --mupai-warning: #F39C12;
+        --mupai-danger: #E74C3C;
+    }
+    
+    .content-card {
+        background: #1E1E1E;
+        padding: 2rem 1.3rem;
+        border-radius: 16px;
+        box-shadow: 0 5px 22px 0px rgba(244,196,48,0.07), 0 1.5px 8px rgba(0,0,0,0.11);
+        margin-bottom: 1.7rem;
+        border-left: 5px solid var(--mupai-yellow);
+        animation: slideIn 0.5s;
+    }
+    .content-card, .content-card * {
+        color: #FFF !important;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Inicialización de variables de sesión específicas para Body and Energy
+    defaults_body_energy = {
+        "be_datos_completos": False,
+        "be_correo_enviado": False,
+        "be_datos_ejercicios": {},
+        "be_niveles_ejercicios": {},
+        "be_nombre": "",
+        "be_telefono": "",
+        "be_email_cliente": "",
+        "be_edad": "",
+        "be_sexo": "Hombre",
+        "be_fecha_llenado": datetime.now().strftime("%Y-%m-%d"),
+        "be_acepto_terminos": False,
+        "be_authenticated": False
+    }
+    
+    for k, v in defaults_body_energy.items():
+        if k not in st.session_state:
+            st.session_state[k] = v
+    
+    # Sistema de autenticación para Body and Energy
+    ADMIN_PASSWORD = "MUPAI2025"
+    
+    if not st.session_state.be_authenticated:
+        st.markdown("""
+        <div class="content-card" style="max-width: 500px; margin: 2rem auto; text-align: center;">
+            <h2 style="color: var(--mupai-yellow); margin-bottom: 1.5rem;">
+                🔐 Acceso Exclusivo - BODY AND ENERGY
+            </h2>
+            <p style="margin-bottom: 2rem; color: #CCCCCC;">
+                Ingresa la contraseña para acceder al sistema de evaluación MUPAI Body and Energy
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Container centrado para el formulario de login
+        login_container = st.container()
+        with login_container:
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                password_input = st.text_input(
+                    "Contraseña", 
+                    type="password", 
+                    placeholder="Ingresa la contraseña de acceso",
+                    key="be_password_input"
+                )
+                
+                if st.button("🚀 Acceder al Sistema Body & Energy", use_container_width=True):
+                    if password_input == ADMIN_PASSWORD:
+                        st.session_state.be_authenticated = True
+                        st.success("✅ Acceso autorizado. Bienvenido al sistema MUPAI Body & Energy.")
+                        st.rerun()
+                    else:
+                        st.error("❌ Contraseña incorrecta. Acceso denegado.")
+        
+        # Mostrar información mientras no esté autenticado
+        st.markdown("""
+        <div class="content-card" style="margin-top: 3rem; text-align: center; background: #1A1A1A;">
+            <h3 style="color: var(--mupai-yellow);">Sistema de Evaluación Body and Energy</h3>
+            <p style="color: #CCCCCC;">
+                Evaluación avanzada de composición corporal, balance energético y rendimiento funcional
+                basada en algoritmos científicos validados.
+            </p>
+            <p style="color: #999999; font-size: 0.9rem; margin-top: 1.5rem;">
+                © 2025 MUPAI - Muscle up GYM 
+                Digital Training Science - Body and Energy Assessment
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        return  # Detener la ejecución hasta que se autentique
+    
+    # Header principal visual con logos
+    try:
+        with open('/home/runner/work/MUPAI/MUPAI/LOGO MUPAI.png', 'rb') as f:
+            logo_mupai_b64 = base64.b64encode(f.read()).decode()
+    except FileNotFoundError:
+        logo_mupai_b64 = ""
+
+    try:
+        with open('/home/runner/work/MUPAI/MUPAI/LOGO MUP.png', 'rb') as f:
+            logo_gym_b64 = base64.b64encode(f.read()).decode()
+    except FileNotFoundError:
+        logo_gym_b64 = ""
+
+    st.markdown(f"""
+    <style>
+    .header-container {{
+        background: #000000;
+        padding: 2rem 1rem;
+        border-radius: 18px;
+        margin-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        animation: fadeIn 0.5s ease-out;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }}
+
+    .logo-left, .logo-right {{
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        max-width: 150px;
+    }}
+
+    .logo-left img, .logo-right img {{
+        max-height: 80px;
+        max-width: 100%;
+        height: auto;
+        width: auto;
+        object-fit: contain;
+    }}
+
+    .header-center {{
+        flex: 1;
+        text-align: center;
+        padding: 0 2rem;
+    }}
+
+    .header-title {{
+        color: #FFB300;
+        font-size: 2.2rem;
+        font-weight: 900;
+        margin: 0;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        line-height: 1.2;
+    }}
+
+    .header-subtitle {{
+        color: #FFFFFF;
+        font-size: 1rem;
+        margin: 0.5rem 0 0 0;
+        opacity: 0.9;
+    }}
+
+    @media (max-width: 768px) {{
+        .header-container {{
+            flex-direction: column;
+            text-align: center;
+        }}
+        
+        .logo-left, .logo-right {{
+            margin-bottom: 1rem;
+        }}
+        
+        .header-center {{
+            padding: 0;
+        }}
+        
+        .header-title {{
+            font-size: 1.8rem;
+        }}
+    }}
+    </style>
+
+    <div class="header-container">
+        <div class="logo-left">
+            <img src="data:image/png;base64,{logo_mupai_b64}" alt="LOGO MUPAI" />
+        </div>
+        <div class="header-center">
+            <h1 class="header-title">TEST MUPAI: BODY AND ENERGY </h1>
+            <p class="header-subtitle">Tu evaluación de la composición corporal y balance energético basada en ciencia</p>
+        </div>
+        <div class="logo-right">
+            <img src="data:image/png;base64,{logo_gym_b64}" alt="LOGO MUSCLE UP GYM" />
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Referencias funcionales mejoradas (CORREGIDO PARA MUJERES)
+    referencias_funcionales = {
+        "Hombre": {
+            "Flexiones": {"tipo": "reps", "niveles": [("Bajo", 10), ("Promedio", 20), ("Bueno", 35), ("Avanzado", 50)]},
+            "Fondos": {"tipo": "reps", "niveles": [("Bajo", 5), ("Promedio", 12), ("Bueno", 20), ("Avanzado", 30)]},
+            "Dominadas": {"tipo": "reps", "niveles": [("Bajo", 2), ("Promedio", 5), ("Bueno", 10), ("Avanzado", 15)]},
+            "Remo invertido": {"tipo": "reps", "niveles": [("Bajo", 5), ("Promedio", 10), ("Bueno", 15), ("Avanzado", 20)]},
+            "Sentadilla búlgara unilateral": {"tipo": "reps", "niveles": [("Bajo", 5), ("Promedio", 10), ("Bueno", 15), ("Avanzado", 20)]},
+            "Puente de glúteo unilateral": {"tipo": "reps", "niveles": [("Bajo", 8), ("Promedio", 15), ("Bueno", 25), ("Avanzado", 35)]},
+            "Plancha": {"tipo": "tiempo", "niveles": [("Bajo", 20), ("Promedio", 40), ("Bueno", 60), ("Avanzado", 90)]},
+            "Ab wheel": {"tipo": "reps", "niveles": [("Bajo", 1), ("Promedio", 5), ("Bueno", 10), ("Avanzado", 15)]},
+            "L-sit": {"tipo": "tiempo", "niveles": [("Bajo", 5), ("Promedio", 10), ("Bueno", 20), ("Avanzado", 30)]}
+        },
+        "Mujer": {
+            "Flexiones": {"tipo": "reps", "niveles": [("Bajo", 2), ("Promedio", 8), ("Bueno", 15), ("Avanzado", 25)]},
+            "Fondos": {"tipo": "reps", "niveles": [("Bajo", 1), ("Promedio", 4), ("Bueno", 10), ("Avanzado", 18)]},
+            "Dominadas": {"tipo": "reps", "niveles": [("Bajo", 0), ("Promedio", 1), ("Bueno", 3), ("Avanzado", 5)]},
+            "Remo invertido": {"tipo": "reps", "niveles": [("Bajo", 2), ("Promedio", 5), ("Bueno", 10), ("Avanzado", 15)]},
+            "Sentadilla búlgara unilateral": {"tipo": "reps", "niveles": [("Bajo", 3), ("Promedio", 8), ("Bueno", 12), ("Avanzado", 18)]},
+            "Puente de glúteo unilateral": {"tipo": "reps", "niveles": [("Bajo", 5), ("Promedio", 12), ("Bueno", 20), ("Avanzado", 30)]},
+            "Plancha": {"tipo": "tiempo", "niveles": [("Bajo", 15), ("Promedio", 30), ("Bueno", 50), ("Avanzado", 70)]},
+            "Ab wheel": {"tipo": "reps", "niveles": [("Bajo", 0), ("Promedio", 3), ("Bueno", 7), ("Avanzado", 12)]},
+            "L-sit": {"tipo": "tiempo", "niveles": [("Bajo", 3), ("Promedio", 8), ("Bueno", 15), ("Avanzado", 25)]}
+        }
+    }
+    
+    # Misión, Visión y Compromiso con diseño mejorado
+    with st.expander("🎯 **Misión, Visión y Compromiso MUPAI**", expanded=False):
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.markdown(crear_tarjeta_body_energy(
+                "🎯 Misión",
+                "Hacer accesible el entrenamiento basado en ciencia, ofreciendo planes personalizados que se adaptan a todos los niveles de condición física.",
+                "info"
+            ), unsafe_allow_html=True)
+        with col2:
+            st.markdown(crear_tarjeta_body_energy(
+                "👁️ Visión",
+                "Ser el referente global en evaluación y entrenamiento digital personalizado, uniendo investigación científica con experiencia práctica.",
+                "success"
+            ), unsafe_allow_html=True)
+        with col3:
+            st.markdown(crear_tarjeta_body_energy(
+                "🤝 Compromiso",
+                "Nos guiamos por la ética, transparencia y precisión científica para ofrecer resultados reales, medibles y sostenibles.",
+                "warning"
+            ), unsafe_allow_html=True)
+
+    # BLOQUE 0: Datos personales con diseño mejorado
+    st.markdown('<div class="content-card">', unsafe_allow_html=True)
+    st.markdown("### 👤 Información Personal")
+    st.markdown("Por favor, completa todos los campos para comenzar tu evaluación personalizada.")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        nombre = st.text_input("Nombre completo*", placeholder="Ej: Juan Pérez García", help="Tu nombre legal completo", key="be_nombre_input")
+        telefono = st.text_input("Teléfono*", placeholder="Ej: 8661234567", help="10 dígitos sin espacios", key="be_telefono_input")
+        email_cliente = st.text_input("Email*", placeholder="correo@ejemplo.com", help="Email válido para recibir resultados", key="be_email_input")
+
+    with col2:
+        edad = st.number_input("Edad (años)*", min_value=15, max_value=80, value=safe_int_body_energy(st.session_state.get("be_edad", 25), 25), help="Tu edad actual", key="be_edad_input")
+        sexo = st.selectbox("Sexo biológico*", ["Hombre", "Mujer"], help="Necesario para cálculos precisos", key="be_sexo_input")
+        fecha_llenado = datetime.now().strftime("%Y-%m-%d")
+        st.info(f"📅 Fecha de evaluación: {fecha_llenado}")
+
+    acepto_terminos = st.checkbox("He leído y acepto la política de privacidad y el descargo de responsabilidad", key="be_acepto_terminos")
+
+    if st.button("🚀 COMENZAR EVALUACIÓN", disabled=not acepto_terminos, key="be_comenzar_evaluacion"):
+        # Validación estricta de cada campo
+        name_valid, name_error = validate_name_body_energy(nombre)
+        phone_valid, phone_error = validate_phone_body_energy(telefono)
+        email_valid, email_error = validate_email_body_energy(email_cliente)
+        
+        # Mostrar errores específicos para cada campo que falle
+        validation_errors = []
+        if not name_valid:
+            validation_errors.append(f"**Nombre:** {name_error}")
+        if not phone_valid:
+            validation_errors.append(f"**Teléfono:** {phone_error}")
+        if not email_valid:
+            validation_errors.append(f"**Email:** {email_error}")
+        
+        # Solo proceder si todas las validaciones pasan
+        if name_valid and phone_valid and email_valid:
+            st.session_state.be_datos_completos = True
+            st.session_state.be_nombre = nombre
+            st.session_state.be_telefono = telefono
+            st.session_state.be_email_cliente = email_cliente
+            st.session_state.be_edad = edad
+            st.session_state.be_sexo = sexo
+            st.session_state.be_fecha_llenado = fecha_llenado
+            st.session_state.be_acepto_terminos = acepto_terminos
+            st.success("✅ Datos registrados correctamente. ¡Continuemos con tu evaluación!")
+        else:
+            # Mostrar todos los errores de validación
+            error_message = "⚠️ **Por favor corrige los siguientes errores:**\n\n" + "\n\n".join(validation_errors)
+            st.error(error_message)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    if not st.session_state.be_datos_completos:
+        st.markdown("""
+        <div class="content-card" style="margin-top:2rem; padding:3rem; background: #181A1B; color: #F5F5F5; border-left: 5px solid #F4C430;">
+            <div style="text-align:center;">
+                <h2 style="color: #F5C430; font-weight:900; margin:0;">
+                    🏋️ Bienvenido a MUPAI Body & Energy
+                </h2>
+                <p style="color: #F5F5F5;font-size:1.1rem;font-weight:600;margin-top:1.5rem;">
+                    <span style="font-size:1.15rem; font-weight:700;">¿Cómo funciona el cuestionario?</span>
+                </p>
+                <div style="text-align:left;display:inline-block;max-width:650px;">
+                    <ul style="list-style:none;padding:0;">
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">📝</span> <b>Paso 1:</b> Datos personales<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Recopilamos tu nombre, edad, sexo y contacto para personalizar el análisis.
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">⚖️</span> <b>Paso 2:</b> Composición corporal<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Medidas científicas de peso, estatura y % de grasa corporal usando métodos validados (DEXA, BIA).
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">💪</span> <b>Paso 3:</b> Experiencia y rendimiento funcional<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Indicas tu experiencia y tus mejores resultados en ejercicios clave.
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">🚶</span> <b>Paso 4:</b> Actividad física diaria<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Clasificamos tu nivel de actividad habitual para ajustar el cálculo energético.
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">🍽️</span> <b>Paso 5:</b> Efecto térmico de los alimentos (ETA)<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Calculamos el gasto energético extra por digestión, según tu composición corporal y evidencia científica.
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">🏋️</span> <b>Paso 6:</b> Entrenamiento de fuerza<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Ajustamos tu gasto según frecuencia y nivel de entrenamiento de resistencia.
+                            </span>
+                        </li>
+                        <li style="margin-bottom:1.1em;">
+                            <span style="font-size:1.3rem;">📈</span> <b>Resultado final:</b> Plan nutricional personalizado<br>
+                            <span style="color:#F5F5F5;font-size:1rem;">
+                                Recibes tus métricas clave, diagnóstico y recomendaciones basadas en ciencia.
+                            </span>
+                        </li>
+                    </ul>
+                    <div style="margin-top:1.2em; font-size:1rem; color:#F4C430;">
+                        <b>Finalidad:</b> Este cuestionario integra principios científicos y experiencia práctica para ofrecerte un diagnóstico preciso y recomendaciones útiles. <br>
+                        <b>Tiempo estimado:</b> Menos de 5 minutos.
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # VALIDACIÓN DATOS PERSONALES PARA CONTINUAR
+    datos_personales_completos = all([nombre, telefono, email_cliente]) and acepto_terminos
+
+    if datos_personales_completos and st.session_state.be_datos_completos:
+        # Progress bar general
+        progress = st.progress(0)
+        progress_text = st.empty()
+
+        # BLOQUE 1: Datos antropométricos con diseño mejorado
+        with st.expander("📊 **Paso 1: Composición Corporal y Antropometría**", expanded=True):
+            progress.progress(20)
+            progress_text.text("Paso 1 de 5: Evaluación de composición corporal")
+
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                # Ensure peso has a valid default
+                peso_default = 70.0
+                peso_value = st.session_state.get("be_peso", peso_default)
+                if peso_value == '' or peso_value is None or peso_value == 0:
+                    peso_value = peso_default
+                peso = st.number_input(
+                    "⚖️ Peso corporal (kg)",
+                    min_value=30.0,
+                    max_value=200.0,
+                    value=safe_float_body_energy(peso_value, peso_default),
+                    step=0.1,
+                    key="be_peso",
+                    help="Peso en ayunas, sin ropa"
+                )
+            with col2:
+                # Ensure estatura has a valid default
+                estatura_default = 170
+                estatura_value = st.session_state.get("be_estatura", estatura_default)
+                if estatura_value == '' or estatura_value is None or estatura_value == 0:
+                    estatura_value = estatura_default
+                estatura = st.number_input(
+                    "📏 Estatura (cm)",
+                    min_value=120,
+                    max_value=220,
+                    value=safe_int_body_energy(estatura_value, estatura_default),
+                    key="be_estatura",
+                    help="Medida sin zapatos"
+                )
+            with col3:
+                st.markdown('<div class="body-fat-method-selector">', unsafe_allow_html=True)
+                metodo_grasa = st.selectbox(
+                    "📊 Método de medición de grasa",
+                    ["Omron HBF-516 (BIA)", "InBody 270 (BIA profesional)", "Bod Pod (Pletismografía)", "DEXA (Gold Standard)"],
+                    key="be_metodo_grasa",
+                    help="Selecciona el método utilizado"
+                )
+                st.markdown('</div>', unsafe_allow_html=True)
+            
+            # Continuaré expandiendo más secciones
+            st.success("✅ Sección 1 integrada. Continuando desarrollo...")
+            st.markdown('</div>', unsafe_allow_html=True)
 
 def load_banking_image_base64():
     """
