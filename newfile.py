@@ -152,6 +152,124 @@ st.markdown("""
         box-shadow: 0 5px 20px rgba(255,204,0,0.2);  
     }  
       
+    /* ========================================================================== */
+    /* MODULARIZED QUESTIONNAIRE CSS STYLES - SCOPED WITH 'cuest-' PREFIX */
+    /* ========================================================================== */
+    
+    .cuest-section-header {  
+        background: linear-gradient(90deg, #000 0%, #333 100%);  
+        color: #FFCC00;  
+        padding: 1rem;  
+        border-radius: 10px;  
+        margin: 1.5rem 0;  
+        text-align: center;  
+        font-weight: bold;  
+        box-shadow: 0 3px 10px rgba(255,204,0,0.2);  
+        border: 1px solid #FFCC00;
+    }  
+      
+    .cuest-container {  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
+        padding: 1.5rem;  
+        border-radius: 12px;  
+        border-left: 5px solid #FFCC00;  
+        margin: 1rem 0;  
+        box-shadow: 0 2px 8px rgba(255,204,0,0.1);  
+        color: #FFFFFF;
+    }  
+      
+    .cuest-results {  
+        background: linear-gradient(135deg, #FFCC00 0%, #FFE066 50%, #FFF2A6 100%);  
+        padding: 2rem;  
+        border-radius: 15px;  
+        color: #000;  
+        margin: 1rem 0;  
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);  
+    }  
+      
+    .cuest-metric-card {  
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
+        padding: 1.5rem;  
+        border-radius: 12px;  
+        box-shadow: 0 3px 12px rgba(255,204,0,0.1);  
+        border-left: 6px solid #FFCC00;  
+        margin: 1rem 0;  
+        transition: transform 0.2s ease;  
+        color: #FFFFFF;
+    }  
+      
+    .cuest-metric-card:hover {  
+        transform: translateY(-2px);  
+        box-shadow: 0 5px 20px rgba(255,204,0,0.2);  
+    }
+
+    .cuest-warning {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
+        color: white;
+        margin: 1rem 0;
+        border-left: 5px solid #ff3333;
+    }
+
+    .cuest-info {
+        background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 100%);
+        padding: 1.5rem;
+        border-radius: 10px;
+        color: white;
+        margin: 1rem 0;
+        border-left: 5px solid #0984e3;
+    }
+
+    /* Mobile responsive styles for questionnaire components */
+    @media (max-width: 768px) {
+        .cuest-section-header {
+            padding: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        
+        .cuest-container, .cuest-metric-card {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+        }
+        
+        .cuest-results {
+            padding: 1.5rem 1rem;
+            margin: 1rem 0;
+        }
+
+        .cuest-warning, .cuest-info {
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .cuest-section-header {
+            padding: 0.6rem;
+            font-size: 0.8rem;
+        }
+        
+        .cuest-container, .cuest-metric-card {
+            padding: 0.8rem 0.6rem;
+            margin: 0.3rem 0;
+        }
+        
+        .cuest-results {
+            padding: 1rem 0.8rem;
+        }
+
+        .cuest-warning, .cuest-info {
+            padding: 0.8rem;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* END MODULARIZED QUESTIONNAIRE STYLES */
+    /* ========================================================================== */
+      
     .corporate-section {  
         background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);  
         padding: 2rem;  
@@ -2998,13 +3116,13 @@ elif st.session_state.page == "quienes_somos":
 # ==================== CUESTIONARIO BALANCE ENERGÉTICO ====================
 elif st.session_state.page == "balance_energetico":
     st.markdown("""
-    <div class="section-header">
+    <div class="cuest-section-header">
         <h2>🧮 Cuestionario Científico Avanzado - Balance Energético Óptimo</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="questionnaire-container">
+    <div class="cuest-container">
         <h3>🎯 Objetivo</h3>
         <p>Evaluación científicamente fundamentada que integra <strong>composición corporal, actividad física, 
         calidad del sueño, estrés percibido y factor de recuperación inteligente</strong> para determinar 
@@ -3486,7 +3604,7 @@ elif st.session_state.page == "balance_energetico":
         
         if sleep_score >= 10:
             st.markdown(f"""
-            <div class="warning-container">
+            <div class="cuest-warning">
                 <h4>⚠️ Calidad de Sueño Deficiente</h4>
                 <p><strong>Puntuación Pittsburgh: {sleep_score}/16</strong></p>
                 <p>Tu calidad de sueño está comprometida, lo que puede afectar tu recuperación y objetivos nutricionales.</p>
@@ -3494,7 +3612,7 @@ elif st.session_state.page == "balance_energetico":
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
-            <div class="info-container">
+            <div class="cuest-info">
                 <h4>✅ Calidad de Sueño Adecuada</h4>
                 <p><strong>Puntuación Pittsburgh: {sleep_score}/16</strong></p>
                 <p>Tu calidad de sueño es buena y apoya tus objetivos de recuperación.</p>
@@ -3539,7 +3657,7 @@ elif st.session_state.page == "balance_energetico":
         
         if stress_score >= 10:
             st.markdown(f"""
-            <div class="warning-container">
+            <div class="cuest-warning">
                 <h4>⚠️ Nivel de Estrés Elevado</h4>
                 <p><strong>Puntuación PSS-4: {stress_score}/16</strong></p>
                 <p>Tu nivel de estrés es alto, lo que puede impactar tu recuperación y objetivos nutricionales.</p>
@@ -3547,7 +3665,7 @@ elif st.session_state.page == "balance_energetico":
             """, unsafe_allow_html=True)
         else:
             st.markdown(f"""
-            <div class="info-container">
+            <div class="cuest-info">
                 <h4>✅ Nivel de Estrés Manejable</h4>
                 <p><strong>Puntuación PSS-4: {stress_score}/16</strong></p>
                 <p>Tu nivel de estrés es adecuado y no interfiere significativamente con tu recuperación.</p>
@@ -3581,7 +3699,7 @@ elif st.session_state.page == "balance_energetico":
         if fri["factor"] < 0.90:
             fri_adjustment_percent = (1 - fri["factor"]) * 100
             st.markdown(f"""
-            <div class="warning-container">
+            <div class="cuest-warning">
                 <h4>⚠️ Impacto del FRI</h4>
                 <p>Tu Factor de Recuperación Inteligente indica que la severidad de tus objetivos energéticos será 
                 reducida automáticamente en un <strong>{fri_adjustment_percent:.0f}%</strong> para optimizar tu recuperación.</p>
@@ -3626,13 +3744,13 @@ elif st.session_state.page == "balance_energetico":
 # ==================== CUESTIONARIO PREFERENCIAS ALIMENTARIAS ====================
 elif st.session_state.page == "preferencias_alimentarias":
     st.markdown("""
-    <div class="section-header">
+    <div class="cuest-section-header">
         <h2>🍽️ Cuestionario: Patrones y Preferencias Alimenticias</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="questionnaire-container">
+    <div class="cuest-container">
         <h3>📋 Instrucciones</h3>
         <p><strong>Selecciona de cada lista los alimentos que prefieres o estás dispuesto(a) a consumir.</strong></p>
         <p>✅ Marca todos los que apliquen</p>
@@ -3650,7 +3768,7 @@ elif st.session_state.page == "preferencias_alimentarias":
         # EMAIL OBLIGATORIO
         st.markdown("---")
         st.markdown("""
-        <div class="questionnaire-container">
+        <div class="cuest-container">
             <h3>📧 Información de Contacto</h3>
         </div>
         """, unsafe_allow_html=True)
@@ -3666,14 +3784,14 @@ elif st.session_state.page == "preferencias_alimentarias":
 # ==================== CUESTIONARIO ANTOJOS ALIMENTARIOS ====================
 elif st.session_state.page == "antojos_alimentarios":
     st.markdown("""
-    <div class="section-header">
+    <div class="cuest-section-header">
         <h2>🧁 Cuestionario de Antojos Alimentarios (Food Cravings)</h2>
         <h3>Versión Población Mexicana</h3>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="questionnaire-container">
+    <div class="cuest-container">
         <h3>🎯 Objetivo del Cuestionario</h3>
         <p>Este cuestionario tiene como objetivo identificar tu <strong>perfil personal de antojos alimentarios</strong>. 
         Responde con sinceridad para cada grupo de alimentos. Esto nos permitirá adaptar tu plan nutricional 
@@ -3687,7 +3805,7 @@ elif st.session_state.page == "antojos_alimentarios":
         # EMAIL OBLIGATORIO
         st.markdown("---")
         st.markdown("""
-        <div class="questionnaire-container">
+        <div class="cuest-container">
             <h3>📧 Información de Contacto</h3>
         </div>
         """, unsafe_allow_html=True)
@@ -3950,7 +4068,7 @@ elif st.session_state.page == "body_and_energy":
 
 elif st.session_state.page == "food_preferences":
     st.markdown("""
-    <div class="section-header">
+    <div class="cuest-section-header">
         <h2>FOOD PREFERENCES</h2>
     </div>
     """, unsafe_allow_html=True)
@@ -3976,13 +4094,13 @@ elif st.session_state.page == "food_preferences":
 
 elif st.session_state.page == "designing_training":
     st.markdown("""
-    <div class="section-header">
+    <div class="cuest-section-header">
         <h2>DESIGNING YOUR TRAINING</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div class="questionnaire-container">
+    <div class="cuest-container">
         <h3>Pronto disponible.</h3>
     </div>
     """, unsafe_allow_html=True)
