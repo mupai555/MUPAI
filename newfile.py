@@ -229,6 +229,200 @@ def obtener_geaf_body_energy(nivel):
     }
     return valores.get(nivel, 1.00)
 
+def sugerir_deficit_body_energy(porcentaje_grasa, sexo):
+    """Sugiere el déficit calórico recomendado por % de grasa y sexo."""
+    try:
+        porcentaje_grasa = float(porcentaje_grasa)
+    except (TypeError, ValueError):
+        porcentaje_grasa = 0.0
+    rangos_hombre = [
+        (0, 8, 3), (8.1, 10.5, 5), (10.6, 13, 10), (13.1, 15.5, 15),
+        (15.6, 18, 20), (18.1, 20.5, 25), (20.6, 23, 27), (23.1, 25.5, 29),
+        (25.6, 30, 30), (30.1, 32.5, 35), (32.6, 35, 40), (35.1, 37.5, 45),
+        (37.6, 100, 50)
+    ]
+    rangos_mujer = [
+        (0, 14, 3), (14.1, 16.5, 5), (16.6, 19, 10), (19.1, 21.5, 15),
+        (21.6, 24, 20), (24.1, 26.5, 25), (26.6, 29, 27), (29.1, 31.5, 29),
+        (31.6, 35, 30), (35.1, 37.5, 35), (37.6, 40, 40), (40.1, 42.5, 45),
+        (42.6, 100, 50)
+    ]
+    tabla = rangos_hombre if sexo == "Hombre" else rangos_mujer
+    tope = 30
+    limite_extra = 30 if sexo == "Hombre" else 35
+    for minimo, maximo, deficit in tabla:
+        if minimo <= porcentaje_grasa <= maximo:
+            return min(deficit, tope) if porcentaje_grasa <= limite_extra else deficit
+    return 20  # Déficit por defecto
+
+def calculate_psmf_body_energy(sexo, peso, grasa_corregida, mlg):
+    """
+    Calcula los parámetros para PSMF (Very Low Calorie Diet) actualizada
+    según el nuevo protocolo basado en proteína total y multiplicadores.
+    """
+    try:
+        peso = float(peso)
+        grasa_corregida = float(grasa_corregida)
+    except (TypeError, ValueError):
+        peso = 70.0
+        grasa_corregida = 20.0
+    
+    # Determinar elegibilidad para PSMF según sexo y % grasa
+    if sexo == "Hombre" and grasa_corregida > 18:
+        psmf_aplicable = True
+        criterio = "PSMF recomendado por % grasa >18%"
+        calorias_piso_dia = 800
+    elif sexo == "Mujer" and grasa_corregida > 23:
+        psmf_aplicable = True
+        criterio = "PSMF recomendado por % grasa >23%"
+        calorias_piso_dia = 700
+    else:
+        return {"psmf_aplicable": False}
+    
+    if psmf_aplicable:
+        # PROTEÍNA: Mínimo 1.8g/kg peso corporal total
+        proteina_g_dia = round(peso * 1.8, 1)
+        
+        # MULTIPLICADOR CALÓRICO según % grasa corporal
+        if grasa_corregida > 35:  # Alto % grasa - PSMF tradicional
+            multiplicador = 8.3
+            perfil_grasa = "alto % grasa (PSMF tradicional)"
+        elif grasa_corregida >= 25 and sexo == "Hombre":  # Moderado para hombres
+            multiplicador = 9.0
+            perfil_grasa = "% grasa moderado"
+        elif grasa_corregida >= 30 and sexo == "Mujer":  # Moderado para mujeres
+            multiplicador = 9.0
+            perfil_grasa = "% grasa moderado"
+        else:  # Casos más magros - visible abdominals/lower %
+            multiplicador = 9.6
+            perfil_grasa = "más magro (abdominales visibles)"
+        
+        # CALORÍAS = proteína (g) × multiplicador
+        calorias_dia = round(proteina_g_dia * multiplicador, 0)
+        
+        # Verificar que no esté por debajo del piso mínimo
+        if calorias_dia < calorias_piso_dia:
+            calorias_dia = calorias_piso_dia
+        
+        # Calcular rango de pérdida semanal proyectada (estimación conservadora)
+        if sexo == "Hombre":
+            perdida_semanal_min = 0.8  # kg/semana
+            perdida_semanal_max = 1.2
+        else:  # Mujer
+            perdida_semanal_min = 0.6  # kg/semana
+            perdida_semanal_max = 1.0
+        
+        return {
+            "psmf_aplicable": True,
+            "proteina_g_dia": proteina_g_dia,
+            "calorias_dia": calorias_dia,
+            "calorias_piso_dia": calorias_piso_dia,
+            "multiplicador": multiplicador,
+            "perfil_grasa": perfil_grasa,
+            "perdida_semanal_kg": (perdida_semanal_min, perdida_semanal_max),
+            "criterio": f"{criterio} - Nuevo protocolo: {perfil_grasa}"
+        }
+    else:
+        return {"psmf_aplicable": False}
+
+def esta_en_rango_saludable_body_energy(porcentaje_grasa, sexo):
+    """
+    Determina si el porcentaje de grasa corporal está en rango saludable para ponderar FFMI.
+    """
+    try:
+        grasa = float(porcentaje_grasa)
+    except (TypeError, ValueError):
+        return True  # Si no se puede determinar, usar ponderación normal por seguridad
+    
+    if sexo == "Hombre":
+        return grasa <= 25.0
+    else:  # Mujer
+        return grasa <= 32.0
+
+def calcular_proyeccion_cientifica_body_energy(sexo, grasa_corregida, nivel_entrenamiento, peso_actual, porcentaje_deficit_superavit):
+    """
+    Calcula la proyección científica realista de ganancia o pérdida de peso semanal y total.
+    """
+    try:
+        peso_actual = float(peso_actual)
+        grasa_corregida = float(grasa_corregida)
+        porcentaje = float(porcentaje_deficit_superavit)
+    except (ValueError, TypeError):
+        peso_actual = 70.0
+        grasa_corregida = 20.0
+        porcentaje = 0.0
+    
+    # Rangos científicos según objetivo, sexo y nivel
+    if porcentaje < 0:  # Déficit (pérdida) - valor negativo
+        if sexo == "Hombre":
+            if nivel_entrenamiento in ["principiante", "intermedio"]:
+                rango_pct_min, rango_pct_max = -1.0, -0.5
+            else:  # avanzado, élite
+                rango_pct_min, rango_pct_max = -0.7, -0.3
+        else:  # Mujer
+            if nivel_entrenamiento in ["principiante", "intermedio"]:
+                rango_pct_min, rango_pct_max = -0.8, -0.3
+            else:  # avanzado, élite
+                rango_pct_min, rango_pct_max = -0.6, -0.2
+        
+        # Ajuste por % grasa (personas con más grasa pueden perder más rápido inicialmente)
+        if grasa_corregida > (25 if sexo == "Hombre" else 30):
+            factor_grasa = 1.2  # 20% más rápido
+        elif grasa_corregida < (12 if sexo == "Hombre" else 18):
+            factor_grasa = 0.8  # 20% más conservador
+        else:
+            factor_grasa = 1.0
+        
+        rango_pct_min *= factor_grasa
+        rango_pct_max *= factor_grasa
+        
+        explicacion = f"Con {grasa_corregida:.1f}% de grasa y nivel {nivel_entrenamiento}, se recomienda una pérdida conservadora pero efectiva."
+        
+    elif porcentaje > 0:  # Superávit (ganancia) - valor positivo
+        if sexo == "Hombre":
+            if nivel_entrenamiento in ["principiante", "intermedio"]:
+                rango_pct_min, rango_pct_max = 0.2, 0.5
+            else:  # avanzado, élite
+                rango_pct_min, rango_pct_max = 0.1, 0.3
+        else:  # Mujer
+            if nivel_entrenamiento in ["principiante", "intermedio"]:
+                rango_pct_min, rango_pct_max = 0.1, 0.3
+            else:  # avanzado, élite
+                rango_pct_min, rango_pct_max = 0.05, 0.2
+        
+        explicacion = f"Como {sexo.lower()} con nivel {nivel_entrenamiento}, la ganancia muscular será gradual y sostenible."
+        
+    else:  # Mantenimiento
+        rango_pct_min, rango_pct_max = -0.1, 0.1
+        explicacion = f"En mantenimiento, el peso debe mantenerse estable con fluctuaciones menores."
+    
+    # Convertir porcentajes a kg
+    rango_kg_min = peso_actual * (rango_pct_min / 100)
+    rango_kg_max = peso_actual * (rango_pct_max / 100)
+    
+    # Proyección total 6 semanas
+    rango_total_min_6sem = rango_kg_min * 6
+    rango_total_max_6sem = rango_kg_max * 6
+    
+    return {
+        "rango_semanal_pct": (rango_pct_min, rango_pct_max),
+        "rango_semanal_kg": (rango_kg_min, rango_kg_max),
+        "rango_total_6sem_kg": (rango_total_min_6sem, rango_total_max_6sem),
+        "explicacion_textual": explicacion
+    }
+
+def obtener_porcentaje_para_proyeccion_body_energy(plan_elegido, psmf_recs, GE, porcentaje):
+    """
+    Función centralizada para calcular el porcentaje correcto a usar en proyecciones.
+    """
+    if plan_elegido and psmf_recs.get("psmf_aplicable") and "PSMF" in str(plan_elegido):
+        # Para PSMF, usar el déficit específico de PSMF
+        deficit_psmf_calc = int((1 - psmf_recs['calorias_dia']/GE) * 100) if GE > 0 else 40
+        return -deficit_psmf_calc  # Negativo para pérdida
+    else:
+        # Para plan tradicional, usar el porcentaje tradicional
+        return porcentaje if porcentaje is not None else 0
+
 def enviar_email_resumen_body_energy(contenido, nombre_cliente, email_cliente, fecha, edad, telefono):
     """Envía el email con el resumen completo de la evaluación."""
     try:
@@ -679,9 +873,286 @@ def mostrar_body_and_energy():
                 )
                 st.markdown('</div>', unsafe_allow_html=True)
             
-            # Continuaré expandiendo más secciones
-            st.success("✅ Sección 1 integrada. Continuando desarrollo...")
+            # Ensure grasa_corporal has a valid default
+            grasa_default = 20.0
+            grasa_value = st.session_state.get("be_grasa_corporal", grasa_default)
+            if grasa_value == '' or grasa_value is None or grasa_value == 0:
+                grasa_value = grasa_default
+            grasa_corporal = st.number_input(
+                f"💪 % de grasa corporal ({metodo_grasa.split('(')[0].strip()})",
+                min_value=3.0,
+                max_value=60.0,
+                value=safe_float_body_energy(grasa_value, grasa_default),
+                step=0.1,
+                key="be_grasa_corporal",
+                help="Valor medido con el método seleccionado"
+            )
+
             st.markdown('</div>', unsafe_allow_html=True)
+
+        # Cálculos antropométricos
+        sexo = st.session_state.be_sexo
+        edad = st.session_state.be_edad
+        metodo_grasa = st.session_state.be_metodo_grasa
+        peso = st.session_state.be_peso
+        estatura = st.session_state.be_estatura
+        grasa_corporal = st.session_state.be_grasa_corporal
+
+        grasa_corregida = corregir_porcentaje_grasa_body_energy(grasa_corporal, metodo_grasa, sexo)
+        mlg = calcular_mlg_body_energy(peso, grasa_corregida)
+        tmb = calcular_tmb_cunningham_body_energy(mlg)
+
+        # Validar estatura > 0
+        if estatura <= 0:
+            st.error("Error: La estatura debe ser mayor que cero para calcular FFMI.")
+            ffmi = 0
+        else:
+            ffmi = calcular_ffmi_body_energy(mlg, estatura)
+
+        nivel_ffmi = clasificar_ffmi_body_energy(ffmi, sexo)
+        edad_metabolica = calcular_edad_metabolica_body_energy(edad, grasa_corregida, sexo)
+
+        # Mostrar corrección si aplica
+        if metodo_grasa != "DEXA (Gold Standard)" and abs(grasa_corregida - grasa_corporal) > 0.1:
+            st.info(
+                f"📊 Valor corregido a equivalente DEXA: {grasa_corregida:.1f}% "
+                f"(ajuste de {grasa_corregida - grasa_corporal:+.1f}%)"
+            )
+
+        # Resultados principales visuales
+        st.markdown("### 📈 Resultados de tu composición corporal")
+        col1, col2, col3, col4 = st.columns(4)
+        with col1:
+            st.metric("% Grasa (DEXA)", f"{grasa_corregida:.1f}%", "Normal" if 10 <= grasa_corregida <= 25 else "Revisar")
+        with col2:
+            st.metric("MLG", f"{mlg:.1f} kg", "Masa Libre de Grasa")
+        with col3:
+            st.metric("TMB", f"{tmb:.0f} kcal", "Metabolismo Basal")
+        with col4:
+            try:
+                edad_num = int(edad)
+                diferencia_edad = edad_metabolica - edad_num
+            except (ValueError, TypeError):
+                edad_num = 25
+                diferencia_edad = 0
+            st.metric("Edad Metabólica", f"{edad_metabolica} años", f"{'+' if diferencia_edad > 0 else ''}{diferencia_edad} años")
+
+        # FFMI con visualización mejorada
+        st.markdown("### 💪 Índice de Masa Libre de Grasa (FFMI)")
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            color_nivel = {
+                "Bajo": "danger",
+                "Promedio": "warning",
+                "Bueno": "success",
+                "Avanzado": "info",
+                "Élite": "success"
+            }.get(nivel_ffmi, "info")
+            st.markdown(f"""
+            <h2 style="margin: 0;">FFMI: {ffmi:.2f} 
+            <span class="badge badge-{color_nivel}">{nivel_ffmi}</span></h2>
+            """, unsafe_allow_html=True)
+            if sexo == "Hombre":
+                ffmi_max = 25
+                rangos_ffmi = {"Bajo": 18, "Promedio": 20, "Bueno": 22, "Avanzado": 25}
+            else:
+                ffmi_max = 21
+                rangos_ffmi = {"Bajo": 15, "Promedio": 17, "Bueno": 19, "Avanzado": 21}
+            progreso_ffmi = min(ffmi / ffmi_max, 1.0)
+            st.progress(progreso_ffmi)
+            st.caption(f"Desarrollo muscular: {progreso_ffmi*100:.0f}% del potencial natural máximo")
+        with col2:
+            st.info(f"""
+            **Referencia FFMI ({sexo}):**
+            - Bajo: <{rangos_ffmi['Bajo']}
+            - Promedio: {rangos_ffmi['Bajo']}-{rangos_ffmi['Promedio']}
+            - Bueno: {rangos_ffmi['Promedio']}-{rangos_ffmi['Bueno']}
+            - Avanzado: {rangos_ffmi['Bueno']}-{rangos_ffmi['Avanzado']}
+            - Élite: >{rangos_ffmi['Avanzado']}
+            """)
+
+        # BLOQUE 2: Evaluación funcional mejorada
+        with st.expander("💪 **Paso 2: Evaluación Funcional y Nivel de Entrenamiento**", expanded=True):
+            progress.progress(40)
+            progress_text.text("Paso 2 de 5: Evaluación de capacidades funcionales")
+
+            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+
+            st.markdown("### 📋 Experiencia en entrenamiento")
+            experiencia = st.radio(
+                "¿Cuál de las siguientes afirmaciones describe con mayor precisión tu hábito de entrenamiento en los últimos dos años?",
+                [
+                    "A) He entrenado de forma irregular, con semanas sin entrenar y sin un plan estructurado.",
+                    "B) He entrenado al menos 2 veces por semana siguiendo rutinas generales sin mucha progresión planificada.",
+                    "C) He seguido un programa de entrenamiento estructurado con objetivos claros y progresión semanal.",
+                    "D) He diseñado o ajustado personalmente mis planes de entrenamiento, monitoreando variables como volumen, intensidad y recuperación."
+                ],
+                help="Tu respuesta debe reflejar tu consistencia y planificación real.",
+                key="be_experiencia"
+            )
+
+            # Solo mostrar ejercicios funcionales si la experiencia ha sido contestada apropiadamente
+            if experiencia and not experiencia.startswith("A) He entrenado de forma irregular"):
+                st.markdown("### 🏆 Evaluación de rendimiento por categoría")
+                st.info("💡 Para cada categoría, selecciona el ejercicio donde hayas alcanzado tu mejor rendimiento y proporciona el máximo que hayas logrado manteniendo una técnica adecuada.")
+
+                ejercicios_data = {}
+                niveles_ejercicios = {}
+
+                tab1, tab2, tab3, tab4, tab5 = st.tabs(["💪 Empuje", "🏋️ Tracción", "🦵 Pierna Empuje", "🦵 Pierna Tracción", "🧘 Core"])
+                
+                with tab1:
+                    st.markdown("#### Empuje superior")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        empuje = st.selectbox(
+                            "Elige tu mejor ejercicio de empuje:",
+                            ["Flexiones", "Fondos"],
+                            help="Selecciona el ejercicio donde tengas mejor rendimiento y técnica.",
+                            key="be_empuje"
+                        )
+                    with col2:
+                        empuje_reps = st.number_input(
+                            f"¿Cuántas repeticiones continuas realizas con buena forma en {empuje}?",
+                            min_value=0, max_value=100, value=safe_int_body_energy(st.session_state.get(f"be_{empuje}_reps", 10), 10),
+                            help="Sin pausas, sin perder rango completo de movimiento.",
+                            key=f"be_{empuje}_reps"
+                        )
+                        ejercicios_data[empuje] = empuje_reps
+
+                with tab2:
+                    st.markdown("#### Tracción superior")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        traccion = st.selectbox(
+                            "Elige tu mejor ejercicio de tracción:",
+                            ["Dominadas", "Remo invertido"],
+                            help="Selecciona el ejercicio donde tengas mejor rendimiento y técnica.",
+                            key="be_traccion"
+                        )
+                    with col2:
+                        traccion_reps = st.number_input(
+                            f"¿Cuántas repeticiones continuas realizas con buena forma en {traccion}?",
+                            min_value=0, max_value=50, value=safe_int_body_energy(st.session_state.get(f"be_{traccion}_reps", 5), 5),
+                            help="Sin balanceo ni uso de impulso; técnica estricta.",
+                            key=f"be_{traccion}_reps"
+                        )
+                        ejercicios_data[traccion] = traccion_reps
+
+                with tab3:
+                    st.markdown("#### Tren inferior empuje")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown("**Ejercicio:**")
+                        st.info("Sentadilla búlgara unilateral")
+                    with col2:
+                        pierna_empuje_reps = st.number_input(
+                            "¿Cuántas repeticiones continuas realizas con buena forma en Sentadilla búlgara unilateral?",
+                            min_value=0, max_value=50, value=safe_int_body_energy(st.session_state.get("be_sentadilla_bulgara_reps", 10), 10),
+                            help="Repeticiones con técnica controlada por cada pierna.",
+                            key="be_sentadilla_bulgara_reps"
+                        )
+                        ejercicios_data["Sentadilla búlgara unilateral"] = pierna_empuje_reps
+
+                with tab4:
+                    st.markdown("#### Tren inferior tracción")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.markdown("**Ejercicio:**")
+                        st.info("Puente de glúteo unilateral")
+                    with col2:
+                        pierna_traccion_reps = st.number_input(
+                            "¿Cuántas repeticiones continuas realizas con buena forma en Puente de glúteo unilateral?",
+                            min_value=0, max_value=50, value=safe_int_body_energy(st.session_state.get("be_puente_gluteo_reps", 15), 15),
+                            help="Repeticiones con técnica controlada por cada pierna.",
+                            key="be_puente_gluteo_reps"
+                        )
+                        ejercicios_data["Puente de glúteo unilateral"] = pierna_traccion_reps
+
+                with tab5:
+                    st.markdown("#### Core y estabilidad")
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        core = st.selectbox(
+                            "Elige tu mejor ejercicio de core:",
+                            ["Plancha", "Ab wheel", "L-sit"],
+                            help="Selecciona el ejercicio donde tengas mejor rendimiento y técnica.",
+                            key="be_core"
+                        )
+                    with col2:
+                        if core == "Plancha":
+                            core_valor = st.number_input(
+                                "¿Cuál es el máximo tiempo (segundos) que mantienes la posición de plancha con técnica correcta?",
+                                min_value=0, max_value=600, value=safe_int_body_energy(st.session_state.get("be_plancha_tiempo", 60), 60),
+                                help="Mantén la posición sin perder alineación corporal.",
+                                key="be_plancha_tiempo"
+                            )
+                        else:
+                            core_valor = st.number_input(
+                                f"¿Cuántas repeticiones completas realizas en {core} con buena forma?",
+                                min_value=0, max_value=100, value=safe_int_body_energy(st.session_state.get(f"be_{core}_reps", 10), 10),
+                                help="Repeticiones con control y sin compensaciones.",
+                                key=f"be_{core}_reps"
+                            )
+                        ejercicios_data[core] = core_valor
+
+                # Evaluar niveles según referencias
+                st.markdown("### 📊 Tu nivel en cada ejercicio")
+
+                cols = st.columns(5)
+                for idx, (ejercicio, valor) in enumerate(ejercicios_data.items()):
+                    with cols[idx % 5]:
+                        if ejercicio in referencias_funcionales[sexo]:
+                            ref = referencias_funcionales[sexo][ejercicio]
+                            nivel_ej = "Bajo"  # Por defecto
+
+                            if ref["tipo"] == "reps":
+                                for nombre_nivel, umbral in ref["niveles"]:
+                                    if valor >= umbral:
+                                        nivel_ej = nombre_nivel
+                                    else:
+                                        break
+                            elif ref["tipo"] == "tiempo":
+                                for nombre_nivel, umbral in ref["niveles"]:
+                                    if valor >= umbral:
+                                        nivel_ej = nombre_nivel
+                                    else:
+                                        break
+
+                            niveles_ejercicios[ejercicio] = nivel_ej
+
+                            # Mostrar con badge de color
+                            color_badge = {
+                                "Bajo": "danger",
+                                "Promedio": "warning",
+                                "Bueno": "success",
+                                "Avanzado": "info"
+                            }.get(nivel_ej, "info")
+
+                            st.markdown(f"""
+                            <div style="text-align: center; padding: 1rem; background: #F4C430; border-radius: 10px; border: 2px solid #DAA520;">
+                                <strong style="color: #1E1E1E; font-weight: bold; font-size: 1.1rem;">{ejercicio}</strong><br>
+                                <span class="badge badge-{color_badge}" style="font-size: 1rem; background: #1E1E1E; color: #F4C430; font-weight: bold; margin: 0.5rem 0;">{nivel_ej}</span><br>
+                                <small style="color: #1E1E1E; font-weight: bold;">{valor}</small>
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                # Guardar datos
+                st.session_state.be_datos_ejercicios = ejercicios_data
+                st.session_state.be_niveles_ejercicios = niveles_ejercicios
+            else:
+                st.warning("⚠️ **Primero debes seleccionar tu nivel de experiencia en entrenamiento para acceder a la evaluación de ejercicios funcionales.**")
+                st.info("Por favor, selecciona una opción diferente a 'A) He entrenado de forma irregular' para continuar con la evaluación funcional.")
+                ejercicios_data = {}
+                niveles_ejercicios = {}
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+        # Continuaré con las siguientes secciones (actividad física, ETA, etc.)
+        st.success("✅ Secciones 1 y 2 integradas completamente. Continuando con el desarrollo completo...")
+
+    else:
+        st.info("Por favor completa los datos personales para comenzar la evaluación.")
 
 def load_banking_image_base64():
     """
