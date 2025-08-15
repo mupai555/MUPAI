@@ -3093,12 +3093,28 @@ def mostrar_body_and_energy():
 
     # Continuar solo si los datos personales están completos
     if st.session_state.get("body_energy_datos_completos", False):
-        # ==================== BLOQUE 1: DATOS ANTROPOMÉTRICOS ====================
+        # ==================== BLOQUE 1: DATOS ANTROPOMÉTRICOS MODERNIZADOS ====================
         with st.expander("📊 **Paso 1: Composición Corporal y Antropometría**", expanded=True):
-            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="content-card">
+                <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                    <span style="font-size: 2.5rem; margin-right: 1rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                        📊
+                    </span>
+                    <div>
+                        <h3 style="margin: 0; color: var(--mupai-primary); font-weight: 700; font-size: 1.5rem;">
+                            Mediciones Antropométricas
+                        </h3>
+                        <p style="margin: 0.5rem 0 0 0; color: rgba(255,255,255,0.8); font-size: 1rem;">
+                            Datos precisos para cálculos científicos avanzados
+                        </p>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
+            
+            # Primera fila de mediciones principales
             col1, col2, col3 = st.columns(3)
             with col1:
-                # Ensure peso has a valid default
                 peso_default = 70.0
                 peso_value = st.session_state.get("body_energy_peso", peso_default)
                 if peso_value == '' or peso_value is None or peso_value == 0:
@@ -3110,10 +3126,9 @@ def mostrar_body_and_energy():
                     value=safe_float(peso_value, peso_default),
                     step=0.1,
                     key="body_energy_peso",
-                    help="Peso en ayunas, sin ropa"
+                    help="Peso corporal en ayunas, sin ropa, preferiblemente en la mañana"
                 )
             with col2:
-                # Ensure estatura has a valid default
                 estatura_default = 170
                 estatura_value = st.session_state.get("body_energy_estatura", estatura_default)
                 if estatura_value == '' or estatura_value is None or estatura_value == 0:
@@ -3124,17 +3139,22 @@ def mostrar_body_and_energy():
                     max_value=220,
                     value=safe_int(estatura_value, estatura_default),
                     key="body_energy_estatura",
-                    help="Medida sin zapatos"
+                    help="Altura total sin zapatos, de pie completamente erguido"
                 )
             with col3:
                 metodo_grasa = st.selectbox(
-                    "📊 Método de medición de grasa",
+                    "📊 Método de medición BF%",
                     ["Omron HBF-516 (BIA)", "InBody 270 (BIA profesional)", "Bod Pod (Pletismografía)", "DEXA (Gold Standard)"],
                     key="body_energy_metodo_grasa",
-                    help="Método usado para medir tu porcentaje de grasa corporal"
+                    help="Selecciona el método usado para medir tu porcentaje de grasa corporal"
                 )
 
-            # Segunda fila
+            # Segunda fila - Grasa corporal y cálculos automáticos
+            st.markdown("""
+            <div style="margin: 2rem 0; padding: 1rem 0; border-top: 1px solid rgba(255,204,0,0.2);">
+            </div>
+            """, unsafe_allow_html=True)
+            
             col1, col2, col3 = st.columns(3)
             with col1:
                 grasa_corporal_default = 15.0
@@ -3146,10 +3166,10 @@ def mostrar_body_and_energy():
                     value=safe_float(grasa_corporal_value, grasa_corporal_default),
                     step=0.1,
                     key="body_energy_grasa_corporal",
-                    help="Porcentaje de grasa corporal medido"
+                    help="Porcentaje de grasa corporal según el método seleccionado"
                 )
             
-            # Calcular valores derivados si tenemos datos completos
+            # Calcular valores derivados automáticamente si tenemos datos completos
             if peso > 0 and estatura > 0 and grasa_corporal > 0:
                 # Corregir porcentaje de grasa según método
                 grasa_corregida = corregir_porcentaje_grasa(grasa_corporal, metodo_grasa, sexo)
@@ -3160,19 +3180,47 @@ def mostrar_body_and_energy():
                 ffmi = calcular_ffmi(mlg, estatura)
                 nivel_ffmi = clasificar_ffmi(ffmi, sexo)
                 
-                # Mostrar resultados
+                # Mostrar métricas modernas
                 with col2:
-                    st.metric("🔥 TMB (Cunningham)", f"{tmb:.0f} kcal", "Tasa metabólica basal")
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <div class="metric-value">{tmb:.0f}</div>
+                        <div class="metric-label">TMB Cunningham (kcal)</div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
                 with col3:
-                    st.metric("💪 FFMI", f"{ffmi:.2f}", f"Nivel: {nivel_ffmi}")
+                    st.markdown(f"""
+                    <div class="metric-card">
+                        <div class="metric-value">{ffmi:.2f}</div>
+                        <div class="metric-label">FFMI - {nivel_ffmi}</div>
+                    </div>
+                    """, unsafe_allow_html=True)
                 
-                # Información adicional
+                # Panel de análisis detallado
                 st.markdown(f"""
-                **📊 Análisis de Composición Corporal:**
-                - **Grasa corregida (DEXA equivalente):** {grasa_corregida:.1f}%
-                - **Masa libre de grasa:** {mlg:.1f} kg
-                - **Masa grasa:** {peso - mlg:.1f} kg
-                """)
+                <div style="margin: 2rem 0; padding: 2rem; background: var(--gradient-dark); 
+                           border-radius: 16px; border: 1px solid rgba(255,204,0,0.15);">
+                    <h4 style="color: var(--mupai-primary); margin-bottom: 1.5rem; display: flex; align-items: center;">
+                        <span style="font-size: 1.5rem; margin-right: 0.5rem;">📊</span>
+                        Análisis de Composición Corporal
+                    </h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div>
+                            <strong style="color: var(--tech-accent);">Grasa corregida (DEXA eq.):</strong><br>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">{grasa_corregida:.1f}%</span>
+                        </div>
+                        <div>
+                            <strong style="color: var(--tech-success);">Masa libre de grasa:</strong><br>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">{mlg:.1f} kg</span>
+                        </div>
+                        <div>
+                            <strong style="color: var(--tech-warning);">Masa grasa:</strong><br>
+                            <span style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">{peso - mlg:.1f} kg</span>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
                 
                 # Guardar valores calculados en session state
                 st.session_state.body_energy_grasa_corregida = grasa_corregida
@@ -3183,9 +3231,24 @@ def mostrar_body_and_energy():
             
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # ==================== BLOQUE 2: EXPERIENCIA Y RENDIMIENTO ====================
+        # ==================== BLOQUE 2: EXPERIENCIA Y RENDIMIENTO MODERNIZADO ====================
         with st.expander("💪 **Paso 2: Experiencia de Entrenamiento**", expanded=True):
-            st.markdown('<div class="content-card">', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="content-card">
+                <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+                    <span style="font-size: 2.5rem; margin-right: 1rem; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
+                        💪
+                    </span>
+                    <div>
+                        <h3 style="margin: 0; color: var(--mupai-primary); font-weight: 700; font-size: 1.5rem;">
+                            Experiencia y Rendimiento
+                        </h3>
+                        <p style="margin: 0.5rem 0 0 0; color: rgba(255,255,255,0.8); font-size: 1rem;">
+                            Evaluación de tu nivel actual de entrenamiento
+                        </p>
+                    </div>
+                </div>
+            """, unsafe_allow_html=True)
             
             experiencia = st.selectbox(
                 "¿Cuál es tu experiencia en entrenamiento de fuerza?",
@@ -3196,11 +3259,21 @@ def mostrar_body_and_energy():
                     "Intermedio avanzado (3-5 años)",
                     "Avanzado (5+ años)"
                 ],
-                key="body_energy_experiencia"
+                key="body_energy_experiencia",
+                help="Selecciona tu nivel basado en años de entrenamiento consistente"
             )
             
-            st.markdown("### 🏋️ Evaluación Funcional")
-            st.markdown("Indica tus mejores marcas en los siguientes ejercicios:")
+            st.markdown("""
+            <div style="margin: 2rem 0; padding: 1rem 0; border-top: 1px solid rgba(255,204,0,0.2);">
+                <h4 style="color: var(--mupai-primary); margin-bottom: 1rem; display: flex; align-items: center;">
+                    <span style="font-size: 1.5rem; margin-right: 0.5rem;">🏋️</span>
+                    Evaluación Funcional
+                </h4>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem;">
+                    Indica tus mejores marcas en los siguientes ejercicios (puedes omitir los que no realizas):
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
             
             # Referencias funcionales mejoradas
             referencias_funcionales = {
