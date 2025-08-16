@@ -2329,7 +2329,7 @@ def mostrar_body_and_energy():
         logo_mupai_b64 = ""
     
     try:
-        with open('LOGO MUP.png', 'rb') as f:
+        with open('LOGO MUSCLE UP GYM.png', 'rb') as f:
             logo_gym_b64 = base64.b64encode(f.read()).decode()
     except FileNotFoundError:
         logo_gym_b64 = ""
