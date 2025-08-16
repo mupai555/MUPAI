@@ -491,7 +491,7 @@ def load_logo_image_base64():
     Loads the logo image and returns it as base64 encoded string.
     Returns a fallback message if the image file is not found.
     """
-    logo_image_path = 'LOGO MUSCLE UP GYM.png'
+    logo_image_path = 'LOGO.png'
     
     try:
         with open(logo_image_path, 'rb') as f:
@@ -2329,7 +2329,7 @@ def mostrar_body_and_energy():
         logo_mupai_b64 = ""
     
     try:
-        with open('LOGO MUSCLE UP GYM.png', 'rb') as f:
+        with open('LOGO MUP.png', 'rb') as f:
             logo_gym_b64 = base64.b64encode(f.read()).decode()
     except FileNotFoundError:
         logo_gym_b64 = ""
