@@ -3925,7 +3925,7 @@ st.markdown(f"""
             <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
             <a href="https://wa.me/528662580594" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
             <a href="mailto:administracion@muscleupgym.fitness" style="color: #EA4335; text-decoration: none;">📧 Email</a>
-            <a href="https://muscleupgym.fitness/planes" target="_blank" style="color: #FFCC00; text-decoration: none;">🌐 Planes Matriz</a>
+            <a href="https://muscleupgym.fitness/planes" target="_blank" style="color: #FFCC00; text-decoration: none;">🌐 Página web matriz</a>
         </div>
         <p style="color: #CCCCCC; font-size: 0.9rem; margin: 0;">© 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence</p>
     </div>
