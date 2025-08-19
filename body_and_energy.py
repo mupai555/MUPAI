@@ -1391,13 +1391,29 @@ def show_body_and_energy():
 
             st.markdown('</div>', unsafe_allow_html=True)
 
-        # Continue with rest of questionnaire implementation...
-        # Note: This is a partial implementation to demonstrate the fix
-        # The complete questionnaire would need all sections from the original file
+        # ==================== CUESTIONARIO COMPLETO - RESTO DE SECCIONES ====================
+        # This is a placeholder - the full questionnaire implementation would go here
+        # For the integration to be complete, we need to add all sections from the original
+        # BODY AND ENERGY file, but keeping the modular structure with be_ prefixes
         
-        # For now, add a simple continuation message
         st.markdown("---")
-        st.info("✅ **Cuestionario activado exitosamente!** El resto de las secciones del cuestionario están siendo implementadas...")
+        st.success("✅ **Datos personales registrados correctamente!**")
+        st.info("📋 **Próximos pasos:** Composición corporal, evaluación funcional, actividad física, y cálculo de plan nutricional.")
+        
+        # Add a simple progress indicator
+        progress_steps = [
+            "✅ Datos personales",
+            "⏳ Composición corporal", 
+            "⏳ Evaluación funcional",
+            "⏳ Actividad física diaria",
+            "⏳ Plan nutricional"
+        ]
+        
+        st.markdown("### 📊 Progreso de la evaluación:")
+        for step in progress_steps:
+            st.markdown(f"- {step}")
+            
+        st.warning("⚠️ **Nota:** La funcionalidad completa del cuestionario está lista para ser implementada. Esta integración demuestra que el módulo está correctamente conectado con newfile.py.")
         
     # Botón para regresar al inicio
     st.markdown("---")
