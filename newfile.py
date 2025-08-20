@@ -1477,15 +1477,18 @@ st.markdown("""
     /* ========================================================================== */
     
     .institutional-footer {
-        background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        background: #000000;
         border-top: 3px solid #FFCC00;
-        padding: 2.5rem 1rem;
+        padding: 2.5rem 0;
         margin-top: 4rem;
         box-shadow: 0 -5px 15px rgba(255,204,0,0.2);
-        width: 100%;
+        width: 100vw;
         position: relative;
-        bottom: 0;
-        left: 0;
+        left: 50%;
+        right: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        box-sizing: border-box;
     }
     
     .footer-content {
@@ -1496,6 +1499,8 @@ st.markdown("""
         margin: 0 auto;
         gap: 2rem;
         min-height: 100px;
+        padding: 0 1rem;
+        box-sizing: border-box;
     }
     
     .footer-logo-left, .footer-logo-right {
@@ -1585,11 +1590,16 @@ st.markdown("""
     
     /* Mobile footer responsiveness */
     @media (max-width: 768px) {
+        .institutional-footer {
+            padding: 2rem 0;
+        }
+        
         .footer-content {
             flex-direction: column;
             text-align: center;
             gap: 1.5rem;
             min-height: auto;
+            padding: 0 1rem;
         }
         
         .footer-logo-left, .footer-logo-right {
@@ -1650,7 +1660,11 @@ st.markdown("""
     
     @media (max-width: 480px) {
         .institutional-footer {
-            padding: 1.5rem 0.5rem;
+            padding: 1.5rem 0;
+        }
+        
+        .footer-content {
+            padding: 0 0.5rem;
         }
         
         .footer-social-icons {
@@ -1840,7 +1854,8 @@ def mostrar_footer_institucional():
                     </a>
                 </div>
                 <div class="footer-copyright">
-                    © 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence
+                    © 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence<br>
+                    © 2025 MUPAI - Muscle up GYM Digital Nutrition Science Alimentary Pattern Assessment Intelligence
                 </div>
             </div>
             
