@@ -1064,6 +1064,33 @@ st.markdown("""
         margin: 0 0.3rem;
     }
     
+    .sidebar-icon-mobile {
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #000;
+        background: #FFCC00;
+        padding: 0.3rem 0.6rem;
+        border-radius: 10px;
+        display: inline-block;
+        margin: 0 0.3rem;
+        box-shadow: 0 2px 8px rgba(255,204,0,0.4);
+        animation: gentle-glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes gentle-glow {
+        0% { box-shadow: 0 2px 8px rgba(255,204,0,0.4); }
+        100% { box-shadow: 0 4px 12px rgba(255,204,0,0.6); }
+    }
+    
+    /* Show/hide instructions based on device */
+    .desktop-instruction {
+        display: inline;
+    }
+    
+    .mobile-instruction {
+        display: none;
+    }
+    
     @keyframes subtle-pulse {
         0%, 100% { transform: scale(1); }
         50% { transform: scale(1.02); }
@@ -1087,6 +1114,20 @@ st.markdown("""
         
         .sidebar-icon {
             font-size: 1.2rem;
+        }
+        
+        /* Switch instructions for mobile */
+        .desktop-instruction {
+            display: none;
+        }
+        
+        .mobile-instruction {
+            display: inline;
+        }
+        
+        .sidebar-icon-mobile {
+            font-size: 1.4rem;
+            animation: gentle-glow 1.5s ease-in-out infinite alternate;
         }
     }
     
@@ -1217,6 +1258,74 @@ st.markdown("""
     /* INSTITUTIONAL FOOTER STYLES */
     /* ========================================================================== */
     
+    /* ========================================================================== */
+    /* WELCOME CONTAINER RESPONSIVE STYLES */
+    /* ========================================================================== */
+    
+    .welcome-container {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Mobile welcome container responsiveness */
+    @media (max-width: 768px) {
+        .welcome-container {
+            padding: 2rem 1rem !important;
+            margin: 1rem 0 !important;
+            min-height: 250px !important;
+        }
+        
+        .welcome-container h1 {
+            font-size: 2.5rem !important;
+            line-height: 1.2 !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .welcome-container h2 {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        .welcome-container p {
+            font-size: 1.1rem !important;
+            line-height: 1.5 !important;
+            max-width: 100% !important;
+            padding: 0 0.5rem !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .welcome-container {
+            padding: 1.5rem 0.8rem !important;
+            min-height: 200px !important;
+        }
+        
+        .welcome-container h1 {
+            font-size: 2rem !important;
+            margin-bottom: 0.8rem !important;
+        }
+        
+        .welcome-container h2 {
+            font-size: 1.2rem !important;
+            margin-bottom: 1rem !important;
+        }
+        
+        .welcome-container p {
+            font-size: 1rem !important;
+            padding: 0 0.3rem !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* INSTITUTIONAL FOOTER STYLES */
+    /* ========================================================================== */
+    
     .institutional-footer {
         background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
         border-top: 3px solid #FFCC00;
@@ -1232,6 +1341,7 @@ st.markdown("""
         max-width: 1200px;
         margin: 0 auto;
         gap: 2rem;
+        min-height: 100px;
     }
     
     .footer-logo-left, .footer-logo-right {
@@ -1239,24 +1349,36 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
+        width: 140px;
+        height: 100px;
     }
     
     .footer-logo-img {
         max-width: 120px;
         max-height: 80px;
+        width: auto;
         height: auto;
         object-fit: contain;
+        display: block;
     }
     
     .footer-logo-fallback {
         color: #FFCC00;
         text-align: center;
         font-weight: bold;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     
     .footer-center {
         flex: 1;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     
     .footer-social-icons {
@@ -1301,6 +1423,10 @@ st.markdown("""
         font-weight: 500;
         max-width: 600px;
         margin: 0 auto;
+        text-align: center;
+        word-wrap: break-word;
+        hyphens: auto;
+        overflow-wrap: break-word;
     }
     
     /* Mobile footer responsiveness */
@@ -1309,14 +1435,18 @@ st.markdown("""
             flex-direction: column;
             text-align: center;
             gap: 1.5rem;
+            min-height: auto;
         }
         
         .footer-logo-left, .footer-logo-right {
+            width: 120px;
+            height: 80px;
             order: 2;
         }
         
         .footer-center {
             order: 1;
+            width: 100%;
         }
         
         .footer-social-icons {
@@ -1338,11 +1468,29 @@ st.markdown("""
         .footer-copyright {
             font-size: 0.85rem;
             padding: 0 1rem;
+            max-width: 100%;
+            line-height: 1.3;
         }
         
         .footer-logo-img {
             max-width: 100px;
             max-height: 60px;
+        }
+        
+        /* Stack logos horizontally on mobile */
+        .institutional-footer .footer-content {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logos-mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            order: 3;
         }
     }
     
@@ -1370,6 +1518,18 @@ st.markdown("""
         
         .footer-copyright {
             font-size: 0.8rem;
+            padding: 0 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 100px;
+            height: 60px;
+        }
+        
+        .footer-logo-img {
+            max-width: 80px;
+            max-height: 50px;
         }
         
         .footer-logo-img {
@@ -1457,14 +1617,16 @@ def crear_sidebar_navegacion():
 def mostrar_banner_profesional():
     """
     Displays a professional banner encouraging users to access the sidebar menu.
-    Visible on all pages and devices.
+    Visible on all pages and devices with enhanced mobile instructions.
     """
     st.markdown("""
     <div class="professional-banner">
         <h4>👉 ¡Descubre Todo el Contenido de MUPAI!</h4>
         <p>
-            Haz clic en el ícono <span class="sidebar-icon">☰</span> en la esquina superior izquierda 
-            para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.
+            <span class="desktop-instruction">Haz clic en el ícono <span class="sidebar-icon">☰</span> en la esquina superior izquierda 
+            para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.</span>
+            <span class="mobile-instruction">📱 <strong>En móvil:</strong> Toca el ícono <span class="sidebar-icon-mobile">☰</span> 
+            arriba a la izquierda para abrir el menú completo con todos los cuestionarios y opciones de MUPAI.</span>
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2011,19 +2173,23 @@ if st.session_state.page == "inicio":
     
     # Título de bienvenida
     st.markdown("""
-    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+    <div class="welcome-container" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                 padding: 3rem 2rem; border-radius: 20px; text-align: center; 
                 margin: 2rem 0; border: 2px solid #FFCC00; 
-                box-shadow: 0 4px 15px rgba(255,204,0,0.3);">
+                box-shadow: 0 4px 15px rgba(255,204,0,0.3);
+                display: flex; flex-direction: column; align-items: center; 
+                justify-content: center; min-height: 300px;">
         <h1 style="color: #FFCC00; font-size: 3.5rem; font-weight: bold; 
-                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);">
+                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);
+                   text-align: center; width: 100%;">
             🎯 Bienvenido a MUPAI
         </h1>
-        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 2rem; font-weight: 500;">
+        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 2rem; font-weight: 500;
+                   text-align: center; width: 100%;">
             Tu Transformación Física Basada en Ciencia e Inteligencia Artificial
         </h2>
         <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.6; max-width: 900px; 
-                  margin: 0 auto;">
+                  margin: 0 auto; text-align: center;">
             <strong>MUPAI</strong> revoluciona el entrenamiento digital combinando 
             <strong style="color: #FFCC00;">ciencias del ejercicio actualizada</strong>, 
             <strong style="color: #FFCC00;">inteligencia artificial</strong> y 
