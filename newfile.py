@@ -32,9 +32,7 @@ mobile_header_style = """
         display: block !important;
     }
     
-    /* Hide only non-essential elements but keep sidebar toggle */
-    [data-testid="stToolbar"] {display: none !important;}
-    .stAppHeader {display: none !important;}
+    /* Hide only non-essential elements but preserve header with hamburger menu */
     .stDeployButton {display: none !important;}
     
     /* Ensure hamburger menu is always clickeable on mobile */
@@ -141,6 +139,94 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+
+# Override CSS immediately after page config to ensure header visibility
+st.markdown("""
+<style>
+/* CRITICAL OVERRIDE: Force Streamlit header visibility on all devices */
+[data-testid="stHeader"] { 
+    position: sticky !important; 
+    top: 0 !important; 
+    z-index: 1000 !important; 
+    background: #fff !important; 
+    visibility: visible !important; 
+    display: block !important; 
+}
+
+header, #MainMenu { 
+    visibility: visible !important; 
+    display: block !important; 
+}
+
+.stAppHeader { 
+    display: block !important; 
+    visibility: visible !important; 
+}
+
+/* Ensure professional banner doesn't interfere with header */
+.professional-banner { 
+    position: relative !important; 
+    z-index: 1 !important; 
+    pointer-events: auto !important;
+}
+
+/* Decorative overlays should not block header interaction */
+.overlay-decorative {
+    pointer-events: none !important;
+}
+</style>
+
+<script>
+// Mobile sidebar auto-open on first visit
+(function() {
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    function openSidebarOnce() {
+        // Check if we've already opened the sidebar
+        if (localStorage.getItem('mupai_sidebar_opened_once')) {
+            return;
+        }
+        
+        if (!isMobile()) {
+            return;
+        }
+        
+        // Try multiple selectors for the hamburger menu
+        const selectors = [
+            '[data-testid="stSidebarNav"] button',
+            '[data-testid="stSidebar"] button',
+            '.css-1dp5vir button',
+            '[aria-label="Open sidebar"]',
+            'button[kind="header"]',
+            '[data-testid="stHeader"] button'
+        ];
+        
+        let sidebarButton = null;
+        for (const selector of selectors) {
+            sidebarButton = document.querySelector(selector);
+            if (sidebarButton) break;
+        }
+        
+        if (sidebarButton) {
+            try {
+                sidebarButton.click();
+                // Mark that we've opened the sidebar once
+                localStorage.setItem('mupai_sidebar_opened_once', 'true');
+            } catch (error) {
+                console.log('Could not auto-open sidebar:', error);
+            }
+        }
+    }
+    
+    // Wait for DOM to be ready, then try multiple times as Streamlit loads dynamically
+    setTimeout(openSidebarOnce, 1000);
+    setTimeout(openSidebarOnce, 2000);
+    setTimeout(openSidebarOnce, 3000);
+})();
+</script>
+""", unsafe_allow_html=True)
 
 # Initialize session state for page navigation if not already set
 if 'page' not in st.session_state:
