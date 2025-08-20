@@ -96,6 +96,23 @@ def load_muscle_up_logo_base64():
     except Exception as e:
         return None
 
+def load_mupai_logo_base64():
+    """
+    Loads the MUPAI logo image and returns it as base64 encoded string.
+    Returns None if the image file is not found.
+    """
+    logo_image_path = 'LOGO MUPAI.png'
+    
+    try:
+        with open(logo_image_path, 'rb') as f:
+            image_data = f.read()
+            encoded_image = base64.b64encode(image_data).decode()
+            return f'data:image/png;base64,{encoded_image}'
+    except FileNotFoundError:
+        return None
+    except Exception as e:
+        return None
+
 # Configuración de la página
 st.set_page_config(
     page_title="MUPAI - Entrenamiento Digital Basado en Ciencia",
@@ -1195,9 +1212,247 @@ st.markdown("""
             font-size: 1.8rem !important;
         }
     }
+    
+    /* ========================================================================== */
+    /* INSTITUTIONAL FOOTER STYLES */
+    /* ========================================================================== */
+    
+    .institutional-footer {
+        background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+        border-top: 3px solid #FFCC00;
+        padding: 2rem 1rem;
+        margin-top: 3rem;
+        box-shadow: 0 -5px 15px rgba(255,204,0,0.2);
+    }
+    
+    .footer-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1200px;
+        margin: 0 auto;
+        gap: 2rem;
+    }
+    
+    .footer-logo-left, .footer-logo-right {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .footer-logo-img {
+        max-width: 120px;
+        max-height: 80px;
+        height: auto;
+        object-fit: contain;
+    }
+    
+    .footer-logo-fallback {
+        color: #FFCC00;
+        text-align: center;
+        font-weight: bold;
+    }
+    
+    .footer-center {
+        flex: 1;
+        text-align: center;
+    }
+    
+    .footer-social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .footer-social-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: #FFCC00;
+        transition: all 0.3s ease;
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+    
+    .footer-social-link:hover {
+        background-color: rgba(255,204,0,0.1);
+        transform: translateY(-2px);
+        color: #FFD700;
+    }
+    
+    .footer-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .footer-icon-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+    
+    .footer-copyright {
+        color: #FFFFFF;
+        font-size: 0.95rem;
+        line-height: 1.4;
+        font-weight: 500;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    /* Mobile footer responsiveness */
+    @media (max-width: 768px) {
+        .footer-content {
+            flex-direction: column;
+            text-align: center;
+            gap: 1.5rem;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            order: 2;
+        }
+        
+        .footer-center {
+            order: 1;
+        }
+        
+        .footer-social-icons {
+            gap: 1rem;
+        }
+        
+        .footer-social-link {
+            min-width: 70px;
+        }
+        
+        .footer-icon {
+            font-size: 1.5rem;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.8rem;
+        }
+        
+        .footer-copyright {
+            font-size: 0.85rem;
+            padding: 0 1rem;
+        }
+        
+        .footer-logo-img {
+            max-width: 100px;
+            max-height: 60px;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .institutional-footer {
+            padding: 1.5rem 0.5rem;
+        }
+        
+        .footer-social-icons {
+            gap: 0.8rem;
+        }
+        
+        .footer-social-link {
+            min-width: 60px;
+            padding: 0.3rem;
+        }
+        
+        .footer-icon {
+            font-size: 1.3rem;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.75rem;
+        }
+        
+        .footer-copyright {
+            font-size: 0.8rem;
+        }
+        
+        .footer-logo-img {
+            max-width: 80px;
+            max-height: 50px;
+        }
+    }
 </style>  
 """, unsafe_allow_html=True)
 
+# ==================== SIDEBAR NAVIGATION ====================
+def crear_sidebar_navegacion():
+    """
+    Creates the sidebar navigation menu with all available pages.
+    """
+    with st.sidebar:
+        # MUPAI Logo in sidebar
+        logo_base64 = load_logo_image_base64()
+        if logo_base64:
+            st.markdown(f"""
+            <div style="text-align: center; margin-bottom: 1rem;">
+                <img src="{logo_base64}" style="max-width: 150px; height: auto;" alt="MUPAI Logo">
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div style="text-align: center; margin-bottom: 1rem; color: #FFCC00;">
+                <h2>💪 MUPAI</h2>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        st.markdown("---")
+        
+        # Navigation buttons
+        if st.button("🏠 Inicio", use_container_width=True):
+            st.session_state.page = "inicio"
+            st.rerun()
+            
+        if st.button("👥 ¿Quiénes Somos?", use_container_width=True):
+            st.session_state.page = "quienes_somos"
+            st.rerun()
+            
+        if st.button("💰 Planes y Costos", use_container_width=True):
+            st.session_state.page = "planes_costos" 
+            st.rerun()
+            
+        st.markdown("### 📋 Cuestionarios")
+        
+        if st.button("⚡ Balance Energético", use_container_width=True):
+            st.session_state.page = "balance_energetico"
+            st.rerun()
+            
+        if st.button("🍽️ Preferencias Alimentarias", use_container_width=True):
+            st.session_state.page = "preferencias_alimentarias"
+            st.rerun()
+            
+        if st.button("🍫 Antojos Alimentarios", use_container_width=True):
+            st.session_state.page = "antojos_alimentarios"
+            st.rerun()
+            
+        st.markdown("### 🧪 Test MUPAI")
+        
+        if st.button("🏋️‍♂️ Body and Energy", use_container_width=True):
+            st.session_state.page = "body_and_energy"
+            st.rerun()
+            
+        if st.button("🥗 Food Preferences", use_container_width=True):
+            st.session_state.page = "food_preferences"
+            st.rerun()
+            
+        if st.button("💪 Designing Training", use_container_width=True):
+            st.session_state.page = "designing_training"
+            st.rerun()
+            
+        st.markdown("---")
+        
+        if st.button("👨‍⚕️ Sobre el Profesional", use_container_width=True):
+            st.session_state.page = "about"
+            st.rerun()
+            
+        if st.button("📞 Contacto", use_container_width=True):
+            st.session_state.page = "contacto"
+            st.rerun()
 
 def mostrar_banner_profesional():
     """
@@ -1211,6 +1466,86 @@ def mostrar_banner_profesional():
             Haz clic en el ícono <span class="sidebar-icon">☰</span> en la esquina superior izquierda 
             para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.
         </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+def mostrar_footer_institucional():
+    """
+    Displays the institutional footer with logos, social media links and copyright.
+    Responsive design for all devices.
+    """
+    # Load logos
+    logo_mupai = load_mupai_logo_base64()
+    logo_mup = load_muscle_up_logo_base64()
+    
+    st.markdown("""
+    <div class="institutional-footer">
+        <div class="footer-content">
+            <!-- Left Logo -->
+            <div class="footer-logo-left">
+    """, unsafe_allow_html=True)
+    
+    if logo_mupai:
+        st.markdown(f"""
+                <img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+                <div class="footer-logo-fallback">
+                    <h3>💪 MUPAI</h3>
+                </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+            </div>
+            
+            <!-- Center Social Media Icons -->
+            <div class="footer-center">
+                <div class="footer-social-icons">
+                    <a href="https://wa.me/528662580594" target="_blank" class="footer-social-link whatsapp">
+                        <span class="footer-icon">📱</span>
+                        <span class="footer-icon-text">WhatsApp</span>
+                    </a>
+                    <a href="mailto:administracion@muscleupgym.fitness" class="footer-social-link email">
+                        <span class="footer-icon">📧</span>
+                        <span class="footer-icon-text">Email</span>
+                    </a>
+                    <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" class="footer-social-link facebook">
+                        <span class="footer-icon">📘</span>
+                        <span class="footer-icon-text">Facebook</span>
+                    </a>
+                    <a href="https://www.instagram.com/mup_lindavista" target="_blank" class="footer-social-link instagram">
+                        <span class="footer-icon">📷</span>
+                        <span class="footer-icon-text">Instagram</span>
+                    </a>
+                    <a href="https://muscleupgym.fitness/planes" target="_blank" class="footer-social-link website">
+                        <span class="footer-icon">🌐</span>
+                        <span class="footer-icon-text">Web</span>
+                    </a>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence
+                </div>
+            </div>
+            
+            <!-- Right Logo -->
+            <div class="footer-logo-right">
+    """, unsafe_allow_html=True)
+    
+    if logo_mup:
+        st.markdown(f"""
+                <img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+                <div class="footer-logo-fallback">
+                    <h3>🏋️ MUP</h3>
+                </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
@@ -1647,6 +1982,9 @@ def enviar_email_resultados(destinatario, asunto, contenido):
     except Exception as e:
         st.error(f"Error al procesar: {str(e)}")
         return False
+
+# Create sidebar navigation
+crear_sidebar_navegacion()
 
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
@@ -3210,3 +3548,6 @@ elif st.session_state.page == "contacto":
     """, unsafe_allow_html=True)
 
 
+# ==================== INSTITUTIONAL FOOTER ====================
+# Display footer on all pages
+mostrar_footer_institucional()
