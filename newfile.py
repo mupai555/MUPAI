@@ -13,18 +13,39 @@ import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
-# Hide Streamlit Cloud header bar (GitHub logo and Fork button)
-hide_streamlit_style = """
+# Configure Streamlit header for mobile visibility and sidebar access
+mobile_header_style = """
     <style>
-    #MainMenu {visibility: hidden !important;}
-    header {visibility: hidden !important;}
-    [data-testid="stHeader"] {display: none !important;}
+    /* Ensure Streamlit header is visible and accessible on mobile */
+    [data-testid="stHeader"] {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        background: white !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Keep main menu (hamburger icon) visible */
+    header, #MainMenu {
+        visibility: visible !important;
+        display: block !important;
+    }
+    
+    /* Hide only non-essential elements but keep sidebar toggle */
     [data-testid="stToolbar"] {display: none !important;}
     .stAppHeader {display: none !important;}
     .stDeployButton {display: none !important;}
+    
+    /* Ensure hamburger menu is always clickeable on mobile */
+    [data-testid="stSidebarNav"] {
+        visibility: visible !important;
+        display: block !important;
+        z-index: 1001 !important;
+    }
     </style>
 """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.markdown(mobile_header_style, unsafe_allow_html=True)
 
 
 def load_banking_image_base64():
@@ -1251,6 +1272,49 @@ st.markdown("""
             width: 60px !important;
             height: 60px !important;
             font-size: 1.8rem !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* MOBILE HEADER AND SIDEBAR ACCESSIBILITY IMPROVEMENTS */
+    /* ========================================================================== */
+    
+    /* Ensure header stays visible and accessible on all devices */
+    @media (max-width: 768px) {
+        /* Force header to be visible and properly positioned */
+        [data-testid="stHeader"] {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 1000 !important;
+            background: white !important;
+            visibility: visible !important;
+            display: block !important;
+            height: auto !important;
+            min-height: 45px !important;
+        }
+        
+        /* Ensure professional banner doesn't overlap header */
+        .professional-banner {
+            margin-top: 1rem !important;
+            position: relative !important;
+            z-index: 100 !important;
+        }
+        
+        /* Add small top margin to main content to account for sticky header */
+        .stApp > div:first-child {
+            padding-top: 0.5rem !important;
+        }
+    }
+    
+    /* Ultra-mobile devices - ensure hamburger menu is accessible */
+    @media (max-width: 480px) {
+        [data-testid="stHeader"] {
+            min-height: 40px !important;
+        }
+        
+        /* Slightly reduce banner margin on very small screens */
+        .professional-banner {
+            margin-top: 0.5rem !important;
         }
     }
     
