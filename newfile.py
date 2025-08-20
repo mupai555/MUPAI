@@ -104,6 +104,10 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Initialize session state for page navigation if not already set
+if 'page' not in st.session_state:
+    st.session_state.page = 'inicio'
+
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
