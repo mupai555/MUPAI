@@ -52,7 +52,7 @@ st.markdown("""
 <style>
     /* Ensure Streamlit header is visible with high z-index for mobile sidebar button */
     [data-testid="stHeader"] {
-        display: block !important;
+        display: flex !important;
         visibility: visible !important;
         z-index: 999999 !important;
         position: sticky !important;
@@ -60,6 +60,13 @@ st.markdown("""
         background-color: #ffffff !important;
         border-bottom: 1px solid #e0e0e0 !important;
         height: auto !important;
+        min-height: 56px !important;
+    }
+    
+    /* Make sure the header content is visible */
+    [data-testid="stHeader"] > div {
+        display: flex !important;
+        visibility: visible !important;
     }
     
     /* Hide only specific elements while keeping header structure */
@@ -72,6 +79,13 @@ st.markdown("""
         display: block !important;
         visibility: visible !important;
         z-index: 1000000 !important;
+    }
+    
+    /* Make sure the sidebar collapse button is always visible */
+    [data-testid="stSidebarCollapseButton"] {
+        display: flex !important;
+        visibility: visible !important;
+        z-index: 1000001 !important;
     }
     
     /* Adjust main content to account for sticky header */
