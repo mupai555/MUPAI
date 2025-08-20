@@ -50,6 +50,35 @@ ETA_FACTOR = 1.15  # Thermic Effect of Activity
 
 st.markdown("""
 <style>
+    /* Ensure Streamlit header is visible with high z-index for mobile sidebar button */
+    [data-testid="stHeader"] {
+        display: block !important;
+        visibility: visible !important;
+        z-index: 999999 !important;
+        position: sticky !important;
+        top: 0 !important;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        height: auto !important;
+    }
+    
+    /* Hide only specific elements while keeping header structure */
+    [data-testid="stToolbar"] {display: none !important;}
+    .stAppHeader {display: none !important;}
+    .stDeployButton {display: none !important;}
+    
+    /* Ensure sidebar toggle button is always visible */
+    [data-testid="stSidebarNav"] {
+        display: block !important;
+        visibility: visible !important;
+        z-index: 1000000 !important;
+    }
+    
+    /* Adjust main content to account for sticky header */
+    .main .block-container {
+        padding-top: 1rem !important;
+    }
+    
     /* Navigation Banner */
     .navigation-banner {
         background: linear-gradient(135deg, #FFCC00 0%, #FFD700 50%, #FFA500 100%);
@@ -60,7 +89,7 @@ st.markdown("""
         text-align: center;
         color: #000;
         position: relative;
-        z-index: 100;
+        z-index: 1;
     }
     
     .navigation-banner h3 {

@@ -13,18 +13,35 @@ import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
-# Hide Streamlit Cloud header bar (GitHub logo and Fork button)
-hide_streamlit_style = """
+# Ensure Streamlit header is visible for mobile sidebar access
+streamlit_header_fix = """
     <style>
-    #MainMenu {visibility: hidden !important;}
-    header {visibility: hidden !important;}
-    [data-testid="stHeader"] {display: none !important;}
+    /* Ensure Streamlit header is visible with high z-index for mobile sidebar button */
+    [data-testid="stHeader"] {
+        display: block !important;
+        visibility: visible !important;
+        z-index: 999999 !important;
+        position: sticky !important;
+        top: 0 !important;
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        height: auto !important;
+    }
+    
+    /* Hide only specific elements while keeping header structure */
     [data-testid="stToolbar"] {display: none !important;}
     .stAppHeader {display: none !important;}
     .stDeployButton {display: none !important;}
+    
+    /* Ensure sidebar toggle button is always visible */
+    [data-testid="stSidebarNav"] {
+        display: block !important;
+        visibility: visible !important;
+        z-index: 1000000 !important;
+    }
     </style>
 """
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+st.markdown(streamlit_header_fix, unsafe_allow_html=True)
 
 
 def load_banking_image_base64():
@@ -131,6 +148,11 @@ st.markdown("""
     /* Tema principal: Negro, amarillo mostaza, blanco */
     .stApp > div:first-child {
         background-color: #000000;
+    }
+    
+    /* Adjust main content to account for sticky header */
+    .main .block-container {
+        padding-top: 1rem !important;
     }
     
     .main-header {  
@@ -1037,6 +1059,9 @@ st.markdown("""
         color: #000;
         font-weight: 500;
         animation: subtle-pulse 3s ease-in-out infinite;
+        position: relative !important;
+        z-index: 1 !important;
+        pointer-events: auto !important;
     }
     
     .professional-banner h4 {
