@@ -1479,9 +1479,13 @@ st.markdown("""
     .institutional-footer {
         background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
         border-top: 3px solid #FFCC00;
-        padding: 2rem 1rem;
-        margin-top: 3rem;
+        padding: 2.5rem 1rem;
+        margin-top: 4rem;
         box-shadow: 0 -5px 15px rgba(255,204,0,0.2);
+        width: 100%;
+        position: relative;
+        bottom: 0;
+        left: 0;
     }
     
     .footer-content {
@@ -3687,11 +3691,16 @@ elif st.session_state.page == "body_and_energy":
     # Attractive centered button linking to Body And Energy Calculator
     st.markdown("""
     <div style="text-align: center; margin: 3rem 0;">
-        <a href="https://bodyandenergy.streamlit.app/" target="_blank" style="text-decoration: none;">
+        <a href="https://mupai-digital-training-science-fbeo.streamlit.app/" target="_blank" style="text-decoration: none;">
             <div class="attractive-button">
-                <h2 style="margin: 0; color: #000; font-size: 2rem;">🏋️‍♂️ Body And Energy Calculator</h2>
-                <p style="margin: 0.5rem 0 0 0; color: #000; font-size: 1.1rem;">
+                <h2 style="margin: 0; color: #000; font-size: 1.8rem; font-weight: bold;">
+                    🏋️‍♂️ ACCEDER A BODY AND ENERGY
+                </h2>
+                <p style="margin: 0.5rem 0 0 0; color: #333; font-size: 1.1rem;">
                     Herramienta profesional para cálculo exacto de gasto energético y composición corporal
+                </p>
+                <p style="margin: 0.5rem 0 0 0; color: #000; font-size: 1.2rem; font-weight: bold;">
+                    👆 Da clic aquí para acceder
                 </p>
             </div>
         </a>
