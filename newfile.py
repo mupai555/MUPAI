@@ -13,6 +13,19 @@ import re
 # Import BODY AND ENERGY module
 from body_and_energy import show_body_and_energy
 
+# Hide Streamlit Cloud header bar (GitHub logo and Fork button)
+hide_streamlit_style = """
+    <style>
+    #MainMenu {visibility: hidden !important;}
+    header {visibility: hidden !important;}
+    [data-testid="stHeader"] {display: none !important;}
+    [data-testid="stToolbar"] {display: none !important;}
+    .stAppHeader {display: none !important;}
+    .stDeployButton {display: none !important;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+
 # ==================== BODY AND ENERGY INTEGRATION FUNCTIONS ====================
 def validate_name_body_energy(name):
     """
