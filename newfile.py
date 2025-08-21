@@ -3961,25 +3961,19 @@ def mostrar_footer_institucional():
     logo_mupai = load_mupai_logo_base64()
     logo_mup = load_muscle_up_logo_base64()
     
-    st.markdown("""
+    # Prepare logo HTML for left logo
+    left_logo_html = f'<img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">' if logo_mupai else '<div class="footer-logo-fallback"><h3>💪 MUPAI</h3></div>'
+    
+    # Prepare logo HTML for right logo  
+    right_logo_html = f'<img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">' if logo_mup else '<div class="footer-logo-fallback"><h3>🏋️ MUP</h3></div>'
+    
+    # Render complete footer in single markdown call
+    st.markdown(f"""
     <div class="institutional-footer">
         <div class="footer-content">
             <!-- Left Logo -->
             <div class="footer-logo-left">
-    """, unsafe_allow_html=True)
-    
-    if logo_mupai:
-        st.markdown(f"""
-                <img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
-                <div class="footer-logo-fallback">
-                    <h3>💪 MUPAI</h3>
-                </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown("""
+                {left_logo_html}
             </div>
             
             <!-- Center Content -->
@@ -4027,20 +4021,7 @@ def mostrar_footer_institucional():
             
             <!-- Right Logo -->
             <div class="footer-logo-right">
-    """, unsafe_allow_html=True)
-    
-    if logo_mup:
-        st.markdown(f"""
-                <img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown("""
-                <div class="footer-logo-fallback">
-                    <h3>🏋️ MUP</h3>
-                </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown("""
+                {right_logo_html}
             </div>
         </div>
     </div>
