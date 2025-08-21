@@ -1469,249 +1469,6 @@ st.markdown("""
     }
     
     /* ========================================================================== */
-    /* INFORMATIVE BANNER STYLES (HOME PAGE ONLY) */
-    /* ========================================================================== */
-    
-    .informative-banner {
-        background: linear-gradient(135deg, #74b9ff 0%, #a29bfe 50%, #6c5ce7 100%);
-        padding: 1.5rem 2rem;
-        border-radius: 12px;
-        margin: 1rem 0 2rem 0;
-        border: 2px solid #0984e3;
-        box-shadow: 0 4px 15px rgba(116, 185, 255, 0.3);
-        text-align: center;
-        color: white;
-        font-weight: 500;
-        position: relative;
-    }
-    
-    .informative-banner p {
-        color: #ffffff;
-        margin: 0;
-        font-size: 1.1rem;
-        line-height: 1.6;
-        font-weight: 500;
-    }
-    
-    /* Mobile responsive informative banner */
-    @media (max-width: 768px) {
-        .informative-banner {
-            padding: 1rem 1.5rem;
-            margin: 0.5rem 0 1.5rem 0;
-            border-radius: 10px;
-        }
-        
-        .informative-banner p {
-            font-size: 1rem;
-            line-height: 1.5;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .informative-banner {
-            padding: 0.8rem 1rem;
-            margin: 0.5rem 0 1rem 0;
-        }
-        
-        .informative-banner p {
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-    }
-    
-    /* ========================================================================== */
-    /* FLOATING SIDEBAR LABEL (HOME PAGE ONLY) */
-    /* ========================================================================== */
-    
-    .floating-sidebar-label {
-        position: fixed;
-        top: 15px;
-        left: 60px;
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
-        color: #000;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: bold;
-        box-shadow: 0 4px 15px rgba(255,204,0,0.6);
-        z-index: 1000;
-        animation: floating-bounce 2s ease-in-out infinite;
-        border: 2px solid #000;
-        pointer-events: none;
-        white-space: nowrap;
-    }
-    
-    .floating-sidebar-label::before {
-        content: '';
-        position: absolute;
-        left: -8px;
-        top: 50%;
-        transform: translateY(-50%);
-        border: 8px solid transparent;
-        border-right-color: #FFCC00;
-    }
-    
-    @keyframes floating-bounce {
-        0%, 100% { 
-            transform: translateY(0px) scale(1);
-            box-shadow: 0 4px 15px rgba(255,204,0,0.6);
-        }
-        50% { 
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 8px 25px rgba(255,204,0,0.8);
-        }
-    }
-    
-    /* Mobile responsive floating label */
-    @media (max-width: 768px) {
-        .floating-sidebar-label {
-            top: 12px;
-            left: 55px;
-            padding: 0.4rem 0.8rem;
-            font-size: 0.8rem;
-            border-radius: 15px;
-        }
-        
-        .floating-sidebar-label::before {
-            left: -6px;
-            border-width: 6px;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .floating-sidebar-label {
-            top: 10px;
-            left: 50px;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.75rem;
-            border-radius: 12px;
-        }
-        
-        .floating-sidebar-label::before {
-            left: -5px;
-            border-width: 5px;
-        }
-    }
-    
-    /* ========================================================================== */
-    /* IMPROVED "BIENVENIDO A MUPAI" TITLE STYLES */
-    /* ========================================================================== */
-    
-    .welcome-title-container {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        padding: 3rem 2rem;
-        border-radius: 20px;
-        text-align: center;
-        margin: 2rem auto;
-        border: 2px solid #FFCC00;
-        box-shadow: 0 4px 15px rgba(255,204,0,0.3);
-        max-width: 1200px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .welcome-title-container h1 {
-        color: #FFCC00;
-        font-size: 3.5rem;
-        font-weight: bold;
-        margin-bottom: 1rem;
-        text-shadow: 2px 2px 4px rgba(255,204,0,0.5);
-        text-align: center;
-        line-height: 1.2;
-        width: 100%;
-    }
-    
-    .welcome-title-container h2 {
-        color: #FFFFFF;
-        font-size: 1.8rem;
-        margin-bottom: 2rem;
-        font-weight: 500;
-        text-align: center;
-        line-height: 1.4;
-        width: 100%;
-    }
-    
-    .welcome-title-container p {
-        color: #FFFFFF;
-        font-size: 1.3rem;
-        line-height: 1.6;
-        max-width: 900px;
-        margin: 0 auto;
-        text-align: center;
-        width: 100%;
-    }
-    
-    /* Mobile responsive welcome title */
-    @media (max-width: 768px) {
-        .welcome-title-container {
-            padding: 2rem 1.5rem;
-            margin: 1.5rem auto;
-            border-radius: 15px;
-        }
-        
-        .welcome-title-container h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .welcome-title-container h2 {
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .welcome-title-container p {
-            font-size: 1.1rem;
-            line-height: 1.5;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .welcome-title-container {
-            padding: 1.5rem 1rem;
-            margin: 1rem auto;
-            border-radius: 12px;
-        }
-        
-        .welcome-title-container h1 {
-            font-size: 2rem;
-            margin-bottom: 0.8rem;
-            line-height: 1.1;
-        }
-        
-        .welcome-title-container h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .welcome-title-container p {
-            font-size: 1rem;
-            line-height: 1.4;
-        }
-    }
-    
-    /* Ensure proper centering on all devices */
-    @media (max-width: 320px) {
-        .welcome-title-container {
-            padding: 1rem 0.8rem;
-        }
-        
-        .welcome-title-container h1 {
-            font-size: 1.8rem;
-        }
-        
-        .welcome-title-container h2 {
-            font-size: 1.1rem;
-        }
-        
-        .welcome-title-container p {
-            font-size: 0.9rem;
-        }
-    }
-
-    /* ========================================================================== */
     /* END MOBILE RESPONSIVENESS BLOCK */
     /* ========================================================================== */
 </style>  
@@ -1804,21 +1561,6 @@ def mostrar_banner_profesional():
             para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.</span>
             <span class="mobile-instruction">📱 <strong>En móvil:</strong> Toca el ícono <span class="sidebar-icon-mobile">☰</span> 
             arriba a la izquierda para abrir el menú completo con todos los cuestionarios y opciones de MUPAI.</span>
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-
-
-def mostrar_banner_informativo():
-    """
-    Displays an informative banner only on the home page with overview and sidebar instructions.
-    """
-    st.markdown("""
-    <div class="informative-banner">
-        <p>
-            Esta página te muestra un overview general de MUPAI y nuestros servicios principales. 
-            Si quieres conocer más detalles, despliega la barra lateral (haz clic en ☰ arriba a la izquierda) 
-            y elige el apartado que quieras conocer a fondo.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2264,13 +2006,6 @@ crear_sidebar_navegacion()
 
 # ==================== PÁGINA DE INICIO ====================
 if st.session_state.page == "inicio":
-    # Floating sidebar label - only on home page
-    st.markdown("""
-    <div class="floating-sidebar-label">
-        👈 ¡Haz clic aquí!
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Logo grande y centrado sin marco circular
     logo_base64 = load_logo_image_base64()
     if logo_base64:
@@ -2289,15 +2024,28 @@ if st.session_state.page == "inicio":
         </div>
         """, unsafe_allow_html=True)
     
-    # Informative banner - only on home page, replacing professional banner
-    mostrar_banner_informativo()
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
     
-    # Título de bienvenida - improved styling and alignment
+    # Título de bienvenida
     st.markdown("""
-    <div class="welcome-title-container">
-        <h1>🎯 Bienvenido a MUPAI</h1>
-        <h2>Tu Transformación Física Basada en Ciencia e Inteligencia Artificial</h2>
-        <p>
+    <div class="welcome-container" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 2rem 0; border: 2px solid #FFCC00; 
+                box-shadow: 0 4px 15px rgba(255,204,0,0.3);
+                display: flex; flex-direction: column; align-items: center; 
+                justify-content: center; min-height: 300px;">
+        <h1 style="color: #FFCC00; font-size: 3.5rem; font-weight: bold; 
+                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);
+                   text-align: center; width: 100%;">
+            🎯 Bienvenido a MUPAI
+        </h1>
+        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 2rem; font-weight: 500;
+                   text-align: center; width: 100%;">
+            Tu Transformación Física Basada en Ciencia e Inteligencia Artificial
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.6; max-width: 900px; 
+                  margin: 0 auto; text-align: center;">
             <strong>MUPAI</strong> revoluciona el entrenamiento digital combinando 
             <strong style="color: #FFCC00;">ciencias del ejercicio actualizada</strong>, 
             <strong style="color: #FFCC00;">inteligencia artificial</strong> y 
@@ -2496,6 +2244,9 @@ if st.session_state.page == "inicio":
 
 # ==================== PÁGINA ¿QUIÉNES SOMOS? ====================
 elif st.session_state.page == "quienes_somos":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Logo institucional
     logo_base64 = load_logo_image_base64()
     if logo_base64:
@@ -2675,6 +2426,9 @@ elif st.session_state.page == "quienes_somos":
     """, unsafe_allow_html=True)
 # ==================== CUESTIONARIO BALANCE ENERGÉTICO ====================
 elif st.session_state.page == "balance_energetico":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="cuest-section-header">
         <h2>🧮 Cuestionario Científico Avanzado - Balance Energético Óptimo</h2>
@@ -3380,6 +3134,9 @@ elif st.session_state.page == "antojos_alimentarios":
 
 # ==================== PÁGINA DE PLANES Y COSTOS ====================
 elif st.session_state.page == "planes_costos":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>💸 Planes y Costos</h2>
@@ -3624,6 +3381,9 @@ elif st.session_state.page == "planes_costos":
 
 # ==================== NUEVAS PÁGINAS TEST MUPAI ====================
 elif st.session_state.page == "body_and_energy":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="cuest-section-header">
         <h2>BODY AND ENERGY</h2>
@@ -3650,6 +3410,9 @@ elif st.session_state.page == "body_and_energy":
     """, unsafe_allow_html=True)
 
 elif st.session_state.page == "food_preferences":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="cuest-section-header">
         <h2>FOOD PREFERENCES</h2>
@@ -3690,6 +3453,9 @@ elif st.session_state.page == "designing_training":
 
 # ==================== PÁGINAS ADICIONALES ====================
 elif st.session_state.page == "about":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Professional header with subtitle
     st.markdown("""
     <div class="professional-header">
@@ -3721,6 +3487,9 @@ elif st.session_state.page == "about":
     st.markdown("</div>", unsafe_allow_html=True)
 
 elif st.session_state.page == "contacto":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     # Contact section with responsive styling
     st.markdown("""
     <div class="contact-section">
