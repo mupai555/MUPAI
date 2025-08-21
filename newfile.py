@@ -1341,49 +1341,6 @@ st.markdown("""
             padding-top: 0.5rem !important;
         }
     }
-    
-    /* ========================================================================== */
-    /* HIDE GITHUB ELEMENTS - CUSTOM REQUIREMENT */
-    /* ========================================================================== */
-    
-    /* Hide GitHub deploy button and related elements in the banner */
-    [data-testid="stToolbar"],
-    .stDeployButton,
-    [data-testid="stDecoration"],
-    button[title*="Deploy"],
-    button[title*="GitHub"],
-    div[data-testid="stToolbar"],
-    div[data-testid="stDecoration"] {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    /* Hide any GitHub cat logo or fork indicators */
-    img[alt*="GitHub"],
-    img[alt*="Fork"],
-    img[src*="github"],
-    img[src*="fork"],
-    .github-corner,
-    .fork-label,
-    .github-badge {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    /* Hide banner area completely if it contains only GitHub elements */
-    .stToolbar {
-        display: none !important;
-    }
-    
-    /* Ensure sidebar arrow and collapse functionality remains intact */
-    [data-testid="collapsedControl"],
-    [data-testid="stSidebarNav"],
-    button[kind="header"],
-    .css-1rs6os.edgvbvh3,
-    .css-1cypcdb.eczjsme11 {
-        display: block !important;
-        visibility: visible !important;
-    }
 </style>  
 """, unsafe_allow_html=True)
 
@@ -1498,16 +1455,6 @@ if 'page' not in st.session_state:
     st.session_state.page = "inicio"
 
 # Navegación principal - reorganizada según requerimientos
-# Custom label at the top of sidebar
-st.sidebar.markdown("""
-<div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
-           color: #000000; padding: 1rem; border-radius: 12px; 
-           text-align: center; font-weight: bold; margin-bottom: 1rem;
-           box-shadow: 0 4px 15px rgba(255,204,0,0.3);">
-    🌟 Tu salud y bienestar son nuestra misión 🌟
-</div>
-""", unsafe_allow_html=True)
-
 st.sidebar.markdown("### 📋 NAVEGACIÓN")
 
 if st.sidebar.button("🏠 Inicio", use_container_width=True):
