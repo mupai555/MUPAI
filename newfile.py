@@ -1405,8 +1405,384 @@ st.markdown("""
     }
     
     /* ========================================================================== */
-    /* INSTITUTIONAL FOOTER STYLES */
+    /* MODERN INSTITUTIONAL FOOTER STYLES - TECH GLASSMORPHISM DESIGN */
     /* ========================================================================== */
+    
+    .institutional-footer {
+        background: linear-gradient(135deg, 
+            rgba(0,0,0,0.95) 0%, 
+            rgba(26,26,26,0.98) 25%, 
+            rgba(45,45,45,0.95) 50%, 
+            rgba(26,26,26,0.98) 75%, 
+            rgba(0,0,0,0.95) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-top: 2px solid rgba(255,204,0,0.3);
+        box-shadow: 0 -8px 32px rgba(255,204,0,0.1);
+        position: relative;
+        margin-top: 4rem;
+        padding: 2.5rem 0;
+        overflow: hidden;
+    }
+    
+    .institutional-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(45deg, 
+            transparent 0%, 
+            rgba(255,204,0,0.03) 25%, 
+            transparent 50%, 
+            rgba(255,204,0,0.03) 75%, 
+            transparent 100%);
+        animation: techShimmer 8s ease-in-out infinite;
+        pointer-events: none;
+    }
+    
+    @keyframes techShimmer {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
+    }
+    
+    .footer-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 1400px;
+        margin: 0 auto;
+        gap: 2rem;
+        padding: 0 2rem;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .footer-logo-left, .footer-logo-right {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 160px;
+        height: 120px;
+        background: rgba(255,204,0,0.08);
+        border-radius: 20px;
+        border: 1px solid rgba(255,204,0,0.2);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .footer-logo-left:hover, .footer-logo-right:hover {
+        background: rgba(255,204,0,0.15);
+        border-color: rgba(255,204,0,0.4);
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 10px 30px rgba(255,204,0,0.2);
+    }
+    
+    .footer-logo-img {
+        max-width: 130px;
+        max-height: 90px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+        filter: drop-shadow(0 4px 8px rgba(255,204,0,0.3));
+        transition: filter 0.3s ease;
+    }
+    
+    .footer-logo-img:hover {
+        filter: drop-shadow(0 6px 12px rgba(255,204,0,0.5));
+    }
+    
+    .footer-logo-fallback {
+        color: #FFCC00;
+        text-align: center;
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .footer-center {
+        flex: 1;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .footer-contact-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .footer-contact-btn {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+        color: #000;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 0.95rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 15px rgba(255,204,0,0.3);
+        border: 2px solid transparent;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .footer-contact-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+    
+    .footer-contact-btn:hover::before {
+        left: 100%;
+    }
+    
+    .footer-contact-btn:hover {
+        transform: translateY(-2px) scale(1.05);
+        box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%);
+    }
+    
+    .footer-social-icons {
+        display: flex;
+        gap: 1.2rem;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .footer-social-link {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        padding: 0.8rem;
+        border-radius: 15px;
+        background: rgba(255,204,0,0.05);
+        border: 1px solid rgba(255,204,0,0.1);
+        backdrop-filter: blur(10px);
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        min-width: 80px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .footer-social-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at center, rgba(255,204,0,0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .footer-social-link:hover::before {
+        opacity: 1;
+    }
+    
+    .footer-social-link:hover {
+        background: rgba(255,204,0,0.12);
+        border-color: rgba(255,204,0,0.3);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(255,204,0,0.2);
+    }
+    
+    .footer-icon {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+        transition: transform 0.3s ease;
+    }
+    
+    .footer-social-link:hover .footer-icon {
+        transform: scale(1.2) rotate(5deg);
+    }
+    
+    .footer-icon-text {
+        color: #FFFFFF;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        transition: color 0.3s ease;
+    }
+    
+    .footer-social-link:hover .footer-icon-text {
+        color: #FFCC00;
+    }
+    
+    .footer-copyright {
+        color: #CCCCCC;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        text-align: center;
+        max-width: 600px;
+        padding: 1rem;
+        background: rgba(0,0,0,0.3);
+        border-radius: 15px;
+        border: 1px solid rgba(255,204,0,0.1);
+        backdrop-filter: blur(5px);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+    
+    /* ========================================================================== */
+    /* RESPONSIVE DESIGN FOR FOOTER */
+    /* ========================================================================== */
+    
+    @media (max-width: 1024px) {
+        .footer-content {
+            flex-direction: column;
+            gap: 2rem;
+            padding: 0 1.5rem;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 140px;
+            height: 100px;
+        }
+        
+        .footer-center {
+            order: 1;
+            width: 100%;
+        }
+        
+        .footer-logo-left {
+            order: 2;
+        }
+        
+        .footer-logo-right {
+            order: 3;
+        }
+        
+        .footer-contact-buttons {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .footer-social-icons {
+            gap: 1rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .institutional-footer {
+            padding: 2rem 0;
+        }
+        
+        .footer-content {
+            padding: 0 1rem;
+            gap: 1.5rem;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 120px;
+            height: 80px;
+        }
+        
+        .footer-logo-img {
+            max-width: 100px;
+            max-height: 60px;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+        }
+        
+        .footer-social-icons {
+            gap: 0.8rem;
+        }
+        
+        .footer-social-link {
+            min-width: 70px;
+            padding: 0.6rem;
+        }
+        
+        .footer-icon {
+            font-size: 1.5rem;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.8rem;
+        }
+        
+        .footer-copyright {
+            font-size: 0.85rem;
+            padding: 0.8rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .institutional-footer {
+            padding: 1.5rem 0;
+        }
+        
+        .footer-content {
+            padding: 0 0.8rem;
+            gap: 1.2rem;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 100px;
+            height: 70px;
+        }
+        
+        .footer-logo-img {
+            max-width: 80px;
+            max-height: 50px;
+        }
+        
+        .footer-contact-buttons {
+            flex-direction: column;
+            gap: 0.8rem;
+            width: 100%;
+        }
+        
+        .footer-contact-btn {
+            width: 100%;
+            max-width: 250px;
+        }
+        
+        .footer-social-icons {
+            gap: 0.6rem;
+        }
+        
+        .footer-social-link {
+            min-width: 60px;
+            padding: 0.5rem;
+        }
+        
+        .footer-icon {
+            font-size: 1.3rem;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.75rem;
+        }
+        
+        .footer-copyright {
+            font-size: 0.8rem;
+            padding: 0.6rem;
+            line-height: 1.3;
+        }
+    }
     
     .institutional-footer {
         background: linear-gradient(135deg, 
