@@ -1405,7 +1405,7 @@ st.markdown("""
     }
     
     /* ========================================================================== */
-    /* MODERN INSTITUTIONAL FOOTER STYLES - TECH GLASSMORPHISM DESIGN */
+    /* INSTITUTIONAL FOOTER STYLES */
     /* ========================================================================== */
     
     .institutional-footer {
@@ -4332,6 +4332,7 @@ def mostrar_footer_institucional():
     """
     Displays the modern institutional footer with logos, social media links and copyright.
     Features glassmorphism design, dynamic gradients, hover animations and responsive layout.
+    Ensures proper HTML rendering with st.markdown using unsafe_allow_html=True.
     """
     # Load logos
     logo_mupai = load_mupai_logo_base64()
@@ -4343,7 +4344,267 @@ def mostrar_footer_institucional():
     # Prepare logo HTML for right logo  
     right_logo_html = f'<img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">' if logo_mup else '<div class="footer-logo-fallback"><h3>🏋️ MUP</h3></div>'
     
-    # Render complete footer in single markdown call
+    # First inject the CSS styles to ensure proper rendering
+    st.markdown("""
+    <style>
+    /* ========================================================================== */
+    /* INSTITUTIONAL FOOTER STYLES */
+    /* ========================================================================== */
+    
+    .institutional-footer {
+        background: #000000 !important;
+        border-top: 3px solid #FFCC00 !important;
+        padding: 2.5rem 0 !important;
+        margin-top: 4rem !important;
+        box-shadow: 0 -5px 15px rgba(255,204,0,0.2) !important;
+        width: 100vw !important;
+        position: relative !important;
+        left: 50% !important;
+        right: 50% !important;
+        margin-left: -50vw !important;
+        margin-right: -50vw !important;
+        box-sizing: border-box !important;
+    }
+    
+    .footer-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        gap: 2rem !important;
+        min-height: 100px !important;
+        padding: 0 1rem !important;
+        box-sizing: border-box !important;
+    }
+    
+    .footer-logo-left, .footer-logo-right {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 140px !important;
+        height: 100px !important;
+    }
+    
+    .footer-logo-img {
+        max-width: 120px !important;
+        max-height: 80px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+    }
+    
+    .footer-logo-fallback {
+        color: #FFCC00 !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .footer-center {
+        flex: 1 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    .footer-contact-buttons {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 1rem !important;
+        margin-bottom: 1.5rem !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .footer-contact-btn {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%) !important;
+        color: #000000 !important;
+        text-decoration: none !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 25px !important;
+        font-weight: bold !important;
+        font-size: 0.9rem !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        box-shadow: 0 2px 10px rgba(255,204,0,0.3) !important;
+    }
+    
+    .footer-contact-btn:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(255,204,0,0.5) !important;
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%) !important;
+    }
+    
+    .footer-social-icons {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 1.5rem !important;
+        margin-bottom: 1rem !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .footer-social-link {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        color: #FFCC00 !important;
+        transition: all 0.3s ease !important;
+        padding: 0.5rem !important;
+        border-radius: 8px !important;
+    }
+    
+    .footer-social-link:hover {
+        background-color: rgba(255,204,0,0.1) !important;
+        transform: translateY(-2px) !important;
+        color: #FFD700 !important;
+    }
+    
+    .footer-icon {
+        font-size: 1.8rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .footer-icon-text {
+        font-size: 0.9rem !important;
+        font-weight: 500 !important;
+        color: #FFFFFF !important;
+    }
+    
+    .footer-copyright {
+        color: #FFFFFF !important;
+        font-size: 0.95rem !important;
+        line-height: 1.4 !important;
+        font-weight: 500 !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        hyphens: auto !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* Mobile footer responsiveness */
+    @media (max-width: 768px) {
+        .institutional-footer {
+            padding: 2rem 0 !important;
+        }
+        
+        .footer-content {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 1.5rem !important;
+            min-height: auto !important;
+            padding: 0 1rem !important;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 120px !important;
+            height: 80px !important;
+            order: 2 !important;
+        }
+        
+        .footer-center {
+            order: 1 !important;
+            width: 100% !important;
+        }
+        
+        .footer-contact-buttons {
+            gap: 0.5rem !important;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.6rem 1.2rem !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .footer-social-icons {
+            gap: 1rem !important;
+        }
+        
+        .footer-social-link {
+            min-width: 70px !important;
+        }
+        
+        .footer-icon {
+            font-size: 1.5rem !important;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.8rem !important;
+        }
+        
+        .footer-copyright {
+            font-size: 0.85rem !important;
+            padding: 0 1rem !important;
+            max-width: 100% !important;
+            line-height: 1.3 !important;
+        }
+        
+        .footer-logo-img {
+            max-width: 100px !important;
+            max-height: 60px !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .institutional-footer {
+            padding: 1.5rem 0 !important;
+        }
+        
+        .footer-content {
+            padding: 0 0.5rem !important;
+        }
+        
+        .footer-contact-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.5rem 1rem !important;
+            font-size: 0.8rem !important;
+        }
+        
+        .footer-social-icons {
+            gap: 0.8rem !important;
+        }
+        
+        .footer-social-link {
+            min-width: 60px !important;
+            padding: 0.3rem !important;
+        }
+        
+        .footer-icon {
+            font-size: 1.3rem !important;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.75rem !important;
+        }
+        
+        .footer-copyright {
+            font-size: 0.8rem !important;
+            padding: 0 0.5rem !important;
+            line-height: 1.2 !important;
+        }
+        
+        .footer-logo-img {
+            max-width: 80px !important;
+            max-height: 50px !important;
+        }
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
+    # Then render the HTML footer content with proper structure
     st.markdown(f"""
     <div class="institutional-footer">
         <div class="footer-content">
