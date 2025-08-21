@@ -4357,12 +4357,7 @@ def mostrar_footer_institucional():
         padding: 2.5rem 0 !important;
         margin-top: 4rem !important;
         box-shadow: 0 -5px 15px rgba(255,204,0,0.2) !important;
-        width: 100vw !important;
-        position: relative !important;
-        left: 50% !important;
-        right: 50% !important;
-        margin-left: -50vw !important;
-        margin-right: -50vw !important;
+        width: 100% !important;
         box-sizing: border-box !important;
     }
     
