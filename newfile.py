@@ -1477,30 +1477,30 @@ st.markdown("""
     /* ========================================================================== */
     
     .institutional-footer {
-        background: #000000;
-        border-top: 3px solid #FFCC00;
-        padding: 2.5rem 0;
-        margin-top: 4rem;
-        box-shadow: 0 -5px 15px rgba(255,204,0,0.2);
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
-        box-sizing: border-box;
+        background: #000000 !important;
+        border-top: 3px solid #FFCC00 !important;
+        padding: 2.5rem 0 !important;
+        margin-top: 4rem !important;
+        box-shadow: 0 -5px 15px rgba(255,204,0,0.2) !important;
+        width: 100vw !important;
+        position: relative !important;
+        left: 50% !important;
+        right: 50% !important;
+        margin-left: -50vw !important;
+        margin-right: -50vw !important;
+        box-sizing: border-box !important;
     }
     
     .footer-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1200px;
-        margin: 0 auto;
-        gap: 2rem;
-        min-height: 100px;
-        padding: 0 1rem;
-        box-sizing: border-box;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        gap: 2rem !important;
+        min-height: 100px !important;
+        padding: 0 1rem !important;
+        box-sizing: border-box !important;
     }
     
     .footer-logo-left, .footer-logo-right {
@@ -1549,20 +1549,20 @@ st.markdown("""
     }
     
     .footer-social-link {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        color: #FFCC00;
-        transition: all 0.3s ease;
-        padding: 0.5rem;
-        border-radius: 8px;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        text-decoration: none !important;
+        color: #FFCC00 !important;
+        transition: all 0.3s ease !important;
+        padding: 0.5rem !important;
+        border-radius: 8px !important;
     }
     
     .footer-social-link:hover {
-        background-color: rgba(255,204,0,0.1);
-        transform: translateY(-2px);
-        color: #FFD700;
+        background-color: rgba(255,204,0,0.1) !important;
+        transform: translateY(-2px) !important;
+        color: #FFD700 !important;
     }
     
     .footer-icon {
@@ -1576,45 +1576,45 @@ st.markdown("""
     }
     
     .footer-copyright {
-        color: #FFFFFF;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        font-weight: 500;
-        max-width: 600px;
-        margin: 0 auto;
-        text-align: center;
-        word-wrap: break-word;
-        hyphens: auto;
-        overflow-wrap: break-word;
+        color: #FFFFFF !important;
+        font-size: 0.95rem !important;
+        line-height: 1.4 !important;
+        font-weight: 500 !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        hyphens: auto !important;
+        overflow-wrap: break-word !important;
     }
     
     /* Mobile footer responsiveness */
     @media (max-width: 768px) {
         .institutional-footer {
-            padding: 2rem 0;
+            padding: 2rem 0 !important;
         }
         
         .footer-content {
-            flex-direction: column;
-            text-align: center;
-            gap: 1.5rem;
-            min-height: auto;
-            padding: 0 1rem;
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 1.5rem !important;
+            min-height: auto !important;
+            padding: 0 1rem !important;
         }
         
         .footer-logo-left, .footer-logo-right {
-            width: 120px;
-            height: 80px;
-            order: 2;
+            width: 120px !important;
+            height: 80px !important;
+            order: 2 !important;
         }
         
         .footer-center {
-            order: 1;
-            width: 100%;
+            order: 1 !important;
+            width: 100% !important;
         }
         
         .footer-social-icons {
-            gap: 1rem;
+            gap: 1rem !important;
         }
         
         .footer-social-link {
