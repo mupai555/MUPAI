@@ -1404,752 +1404,6 @@ st.markdown("""
         }
     }
     
-    /* ========================================================================== */
-    /* INSTITUTIONAL FOOTER STYLES */
-    /* ========================================================================== */
-    
-    .institutional-footer {
-        background: linear-gradient(135deg, 
-            rgba(0,0,0,0.95) 0%, 
-            rgba(26,26,26,0.98) 25%, 
-            rgba(45,45,45,0.95) 50%, 
-            rgba(26,26,26,0.98) 75%, 
-            rgba(0,0,0,0.95) 100%);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-top: 2px solid rgba(255,204,0,0.3);
-        box-shadow: 0 -8px 32px rgba(255,204,0,0.1);
-        position: relative;
-        margin-top: 4rem;
-        padding: 2.5rem 0;
-        overflow: hidden;
-    }
-    
-    .institutional-footer::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(45deg, 
-            transparent 0%, 
-            rgba(255,204,0,0.03) 25%, 
-            transparent 50%, 
-            rgba(255,204,0,0.03) 75%, 
-            transparent 100%);
-        animation: techShimmer 8s ease-in-out infinite;
-        pointer-events: none;
-    }
-    
-    @keyframes techShimmer {
-        0%, 100% { opacity: 0.3; }
-        50% { opacity: 0.7; }
-    }
-    
-    .footer-content {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1400px;
-        margin: 0 auto;
-        gap: 2rem;
-        padding: 0 2rem;
-        position: relative;
-        z-index: 2;
-    }
-    
-    .footer-logo-left, .footer-logo-right {
-        flex: 0 0 auto;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 160px;
-        height: 120px;
-        background: rgba(255,204,0,0.08);
-        border-radius: 20px;
-        border: 1px solid rgba(255,204,0,0.2);
-        backdrop-filter: blur(10px);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    
-    .footer-logo-left:hover, .footer-logo-right:hover {
-        background: rgba(255,204,0,0.15);
-        border-color: rgba(255,204,0,0.4);
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 10px 30px rgba(255,204,0,0.2);
-    }
-    
-    .footer-logo-img {
-        max-width: 130px;
-        max-height: 90px;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        display: block;
-        filter: drop-shadow(0 4px 8px rgba(255,204,0,0.3));
-        transition: filter 0.3s ease;
-    }
-    
-    .footer-logo-img:hover {
-        filter: drop-shadow(0 6px 12px rgba(255,204,0,0.5));
-    }
-    
-    .footer-logo-fallback {
-        color: #FFCC00;
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.2rem;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-    }
-    
-    .footer-center {
-        flex: 1;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 1.5rem;
-    }
-    
-    .footer-contact-buttons {
-        display: flex;
-        gap: 1rem;
-        margin-bottom: 1rem;
-    }
-    
-    .footer-contact-btn {
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
-        color: #000;
-        padding: 0.8rem 1.5rem;
-        border-radius: 25px;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 0.95rem;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 4px 15px rgba(255,204,0,0.3);
-        border: 2px solid transparent;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .footer-contact-btn::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-        transition: left 0.5s;
-    }
-    
-    .footer-contact-btn:hover::before {
-        left: 100%;
-    }
-    
-    .footer-contact-btn:hover {
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 8px 25px rgba(255,204,0,0.5);
-        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%);
-    }
-    
-    .footer-social-icons {
-        display: flex;
-        gap: 1.2rem;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-    }
-    
-    .footer-social-link {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-decoration: none;
-        padding: 0.8rem;
-        border-radius: 15px;
-        background: rgba(255,204,0,0.05);
-        border: 1px solid rgba(255,204,0,0.1);
-        backdrop-filter: blur(10px);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        min-width: 80px;
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .footer-social-link::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: radial-gradient(circle at center, rgba(255,204,0,0.1) 0%, transparent 70%);
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .footer-social-link:hover::before {
-        opacity: 1;
-    }
-    
-    .footer-social-link:hover {
-        background: rgba(255,204,0,0.12);
-        border-color: rgba(255,204,0,0.3);
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 8px 20px rgba(255,204,0,0.2);
-    }
-    
-    .footer-icon {
-        font-size: 1.8rem;
-        margin-bottom: 0.3rem;
-        transition: transform 0.3s ease;
-    }
-    
-    .footer-social-link:hover .footer-icon {
-        transform: scale(1.2) rotate(5deg);
-    }
-    
-    .footer-icon-text {
-        color: #FFFFFF;
-        font-size: 0.85rem;
-        font-weight: 500;
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        transition: color 0.3s ease;
-    }
-    
-    .footer-social-link:hover .footer-icon-text {
-        color: #FFCC00;
-    }
-    
-    .footer-copyright {
-        color: #CCCCCC;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        text-align: center;
-        max-width: 600px;
-        padding: 1rem;
-        background: rgba(0,0,0,0.3);
-        border-radius: 15px;
-        border: 1px solid rgba(255,204,0,0.1);
-        backdrop-filter: blur(5px);
-        text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-    }
-    
-    /* ========================================================================== */
-    /* RESPONSIVE DESIGN FOR FOOTER */
-    /* ========================================================================== */
-    
-    @media (max-width: 1024px) {
-        .footer-content {
-            flex-direction: column;
-            gap: 2rem;
-            padding: 0 1.5rem;
-        }
-        
-        .footer-logo-left, .footer-logo-right {
-            width: 140px;
-            height: 100px;
-        }
-        
-        .footer-center {
-            order: 1;
-            width: 100%;
-        }
-        
-        .footer-logo-left {
-            order: 2;
-        }
-        
-        .footer-logo-right {
-            order: 3;
-        }
-        
-        .footer-contact-buttons {
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .footer-social-icons {
-            gap: 1rem;
-        }
-    }
-    
-    @media (max-width: 768px) {
-        .institutional-footer {
-            padding: 2rem 0;
-        }
-        
-        .footer-content {
-            padding: 0 1rem;
-            gap: 1.5rem;
-        }
-        
-        .footer-logo-left, .footer-logo-right {
-            width: 120px;
-            height: 80px;
-        }
-        
-        .footer-logo-img {
-            max-width: 100px;
-            max-height: 60px;
-        }
-        
-        .footer-contact-btn {
-            padding: 0.6rem 1.2rem;
-            font-size: 0.9rem;
-        }
-        
-        .footer-social-icons {
-            gap: 0.8rem;
-        }
-        
-        .footer-social-link {
-            min-width: 70px;
-            padding: 0.6rem;
-        }
-        
-        .footer-icon {
-            font-size: 1.5rem;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.8rem;
-        }
-        
-        .footer-copyright {
-            font-size: 0.85rem;
-            padding: 0.8rem;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .institutional-footer {
-            padding: 1.5rem 0;
-        }
-        
-        .footer-content {
-            padding: 0 0.8rem;
-            gap: 1.2rem;
-        }
-        
-        .footer-logo-left, .footer-logo-right {
-            width: 100px;
-            height: 70px;
-        }
-        
-        .footer-logo-img {
-            max-width: 80px;
-            max-height: 50px;
-        }
-        
-        .footer-contact-buttons {
-            flex-direction: column;
-            gap: 0.8rem;
-            width: 100%;
-        }
-        
-        .footer-contact-btn {
-            width: 100%;
-            max-width: 250px;
-        }
-        
-        .footer-social-icons {
-            gap: 0.6rem;
-        }
-        
-        .footer-social-link {
-            min-width: 60px;
-            padding: 0.5rem;
-        }
-        
-        .footer-icon {
-            font-size: 1.3rem;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.75rem;
-        }
-        
-        .footer-copyright {
-            font-size: 0.8rem;
-            padding: 0.6rem;
-            line-height: 1.3;
-        }
-    }
-    
-    .institutional-footer {
-        background: linear-gradient(135deg, 
-            rgba(0,0,0,0.95) 0%, 
-            rgba(15,15,15,0.98) 35%, 
-            rgba(25,25,25,0.95) 70%, 
-            rgba(0,0,0,0.98) 100%) !important;
-        backdrop-filter: blur(10px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
-        border-top: 1px solid rgba(255,204,0,0.2) !important;
-        box-shadow: 0 -8px 32px rgba(0,0,0,0.4), 
-                    inset 0 1px 0 rgba(255,204,0,0.1) !important;
-        width: 100vw !important;
-        margin: 0 !important;
-        margin-left: calc(-50vw + 50%) !important;
-        padding: 3rem 0 !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .institutional-footer::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: radial-gradient(circle at 20% 50%, rgba(255,204,0,0.05) 0%, transparent 50%),
-                    radial-gradient(circle at 80% 50%, rgba(255,215,0,0.03) 0%, transparent 50%) !important;
-        pointer-events: none !important;
-    }
-    
-    .footer-content {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        max-width: 1400px !important;
-        margin: 0 auto !important;
-        gap: 2.5rem !important;
-        min-height: 120px !important;
-        padding: 0 2rem !important;
-        box-sizing: border-box !important;
-        position: relative !important;
-        z-index: 2 !important;
-    }
-    
-    .footer-logo-left, .footer-logo-right {
-        flex: 0 0 auto !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 160px !important;
-        height: 120px !important;
-        background: rgba(255,255,255,0.05) !important;
-        border-radius: 20px !important;
-        border: 1px solid rgba(255,204,0,0.15) !important;
-        backdrop-filter: blur(5px) !important;
-        -webkit-backdrop-filter: blur(5px) !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    }
-    
-    .footer-logo-left:hover, .footer-logo-right:hover {
-        transform: translateY(-4px) scale(1.02) !important;
-        background: rgba(255,204,0,0.08) !important;
-        border-color: rgba(255,204,0,0.3) !important;
-        box-shadow: 0 12px 24px rgba(255,204,0,0.15) !important;
-    }
-    
-    .footer-logo-img {
-        max-width: 130px !important;
-        max-height: 90px !important;
-        width: auto !important;
-        height: auto !important;
-        object-fit: contain !important;
-        display: block !important;
-        filter: brightness(1.1) contrast(1.1) !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .footer-logo-img:hover {
-        filter: brightness(1.3) contrast(1.2) !important;
-        transform: scale(1.05) !important;
-    }
-    
-    .footer-logo-fallback {
-        color: #FFCC00 !important;
-        text-align: center !important;
-        font-weight: bold !important;
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        font-size: 1.2rem !important;
-        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
-    }
-    
-    .footer-center {
-        flex: 1 !important;
-        text-align: center !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 1.5rem !important;
-        max-width: 800px !important;
-    }
-    
-    .footer-social-icons {
-        display: flex !important;
-        justify-content: center !important;
-        align-items: center !important;
-        gap: 1.5rem !important;
-        flex-wrap: wrap !important;
-        margin-bottom: 1rem !important;
-    }
-    
-    .footer-social-link {
-        background: rgba(255,255,255,0.08) !important;
-        border: 1px solid rgba(255,204,0,0.2) !important;
-        border-radius: 16px !important;
-        padding: 1rem 1.2rem !important;
-        text-decoration: none !important;
-        color: #FFFFFF !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-        min-width: 85px !important;
-        backdrop-filter: blur(8px) !important;
-        -webkit-backdrop-filter: blur(8px) !important;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .footer-social-link::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: -100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        background: linear-gradient(90deg, transparent, rgba(255,204,0,0.1), transparent) !important;
-        transition: left 0.6s ease !important;
-    }
-    
-    .footer-social-link:hover::before {
-        left: 100% !important;
-    }
-    
-    .footer-social-link:hover {
-        transform: translateY(-6px) scale(1.05) !important;
-        background: rgba(255,204,0,0.12) !important;
-        border-color: #FFCC00 !important;
-        box-shadow: 0 12px 32px rgba(255,204,0,0.2), 
-                    0 0 0 1px rgba(255,204,0,0.3) !important;
-        color: #FFD700 !important;
-    }
-    
-    .footer-icon {
-        font-size: 2rem !important;
-        margin-bottom: 0.3rem !important;
-        transition: all 0.3s ease !important;
-    }
-    
-    .footer-social-link:hover .footer-icon {
-        transform: scale(1.2) rotate(5deg) !important;
-        filter: drop-shadow(0 4px 8px rgba(255,204,0,0.4)) !important;
-    }
-    
-    .footer-icon-text {
-        font-size: 0.9rem !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.5px !important;
-        text-transform: uppercase !important;
-    }
-    
-    .footer-contact-buttons {
-        display: flex !important;
-        gap: 1rem !important;
-        justify-content: center !important;
-        flex-wrap: wrap !important;
-        margin: 1rem 0 !important;
-    }
-    
-    .footer-contact-btn {
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%) !important;
-        border: none !important;
-        border-radius: 25px !important;
-        padding: 0.8rem 1.5rem !important;
-        color: #000000 !important;
-        font-weight: bold !important;
-        font-size: 0.9rem !important;
-        text-decoration: none !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 4px 15px rgba(255,204,0,0.3) !important;
-        position: relative !important;
-        overflow: hidden !important;
-    }
-    
-    .footer-contact-btn::before {
-        content: '' !important;
-        position: absolute !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        bottom: 0 !important;
-        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%) !important;
-        opacity: 0 !important;
-        transition: opacity 0.3s ease !important;
-    }
-    
-    .footer-contact-btn:hover::before {
-        opacity: 1 !important;
-    }
-    
-    .footer-contact-btn:hover {
-        transform: translateY(-3px) scale(1.05) !important;
-        box-shadow: 0 8px 25px rgba(255,204,0,0.4) !important;
-    }
-    
-    .footer-contact-btn span {
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    .footer-copyright {
-        color: #FFFFFF !important;
-        font-size: 1rem !important;
-        line-height: 1.6 !important;
-        font-weight: 500 !important;
-        max-width: 700px !important;
-        margin: 0 auto !important;
-        text-align: center !important;
-        word-wrap: break-word !important;
-        hyphens: auto !important;
-        overflow-wrap: break-word !important;
-        text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
-        background: rgba(255,255,255,0.03) !important;
-        border-radius: 12px !important;
-        padding: 1.5rem !important;
-        border: 1px solid rgba(255,204,0,0.1) !important;
-        backdrop-filter: blur(5px) !important;
-        -webkit-backdrop-filter: blur(5px) !important;
-    }
-    
-    /* Mobile footer responsiveness */
-    @media (max-width: 768px) {
-        .institutional-footer {
-            padding: 2.5rem 0 !important;
-        }
-        
-        .footer-content {
-            flex-direction: column !important;
-            text-align: center !important;
-            gap: 2rem !important;
-            min-height: auto !important;
-            padding: 0 1rem !important;
-        }
-        
-        .footer-logo-left, .footer-logo-right {
-            width: 140px !important;
-            height: 100px !important;
-            order: 2 !important;
-        }
-        
-        .footer-center {
-            order: 1 !important;
-            width: 100% !important;
-        }
-        
-        .footer-social-icons {
-            gap: 1.2rem !important;
-        }
-        
-        .footer-social-link {
-            min-width: 75px !important;
-            padding: 0.8rem 1rem !important;
-        }
-        
-        .footer-icon {
-            font-size: 1.6rem !important;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.8rem !important;
-        }
-        
-        .footer-contact-buttons {
-            flex-direction: column !important;
-            align-items: center !important;
-        }
-        
-        .footer-copyright {
-            font-size: 0.9rem !important;
-            padding: 1rem !important;
-            max-width: 100% !important;
-            line-height: 1.4 !important;
-        }
-        
-        .footer-logo-img {
-            max-width: 110px !important;
-            max-height: 70px !important;
-        }
-        
-        /* Mobile layout adjustments */
-        .footer-logos-mobile {
-            display: flex !important;
-            justify-content: space-around !important;
-            align-items: center !important;
-            width: 100% !important;
-            max-width: 350px !important;
-            margin: 0 auto !important;
-            order: 3 !important;
-        }
-    }
-    
-    @media (max-width: 480px) {
-        .institutional-footer {
-            padding: 2rem 0 !important;
-        }
-        
-        .footer-content {
-            padding: 0 0.5rem !important;
-            gap: 1.5rem !important;
-        }
-        
-        .footer-social-icons {
-            gap: 1rem !important;
-        }
-        
-        .footer-social-link {
-            min-width: 65px !important;
-            padding: 0.6rem 0.8rem !important;
-        }
-        
-        .footer-icon {
-            font-size: 1.4rem !important;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.75rem !important;
-        }
-        
-        .footer-contact-btn {
-            padding: 0.7rem 1.2rem !important;
-            font-size: 0.85rem !important;
-        }
-        
-        .footer-copyright {
-            font-size: 0.85rem !important;
-            padding: 0.8rem !important;
-            line-height: 1.3 !important;
-        }
-        
-        .footer-logo-left, .footer-logo-right {
-            width: 120px !important;
-            height: 80px !important;
-        }
-        
-        .footer-logo-img {
-            max-width: 90px !important;
-            max-height: 60px !important;
-        }
-    }
     
     /* ========================================================================== */
     /* WELCOME CONTAINER RESPONSIVE STYLES */
@@ -4330,39 +3584,24 @@ elif st.session_state.page == "contacto":
 
 def mostrar_footer_institucional():
     """
-    Displays the modern institutional footer with logos, social media links and copyright.
-    Features glassmorphism design, dynamic gradients, hover animations and responsive layout.
-    Ensures proper HTML rendering with st.markdown using unsafe_allow_html=True.
+    Displays the institutional footer with logos, social media links and copyright.
+    Responsive design for all devices with proper fallback support.
     """
-    # Load logos
+    # Load logos using base64 functions
     logo_mupai = load_mupai_logo_base64()
     logo_mup = load_muscle_up_logo_base64()
     
-    # Prepare logo HTML for left logo
-    left_logo_html = f'<img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">' if logo_mupai else '<div class="footer-logo-fallback"><h3>💪 MUPAI</h3></div>'
-    
-    # Prepare logo HTML for right logo  
-    right_logo_html = f'<img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">' if logo_mup else '<div class="footer-logo-fallback"><h3>🏋️ MUP</h3></div>'
-    
-    # First inject the CSS styles to ensure proper rendering
+    # CSS styles block - compact and functional
     st.markdown("""
     <style>
-    /* ========================================================================== */
     /* INSTITUTIONAL FOOTER STYLES */
-    /* ========================================================================== */
-    
     .institutional-footer {
         background: #000000 !important;
         border-top: 3px solid #FFCC00 !important;
         padding: 2.5rem 0 !important;
         margin-top: 4rem !important;
         box-shadow: 0 -5px 15px rgba(255,204,0,0.2) !important;
-        width: 100vw !important;
-        position: relative !important;
-        left: 50% !important;
-        right: 50% !important;
-        margin-left: -50vw !important;
-        margin-right: -50vw !important;
+        width: 100% !important;
         box-sizing: border-box !important;
     }
     
@@ -4372,18 +3611,15 @@ def mostrar_footer_institucional():
         justify-content: space-between !important;
         max-width: 1200px !important;
         margin: 0 auto !important;
-        gap: 2rem !important;
-        min-height: 100px !important;
         padding: 0 1rem !important;
-        box-sizing: border-box !important;
+        gap: 2rem !important;
     }
     
     .footer-logo-left, .footer-logo-right {
-        flex: 0 0 auto !important;
+        flex: 0 0 140px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        width: 140px !important;
         height: 100px !important;
     }
     
@@ -4393,26 +3629,18 @@ def mostrar_footer_institucional():
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
-        display: block !important;
     }
     
     .footer-logo-fallback {
         color: #FFCC00 !important;
         text-align: center !important;
         font-weight: bold !important;
-        width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
+        font-size: 1.2rem !important;
     }
     
     .footer-center {
         flex: 1 !important;
         text-align: center !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
     }
     
     .footer-contact-buttons {
@@ -4430,16 +3658,13 @@ def mostrar_footer_institucional():
         padding: 0.75rem 1.5rem !important;
         border-radius: 25px !important;
         font-weight: bold !important;
-        font-size: 0.9rem !important;
         transition: all 0.3s ease !important;
-        border: none !important;
         box-shadow: 0 2px 10px rgba(255,204,0,0.3) !important;
     }
     
     .footer-contact-btn:hover {
         transform: translateY(-2px) !important;
         box-shadow: 0 4px 15px rgba(255,204,0,0.5) !important;
-        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%) !important;
     }
     
     .footer-social-icons {
@@ -4474,7 +3699,6 @@ def mostrar_footer_institucional():
     
     .footer-icon-text {
         font-size: 0.9rem !important;
-        font-weight: 500 !important;
         color: #FFFFFF !important;
     }
     
@@ -4482,42 +3706,26 @@ def mostrar_footer_institucional():
         color: #FFFFFF !important;
         font-size: 0.95rem !important;
         line-height: 1.4 !important;
-        font-weight: 500 !important;
         max-width: 600px !important;
         margin: 0 auto !important;
         text-align: center !important;
-        word-wrap: break-word !important;
-        hyphens: auto !important;
-        overflow-wrap: break-word !important;
     }
     
-    /* Mobile footer responsiveness */
+    /* Mobile responsiveness */
     @media (max-width: 768px) {
-        .institutional-footer {
-            padding: 2rem 0 !important;
-        }
-        
         .footer-content {
             flex-direction: column !important;
-            text-align: center !important;
             gap: 1.5rem !important;
-            min-height: auto !important;
-            padding: 0 1rem !important;
         }
         
         .footer-logo-left, .footer-logo-right {
             width: 120px !important;
             height: 80px !important;
-            order: 2 !important;
         }
         
-        .footer-center {
-            order: 1 !important;
-            width: 100% !important;
-        }
-        
-        .footer-contact-buttons {
-            gap: 0.5rem !important;
+        .footer-logo-img {
+            max-width: 100px !important;
+            max-height: 60px !important;
         }
         
         .footer-contact-btn {
@@ -4525,32 +3733,13 @@ def mostrar_footer_institucional():
             font-size: 0.85rem !important;
         }
         
-        .footer-social-icons {
-            gap: 1rem !important;
-        }
-        
-        .footer-social-link {
-            min-width: 70px !important;
-        }
-        
         .footer-icon {
             font-size: 1.5rem !important;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.8rem !important;
         }
         
         .footer-copyright {
             font-size: 0.85rem !important;
             padding: 0 1rem !important;
-            max-width: 100% !important;
-            line-height: 1.3 !important;
-        }
-        
-        .footer-logo-img {
-            max-width: 100px !important;
-            max-height: 60px !important;
         }
     }
     
@@ -4559,41 +3748,13 @@ def mostrar_footer_institucional():
             padding: 1.5rem 0 !important;
         }
         
-        .footer-content {
-            padding: 0 0.5rem !important;
-        }
-        
         .footer-contact-buttons {
             flex-direction: column !important;
             gap: 0.5rem !important;
         }
         
-        .footer-contact-btn {
-            padding: 0.5rem 1rem !important;
-            font-size: 0.8rem !important;
-        }
-        
         .footer-social-icons {
-            gap: 0.8rem !important;
-        }
-        
-        .footer-social-link {
-            min-width: 60px !important;
-            padding: 0.3rem !important;
-        }
-        
-        .footer-icon {
-            font-size: 1.3rem !important;
-        }
-        
-        .footer-icon-text {
-            font-size: 0.75rem !important;
-        }
-        
-        .footer-copyright {
-            font-size: 0.8rem !important;
-            padding: 0 0.5rem !important;
-            line-height: 1.2 !important;
+            gap: 1rem !important;
         }
         
         .footer-logo-img {
@@ -4604,13 +3765,13 @@ def mostrar_footer_institucional():
     </style>
     """, unsafe_allow_html=True)
     
-    # Then render the HTML footer content with proper structure
+    # HTML footer block with logos, contact buttons, social links and copyright
     st.markdown(f"""
     <div class="institutional-footer">
         <div class="footer-content">
             <!-- Left Logo -->
             <div class="footer-logo-left">
-                {left_logo_html}
+                {f'<img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">' if logo_mupai else '<div class="footer-logo-fallback">💪 MUPAI</div>'}
             </div>
             
             <!-- Center Content -->
@@ -4618,10 +3779,10 @@ def mostrar_footer_institucional():
                 <!-- Contact Buttons -->
                 <div class="footer-contact-buttons">
                     <a href="https://wa.me/528662580594" target="_blank" class="footer-contact-btn">
-                        <span>📱 WhatsApp</span>
+                        📱 WhatsApp
                     </a>
                     <a href="mailto:administracion@muscleupgym.fitness" target="_blank" class="footer-contact-btn">
-                        <span>📧 Contacto</span>
+                        📧 Contacto
                     </a>
                 </div>
                 
@@ -4658,7 +3819,7 @@ def mostrar_footer_institucional():
             
             <!-- Right Logo -->
             <div class="footer-logo-right">
-                {right_logo_html}
+                {f'<img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">' if logo_mup else '<div class="footer-logo-fallback">🏋️ MUP</div>'}
             </div>
         </div>
     </div>
