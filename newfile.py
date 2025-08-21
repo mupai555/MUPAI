@@ -4330,8 +4330,9 @@ elif st.session_state.page == "contacto":
 
 def mostrar_footer_institucional():
     """
-    Displays the institutional footer with logos, social media links and copyright.
-    Features proper HTML rendering with CSS styling.
+    Displays the modern institutional footer with logos, social media links and copyright.
+    Features glassmorphism design, dynamic gradients, hover animations and responsive layout.
+    Ensures proper HTML rendering with st.markdown using unsafe_allow_html=True.
     """
     # Load logos
     logo_mupai = load_mupai_logo_base64()
@@ -4346,6 +4347,10 @@ def mostrar_footer_institucional():
     # First inject the CSS styles to ensure proper rendering
     st.markdown("""
     <style>
+    /* ========================================================================== */
+    /* INSTITUTIONAL FOOTER STYLES */
+    /* ========================================================================== */
+    
     .institutional-footer {
         background: #000000 !important;
         border-top: 3px solid #FFCC00 !important;
@@ -4408,6 +4413,33 @@ def mostrar_footer_institucional():
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
+    }
+    
+    .footer-contact-buttons {
+        display: flex !important;
+        justify-content: center !important;
+        gap: 1rem !important;
+        margin-bottom: 1.5rem !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .footer-contact-btn {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%) !important;
+        color: #000000 !important;
+        text-decoration: none !important;
+        padding: 0.75rem 1.5rem !important;
+        border-radius: 25px !important;
+        font-weight: bold !important;
+        font-size: 0.9rem !important;
+        transition: all 0.3s ease !important;
+        border: none !important;
+        box-shadow: 0 2px 10px rgba(255,204,0,0.3) !important;
+    }
+    
+    .footer-contact-btn:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 15px rgba(255,204,0,0.5) !important;
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%) !important;
     }
     
     .footer-social-icons {
@@ -4484,6 +4516,15 @@ def mostrar_footer_institucional():
             width: 100% !important;
         }
         
+        .footer-contact-buttons {
+            gap: 0.5rem !important;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.6rem 1.2rem !important;
+            font-size: 0.85rem !important;
+        }
+        
         .footer-social-icons {
             gap: 1rem !important;
         }
@@ -4520,6 +4561,16 @@ def mostrar_footer_institucional():
         
         .footer-content {
             padding: 0 0.5rem !important;
+        }
+        
+        .footer-contact-buttons {
+            flex-direction: column !important;
+            gap: 0.5rem !important;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.5rem 1rem !important;
+            font-size: 0.8rem !important;
         }
         
         .footer-social-icons {
@@ -4564,6 +4615,16 @@ def mostrar_footer_institucional():
             
             <!-- Center Content -->
             <div class="footer-center">
+                <!-- Contact Buttons -->
+                <div class="footer-contact-buttons">
+                    <a href="https://wa.me/528662580594" target="_blank" class="footer-contact-btn">
+                        <span>📱 WhatsApp</span>
+                    </a>
+                    <a href="mailto:administracion@muscleupgym.fitness" target="_blank" class="footer-contact-btn">
+                        <span>📧 Contacto</span>
+                    </a>
+                </div>
+                
                 <!-- Social Media Icons -->
                 <div class="footer-social-icons">
                     <a href="https://wa.me/528662580594" target="_blank" class="footer-social-link">
