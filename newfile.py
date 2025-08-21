@@ -1822,6 +1822,28 @@ elif st.session_state.page == "about":
         <p style="margin-top: 1rem; color: #666; font-size: 1rem;">👨‍⚕️ Acerca del Profesional</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Main professional images - improved responsive styling
+    st.markdown("""
+    <div class='professional-images' style='text-align: center; margin: 2rem 0; display: flex; flex-direction: column; align-items: center; gap: 1.5rem;'>
+    """, unsafe_allow_html=True)
+    
+    # First image - responsive with max width
+    try:
+        from PIL import Image
+        main_image = Image.open("Copia de Anfitrión_20250809_125513_0000.png")
+        st.image(main_image, caption="Coach Erick - Especialista MUPAI", use_container_width=True)
+    except:
+        st.info("🏢 Imagen Principal del Profesional")
+    
+    # Second image - responsive with max width
+    try:
+        secondary_image = Image.open("20250728_220454.jpg")
+        st.image(secondary_image, caption="Imagen Secundaria Profesional", use_container_width=True)
+    except:
+        st.info("📸 Imagen Secundaria del Profesional")
+    
+    st.markdown("</div>", unsafe_allow_html=True)
 
 elif st.session_state.page == "contacto":
     st.markdown("""
