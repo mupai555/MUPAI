@@ -32,8 +32,7 @@ mobile_header_style = """
         display: block !important;
     }
     
-    /* Hide only non-essential elements but preserve header with hamburger menu */
-    .stDeployButton {display: none !important;}
+    /* Preserve header with hamburger menu and fork button visibility */
     
     /* Ensure hamburger menu is always clickeable on mobile */
     [data-testid="stSidebarNav"] {
