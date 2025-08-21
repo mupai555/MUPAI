@@ -4330,8 +4330,8 @@ elif st.session_state.page == "contacto":
 
 def mostrar_footer_institucional():
     """
-    Displays the modern institutional footer with logos, social media links and copyright.
-    Features clean styling with proper CSS integration.
+    Displays the institutional footer with logos, social media links and copyright.
+    Features proper HTML rendering with CSS styling.
     """
     # Load logos
     logo_mupai = load_mupai_logo_base64()
@@ -4343,7 +4343,7 @@ def mostrar_footer_institucional():
     # Prepare logo HTML for right logo  
     right_logo_html = f'<img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">' if logo_mup else '<div class="footer-logo-fallback"><h3>🏋️ MUP</h3></div>'
     
-    # First inject the CSS styles to ensure they are loaded
+    # First inject the CSS styles to ensure proper rendering
     st.markdown("""
     <style>
     .institutional-footer {
@@ -4395,7 +4395,10 @@ def mostrar_footer_institucional():
         color: #FFCC00 !important;
         text-align: center !important;
         font-weight: bold !important;
-        font-size: 1.1rem !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
     .footer-center {
@@ -4404,33 +4407,7 @@ def mostrar_footer_institucional():
         display: flex !important;
         flex-direction: column !important;
         align-items: center !important;
-        gap: 1rem !important;
-    }
-    
-    .footer-contact-buttons {
-        display: flex !important;
         justify-content: center !important;
-        gap: 1rem !important;
-        margin-bottom: 1rem !important;
-        flex-wrap: wrap !important;
-    }
-    
-    .footer-contact-btn {
-        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%) !important;
-        color: #000000 !important;
-        text-decoration: none !important;
-        padding: 0.8rem 1.5rem !important;
-        border-radius: 25px !important;
-        font-weight: bold !important;
-        transition: all 0.3s ease !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 0.5rem !important;
-    }
-    
-    .footer-contact-btn:hover {
-        transform: translateY(-2px) !important;
-        box-shadow: 0 8px 20px rgba(255,204,0,0.4) !important;
     }
     
     .footer-social-icons {
@@ -4464,13 +4441,9 @@ def mostrar_footer_institucional():
     }
     
     .footer-icon-text {
-        color: #FFFFFF !important;
         font-size: 0.9rem !important;
         font-weight: 500 !important;
-    }
-    
-    .footer-social-link:hover .footer-icon-text {
-        color: #FFCC00 !important;
+        color: #FFFFFF !important;
     }
     
     .footer-copyright {
@@ -4580,7 +4553,7 @@ def mostrar_footer_institucional():
     </style>
     """, unsafe_allow_html=True)
     
-    # Then render the HTML footer content
+    # Then render the HTML footer content with proper structure
     st.markdown(f"""
     <div class="institutional-footer">
         <div class="footer-content">
@@ -4591,16 +4564,6 @@ def mostrar_footer_institucional():
             
             <!-- Center Content -->
             <div class="footer-center">
-                <!-- Contact Buttons -->
-                <div class="footer-contact-buttons">
-                    <a href="https://wa.me/528662580594" target="_blank" class="footer-contact-btn">
-                        <span>📱 WhatsApp</span>
-                    </a>
-                    <a href="mailto:administracion@muscleupgym.fitness" target="_blank" class="footer-contact-btn">
-                        <span>📧 Contacto</span>
-                    </a>
-                </div>
-                
                 <!-- Social Media Icons -->
                 <div class="footer-social-icons">
                     <a href="https://wa.me/528662580594" target="_blank" class="footer-social-link">
