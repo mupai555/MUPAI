@@ -1408,6 +1408,373 @@ st.markdown("""
     /* INSTITUTIONAL FOOTER STYLES */
     /* ========================================================================== */
     
+    .institutional-footer {
+        background: linear-gradient(135deg, 
+            rgba(0,0,0,0.95) 0%, 
+            rgba(15,15,15,0.98) 35%, 
+            rgba(25,25,25,0.95) 70%, 
+            rgba(0,0,0,0.98) 100%) !important;
+        backdrop-filter: blur(10px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(10px) saturate(180%) !important;
+        border-top: 1px solid rgba(255,204,0,0.2) !important;
+        box-shadow: 0 -8px 32px rgba(0,0,0,0.4), 
+                    inset 0 1px 0 rgba(255,204,0,0.1) !important;
+        width: 100vw !important;
+        margin: 0 !important;
+        margin-left: calc(-50vw + 50%) !important;
+        padding: 3rem 0 !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .institutional-footer::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: radial-gradient(circle at 20% 50%, rgba(255,204,0,0.05) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 50%, rgba(255,215,0,0.03) 0%, transparent 50%) !important;
+        pointer-events: none !important;
+    }
+    
+    .footer-content {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+        gap: 2.5rem !important;
+        min-height: 120px !important;
+        padding: 0 2rem !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+        z-index: 2 !important;
+    }
+    
+    .footer-logo-left, .footer-logo-right {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 160px !important;
+        height: 120px !important;
+        background: rgba(255,255,255,0.05) !important;
+        border-radius: 20px !important;
+        border: 1px solid rgba(255,204,0,0.15) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    
+    .footer-logo-left:hover, .footer-logo-right:hover {
+        transform: translateY(-4px) scale(1.02) !important;
+        background: rgba(255,204,0,0.08) !important;
+        border-color: rgba(255,204,0,0.3) !important;
+        box-shadow: 0 12px 24px rgba(255,204,0,0.15) !important;
+    }
+    
+    .footer-logo-img {
+        max-width: 130px !important;
+        max-height: 90px !important;
+        width: auto !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        filter: brightness(1.1) contrast(1.1) !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .footer-logo-img:hover {
+        filter: brightness(1.3) contrast(1.2) !important;
+        transform: scale(1.05) !important;
+    }
+    
+    .footer-logo-fallback {
+        color: #FFCC00 !important;
+        text-align: center !important;
+        font-weight: bold !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.2rem !important;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.5) !important;
+    }
+    
+    .footer-center {
+        flex: 1 !important;
+        text-align: center !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        max-width: 800px !important;
+    }
+    
+    .footer-social-icons {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 1.5rem !important;
+        flex-wrap: wrap !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .footer-social-link {
+        background: rgba(255,255,255,0.08) !important;
+        border: 1px solid rgba(255,204,0,0.2) !important;
+        border-radius: 16px !important;
+        padding: 1rem 1.2rem !important;
+        text-decoration: none !important;
+        color: #FFFFFF !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        min-width: 85px !important;
+        backdrop-filter: blur(8px) !important;
+        -webkit-backdrop-filter: blur(8px) !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .footer-social-link::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: -100% !important;
+        width: 100% !important;
+        height: 100% !important;
+        background: linear-gradient(90deg, transparent, rgba(255,204,0,0.1), transparent) !important;
+        transition: left 0.6s ease !important;
+    }
+    
+    .footer-social-link:hover::before {
+        left: 100% !important;
+    }
+    
+    .footer-social-link:hover {
+        transform: translateY(-6px) scale(1.05) !important;
+        background: rgba(255,204,0,0.12) !important;
+        border-color: #FFCC00 !important;
+        box-shadow: 0 12px 32px rgba(255,204,0,0.2), 
+                    0 0 0 1px rgba(255,204,0,0.3) !important;
+        color: #FFD700 !important;
+    }
+    
+    .footer-icon {
+        font-size: 2rem !important;
+        margin-bottom: 0.3rem !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .footer-social-link:hover .footer-icon {
+        transform: scale(1.2) rotate(5deg) !important;
+        filter: drop-shadow(0 4px 8px rgba(255,204,0,0.4)) !important;
+    }
+    
+    .footer-icon-text {
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+    }
+    
+    .footer-contact-buttons {
+        display: flex !important;
+        gap: 1rem !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+        margin: 1rem 0 !important;
+    }
+    
+    .footer-contact-btn {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%) !important;
+        border: none !important;
+        border-radius: 25px !important;
+        padding: 0.8rem 1.5rem !important;
+        color: #000000 !important;
+        font-weight: bold !important;
+        font-size: 0.9rem !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 15px rgba(255,204,0,0.3) !important;
+        position: relative !important;
+        overflow: hidden !important;
+    }
+    
+    .footer-contact-btn::before {
+        content: '' !important;
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%) !important;
+        opacity: 0 !important;
+        transition: opacity 0.3s ease !important;
+    }
+    
+    .footer-contact-btn:hover::before {
+        opacity: 1 !important;
+    }
+    
+    .footer-contact-btn:hover {
+        transform: translateY(-3px) scale(1.05) !important;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.4) !important;
+    }
+    
+    .footer-contact-btn span {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    
+    .footer-copyright {
+        color: #FFFFFF !important;
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        font-weight: 500 !important;
+        max-width: 700px !important;
+        margin: 0 auto !important;
+        text-align: center !important;
+        word-wrap: break-word !important;
+        hyphens: auto !important;
+        overflow-wrap: break-word !important;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.5) !important;
+        background: rgba(255,255,255,0.03) !important;
+        border-radius: 12px !important;
+        padding: 1.5rem !important;
+        border: 1px solid rgba(255,204,0,0.1) !important;
+        backdrop-filter: blur(5px) !important;
+        -webkit-backdrop-filter: blur(5px) !important;
+    }
+    
+    /* Mobile footer responsiveness */
+    @media (max-width: 768px) {
+        .institutional-footer {
+            padding: 2.5rem 0 !important;
+        }
+        
+        .footer-content {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 2rem !important;
+            min-height: auto !important;
+            padding: 0 1rem !important;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 140px !important;
+            height: 100px !important;
+            order: 2 !important;
+        }
+        
+        .footer-center {
+            order: 1 !important;
+            width: 100% !important;
+        }
+        
+        .footer-social-icons {
+            gap: 1.2rem !important;
+        }
+        
+        .footer-social-link {
+            min-width: 75px !important;
+            padding: 0.8rem 1rem !important;
+        }
+        
+        .footer-icon {
+            font-size: 1.6rem !important;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.8rem !important;
+        }
+        
+        .footer-contact-buttons {
+            flex-direction: column !important;
+            align-items: center !important;
+        }
+        
+        .footer-copyright {
+            font-size: 0.9rem !important;
+            padding: 1rem !important;
+            max-width: 100% !important;
+            line-height: 1.4 !important;
+        }
+        
+        .footer-logo-img {
+            max-width: 110px !important;
+            max-height: 70px !important;
+        }
+        
+        /* Mobile layout adjustments */
+        .footer-logos-mobile {
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
+            width: 100% !important;
+            max-width: 350px !important;
+            margin: 0 auto !important;
+            order: 3 !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .institutional-footer {
+            padding: 2rem 0 !important;
+        }
+        
+        .footer-content {
+            padding: 0 0.5rem !important;
+            gap: 1.5rem !important;
+        }
+        
+        .footer-social-icons {
+            gap: 1rem !important;
+        }
+        
+        .footer-social-link {
+            min-width: 65px !important;
+            padding: 0.6rem 0.8rem !important;
+        }
+        
+        .footer-icon {
+            font-size: 1.4rem !important;
+        }
+        
+        .footer-icon-text {
+            font-size: 0.75rem !important;
+        }
+        
+        .footer-contact-btn {
+            padding: 0.7rem 1.2rem !important;
+            font-size: 0.85rem !important;
+        }
+        
+        .footer-copyright {
+            font-size: 0.85rem !important;
+            padding: 0.8rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        .footer-logo-left, .footer-logo-right {
+            width: 120px !important;
+            height: 80px !important;
+        }
+        
+        .footer-logo-img {
+            max-width: 90px !important;
+            max-height: 60px !important;
+        }
+    }
+    
     /* ========================================================================== */
     /* WELCOME CONTAINER RESPONSIVE STYLES */
     /* ========================================================================== */
@@ -3579,16 +3946,107 @@ elif st.session_state.page == "contacto":
     """, unsafe_allow_html=True)
 
 # ===========================================================================
-# FOOTER REMOVAL DOCUMENTATION
+# MODERN INSTITUTIONAL FOOTER
 # ===========================================================================
-# El footer institucional ha sido removido del código el 2025-01-23
-# Toda la información del footer está respaldada en: footer_backup.md
-# 
-# Componentes eliminados:
-# - Función mostrar_footer_institucional()
-# - CSS del footer institucional (.institutional-footer y clases relacionadas)
-# - Llamada de la función al final del archivo
-# 
-# Las funciones load_mupai_logo_base64() y load_muscle_up_logo_base64()
-# han sido conservadas para uso en otras partes de la aplicación.
+# Footer institucional regenerado el 2025-01-23 con diseño moderno y tecnológico
+# Características: Glassmorphism, gradientes dinámicos, hover animations, responsive design
 # ===========================================================================
+
+def mostrar_footer_institucional():
+    """
+    Displays the modern institutional footer with logos, social media links and copyright.
+    Features glassmorphism design, dynamic gradients, hover animations and responsive layout.
+    """
+    # Load logos
+    logo_mupai = load_mupai_logo_base64()
+    logo_mup = load_muscle_up_logo_base64()
+    
+    st.markdown("""
+    <div class="institutional-footer">
+        <div class="footer-content">
+            <!-- Left Logo -->
+            <div class="footer-logo-left">
+    """, unsafe_allow_html=True)
+    
+    if logo_mupai:
+        st.markdown(f"""
+                <img src="{logo_mupai}" alt="LOGO MUPAI" class="footer-logo-img">
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+                <div class="footer-logo-fallback">
+                    <h3>💪 MUPAI</h3>
+                </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+            </div>
+            
+            <!-- Center Content -->
+            <div class="footer-center">
+                <!-- Contact Buttons -->
+                <div class="footer-contact-buttons">
+                    <a href="https://wa.me/528662580594" target="_blank" class="footer-contact-btn">
+                        <span>📱 WhatsApp</span>
+                    </a>
+                    <a href="mailto:administracion@muscleupgym.fitness" target="_blank" class="footer-contact-btn">
+                        <span>📧 Contacto</span>
+                    </a>
+                </div>
+                
+                <!-- Social Media Icons -->
+                <div class="footer-social-icons">
+                    <a href="https://wa.me/528662580594" target="_blank" class="footer-social-link">
+                        <div class="footer-icon">📱</div>
+                        <div class="footer-icon-text">WhatsApp</div>
+                    </a>
+                    <a href="mailto:administracion@muscleupgym.fitness" target="_blank" class="footer-social-link">
+                        <div class="footer-icon">📧</div>
+                        <div class="footer-icon-text">Email</div>
+                    </a>
+                    <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" class="footer-social-link">
+                        <div class="footer-icon">📘</div>
+                        <div class="footer-icon-text">Facebook</div>
+                    </a>
+                    <a href="https://www.instagram.com/mup_lindavista" target="_blank" class="footer-social-link">
+                        <div class="footer-icon">📷</div>
+                        <div class="footer-icon-text">Instagram</div>
+                    </a>
+                    <a href="https://muscleupgym.fitness/planes" target="_blank" class="footer-social-link">
+                        <div class="footer-icon">🌐</div>
+                        <div class="footer-icon-text">Website</div>
+                    </a>
+                </div>
+                
+                <!-- Copyright -->
+                <div class="footer-copyright">
+                    © 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence<br>
+                    © 2025 MUPAI - Muscle up GYM Digital Nutrition Science Alimentary Pattern Assessment Intelligence
+                </div>
+            </div>
+            
+            <!-- Right Logo -->
+            <div class="footer-logo-right">
+    """, unsafe_allow_html=True)
+    
+    if logo_mup:
+        st.markdown(f"""
+                <img src="{logo_mup}" alt="LOGO MUP" class="footer-logo-img">
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+                <div class="footer-logo-fallback">
+                    <h3>🏋️ MUP</h3>
+                </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ===========================================================================
+# Display footer on all pages
+# ===========================================================================
+mostrar_footer_institucional()
