@@ -1852,6 +1852,82 @@ elif st.session_state.page == "contacto":
         <p class="contact-description">Da clic para comunicarte en el medio que necesites</p>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Contact icons using responsive layout
+    st.markdown("""
+    <div class="contact-icons">
+        <div style="text-align: center;">
+            <a href="https://wa.me/528662580594" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon whatsapp">
+                    📱
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">WhatsApp</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="mailto:administracion@muscleupgym.fitness" style="text-decoration: none;">
+                <div class="contact-icon email">
+                    📧
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Email</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon facebook">
+                    📘
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Facebook</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon instagram">
+                    📷
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Instagram</p>
+        </div>
+        <div style="text-align: center;">
+            <a href="https://muscleupgym.fitness/planes" target="_blank" style="text-decoration: none;">
+                <div class="contact-icon website">
+                    🌐
+                </div>
+            </a>
+            <p style="color: #333; font-size: 0.9rem; margin-top: 0.5rem; font-weight: bold;">Página web matriz</p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; margin-top: 1.5rem;">
+        <p style="color: #333; font-size: 0.9rem; font-style: italic;">
+            Respuesta garantizada en 24-48 horas
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Información de contacto detallada
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 2rem; border-radius: 15px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFCC00; text-align: center; margin-bottom: 1.5rem;">📞 Información de Contacto Muscle Up Gym</h3>
+        <div style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8;">
+            <p><strong style="color: #FFCC00;">📧 Correo:</strong> administracion@muscleupgym.fitness</p>
+            <p><strong style="color: #FFCC00;">📱 WhatsApp:</strong> 8662580594</p>
+            <p><strong style="color: #FFCC00;">📘 Facebook:</strong> Muscle Up Gym</p>
+            <p><strong style="color: #FFCC00;">📷 Instagram:</strong> @mup_lindavista | @erickmuscleup</p>
+            <p><strong style="color: #FFCC00;">🌐 Sitio Web:</strong> www.muscleupgym.fitness</p>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem; padding: 1rem; 
+                    background: rgba(255,204,0,0.1); border-radius: 10px;">
+            <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.2rem;">
+                ¡Agenda tu cita y recibe asesoría profesional!
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
