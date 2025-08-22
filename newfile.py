@@ -94,21 +94,6 @@ def load_mupai_logo_base64():
     except (FileNotFoundError, Exception):
         return None
 
-def load_mup_logo_base64():
-    """
-    Loads the MUP logo image and returns it as base64 encoded string.
-    Returns None if file is not found or any error occurs.
-    """
-    logo_path = 'LOGO MUP.png'
-    
-    try:
-        with open(logo_path, 'rb') as f:
-            image_data = f.read()
-            encoded_image = base64.b64encode(image_data).decode()
-            return f'data:image/png;base64,{encoded_image}'
-    except (FileNotFoundError, Exception):
-        return None
-
 # Configuración de la página
 st.set_page_config(
     page_title="MUPAI - Entrenamiento Digital Basado en Ciencia",
@@ -1946,46 +1931,24 @@ elif st.session_state.page == "contacto":
 
 # Footer
 st.markdown("---")
-
-# Load both logos
-logo_mupai_base64 = load_mupai_logo_base64()
-logo_mup_base64 = load_mup_logo_base64()
-
-# Create logo HTML elements with fallbacks
-if logo_mupai_base64:
-    footer_logo_left_html = f'<img src="{logo_mupai_base64}" style="width: 120px; height: 120px; object-fit: contain;" alt="MUPAI Logo">'
+logo_base64_footer = load_logo_image_base64()
+if logo_base64_footer:
+    footer_logo_html = f'<img src="{logo_base64_footer}" style=\'width: 120px; height: 120px; object-fit: contain;\'>'
 else:
-    footer_logo_left_html = '<div style="width: 120px; height: 120px; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 1.5rem;">💪 MUPAI</div>'
-
-if logo_mup_base64:
-    footer_logo_right_html = f'<img src="{logo_mup_base64}" style="width: 120px; height: 120px; object-fit: contain;" alt="MUP Logo">'
-else:
-    footer_logo_right_html = '<div style="width: 120px; height: 120px; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 1.5rem;">🏋️ MUP</div>'
+    footer_logo_html = '<div style="width: 120px; height: 120px; background-color: #ffcc00; display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 2rem;">MUPAI</div>'
 
 st.markdown(f"""
-<div style="padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 10px; border: 1px solid #FFCC00;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
-        <!-- Left Logo -->
-        <div style="flex: 0 0 auto;">
-            {footer_logo_left_html}
-        </div>
-        
-        <!-- Center Content -->
-        <div style="flex: 1; text-align: center; margin: 0 1rem;">
-            <div style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
-                <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="color: #4267B2; text-decoration: none;">📘 Facebook</a>
-                <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
-                <a href="https://wa.me/528662580594" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
-                <a href="mailto:administracion@muscleupgym.fitness" style="color: #EA4335; text-decoration: none;">📧 Email</a>
-                <a href="https://muscleupgym.fitness/planes" target="_blank" style="color: #FFCC00; text-decoration: none;">🌐 Planes Matriz</a>
-            </div>
-            <p style="color: #CCCCCC; font-size: 0.9rem; margin: 0;">© 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence</p>
-        </div>
-        
-        <!-- Right Logo -->
-        <div style="flex: 0 0 auto;">
-            {footer_logo_right_html}
-        </div>
+<div style="text-align: center; padding: 2rem; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); border-radius: 10px; border: 1px solid #FFCC00;">
+    <div style='margin-bottom: 1.5rem;'>
+        {footer_logo_html}
     </div>
+    <div style="display: flex; justify-content: center; gap: 1rem; margin: 1rem 0; flex-wrap: wrap;">
+        <a href="https://www.facebook.com/share/16WtR5TLw5/" target="_blank" style="color: #4267B2; text-decoration: none;">📘 Facebook</a>
+        <a href="https://www.instagram.com/mup_lindavista" target="_blank" style="color: #E4405F; text-decoration: none;">📷 Instagram</a>
+        <a href="https://wa.me/528662580594" target="_blank" style="color: #25D366; text-decoration: none;">📱 WhatsApp</a>
+        <a href="mailto:administracion@muscleupgym.fitness" style="color: #EA4335; text-decoration: none;">📧 Email</a>
+        <a href="https://muscleupgym.fitness/planes" target="_blank" style="color: #FFCC00; text-decoration: none;">🌐 Planes Matriz</a>
+    </div>
+    <p style="color: #CCCCCC; font-size: 0.9rem;">© 2025 MUPAI - Muscle up GYM Digital Training Science Performance Assessment Intelligence</p>
 </div>
 """, unsafe_allow_html=True)
