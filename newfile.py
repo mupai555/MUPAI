@@ -1741,10 +1741,163 @@ elif st.session_state.page == "quienes_somos":
         </div>
         """, unsafe_allow_html=True)
 
-    # Rest of quienes_somos content would go here
+    # Título principal
     st.markdown("""
-    <div class="section-header">
-        <h2>🏢 ¿Quiénes Somos?</h2>
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 2rem 0; border: 2px solid #FFCC00; 
+                box-shadow: 0 4px 15px rgba(255,204,0,0.3);">
+        <h1 style="color: #FFCC00; font-size: 3.5rem; font-weight: bold; 
+                   margin-bottom: 1rem; text-shadow: 2px 2px 4px rgba(255,204,0,0.5);">
+            🏢 ¿Quiénes Somos?
+        </h1>
+        <h2 style="color: #FFFFFF; font-size: 1.8rem; margin-bottom: 0; font-weight: 500;">
+            Conoce la filosofía y valores que nos impulsan
+        </h2>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Misión
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            🎯 Nuestra Misión
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 1.5rem; text-align: center;">
+            Hacer accesible el <strong style="color: #FFCC00;">entrenamiento basado en ciencia</strong>, 
+            proporcionando planes completamente personalizados a través de herramientas digitales 
+            respaldadas por <strong style="color: #FFCC00;">inteligencia artificial</strong>, 
+            datos precisos y la investigación más actualizada en ciencias del ejercicio.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Nos enfocamos en promover el <strong style="color: #FFCC00;">desarrollo integral</strong> 
+            de nuestros usuarios y su bienestar físico y mental, democratizando el acceso a 
+            soluciones nutricionales y de entrenamiento de clase mundial.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Visión
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            🔮 Nuestra Visión
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 1.5rem; text-align: center;">
+            Convertirnos en uno de los <strong style="color: #FFCC00;">máximos referentes a nivel global</strong> 
+            en entrenamiento digital personalizado, aprovechando las nuevas tecnologías para hacer más 
+            accesible el fitness basado en ciencia.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Aspiramos a <strong style="color: #FFCC00;">transformar la experiencia del entrenamiento físico</strong>, 
+            integrando inteligencia artificial, investigación científica y herramientas digitales avanzadas 
+            que permitan a cualquier persona alcanzar su máximo potencial físico de manera segura y sostenible.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Política Institucional
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            📋 Nuestra Política Institucional
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; margin-bottom: 2rem; text-align: center;">
+            En MUPAI, nuestra política está fundamentada en el <strong style="color: #FFCC00;">compromiso con la excelencia</strong>, 
+            la ética y el servicio centrado en el usuario.
+        </p>
+        <p style="color: #FFFFFF; font-size: 1.4rem; line-height: 1.8; text-align: center;">
+            Actuamos con <strong style="color: #FFCC00;">responsabilidad y transparencia</strong> para ofrecer 
+            soluciones tecnológicas que integren ciencia, personalización y accesibilidad, contribuyendo 
+            al bienestar integral de quienes confían en nosotros.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Política del Servicio
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; 
+                   margin-bottom: 1.5rem; text-align: center; text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            📘 Política del Servicio
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; line-height: 1.8; margin-bottom: 2rem; text-align: center;">
+            En MUPAI, guiamos nuestras acciones por los siguientes principios fundamentales:
+        </p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🔬 Ciencia y Evidencia</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Diseñamos entrenamientos digitales que combinan personalización, datos confiables y ciencia del ejercicio 
+                    respaldada por investigación peer-reviewed.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">💻 Tecnología Avanzada</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Aprovechamos la tecnología e inteligencia artificial para ofrecer un servicio accesible 
+                    y adaptable a las necesidades de cada usuario.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🔒 Privacidad y Seguridad</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Respetamos y protegemos la privacidad de los datos personales, garantizando su uso 
+                    responsable bajo los más altos estándares de seguridad.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🚀 Innovación Continua</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Innovamos de forma continua para mejorar la experiencia y los resultados de nuestros usuarios, 
+                    manteniéndonos a la vanguardia tecnológica.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">🤝 Valores Fundamentales</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Promovemos valores como el esfuerzo, la constancia y el respeto en cada interacción, 
+                    fomentando un ambiente de crecimiento y bienestar.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; font-size: 1.4rem; margin-bottom: 1rem;">⭐ Compromiso Total</h4>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+                    Mantenemos un compromiso inquebrantable con la excelencia, proporcionando resultados 
+                    medibles y transformaciones reales en nuestros usuarios.
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Llamada a la acción
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 3rem 0; color: #000; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
+            🤝 ¡Únete a la Revolución MUPAI!
+        </h2>
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; font-weight: 500;">
+            Descubre por qué somos la elección de miles de personas que buscan transformar su físico con ciencia
+        </p>
+        <div style="background: #000; color: #FFCC00; padding: 1.5rem; border-radius: 15px; 
+                    font-size: 1.2rem; font-weight: bold; display: inline-block;">
+            📧 administracion@muscleupgym.fitness<br>
+            📱 WhatsApp: 8662580594
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
