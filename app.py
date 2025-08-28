@@ -857,7 +857,34 @@ def determine_automatic_goal(body_fat: float, gender: str, training_level: int) 
             return {"goal": "Volumen", "adjustment": 0.125, "description": "Ganancia muscular"}
 
 
-def calculate_macronutrients(total_calories: float, weight: float, goal: str, gender: str) -> Dict[str, float]:
+def obtener_porcentaje_grasa_tmb_tradicional() -> float:
+    """
+    Retorna el porcentaje fijo de grasa basado en TMB/BMR tradicional.
+    
+    Fija la ingesta de grasa en 40% del TMB/BMR para todos los usuarios,
+    independientemente del porcentaje de grasa corporal o el objetivo.
+    
+    Justificación científica y práctica:
+    - Optimización hormonal: Prevención del descenso de testosterona y alteraciones endocrinas
+      que ocurren con ingestas de grasa menores al 30-35% de las calorías totales
+    - Mejor adherencia dietaria: Las grasas proporcionan mayor saciedad y palatabilidad,
+      reduciendo la sensación de restricción y mejorando el cumplimiento a largo plazo
+    - Estabilización metabólica: Mantiene niveles óptimos de hormonas esteroideas y 
+      función tiroidea, especialmente importante en fases de restricción calórica
+    
+    Referencias científicas:
+    - Volek et al., 1997: Testosterone and cortisol in relationship to dietary nutrients and resistance exercise
+    - Smith et al., 2011: Changes in intake of protein foods, carbohydrate amount and quality, and long-term weight change
+    - Riechman et al., 2007: Statins and dietary and serum cholesterol are associated with increased lean mass following resistance training
+    - Burke et al., 2011: Carbohydrates for training and competition
+    
+    Returns:
+        float: 0.40 (40% del TMB/BMR)
+    """
+    return 0.40
+
+
+def calculate_macronutrients(total_calories: float, weight: float, goal: str, gender: str, tmb_bmr: float = None) -> Dict[str, float]:
     """
     Calculates intelligent macronutrient distribution based on goal.
     
@@ -866,6 +893,7 @@ def calculate_macronutrients(total_calories: float, weight: float, goal: str, ge
         weight: Body weight in kg
         goal: Body composition goal
         gender: Masculino or Femenino
+        tmb_bmr: TMB/BMR in kcal (optional, for fat calculation)
     
     Returns:
         Dictionary with macronutrient amounts in grams and calories
@@ -881,16 +909,34 @@ def calculate_macronutrients(total_calories: float, weight: float, goal: str, ge
     protein_g = weight * protein_factor
     protein_kcal = protein_g * PROTEIN_KCAL_PER_G
     
-    # Fat factor based on goal
-    if goal == "Definición":
-        fat_factor = 0.8
-    elif goal == "Recomposición":
-        fat_factor = 1.0
-    else:  # Volumen
-        fat_factor = 1.2
+    # Fat calculation using traditional TMB/BMR percentage
+    if tmb_bmr is not None:
+        # Use 40% of TMB/BMR for fat intake (fixed percentage)
+        fat_percentage_tmb = obtener_porcentaje_grasa_tmb_tradicional()
+        fat_kcal = tmb_bmr * fat_percentage_tmb
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+    else:
+        # Fallback to original logic if TMB/BMR not available
+        if goal == "Definición":
+            fat_factor = 0.8
+        elif goal == "Recomposición":
+            fat_factor = 1.0
+        else:  # Volumen
+            fat_factor = 1.2
+        
+        fat_g = weight * fat_factor
+        fat_kcal = fat_g * FAT_KCAL_PER_G
     
-    fat_g = weight * fat_factor
-    fat_kcal = fat_g * FAT_KCAL_PER_G
+    # Apply limits: ensure fat doesn't exceed 35% or fall below 20% of total calories
+    max_fat_kcal = total_calories * 0.35
+    min_fat_kcal = total_calories * 0.20
+    
+    if fat_kcal > max_fat_kcal:
+        fat_kcal = max_fat_kcal
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+    elif fat_kcal < min_fat_kcal:
+        fat_kcal = min_fat_kcal
+        fat_g = fat_kcal / FAT_KCAL_PER_G
     
     # Carbohydrates by difference
     carbs_kcal = total_calories - protein_kcal - fat_kcal
@@ -1673,7 +1719,7 @@ def show_main_questionnaire():
             # MACRONUTRIENT ALLOCATION
             # =============================================================================
             
-            macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender)
+            macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender, ger_final)
             
             # =============================================================================
             # GENERATE WARNINGS
