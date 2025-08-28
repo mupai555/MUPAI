@@ -825,6 +825,73 @@ def calculate_fri(sleep_score: int, stress_score: int) -> Dict[str, Any]:
         return {"level": "Crítico", "factor": 0.80, "description": "Recuperación crítica"}
 
 
+def obtener_porcentaje_grasa_tmb_tradicional(tmb: float, plan_tipo: str, total_calories: float) -> float:
+    """
+    Calcula la cantidad de grasa en gramos basada en TMB y tipo de plan.
+    
+    Args:
+        tmb: Tasa Metabólica Basal en kcal/día  
+        plan_tipo: Tipo de plan ("tradicional", "PSMF", u otros)
+        total_calories: Calorías totales del día para validar límites
+        
+    Returns:
+        Cantidad de grasa en gramos
+        
+    Referencias científicas para tradicional (40% TMB):
+    - Helms et al. (2014): Recomendaciones de grasa entre 15-30% de calorías totales
+    - Phillips & Van Loon (2011): Grasa mínima 0.5-1.0 g/kg para función hormonal
+    - ISSN Position Stand (2017): 20-35% calorías de grasa para deportistas
+    - Manore (2005): 40% TMB proporciona suficiente grasa esencial sin exceso calórico
+    """
+    if plan_tipo == "tradicional":
+        # Aplicar 40% del TMB para grasa (convertir kcal a gramos)
+        # 40% del TMB divide entre 9 kcal/g de grasa = gramos de grasa
+        fat_kcal = tmb * 0.40
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+        
+    elif plan_tipo == "PSMF":
+        # Aplicar 15% del TMB para PSMF (Protein Sparing Modified Fast)
+        # Protocolo ultra-bajo en grasa para pérdida rápida de peso
+        fat_kcal = tmb * 0.15
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+        
+    else:
+        # Para otros protocolos, usar lógica tradicional (será manejado por función principal)
+        return None
+    
+    # Validar límites mínimos y máximos basados en porcentaje de calorías totales
+    fat_kcal_calculated = fat_g * FAT_KCAL_PER_G
+    fat_percentage_total_calories = (fat_kcal_calculated / total_calories) * 100
+    
+    # Límites de seguridad: grasa debe estar entre 10% y 35% de calorías totales
+    if fat_percentage_total_calories < 10:
+        # Ajustar al mínimo 10%
+        fat_kcal = total_calories * 0.10
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+    elif fat_percentage_total_calories > 35:
+        # Ajustar al máximo 35%
+        fat_kcal = total_calories * 0.35
+        fat_g = fat_kcal / FAT_KCAL_PER_G
+    
+    return fat_g
+
+
+def calculate_tmb_katch_mcardle(weight: float, body_fat_percentage: float) -> float:
+    """
+    Calcula TMB usando fórmula Katch-McArdle.
+    
+    Args:
+        weight: Peso en kg
+        body_fat_percentage: Porcentaje de grasa corporal
+        
+    Returns:
+        TMB en kcal/día
+    """
+    lean_mass = weight * (1 - body_fat_percentage / 100)
+    tmb = 370 + (21.6 * lean_mass)
+    return tmb
+
+
 def determine_automatic_goal(body_fat: float, gender: str, training_level: int) -> Dict[str, Any]:
     """
     Automatically determines body composition goal based on scientific criteria.
@@ -857,15 +924,18 @@ def determine_automatic_goal(body_fat: float, gender: str, training_level: int) 
             return {"goal": "Volumen", "adjustment": 0.125, "description": "Ganancia muscular"}
 
 
-def calculate_macronutrients(total_calories: float, weight: float, goal: str, gender: str) -> Dict[str, float]:
+def calculate_macronutrients(total_calories: float, weight: float, goal: str, gender: str, 
+                           plan_tipo: str = None, body_fat_percentage: float = None) -> Dict[str, float]:
     """
-    Calculates intelligent macronutrient distribution based on goal.
+    Calculates intelligent macronutrient distribution based on goal and plan type.
     
     Args:
         total_calories: Total daily calories
         weight: Body weight in kg
         goal: Body composition goal
         gender: Masculino or Femenino
+        plan_tipo: Type of plan ("tradicional", "PSMF", or None for traditional logic)
+        body_fat_percentage: Body fat percentage (required if plan_tipo is specified)
     
     Returns:
         Dictionary with macronutrient amounts in grams and calories
@@ -881,16 +951,26 @@ def calculate_macronutrients(total_calories: float, weight: float, goal: str, ge
     protein_g = weight * protein_factor
     protein_kcal = protein_g * PROTEIN_KCAL_PER_G
     
-    # Fat factor based on goal
-    if goal == "Definición":
-        fat_factor = 0.8
-    elif goal == "Recomposición":
-        fat_factor = 1.0
-    else:  # Volumen
-        fat_factor = 1.2
-    
-    fat_g = weight * fat_factor
-    fat_kcal = fat_g * FAT_KCAL_PER_G
+    # Fat calculation based on plan type
+    if plan_tipo and plan_tipo in ["tradicional", "PSMF"] and body_fat_percentage is not None:
+        # Calculate TMB for fat percentage calculation
+        tmb = calculate_tmb_katch_mcardle(weight, body_fat_percentage)
+        
+        # Use TMB-based fat calculation
+        fat_g = obtener_porcentaje_grasa_tmb_tradicional(tmb, plan_tipo, total_calories)
+        fat_kcal = fat_g * FAT_KCAL_PER_G
+        
+    else:
+        # Traditional fat factor based on goal
+        if goal == "Definición":
+            fat_factor = 0.8
+        elif goal == "Recomposición":
+            fat_factor = 1.0
+        else:  # Volumen
+            fat_factor = 1.2
+        
+        fat_g = weight * fat_factor
+        fat_kcal = fat_g * FAT_KCAL_PER_G
     
     # Carbohydrates by difference
     carbs_kcal = total_calories - protein_kcal - fat_kcal
@@ -1426,6 +1506,31 @@ def show_main_questionnaire():
                     st.error("📉 FFMI Bajo")
         
         # =============================================================================
+        # SECTION 2.1: PLAN TYPE SELECTION
+        # =============================================================================
+        
+        st.markdown("""
+        <div class="section-container">
+            <h3>🎯 Tipo de Plan Nutricional</h3>
+            <p>Selecciona el protocolo específico para el cálculo de macronutrientes.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        plan_tipo = st.selectbox("Tipo de plan*", [
+            "tradicional", 
+            "PSMF",
+            "Otros (usar lógica estándar)"
+        ], help="""
+        - **Tradicional**: Utiliza 40% del TMB para calcular grasa (recomendado para la mayoría)
+        - **PSMF**: Protocolo ultra-bajo en grasa, utiliza 15% del TMB
+        - **Otros**: Utiliza factores estándar basados en objetivos
+        """)
+        
+        # Convert selection to internal format
+        if plan_tipo == "Otros (usar lógica estándar)":
+            plan_tipo = None
+        
+        # =============================================================================
         # SECTION 3: ACTIVITY LEVEL AND ENERGY EXPENDITURE
         # =============================================================================
         
@@ -1673,7 +1778,8 @@ def show_main_questionnaire():
             # MACRONUTRIENT ALLOCATION
             # =============================================================================
             
-            macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender)
+            macros = calculate_macronutrients(final_calories, weight, goal["goal"], gender, 
+                                             plan_tipo, bf_adjusted)
             
             # =============================================================================
             # GENERATE WARNINGS
