@@ -248,13 +248,6 @@ st.markdown("""
         color: #FFFFFF;
     }
     
-    /* Hide GitHub logo and deploy button in header while preserving sidebar menu */
-    [data-testid="stHeader"] [data-testid="stAppDeployButton"],
-    [data-testid="stHeader"] a[href*="github"],
-    [data-testid="stHeader"] button[aria-label*="Fork"] {
-        display: none !important;
-    }
-    
     /* Sidebar styling */
     .css-1d391kg {
         background-color: #1a1a1a;
