@@ -1341,50 +1341,6 @@ st.markdown("""
             padding-top: 0.5rem !important;
         }
     }
-    
-    /* ========================================================================== */
-    /* HIDE GITHUB FORK BUTTON AND LOGO - PRESERVE SIDEBAR TOGGLE */
-    /* ========================================================================== */
-    
-    /* Hide the Deploy button in the top-right corner */
-    [data-testid="stAppDeployButton"] {
-        display: none !important;
-    }
-    
-    /* Hide toolbar actions (GitHub menu button) */
-    [data-testid="stToolbarActions"] {
-        display: none !important;
-    }
-    
-    /* Hide all header buttons (Deploy and GitHub menu) while preserving sidebar */
-    [data-testid="stToolbar"] button[kind="header"],
-    [data-testid="stToolbar"] button[kind="headerNoPadding"] {
-        display: none !important;
-    }
-    
-    /* Hide buttons with SVG content (GitHub menu button) */
-    [data-testid="stHeader"] button:has(svg) {
-        display: none !important;
-    }
-    
-    /* Fallback: Hide empty buttons with SVG in header */
-    [data-testid="stHeader"] button:empty,
-    [data-testid="stHeader"] button[aria-hidden="true"] {
-        display: none !important;
-    }
-    
-    /* Ensure sidebar toggle button remains visible and functional */
-    [data-testid="collapsedControl"], 
-    [data-testid="stSidebarNav"], 
-    [data-testid="stSidebar"] button,
-    .stSidebar button,
-    button[aria-label*="sidebar"],
-    button[aria-label*="menu"],
-    button[data-testid*="sidebar"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
 </style>  
 """, unsafe_allow_html=True)
 
