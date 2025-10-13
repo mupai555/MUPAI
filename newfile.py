@@ -989,6 +989,173 @@ st.markdown("""
     }
     
     /* ========================================================================== */
+    /* HOW TO GET YOUR PLAN BLOCK STYLES */
+    /* ========================================================================== */
+    
+    .how-to-get-plan-container {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        padding: 3rem 2rem;
+        border-radius: 20px;
+        margin: 2.5rem 0;
+        border: 3px solid #FFCC00;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.3);
+    }
+    
+    .how-to-get-plan-title {
+        text-align: center;
+        margin-bottom: 2.5rem;
+    }
+    
+    .how-to-get-plan-title h2 {
+        color: #FFCC00;
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(255,204,0,0.3);
+    }
+    
+    .how-to-get-plan-title p {
+        color: #FFFFFF;
+        font-size: 1.2rem;
+        margin: 0;
+        font-weight: 400;
+    }
+    
+    .steps-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .step-card {
+        flex: 1;
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        padding: 2rem 1.5rem;
+        border-radius: 15px;
+        border: 2px solid #FFCC00;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255,204,0,0.2);
+    }
+    
+    .step-card:hover {
+        transform: translateY(-5px);
+        border-color: #FFD700;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+    }
+    
+    .step-number {
+        background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+        color: #000;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: bold;
+        margin: 0 auto 1.5rem auto;
+        box-shadow: 0 4px 12px rgba(255,204,0,0.5);
+    }
+    
+    .step-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+    
+    .step-card h3 {
+        color: #FFCC00;
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        font-weight: bold;
+    }
+    
+    .step-card p {
+        color: #FFFFFF;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+    
+    /* Responsive design for steps */
+    @media (max-width: 768px) {
+        .steps-container {
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .how-to-get-plan-container {
+            padding: 2rem 1.5rem;
+        }
+        
+        .how-to-get-plan-title h2 {
+            font-size: 2rem;
+        }
+        
+        .step-card {
+            padding: 1.5rem 1rem;
+        }
+        
+        .step-number {
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .step-icon {
+            font-size: 2.5rem;
+        }
+        
+        .step-card h3 {
+            font-size: 1.3rem;
+        }
+        
+        .step-card p {
+            font-size: 1rem;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .how-to-get-plan-container {
+            padding: 1.5rem 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .how-to-get-plan-title h2 {
+            font-size: 1.6rem;
+        }
+        
+        .how-to-get-plan-title p {
+            font-size: 1rem;
+        }
+        
+        .step-card {
+            padding: 1.2rem 0.8rem;
+        }
+        
+        .step-number {
+            width: 45px;
+            height: 45px;
+            font-size: 1.3rem;
+        }
+        
+        .step-icon {
+            font-size: 2rem;
+        }
+        
+        .step-card h3 {
+            font-size: 1.2rem;
+        }
+        
+        .step-card p {
+            font-size: 0.95rem;
+        }
+    }
+    
+    /* ========================================================================== */
     /* INFORMATIVE BANNER STYLES (HOME PAGE ONLY) */
     /* ========================================================================== */
     
@@ -1586,6 +1753,51 @@ if st.session_state.page == "inicio":
             Consulta el menú lateral <strong>'Planes y Costos'</strong> para ver información detallada 
             y la mecánica de adquisición paso a paso.
         </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # How to get your plan - visual and emotional block
+    st.markdown("""
+    <div class="how-to-get-plan-container">
+        <div class="how-to-get-plan-title">
+            <h2>✨ ¿Cómo Obtener Tu Plan?</h2>
+            <p>Tres pasos simples para comenzar tu transformación</p>
+        </div>
+        
+        <div class="steps-container">
+            <!-- Step 1: Choose your plan -->
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <div class="step-icon">🎯</div>
+                <h3>Elige Tu Plan</h3>
+                <p>
+                    Selecciona el plan que mejor se adapte a tus objetivos: 
+                    nutrición, entrenamiento o el plan combinado para resultados óptimos.
+                </p>
+            </div>
+            
+            <!-- Step 2: Pay -->
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <div class="step-icon">💳</div>
+                <h3>Realiza Tu Pago</h3>
+                <p>
+                    Efectúa la transferencia segura del monto exacto a nuestra cuenta bancaria. 
+                    Encontrarás todos los datos en la sección "Planes y Costos".
+                </p>
+            </div>
+            
+            <!-- Step 3: Receive your plan -->
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <div class="step-icon">🚀</div>
+                <h3>Recibe Tu Plan</h3>
+                <p>
+                    Una vez confirmado tu pago, recibirás tu plan personalizado y podrás 
+                    comenzar tu transformación con el respaldo de ciencia e IA.
+                </p>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
 
