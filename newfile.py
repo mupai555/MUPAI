@@ -2354,6 +2354,96 @@ if st.session_state.page == "inicio":
         </div>
         """, unsafe_allow_html=True)
     
+    # ==================== PLANES CONTINUOS CON DESCUENTOS EN PÁGINA DE INICIO ====================
+    st.markdown("""
+    <div class="section-header" style="margin-top: 3rem;">
+        <h2>🔒 Planes Continuos con Descuentos</h2>
+        <p style="font-size: 1.3rem; color: #FFFFFF; text-align: center; margin-top: 1rem; font-style: italic;">
+            Donde tu hábito se transforma en progreso real y sostenible.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Introducción emocional y motivacional para planes continuos
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+                text-align: center; color: #000;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
+            💥 ¡Compromiso que se Recompensa! 🏆
+        </h2>
+        <p style="font-size: 1.3rem; line-height: 1.8; margin: 1rem 0; font-weight: 600;">
+            ✨ <strong>¡Ahorra hasta 20% al combinar Nutrición + Entrenamiento en planes de largo plazo!</strong> ✨
+        </p>
+        <p style="font-size: 1.2rem; line-height: 1.8; margin: 1rem 0; font-weight: 500;">
+            🔥 Tu compromiso merece premios reales. Estos planes extendidos te ofrecen:<br>
+            💸 <strong>Descuentos increíbles</strong> | 📊 <strong>Evaluaciones cada 8 semanas</strong> | 🎯 <strong>Ajustes continuos</strong>
+        </p>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin: 1rem 0; font-weight: 500;">
+            🤝 <strong>Desde $420–$574 al mes</strong> (según plan y tipo) al prorratear tu inversión total.<br>
+            ⏳ Resultados sostenibles que se notan, se sienten y se quedan contigo.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tablas resumidas de planes continuos para inicio
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
+        <h3 style="color: #FFCC00; font-size: 2rem; text-align: center; margin-bottom: 2rem; line-height: 1.3;">
+            💎 Resumen de Planes Continuos
+        </h3>
+        
+        <div style="overflow-x: auto; margin: 2rem 0;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 600px; background: rgba(255,204,0,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFCC00; font-weight: bold;">Plan</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Duración</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Descuento</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Ahorro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">🍽️ Nutrición</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">12-24 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$990-$1,760</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,260-$2,240</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$110-$560</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.05);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">💪 Entrenamiento</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">16-32 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,170-$2,080</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,440-$2,560</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$130-$640</td>
+                    </tr>
+                    <tr style="background: rgba(255,215,0,0.15);">
+                        <td style="padding: 1rem; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">🔥 Combinado</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">16-32 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">15-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$1,785-$3,360</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$2,295-$4,320</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$315-$1,080</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <p style="color: #FFFFFF; text-align: center; font-size: 1.2rem; margin-top: 2rem; line-height: 1.7;">
+            📋 <strong>Para más detalles</strong> sobre cada plan continuo, visita la sección 
+            <strong style="color: #FFCC00;">"Planes y Costos"</strong> en el menú lateral. 👈
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Información de Transferencia Bancaria con imagen
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
@@ -2902,10 +2992,13 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # ==================== NUEVA SECCIÓN: PLANES DE RETENCIÓN Y DESCUENTOS ====================
+    # ==================== NUEVA SECCIÓN: PLANES CONTINUOS CON DESCUENTOS ====================
     st.markdown("""
     <div class="section-header">
-        <h2>🔒 Planes de Retención y Descuentos</h2>
+        <h2>🔒 Planes Continuos con Descuentos</h2>
+        <p style="font-size: 1.3rem; color: #FFFFFF; text-align: center; margin-top: 1rem; font-style: italic;">
+            Donde tu hábito se transforma en progreso real y sostenible.
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2935,7 +3028,7 @@ elif st.session_state.page == "planes_costos":
     # Plan de Nutrición Extendida
     st.markdown("""
     <div class="corporate-section">
-        <h3>🍽️ Plan de Nutrición Extendida - Retención</h3>
+        <h3>🍽️ Plan de Nutrición Extendida - Continuo</h3>
         <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
             😃 <strong>¡La nutrición que se adapta a tu vida!</strong> Seguimiento prolongado con menús renovados 
             y evaluaciones constantes para garantizar tu progreso sin estancamientos.
@@ -2943,23 +3036,56 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Tabla de Nutrición con pandas para mejor formato
-    df_nutricion = {
-        "Duración": ["12 semanas", "18 semanas", "24 semanas"],
-        "Precio Base Internos": ["$1,100", "$1,650", "$2,200"],
-        "Descuento Internos": ["10%", "15%", "20%"],
-        "Precio Final Internos": ["$990", "$1,403", "$1,760"],
-        "Precio Base Externos": ["$1,400", "$2,100", "$2,800"],
-        "Descuento Externos": ["10%", "15%", "20%"],
-        "Precio Final Externos": ["$1,260", "$1,785", "$2,240"],
-        "Ahorro": ["$110-$140", "$247-$315", "$440-$560"]
-    }
+    # Tabla de Nutrición responsiva con HTML
     st.markdown("""
     <div class="corporate-section">
         <h4>💰 Precios y Ahorros - Nutrición Extendida:</h4>
+        <div style="overflow-x: auto; margin: 1rem 0;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 600px; background: rgba(255,204,0,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFCC00; font-weight: bold;">Duración</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Base Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Descuento</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Final Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Base Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Final Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Ahorro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">12 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,100</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$990</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,400</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,260</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$110-$140</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.05);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">18 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,650</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">15%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,403</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$2,100</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,785</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$247-$315</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">24 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$2,200</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,760</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$2,800</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$2,240</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$440-$560</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    st.dataframe(df_nutricion, use_container_width=True)
     
     st.markdown("""
     <div class="corporate-section">
@@ -2972,7 +3098,7 @@ elif st.session_state.page == "planes_costos":
             <li>💪 Ajustes de macronutrientes según resultados y objetivos cambiantes</li>
         </ul>
         <p style="font-size: 1.15rem; margin-top: 1rem; font-weight: 600; color: #FFCC00;">
-            🎁 Menús extra: desde $80 (internos) $120 (externos) con descuento por retención
+            🎁 Menús extra: desde $80 (internos) $120 (externos) con descuento por plan continuo
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2980,7 +3106,7 @@ elif st.session_state.page == "planes_costos":
     # Plan de Entrenamiento Extendido
     st.markdown("""
     <div class="corporate-section">
-        <h3>💪 Plan de Entrenamiento Extendido - Retención</h3>
+        <h3>💪 Plan de Entrenamiento Extendido - Continuo</h3>
         <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
             🔥 <strong>¡Entrena con propósito y constancia!</strong> Programas renovados cada 8 semanas 
             con progresiones científicas para maximizar fuerza, hipertrofia y rendimiento.
@@ -2988,23 +3114,56 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Tabla de Entrenamiento
-    df_entrenamiento = {
-        "Duración": ["16 semanas", "24 semanas", "32 semanas"],
-        "Precio Base Internos": ["$1,300", "$1,950", "$2,600"],
-        "Descuento Internos": ["10%", "15%", "20%"],
-        "Precio Final Internos": ["$1,170", "$1,658", "$2,080"],
-        "Precio Base Externos": ["$1,600", "$2,400", "$3,200"],
-        "Descuento Externos": ["10%", "15%", "20%"],
-        "Precio Final Externos": ["$1,440", "$2,040", "$2,560"],
-        "Ahorro": ["$130-$160", "$292-$360", "$520-$640"]
-    }
+    # Tabla de Entrenamiento responsiva con HTML
     st.markdown("""
     <div class="corporate-section">
         <h4>💰 Precios y Ahorros - Entrenamiento Extendido:</h4>
+        <div style="overflow-x: auto; margin: 1rem 0;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 600px; background: rgba(255,204,0,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFCC00; font-weight: bold;">Duración</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Base Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Descuento</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Final Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Base Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Final Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Ahorro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">16 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,300</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,170</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,600</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,440</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$130-$160</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.05);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">24 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$1,950</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">15%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,658</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$2,400</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$2,040</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$292-$360</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFFFFF; font-weight: 600;">32 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$2,600</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$2,080</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">$3,200</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$2,560</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$520-$640</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    st.dataframe(df_entrenamiento, use_container_width=True)
     
     st.markdown("""
     <div class="corporate-section">
@@ -3022,7 +3181,7 @@ elif st.session_state.page == "planes_costos":
     # Plan Combinado Extendido
     st.markdown("""
     <div class="corporate-section">
-        <h3>🔥 Plan Combinado Extendido - Retención (Nutrición + Entrenamiento)</h3>
+        <h3>🔥 Plan Combinado Extendido - Continuo (Nutrición + Entrenamiento)</h3>
         <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
             🏆 <strong>¡La fórmula completa para transformación total!</strong> Integración perfecta entre 
             alimentación y entrenamiento con seguimiento coordinado para resultados exponenciales.
@@ -3030,25 +3189,64 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Tabla de Plan Combinado
-    df_combinado = {
-        "Duración": ["16 semanas (N:12 + E:16)", "24 semanas (N:18 + E:24)", "32 semanas (N:24 + E:32)"],
-        "Precio Base Internos": ["$2,100", "$3,150", "$4,200"],
-        "Descuento Internos": ["15%", "18%", "20%"],
-        "Precio Final Internos": ["$1,785", "$2,583", "$3,360"],
-        "Costo/Mes Internos": ["$446", "$431", "$420"],
-        "Precio Base Externos": ["$2,700", "$4,050", "$5,400"],
-        "Descuento Externos": ["15%", "18%", "20%"],
-        "Precio Final Externos": ["$2,295", "$3,321", "$4,320"],
-        "Costo/Mes Externos": ["$574", "$554", "$540"],
-        "Ahorro Total": ["$315-$405", "$567-$729", "$840-$1,080"]
-    }
+    # Tabla de Plan Combinado responsiva con HTML
     st.markdown("""
     <div class="corporate-section">
         <h4>💰 Precios y Ahorros - Plan Combinado Extendido:</h4>
+        <div style="overflow-x: auto; margin: 1rem 0;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 700px; background: rgba(255,204,0,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #000;">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFD700; font-weight: bold;">Duración</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Precio Base Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Descuento</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Precio Final Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Costo/Mes</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Precio Base Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Precio Final Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Costo/Mes</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFD700; font-weight: bold;">Ahorro Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFD700; color: #FFFFFF; font-weight: 600;">16 semanas<br>(N:12 + E:16)</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$2,100</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFCC00; font-weight: bold;">15%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$1,785</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$446</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$2,700</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$2,295</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$574</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$315-$405</td>
+                    </tr>
+                    <tr style="background: rgba(255,215,0,0.05);">
+                        <td style="padding: 1rem; border: 1px solid #FFD700; color: #FFFFFF; font-weight: 600;">24 semanas<br>(N:18 + E:24)</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$3,150</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFCC00; font-weight: bold;">18%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$2,583</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$431</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$4,050</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$3,321</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$554</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$567-$729</td>
+                    </tr>
+                    <tr style="background: rgba(255,215,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFD700; color: #FFFFFF; font-weight: 600;">32 semanas<br>(N:24 + E:32)</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$4,200</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFCC00; font-weight: bold;">20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$3,360</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$420</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">$5,400</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$4,320</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$540</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$840-$1,080</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
     """, unsafe_allow_html=True)
-    st.dataframe(df_combinado, use_container_width=True)
     
     st.markdown("""
     <div class="corporate-section">
@@ -3071,11 +3269,11 @@ elif st.session_state.page == "planes_costos":
     # Sección explicativa: ¿Por qué funcionan estos planes?
     st.markdown("""
     <div class="section-header">
-        <h2>🔬 ¿Por Qué Funcionan los Planes de Retención?</h2>
+        <h2>🔬 ¿Por Qué Funcionan los Planes Continuos?</h2>
     </div>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
@@ -3104,27 +3302,6 @@ elif st.session_state.page == "planes_costos":
         <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                     padding: 2rem; border-radius: 15px; height: 100%; 
                     border: 2px solid #FFCC00; box-shadow: 0 4px 15px rgba(255,204,0,0.2);">
-            <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💬</div>
-            <h3 style="color: #FFCC00; text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">
-                Testimonios Reales
-            </h3>
-            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7;">
-                😃 <strong>"En 16 semanas logré lo que no pude en años"</strong> - María G.<br><br>
-                
-                💪 <strong>"El seguimiento continuo marca la diferencia"</strong> - Carlos R.<br><br>
-                
-                🏆 <strong>"Perdí 12kg de grasa y gané 4kg de músculo en 24 semanas"</strong> - Jorge M.<br><br>
-                
-                ✨ <strong>"Los ajustes constantes evitaron estancamientos"</strong> - Laura P.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2rem; border-radius: 15px; height: 100%; 
-                    border: 2px solid #FFCC00; box-shadow: 0 4px 15px rgba(255,204,0,0.2);">
             <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💰</div>
             <h3 style="color: #FFCC00; text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">
                 Finanzas Inteligentes
@@ -3141,13 +3318,13 @@ elif st.session_state.page == "planes_costos":
         </div>
         """, unsafe_allow_html=True)
     
-    # Explicación de retención y marketing
+    # Explicación de compromiso mutuo y marketing honesto
     st.markdown("""
     <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); 
                 padding: 2.5rem; border-radius: 20px; margin: 2rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
         <h3 style="color: #FFCC00; font-size: 1.8rem; text-align: center; margin-bottom: 1.5rem;">
-            🔒 Retención y Compromiso Mutuo
+            🔒 Compromiso Mutuo y Progreso Sostenible
         </h3>
         <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
             🤝 <strong>Ganamos ambos:</strong> Tú obtienes mejores resultados con seguimiento prolongado y precios 
@@ -3166,7 +3343,7 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Call to Action final para planes de retención
+    # Call to Action final para planes continuos
     st.markdown("""
     <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%); 
                 padding: 3rem 2rem; border-radius: 20px; text-align: center; 
@@ -3176,7 +3353,7 @@ elif st.session_state.page == "planes_costos":
             🎯 ¡Compromete, Ahorra y Transforma! 💥
         </h2>
         <p style="font-size: 1.4rem; margin-bottom: 1.5rem; font-weight: 600; line-height: 1.7;">
-            🔥 Los planes de retención son tu mejor inversión para resultados que permanecen.<br>
+            🔥 Los planes continuos son tu mejor inversión para resultados que permanecen.<br>
             💸 Descuentos de hasta 20% + Seguimiento profesional + Ajustes ilimitados
         </p>
         <p style="font-size: 1.2rem; font-weight: 500; line-height: 1.6;">
