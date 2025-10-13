@@ -751,6 +751,13 @@ st.markdown("""
         hyphens: none !important;
     }
     
+    /* Fix for broken words in HTML tables - prevent words from breaking with hyphens */
+    table th, table td {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        hyphens: none !important;
+    }
+    
     /* Mobile First Approach - Tablet and Mobile */
     @media (max-width: 768px) {
         /* Force column stacking */
