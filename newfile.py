@@ -677,17 +677,24 @@ st.markdown("""
         hyphens: none !important;
     }
     
-    /* Better list item formatting */
+    /* ========================================================================== */
+    /* ENHANCED LIST STYLES - PREVENT OVERFLOW AND IMPROVE READABILITY */
+    /* ========================================================================== */
+    
+    /* Better list item formatting with proper spacing */
     li {
         word-wrap: break-word !important;
         overflow-wrap: break-word !important;
         word-break: normal !important;
         hyphens: auto !important;
+        padding: 0.4rem 0 !important;
+        line-height: 1.8 !important;
     }
     
     /* Optimize spacing in ordered lists */
     ol {
         padding-left: 1.5rem !important;
+        margin: 1rem 0 !important;
     }
     
     ol li {
@@ -695,15 +702,151 @@ st.markdown("""
         line-height: 1.8 !important;
     }
     
-    /* Better paragraph spacing for readability */
-    p strong {
-        white-space: nowrap;
+    /* Unordered lists with proper spacing */
+    ul {
+        padding-left: 1.5rem !important;
+        margin: 1rem 0 !important;
     }
     
-    /* Email addresses should break appropriately */
-    a[href^="mailto:"] {
-        word-break: break-all !important;
+    ul li {
+        margin-bottom: 0.6rem !important;
+        line-height: 1.7 !important;
+        position: relative !important;
     }
+    
+    /* Prevent bullet points from being cut off */
+    ul li::marker {
+        color: #FFCC00 !important;
+    }
+    
+    /* Nested lists with adjusted spacing */
+    ul ul, ol ol, ul ol, ol ul {
+        margin: 0.5rem 0 !important;
+        padding-left: 1.2rem !important;
+    }
+    
+    /* Lists within cards or containers */
+    .metric-card ul li,
+    .corporate-section ul li,
+    .professional-profile ul li,
+    div[style*="background: linear-gradient"] ul li {
+        padding-right: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* ========================================================================== */
+    /* COMPREHENSIVE PADDING AND MARGIN FIX - PREVENT CONTENT TOUCHING BORDERS */
+    /* ========================================================================== */
+    
+    /* Ensure all major containers have adequate padding */
+    .main-header,
+    .section-header,
+    .questionnaire-container,
+    .results-container,
+    .metric-card,
+    .corporate-section,
+    .professional-profile,
+    .contact-section,
+    .professional-header,
+    .welcome-title-container,
+    .how-to-get-plan-container,
+    .informative-banner,
+    .professional-banner {
+        box-sizing: border-box !important;
+        padding: 1.5rem 1.5rem !important;
+        margin: 1rem 0.5rem !important;
+    }
+    
+    /* Ensure text within containers has breathing room */
+    .main-header p,
+    .section-header h2,
+    .questionnaire-container p,
+    .results-container p,
+    .metric-card p,
+    .corporate-section p,
+    .professional-profile p {
+        margin: 0.5rem 0 !important;
+        padding: 0.2rem 0 !important;
+    }
+    
+    /* Headings within containers need spacing */
+    .corporate-section h3,
+    .professional-profile h3,
+    .metric-card h3,
+    .questionnaire-container h3 {
+        margin: 1rem 0 0.8rem 0 !important;
+        padding: 0 0 0.5rem 0 !important;
+    }
+    
+    /* Ensure divs with inline background styles have padding */
+    div[style*="background: linear-gradient"],
+    div[style*="background: rgba"],
+    div[style*="background-color"] {
+        padding: 1rem 1.2rem !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific padding for deeply nested content */
+    div[style*="background"] div[style*="background"] {
+        margin: 0.8rem 0 !important;
+    }
+    
+    /* Ensure borders don't overlap content */
+    [style*="border:"],
+    [style*="border-left:"],
+    [style*="border-right:"],
+    [style*="border-top:"],
+    [style*="border-bottom:"] {
+        box-sizing: border-box !important;
+    }
+    
+    /* ========================================================================== */
+    /* EMAIL ADDRESSES, URLS, AND LONG TEXT - PROPER OVERFLOW HANDLING */
+    /* ========================================================================== */
+    
+    /* Email addresses should break appropriately but preserve readability */
+    a[href^="mailto:"], 
+    [href*="@"],
+    p:has(a[href^="mailto:"]) {
+        word-break: break-all !important;
+        overflow-wrap: break-word !important;
+        hyphens: none !important;
+    }
+    
+    /* URLs and links should break at appropriate points */
+    a[href^="http"], 
+    a[href^="https"], 
+    a[href^="www"] {
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: none !important;
+        max-width: 100% !important;
+        display: inline-block !important;
+    }
+    
+    /* Ensure paragraphs containing emails have proper spacing */
+    p:has(a[href^="mailto:"]),
+    div:has(a[href^="mailto:"]) {
+        padding: 0.3rem 0.5rem !important;
+        word-spacing: normal !important;
+    }
+    
+    /* Price and currency formatting - prevent awkward breaks */
+    strong:has-text("$"),
+    span:has-text("$"),
+    td:has-text("$"),
+    p:has-text("$") {
+        white-space: nowrap !important;
+    }
+    
+    /* Specific styling for price containers */
+    [style*="font-weight: bold"]:has-text("$") {
+        white-space: nowrap !important;
+    }
+    
+    /* ========================================================================== */
+    /* COMPREHENSIVE IMAGE RESPONSIVENESS - PREVENT OVERFLOW */
+    /* ========================================================================== */
     
     /* Global responsive image styling */
     img {
@@ -711,6 +854,8 @@ st.markdown("""
         height: auto !important;
         object-fit: contain !important;
         display: block;
+        margin: 0 auto !important;
+        border-radius: 10px;
     }
     
     /* Enhanced logo responsiveness */
@@ -719,6 +864,7 @@ st.markdown("""
         width: auto !important;
         height: auto !important;
         object-fit: contain !important;
+        margin: 0 auto !important;
     }
     
     /* MOBILE FIX: Professional images always responsive */
@@ -728,10 +874,81 @@ st.markdown("""
     [data-testid="stImage"] img,
     img {
         max-width: 100% !important;
+        width: 100% !important;
         height: auto !important;
         object-fit: contain !important;
         border-radius: 15px;
     }
+    
+    /* Prevent images in inline styles from overflowing */
+    [style*="max-width"] img {
+        max-width: 100% !important;
+    }
+    
+    /* Banking image and other specific images */
+    img[alt*="bancaria"],
+    img[alt*="Cuenta"],
+    img[src*="base64"] {
+        max-width: min(320px, 100%) !important;
+        width: auto !important;
+        margin: 1rem auto !important;
+    }
+    
+    /* Image containers should not overflow */
+    div:has(img) {
+        max-width: 100% !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Streamlit image containers */
+    .stImage, [data-testid="stImage"] {
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+    
+    @media (max-width: 768px) {
+        /* Mobile-specific image adjustments */
+        img {
+            max-width: 100% !important;
+            width: 100% !important;
+            border-radius: 8px !important;
+        }
+        
+        .logo-img {
+            max-width: min(300px, 90%) !important;
+        }
+        
+        img[alt*="bancaria"],
+        img[alt*="Cuenta"] {
+            max-width: min(280px, 95%) !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .logo-img {
+            max-width: min(250px, 85%) !important;
+        }
+        
+        img[alt*="bancaria"],
+        img[alt*="Cuenta"] {
+            max-width: min(240px, 90%) !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* COMPREHENSIVE WORD-BREAK AND TEXT WRAPPING STRATEGY */
+    /* ========================================================================== */
+    /* 
+     * IMPLEMENTED: Comprehensive text wrapping strategy to prevent overflow
+     * - Normal word-break for body text (prevents mid-word breaks)
+     * - Auto-hyphenation for Spanish text where appropriate
+     * - Protected headings and important text from breaking
+     * - Special handling for emails, URLs, and prices
+     * 
+     * MODIFICATION DATE: 2025-01-XX
+     * PURPOSE: Resolve all word overflow and text display issues on mobile/desktop
+     */
     
     /* Ensure text wrapping for long content - IMPROVED for better word breaks */
     * {
@@ -749,13 +966,63 @@ st.markdown("""
     h1, h2, h3, h4, h5, h6 {
         word-break: keep-all !important;
         hyphens: none !important;
+        word-spacing: 0.05em !important;
+        line-height: 1.3 !important;
     }
     
-    /* Fix for broken words in HTML tables - prevent words from breaking with hyphens */
+    /* Prevent awkward word breaks in emphasized text */
+    strong, b, em, i {
+        word-break: keep-all !important;
+        hyphens: none !important;
+    }
+    
+    /* Better paragraph spacing for readability */
+    p strong {
+        white-space: nowrap;
+    }
+    
+    /* ========================================================================== */
+    /* COMPREHENSIVE FIX FOR TABLES - PREVENT WORD BREAKS AND ENSURE READABILITY */
+    /* ========================================================================== */
+    
+    /* Prevent words from breaking with hyphens in table cells */
     table th, table td {
         white-space: nowrap !important;
         word-break: keep-all !important;
         hyphens: none !important;
+        padding: 0.8rem 1rem !important;
+        vertical-align: middle !important;
+    }
+    
+    /* Ensure table containers are scrollable on small screens */
+    table {
+        border-collapse: collapse !important;
+    }
+    
+    /* Wrapper for tables to handle overflow */
+    div[style*="overflow-x: auto"] {
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: thin !important;
+        scrollbar-color: #FFCC00 #1a1a1a !important;
+    }
+    
+    /* Custom scrollbar for webkit browsers (Chrome, Safari) */
+    div[style*="overflow-x: auto"]::-webkit-scrollbar {
+        height: 8px !important;
+    }
+    
+    div[style*="overflow-x: auto"]::-webkit-scrollbar-track {
+        background: #1a1a1a !important;
+        border-radius: 4px !important;
+    }
+    
+    div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb {
+        background: #FFCC00 !important;
+        border-radius: 4px !important;
+    }
+    
+    div[style*="overflow-x: auto"]::-webkit-scrollbar-thumb:hover {
+        background: #FFD700 !important;
     }
     
     /* Mobile First Approach - Tablet and Mobile */
@@ -1072,15 +1339,86 @@ st.markdown("""
             text-overflow: ellipsis !important;
         }
         
-        /* Universal text wrapping - IMPROVED for mobile */
-        p, span, div {
-            word-wrap: break-word !important;
-            overflow-wrap: break-word !important;
-            /* Changed from break-word to normal to prevent awkward mid-word breaks */
-            word-break: normal !important;
-            hyphens: auto !important;
-            -webkit-hyphens: auto !important;
+        /* ========================================================================== */
+    /* ENHANCED MOBILE TEXT OVERFLOW PREVENTION */
+    /* ========================================================================== */
+    
+    /* Mobile-specific fixes for text containers */
+    @media (max-width: 768px) {
+        /* Ensure all text containers have proper width constraints */
+        p, span, div, h1, h2, h3, h4, h5, h6 {
+            max-width: 100% !important;
+            box-sizing: border-box !important;
         }
+        
+        /* Prevent long words from causing horizontal scroll */
+        * {
+            max-width: 100vw !important;
+            box-sizing: border-box !important;
+        }
+        
+        /* Specific fix for inline styled divs on mobile */
+        div[style*="padding"] {
+            padding: 1rem 0.8rem !important;
+        }
+        
+        div[style*="margin"] {
+            margin: 0.8rem 0.3rem !important;
+        }
+        
+        /* Ensure prices don't overflow on mobile */
+        td[style*="font-weight: bold"],
+        span[style*="font-weight: bold"],
+        strong {
+            word-spacing: -0.05em !important;
+        }
+        
+        /* Mobile table cell optimization */
+        table td, table th {
+            font-size: 0.9rem !important;
+            padding: 0.6rem 0.5rem !important;
+        }
+        
+        /* Email and URL handling on mobile */
+        a[href^="mailto:"],
+        a[href^="http"] {
+            font-size: 0.9rem !important;
+            word-break: break-all !important;
+        }
+    }
+    
+    /* Extra small mobile - aggressive overflow prevention */
+    @media (max-width: 480px) {
+        /* Reduce padding to prevent overflow on tiny screens */
+        div[style*="padding: 3rem"],
+        div[style*="padding: 2.5rem"],
+        div[style*="padding: 2rem"] {
+            padding: 1rem 0.8rem !important;
+        }
+        
+        /* Compress table cells further */
+        table td, table th {
+            font-size: 0.85rem !important;
+            padding: 0.5rem 0.3rem !important;
+        }
+        
+        /* Reduce heading sizes to prevent overflow */
+        div[style*="font-size: 2.5rem"] h2,
+        div[style*="font-size: 2.5rem"] h3 {
+            font-size: 1.5rem !important;
+        }
+        
+        div[style*="font-size: 2rem"] h2,
+        div[style*="font-size: 2rem"] h3 {
+            font-size: 1.3rem !important;
+        }
+        
+        /* Aggressive text wrapping for ultra-small screens */
+        p, span, div {
+            word-spacing: -0.02em !important;
+            letter-spacing: -0.01em !important;
+        }
+    }
         
         /* Headings should never break words */
         h1, h2, h3, h4, h5, h6 {
@@ -1436,7 +1774,7 @@ st.markdown("""
     }
     
     /* ========================================================================== */
-    /* INFORMATIVE BANNER STYLES (HOME PAGE ONLY) */
+    /* ENHANCED BANNER AND ALERT STYLES - PREVENT OVERFLOW */
     /* ========================================================================== */
     
     .informative-banner {
@@ -1450,6 +1788,10 @@ st.markdown("""
         color: white;
         font-weight: 500;
         position: relative;
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
     }
     
     .informative-banner p {
@@ -1458,6 +1800,24 @@ st.markdown("""
         font-size: 1.1rem;
         line-height: 1.6;
         font-weight: 500;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        hyphens: auto !important;
+    }
+    
+    /* Professional banner overflow prevention */
+    .professional-banner {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow: hidden !important;
+    }
+    
+    .professional-banner p,
+    .professional-banner h4 {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        max-width: 100% !important;
     }
     
     /* Mobile responsive informative banner */
@@ -1839,6 +2199,144 @@ st.markdown("""
         
         div[style*="font-size: 3rem"] {
             font-size: 2rem !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* FINAL COMPREHENSIVE OVERFLOW PREVENTION AND VISUAL QUALITY ASSURANCE */
+    /* ========================================================================== */
+    /*
+     * IMPLEMENTED: Final layer of protection against all visual issues
+     * - Prevents any content from touching borders
+     * - Ensures proper spacing on all devices
+     * - Handles edge cases for long text, emails, URLs, and prices
+     * - Provides professional visual appearance across all screen sizes
+     * 
+     * MODIFICATION DATE: 2025-01-XX
+     * PURPOSE: Comprehensive audit fix for all visual and UX issues
+     */
+    
+    /* Universal overflow prevention */
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    /* Prevent any horizontal scrolling */
+    body, html, .stApp, .main, .block-container {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    /* Ensure all text elements respect container boundaries */
+    p, span, div, h1, h2, h3, h4, h5, h6, li, td, th, a {
+        max-width: 100% !important;
+    }
+    
+    /* Critical fix: Ensure no element can exceed viewport width */
+    * {
+        max-width: 100vw !important;
+    }
+    
+    /* Exception: Allow table contents to scroll horizontally when needed */
+    table, table * {
+        max-width: none !important;
+    }
+    
+    /* Ensure proper spacing around all interactive elements */
+    button, a.attractive-button, .stButton {
+        margin: 0.5rem 0.3rem !important;
+        padding: 0.8rem 1rem !important;
+    }
+    
+    /* Final mobile safety net */
+    @media (max-width: 768px) {
+        /* Aggressive overflow prevention on mobile */
+        * {
+            max-width: 100% !important;
+        }
+        
+        /* Ensure all containers have safe padding */
+        div[style*="background"],
+        .stMarkdown,
+        section {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        
+        /* Prevent text from touching screen edges */
+        p, h1, h2, h3, h4, h5, h6 {
+            padding-left: 0.3rem !important;
+            padding-right: 0.3rem !important;
+        }
+    }
+    
+    /* Ultra-mobile final safety */
+    @media (max-width: 480px) {
+        /* Maximum compression for tiny screens */
+        div[style*="padding"] {
+            padding: 0.8rem 0.5rem !important;
+        }
+        
+        div[style*="margin"] {
+            margin: 0.5rem 0.2rem !important;
+        }
+        
+        /* Ensure readable font sizes */
+        * {
+            font-size: inherit !important;
+            min-font-size: 0.85rem !important;
+        }
+    }
+    
+    /* ========================================================================== */
+    /* ACCESSIBILITY AND VISUAL HARMONY ENHANCEMENTS */
+    /* ========================================================================== */
+    /*
+     * IMPLEMENTED: Accessibility and visual improvements
+     * - High contrast support
+     * - Touch-friendly targets on mobile
+     * - Smooth transitions and animations
+     * - Professional appearance
+     * 
+     * MODIFICATION DATE: 2025-01-XX
+     */
+    
+    /* Ensure all clickable elements are touch-friendly on mobile */
+    @media (max-width: 768px) {
+        a, button, .stButton > button, .contact-icon {
+            min-height: 44px !important;
+            min-width: 44px !important;
+        }
+    }
+    
+    /* Smooth scrolling for better UX */
+    html {
+        scroll-behavior: smooth !important;
+    }
+    
+    /* Focus indicators for accessibility */
+    a:focus, button:focus, input:focus, select:focus, textarea:focus {
+        outline: 3px solid #FFCC00 !important;
+        outline-offset: 2px !important;
+    }
+    
+    /* Ensure sufficient contrast for readability */
+    @media (prefers-contrast: high) {
+        * {
+            text-shadow: none !important;
+        }
+        
+        .main-header, .section-header, .corporate-section {
+            border-width: 3px !important;
+        }
+    }
+    
+    /* Reduced motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+        * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
         }
     }
 </style>  
