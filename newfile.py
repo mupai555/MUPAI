@@ -145,6 +145,12 @@ st.markdown("""
         font-weight: bold;  
         box-shadow: 0 3px 10px rgba(255,204,0,0.2);  
         border: 1px solid #FFCC00;
+    }
+    
+    .section-header h2 {
+        line-height: 1.3 !important;
+        margin: 0 !important;
+        word-spacing: 0.05em !important;
     }  
       
     .questionnaire-container {  
@@ -545,6 +551,67 @@ st.markdown("""
             font-size: 1rem;
             line-height: 1.6;
         }
+        
+        /* Professional profile mobile optimization */
+        .professional-profile {
+            padding: 1.5rem 1rem !important;
+            margin: 1rem 0 !important;
+        }
+        
+        .professional-profile h3 {
+            font-size: 1.6rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        .professional-profile p {
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Steps cards mobile optimization */
+        div[style*="min-height: 350px"] {
+            padding: 1.5rem 1rem !important;
+            min-height: auto !important;
+        }
+        
+        div[style*="min-height: 350px"] h3 {
+            font-size: 1.3rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        div[style*="min-height: 350px"] p {
+            font-size: 1rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Plans cards mobile optimization */
+        div[style*="min-height: 600px"] {
+            padding: 2rem 1.5rem !important;
+            min-height: auto !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        div[style*="min-height: 600px"] h3 {
+            font-size: 1.5rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        div[style*="min-height: 600px"] li {
+            font-size: 1rem !important;
+            line-height: 1.7 !important;
+        }
+        
+        /* Measurement cards mobile optimization */
+        div[style*="min-height: 320px"] {
+            padding: 1.5rem 1rem !important;
+            min-height: auto !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        div[style*="min-height: 320px"] h3 {
+            font-size: 1.5rem !important;
+            line-height: 1.3 !important;
+        }
     }
     
     @media (max-width: 480px) {
@@ -570,11 +637,73 @@ st.markdown("""
         .informative-banner p {
             font-size: 0.95rem;
         }
+        
+        /* Ultra-mobile plans optimization */
+        div[style*="min-height: 600px"] {
+            padding: 1.5rem 1rem !important;
+        }
+        
+        div[style*="min-height: 600px"] h3 {
+            font-size: 1.3rem !important;
+        }
+        
+        div[style*="min-height: 600px"] p,
+        div[style*="min-height: 600px"] li {
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Ultra-mobile steps optimization */
+        div[style*="min-height: 350px"] {
+            padding: 1.2rem 0.8rem !important;
+        }
+        
+        div[style*="min-height: 350px"] h3 {
+            font-size: 1.2rem !important;
+        }
+        
+        div[style*="min-height: 350px"] p {
+            font-size: 0.95rem !important;
+        }
     }
     
     /* ========================================================================== */
     /* MOBILE FIXES FOR SPECIFIC ISSUES - ADDED FOR ISSUE RESOLUTION */
     /* ========================================================================== */
+    
+    /* Prevent awkward word breaks in headings and key text */
+    strong, b, em, i {
+        word-break: keep-all !important;
+        hyphens: none !important;
+    }
+    
+    /* Better list item formatting */
+    li {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        word-break: normal !important;
+        hyphens: auto !important;
+    }
+    
+    /* Optimize spacing in ordered lists */
+    ol {
+        padding-left: 1.5rem !important;
+    }
+    
+    ol li {
+        margin-bottom: 0.8rem !important;
+        line-height: 1.8 !important;
+    }
+    
+    /* Better paragraph spacing for readability */
+    p strong {
+        white-space: nowrap;
+    }
+    
+    /* Email addresses should break appropriately */
+    a[href^="mailto:"] {
+        word-break: break-all !important;
+    }
     
     /* Global responsive image styling */
     img {
@@ -1556,12 +1685,40 @@ st.markdown("""
             margin: 0 auto !important;
             text-align: center !important;
             border-radius: 10px !important;
+            line-height: 1.7 !important;
         }
         
         /* Contact information sections */
         div[style*="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"] {
             padding: 1.5rem 1rem !important;
             margin: 1rem 0.5rem !important;
+        }
+        
+        /* Large heading sections - Better mobile sizing */
+        div[style*="font-size: 2.8rem"] h2,
+        div[style*="font-size: 2.5rem"] h2 {
+            font-size: 1.8rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        /* Large paragraph sections - Better mobile sizing */
+        div[style*="font-size: 1.3rem"] p,
+        div[style*="font-size: 1.2rem"] p {
+            font-size: 1.05rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Improve mobile text in yellow sections */
+        div[style*="background: linear-gradient(135deg, #FFD700"] h2,
+        div[style*="background: linear-gradient(135deg, #FFCC00"] h2 {
+            font-size: 1.8rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        div[style*="background: linear-gradient(135deg, #FFD700"] p,
+        div[style*="background: linear-gradient(135deg, #FFCC00"] p {
+            font-size: 1.05rem !important;
+            line-height: 1.6 !important;
         }
     }
     
@@ -1627,7 +1784,7 @@ st.markdown("""
         div[style*="background: #000; color: #FFCC00"] {
             font-size: 0.9rem !important;
             padding: 0.8rem !important;
-            line-height: 1.4 !important;
+            line-height: 1.6 !important;
         }
         
         /* Policy boxes - Ultra compact */
@@ -1650,6 +1807,31 @@ st.markdown("""
         /* Add small top margin to main content to account for sticky header */
         .stApp > div:first-child {
             padding-top: 0.5rem !important;
+        }
+        
+        /* Ultra-mobile heading optimization */
+        div[style*="font-size: 2.8rem"] h2,
+        div[style*="font-size: 2.5rem"] h2,
+        div[style*="font-size: 2rem"] h2 {
+            font-size: 1.5rem !important;
+            line-height: 1.3 !important;
+        }
+        
+        /* Ultra-mobile paragraph optimization */
+        div[style*="font-size: 1.3rem"] p,
+        div[style*="font-size: 1.2rem"] p,
+        div[style*="font-size: 1.1rem"] p {
+            font-size: 0.95rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        /* Emoji sizing on ultra-mobile */
+        div[style*="font-size: 3.5rem"] {
+            font-size: 2.5rem !important;
+        }
+        
+        div[style*="font-size: 3rem"] {
+            font-size: 2rem !important;
         }
     }
 </style>  
