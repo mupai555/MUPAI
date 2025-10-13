@@ -2354,6 +2354,96 @@ if st.session_state.page == "inicio":
         </div>
         """, unsafe_allow_html=True)
     
+    # ==================== PLANES CONTINUOS CON DESCUENTOS EN PÁGINA DE INICIO ====================
+    st.markdown("""
+    <div class="section-header" style="margin-top: 3rem;">
+        <h2>🔒 Planes Continuos con Descuentos</h2>
+        <p style="font-size: 1.3rem; color: #FFFFFF; text-align: center; margin-top: 1rem; font-style: italic;">
+            Donde tu hábito se transforma en progreso real y sostenible.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Introducción emocional y motivacional para planes continuos
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+                text-align: center; color: #000;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
+            💥 ¡Compromiso que se Recompensa! 🏆
+        </h2>
+        <p style="font-size: 1.3rem; line-height: 1.8; margin: 1rem 0; font-weight: 600;">
+            ✨ <strong>¡Ahorra hasta 20% al combinar Nutrición + Entrenamiento en planes de largo plazo!</strong> ✨
+        </p>
+        <p style="font-size: 1.2rem; line-height: 1.8; margin: 1rem 0; font-weight: 500;">
+            🔥 Tu compromiso merece premios reales. Estos planes extendidos te ofrecen:<br>
+            💸 <strong>Descuentos increíbles</strong> | 📊 <strong>Evaluaciones cada 8 semanas</strong> | 🎯 <strong>Ajustes continuos</strong>
+        </p>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin: 1rem 0; font-weight: 500;">
+            🤝 <strong>Desde $420–$574 al mes</strong> (según plan y tipo) al prorratear tu inversión total.<br>
+            ⏳ Resultados sostenibles que se notan, se sienten y se quedan contigo.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tablas resumidas de planes continuos para inicio
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
+        <h3 style="color: #FFCC00; font-size: 2rem; text-align: center; margin-bottom: 2rem; line-height: 1.3;">
+            💎 Resumen de Planes Continuos
+        </h3>
+        
+        <div style="overflow-x: auto; margin: 2rem 0;">
+            <table style="width: 100%; border-collapse: collapse; min-width: 600px; background: rgba(255,204,0,0.05); border-radius: 10px; overflow: hidden;">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFCC00; font-weight: bold;">Plan</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Duración</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Descuento</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Internos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Precio Externos</th>
+                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; font-weight: bold;">Ahorro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,204,0,0.1);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">🍽️ Nutrición</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">12-24 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$990-$1,760</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,260-$2,240</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$110-$560</td>
+                    </tr>
+                    <tr style="background: rgba(255,204,0,0.05);">
+                        <td style="padding: 1rem; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">💪 Entrenamiento</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFFFFF;">16-32 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFCC00; font-weight: bold;">10-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,170-$2,080</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #00FF00; font-weight: bold;">$1,440-$2,560</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFCC00; color: #FFD700; font-weight: bold;">$130-$640</td>
+                    </tr>
+                    <tr style="background: rgba(255,215,0,0.15);">
+                        <td style="padding: 1rem; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">🔥 Combinado</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFFFFF;">16-32 semanas</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">15-20%</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$1,785-$3,360</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #00FF00; font-weight: bold;">$2,295-$4,320</td>
+                        <td style="padding: 1rem; text-align: center; border: 1px solid #FFD700; color: #FFD700; font-weight: bold;">$315-$1,080</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <p style="color: #FFFFFF; text-align: center; font-size: 1.2rem; margin-top: 2rem; line-height: 1.7;">
+            📋 <strong>Para más detalles</strong> sobre cada plan continuo, visita la sección 
+            <strong style="color: #FFCC00;">"Planes y Costos"</strong> en el menú lateral. 👈
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
     # Información de Transferencia Bancaria con imagen
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
