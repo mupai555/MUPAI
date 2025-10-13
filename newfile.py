@@ -1756,69 +1756,152 @@ if st.session_state.page == "inicio":
     </div>
     """, unsafe_allow_html=True)
 
-    # How to get your plan - visual and emotional block
+    # ==================== NUEVA SECCIÓN RESPONSIVE CON ESTILOS INLINE ====================
+    # Sección completamente responsive con narrativa emocional y motivacional
+    # Incluye imagen bancaria, todos los detalles de planes y mecánica de adquisición
+    
     st.markdown("""
-    <div class="how-to-get-plan-container">
-        <div class="how-to-get-plan-title">
-            <h2>✨ ¿Cómo Obtener Tu Plan?</h2>
-            <p>Tres pasos simples para comenzar tu transformación</p>
-        </div>
-        
-        <div class="steps-container">
-            <!-- Step 1: Choose your plan -->
-            <div class="step-card">
-                <div class="step-number">1</div>
-                <div class="step-icon">🎯</div>
-                <h3>Elige Tu Plan</h3>
-                <p>
-                    Selecciona el plan que mejor se adapte a tus objetivos: 
-                    nutrición, entrenamiento o el plan combinado para resultados óptimos.
-                </p>
-            </div>
-            
-            <!-- Step 2: Pay -->
-            <div class="step-card">
-                <div class="step-number">2</div>
-                <div class="step-icon">💳</div>
-                <h3>Realiza Tu Pago</h3>
-                <p>
-                    Efectúa la transferencia segura del monto exacto a nuestra cuenta bancaria. 
-                    Encontrarás todos los datos en la sección "Planes y Costos".
-                </p>
-            </div>
-            
-            <!-- Step 3: Receive your plan -->
-            <div class="step-card">
-                <div class="step-number">3</div>
-                <div class="step-icon">🚀</div>
-                <h3>Recibe Tu Plan</h3>
-                <p>
-                    Una vez confirmado tu pago, recibirás tu plan personalizado y podrás 
-                    comenzar tu transformación con el respaldo de ciencia e IA.
-                </p>
-            </div>
-        </div>
-    </div>
+    <style>
+        /* Media queries embebidas para adaptabilidad móvil */
+        @media (max-width: 768px) {
+            .plan-card-container {
+                flex-direction: column !important;
+            }
+            .plan-card-item {
+                width: 100% !important;
+                margin-bottom: 1.5rem !important;
+            }
+            .steps-flex-container {
+                flex-direction: column !important;
+            }
+            .step-item {
+                width: 100% !important;
+                margin-bottom: 1.5rem !important;
+            }
+        }
+    </style>
     """, unsafe_allow_html=True)
-
-    # Servicios principales con precios destacados
+    
+    # Título principal emocional y motivacional
     st.markdown("""
-    <div class="section-header">
-        <h2>🚀 Nuestros Servicios Especializados</h2>
-        <p style="font-size: 1.3rem; color: #FFFFFF; text-align: center; margin-top: 1rem;">
-            Planes diseñados científicamente para maximizar tus resultados
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+                text-align: center;">
+        <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; margin-bottom: 1rem;
+                   text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+            ✨ ¿Cómo Obtener Tu Plan de Transformación?
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 400; line-height: 1.6;">
+            🎯 Tu cambio físico comienza con una decisión. <strong style="color: #FFCC00;">Sigue estos pasos simples</strong> 
+            y comienza tu viaje hacia el cuerpo que siempre has soñado, respaldado por ciencia e inteligencia artificial.
         </p>
     </div>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    # Pasos con estilos inline y diseño responsive
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
+        
+        <div class="steps-flex-container" style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+            
+            <!-- Paso 1: Elegir Plan -->
+            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                        padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
+                        transition: transform 0.3s ease;">
+                <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                           color: #000; width: 60px; height: 60px; border-radius: 50%; 
+                           display: flex; align-items: center; justify-content: center; 
+                           font-size: 2rem; font-weight: bold; margin: 0 auto 1.5rem auto; 
+                           box-shadow: 0 4px 12px rgba(255,204,0,0.5);">
+                    1
+                </div>
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                    Elige Tu Plan Ideal
+                </h3>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                    💪 Selecciona el plan que mejor se adapte a tus objetivos: nutrición, entrenamiento 
+                    o el plan combinado para resultados óptimos y sostenibles.
+                </p>
+            </div>
+            
+            <!-- Paso 2: Realizar Pago -->
+            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                        padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
+                        transition: transform 0.3s ease;">
+                <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                           color: #000; width: 60px; height: 60px; border-radius: 50%; 
+                           display: flex; align-items: center; justify-content: center; 
+                           font-size: 2rem; font-weight: bold; margin: 0 auto 1.5rem auto; 
+                           box-shadow: 0 4px 12px rgba(255,204,0,0.5);">
+                    2
+                </div>
+                <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                    Realiza Tu Pago Seguro
+                </h3>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                    🔒 Efectúa la transferencia del monto exacto a nuestra cuenta bancaria. 
+                    Encontrarás los datos completos más abajo. ¡Es rápido y seguro!
+                </p>
+            </div>
+            
+            <!-- Paso 3: Recibir Plan -->
+            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                        padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
+                        transition: transform 0.3s ease;">
+                <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                           color: #000; width: 60px; height: 60px; border-radius: 50%; 
+                           display: flex; align-items: center; justify-content: center; 
+                           font-size: 2rem; font-weight: bold; margin: 0 auto 1.5rem auto; 
+                           box-shadow: 0 4px 12px rgba(255,204,0,0.5);">
+                    3
+                </div>
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                    ¡Comienza Tu Transformación!
+                </h3>
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                    🎉 Una vez confirmado tu pago, recibirás tu plan personalizado y podrás 
+                    comenzar tu transformación con el respaldo de ciencia e IA.
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
     
-    with col1:
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
-                    border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);
-                    text-align: center; min-height: 450px; display: flex; flex-direction: column;">
+    # Sección de Planes con narrativa emocional y motivacional
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+                text-align: center;">
+        <h2 style="color: #000; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
+            🚀 Nuestros Planes de Transformación Científica
+        </h2>
+        <p style="color: #333; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.6;">
+            💎 Planes diseñados con ciencia actualizada para <strong>maximizar tus resultados</strong>. 
+            Cada plan está personalizado según tus objetivos, preferencias y estilo de vida.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Planes detallados con estilos inline
+    st.markdown("""
+    <div class="plan-card-container" style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin: 2rem 0;">
+        
+        <!-- Plan 1: Nutrición Personalizada -->
+        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFCC00; 
+                    box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
+                    display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🍽️</div>
             <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
                 Nutrición Personalizada
@@ -1827,29 +1910,31 @@ if st.session_state.page == "inicio":
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $550 - $700 MXN
             </div>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
-                <strong>Duración:</strong> 6 semanas<br><br>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+                      text-align: left; flex-grow: 1;">
+                <strong style="color: #FFCC00;">Duración:</strong> 6 semanas<br><br>
+                <strong style="color: #FFCC00;">✅ Beneficios:</strong><br>
                 • Evaluación inicial con bioimpedancia<br>
-                • 6 menús semanales adaptados<br>
-                • Personalización por preferencias<br>
-                • Macronutrientes científicos<br>
-                • Evaluación final completa<br>
-                • Menús extra disponibles
+                • 6 menús semanales adaptados (calorías, macros, micronutrientes)<br>
+                • Personalización según preferencias alimentarias<br>
+                • Evaluación final con medición corporal<br>
+                • Menús extra: $100 (internos) / $150 (externos) MXN<br><br>
+                <strong style="color: #FFCC00;">💰 Precios:</strong><br>
+                • <strong>Internos (miembros gym):</strong> $550 MXN<br>
+                • <strong>Externos:</strong> $700 MXN
             </p>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFCC00; font-weight: bold; margin: 0;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     ✨ Perfecto para optimizar tu alimentación
                 </p>
             </div>
         </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
-                    border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);
-                    text-align: center; min-height: 450px; display: flex; flex-direction: column;">
+        
+        <!-- Plan 2: Entrenamiento Personalizado -->
+        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFCC00; 
+                    box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
+                    display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">💪</div>
             <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
                 Entrenamiento Personalizado
@@ -1858,33 +1943,35 @@ if st.session_state.page == "inicio":
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $650 - $800 MXN
             </div>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
-                <strong>Duración:</strong> 8 semanas<br><br>
-                • Evaluación "Designing Your Training"<br>
-                • Plan personalizado volumen/intensidad<br>
-                • Adaptación a tu horario y nivel<br>
-                • Entrega profesional en PDF<br>
-                • Progresiones incluidas<br>
-                • Evaluación final de progresos
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+                      text-align: left; flex-grow: 1;">
+                <strong style="color: #FFCC00;">Duración:</strong> 8 semanas<br><br>
+                <strong style="color: #FFCC00;">✅ Beneficios:</strong><br>
+                • Evaluación inicial con cuestionario "Designing Your Training"<br>
+                • Plan personalizado en volumen, frecuencia e intensidad<br>
+                • Adaptación a tu horario y nivel de experiencia<br>
+                • Entrega profesional en formato PDF<br>
+                • Evaluación final de progresos<br>
+                • Progresiones y variaciones incluidas<br><br>
+                <strong style="color: #FFCC00;">💰 Precios:</strong><br>
+                • <strong>Internos (miembros gym):</strong> $650 MXN<br>
+                • <strong>Externos:</strong> $800 MXN
             </p>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFCC00; font-weight: bold; margin: 0;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     🔥 Ideal para maximizar tu rendimiento
                 </p>
             </div>
         </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2.5rem 2rem; border-radius: 20px; margin: 1rem 0; 
-                    border: 3px solid #FFD700; box-shadow: 0 6px 20px rgba(255,215,0,0.4);
-                    text-align: center; min-height: 450px; display: flex; flex-direction: column;
-                    position: relative; overflow: hidden;">
-            <div style="position: absolute; top: 0; right: 0; background: #FFD700; 
-                        color: #000; padding: 0.5rem 1rem; font-weight: bold; 
-                        transform: rotate(45deg); transform-origin: 100% 0%;">
+        
+        <!-- Plan 3: Plan Combinado (POPULAR) -->
+        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFD700; 
+                    box-shadow: 0 6px 20px rgba(255,215,0,0.4); text-align: center; 
+                    display: flex; flex-direction: column; position: relative; overflow: hidden;">
+            <div style="position: absolute; top: 10px; right: -35px; background: #FFD700; 
+                        color: #000; padding: 0.5rem 3rem; font-weight: bold; font-size: 0.9rem;
+                        transform: rotate(45deg); box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
                 🌟 POPULAR
             </div>
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🔥</div>
@@ -1897,22 +1984,228 @@ if st.session_state.page == "inicio":
                 💰 $1,050 - $1,350 MXN
                 <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
             </div>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">
-                <strong>Lo mejor de ambos mundos</strong><br><br>
-                • Nutrición + Entrenamiento integrados<br>
-                • Evaluación inicial y final completa<br>
-                • Sinergia total entre dieta y ejercicio<br>
-                • Seguimiento coordinado<br>
-                • Resultados optimizados<br>
-                • Máximo ahorro económico
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+                      text-align: left; flex-grow: 1;">
+                <strong style="color: #FFD700;">Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas<br><br>
+                <strong style="color: #FFD700;">✅ Beneficios:</strong><br>
+                • Ambos planes completos (nutrición + entrenamiento)<br>
+                • Evaluación inicial y final con bioimpedancia<br>
+                • Integración total entre dieta y entrenamiento<br>
+                • Seguimiento coordinado de progreso<br>
+                • <strong>Ahorro de $150 MXN</strong><br><br>
+                <strong style="color: #FFD700;">💰 Precios:</strong><br>
+                • <strong>Internos (miembros gym):</strong> $1,050 MXN<br>
+                • <strong>Externos:</strong> $1,350 MXN
             </p>
             <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFD700; font-weight: bold; margin: 0;">
+                <p style="color: #FFD700; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     ⭐ La solución completa más efectiva
                 </p>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Información de Transferencia Bancaria con imagen
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+                text-align: center;">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
+            💳 Información de Transferencia Bancaria
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; line-height: 1.6;">
+            🔒 Realiza tu transferencia segura del <strong style="color: #FFCC00;">monto exacto</strong> 
+            según el plan elegido. A continuación encontrarás todos los datos necesarios.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Imagen de cuenta bancaria
+    st.markdown("""
+    <div style="text-align: center; margin: 2rem 0; padding: 2rem; 
+                background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                border-radius: 15px; border: 2px solid #FFCC00;">
+    """ + load_banking_image_base64() + """
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Instrucciones de envío de comprobante
+    st.markdown("""
+    <div style="background: #fff3cd; border: 3px solid #ffc107; border-radius: 15px; 
+                padding: 2rem; margin: 2rem 0; box-shadow: 0 6px 20px rgba(255,193,7,0.3);">
+        <h3 style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.8rem; text-align: center;">
+            📋 ¡Importante! Después de Realizar Tu Pago
+        </h3>
+        <p style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.2rem; line-height: 1.8; text-align: center;">
+            <strong>Envía tu comprobante de pago</strong> para confirmar tu adquisición y comenzar tu transformación:
+        </p>
+        <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 1.5rem;">
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📱</div>
+                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold;">
+                    WhatsApp/Teléfono
+                </p>
+                <p style="color: #000; margin: 0.5rem 0 0 0; font-size: 1.3rem; font-weight: bold;">
+                    8662580594
+                </p>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 3rem; margin-bottom: 0.5rem;">📧</div>
+                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold;">
+                    Correo Electrónico
+                </p>
+                <p style="color: #000; margin: 0.5rem 0 0 0; font-size: 1.3rem; font-weight: bold;">
+                    administracion@muscleupgym.fitness
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Mecánica de Adquisición Detallada
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">
+            📝 Mecánica de Adquisición - Paso a Paso
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.6;">
+            🎯 Sigue este proceso completo para obtener tu plan personalizado y comenzar tu transformación física.
+        </p>
+        <ol style="color: #FFFFFF; font-size: 1.1rem; line-height: 2; margin: 0; padding-left: 1.5rem;">
+            <li><strong style="color: #FFCC00;">Selección del Plan:</strong> Elige el plan que mejor se adapte a tus objetivos y presupuesto.</li>
+            <li><strong style="color: #FFCC00;">Transferencia Bancaria:</strong> Realiza la transferencia del monto exacto a la cuenta mostrada arriba.</li>
+            <li><strong style="color: #FFCC00;">Envío de Comprobante:</strong> Envía tu comprobante de pago por correo (administracion@muscleupgym.fitness) o WhatsApp (8662580594).</li>
+            <li><strong style="color: #FFCC00;">Programación de Medición:</strong> Agenda tu medición corporal inicial (detalles más abajo).</li>
+            <li><strong style="color: #FFCC00;">Acceso a Cuestionarios:</strong> Se autoriza el acceso a los cuestionarios especializados correspondientes a tu plan.</li>
+            <li><strong style="color: #FFCC00;">Llenado de Cuestionarios:</strong> Completa los cuestionarios con información precisa y detallada.</li>
+            <li><strong style="color: #FFCC00;">Entrega del Plan:</strong> Recibe tu plan personalizado en <strong>3 a 5 días hábiles</strong>.</li>
+        </ol>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Información sobre Medición Corporal
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+            📏 Medición Corporal
+        </h2>
+        <div style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+            
+            <!-- Usuarios Internos -->
+            <div style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                        padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00;">
+                <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+                    🏠 Usuarios Internos
+                </h3>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                    <strong style="color: #FFCC00;">Ubicación:</strong> Instalaciones de Muscle Up Gym<br><br>
+                    <strong style="color: #FFCC00;">Equipo:</strong> Bioimpedancia profesional<br><br>
+                    <strong style="color: #FFCC00;">Incluye:</strong><br>
+                    • Medición con bioimpedancia<br>
+                    • Antropometría completa<br>
+                    • Asesoría presencial<br>
+                    • Programación de cita incluida
+                </p>
+            </div>
+            
+            <!-- Usuarios Externos -->
+            <div style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                        padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00;">
+                <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+                    🌍 Usuarios Externos
+                </h3>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                    <strong style="color: #FFCC00;">Modalidad:</strong> Por cuenta propia<br><br>
+                    <strong style="color: #FFCC00;">Requerimiento:</strong> Medición local<br><br>
+                    <strong style="color: #FFCC00;">Incluye:</strong><br>
+                    • Guía detallada para medición<br>
+                    • Recomendaciones de equipos<br>
+                    • Asesoría virtual incluida<br>
+                    • Validación de datos por el profesional
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Cuestionarios Especializados
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">
+            📝 Cuestionarios Especializados
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.6;">
+            🎯 Una vez confirmado tu pago y programada tu medición, tendrás acceso a cuestionarios según tu plan:
+        </p>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+                📊 Para TODOS los planes:
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                • <strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal
+            </p>
+        </div>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+                🍽️ Para planes de ALIMENTACIÓN:
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                • <strong>FOOD PREFERENCES:</strong> Análisis detallado de patrones y preferencias alimentarias<br>
+                • <strong>FOOD CRAVINGS:</strong> Evaluación de antojos alimentarios (versión población mexicana)
+            </p>
+        </div>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
+            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+                💪 Para planes de ENTRENAMIENTO:
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                • <strong>DESIGNING YOUR TRAINING:</strong> Cuestionario especializado para diseño de rutinas de entrenamiento
+            </p>
+        </div>
+        
+        <div style="background: rgba(255,215,0,0.15); padding: 2rem; border-radius: 15px; border: 2px solid #FFD700;">
+            <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem;">
+                🔥 Para plan COMBINADO:
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                • <strong>TODOS los cuestionarios anteriores</strong> para una evaluación integral completa
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Nota final sobre tiempo de entrega
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+                text-align: center;">
+        <h3 style="color: #000; font-size: 2rem; margin-bottom: 1rem; font-weight: bold;">
+            ⏰ Tiempo de Entrega
+        </h3>
+        <p style="color: #333; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; line-height: 1.6;">
+            📦 Los planes se entregan de <strong>3 a 5 días hábiles</strong> tras completar 
+            la medición corporal y los cuestionarios correspondientes.
+        </p>
+        <p style="color: #333; font-size: 1.1rem; margin: 0; font-weight: 400;">
+            💡 <strong>Nota Importante:</strong> La calidad de tu plan depende de la precisión 
+            de la información proporcionada en los cuestionarios y mediciones.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
     # Llamada a la acción final
     st.markdown("""
