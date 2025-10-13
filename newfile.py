@@ -2026,8 +2026,6 @@ if st.session_state.page == "inicio":
         </p>
     </div>
     """, unsafe_allow_html=True)
-    </div>
-    """, unsafe_allow_html=True)
 
     # Sección del profesional/encargado
     st.markdown("""
@@ -2901,6 +2899,293 @@ elif st.session_state.page == "planes_costos":
             <li>Seguimiento coordinado de progreso</li>
             <li><strong>Ahorro de $150 MXN (internos) o $150 MXN (externos)</strong></li>
         </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # ==================== NUEVA SECCIÓN: PLANES DE RETENCIÓN Y DESCUENTOS ====================
+    st.markdown("""
+    <div class="section-header">
+        <h2>🔒 Planes de Retención y Descuentos</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Introducción emocional y motivacional
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 50%, #FFF2A6 100%); 
+                padding: 2.5rem 2rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
+                text-align: center; color: #000;">
+        <h2 style="font-size: 2.2rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
+            💥 ¡Compromiso que se Recompensa! 🏆
+        </h2>
+        <p style="font-size: 1.3rem; line-height: 1.8; margin: 1rem 0; font-weight: 600;">
+            ✨ <strong>¡Ahorra hasta 20% al combinar Nutrición + Entrenamiento en planes de largo plazo!</strong> ✨
+        </p>
+        <p style="font-size: 1.2rem; line-height: 1.8; margin: 1rem 0; font-weight: 500;">
+            🔥 Tu compromiso merece premios reales. Estos planes extendidos te ofrecen:<br>
+            💸 <strong>Descuentos increíbles</strong> | 📊 <strong>Evaluaciones cada 8 semanas</strong> | 🎯 <strong>Ajustes continuos</strong>
+        </p>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin: 1rem 0; font-weight: 500;">
+            🤝 <strong>Desde $526–$727 al mes</strong> (según plan y tipo) al prorratear tu inversión total.<br>
+            ⏳ Resultados sostenibles que se notan, se sienten y se quedan contigo.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan de Nutrición Extendida
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🍽️ Plan de Nutrición Extendida - Retención</h3>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            😃 <strong>¡La nutrición que se adapta a tu vida!</strong> Seguimiento prolongado con menús renovados 
+            y evaluaciones constantes para garantizar tu progreso sin estancamientos.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tabla de Nutrición con pandas para mejor formato
+    df_nutricion = {
+        "Duración": ["12 semanas", "18 semanas", "24 semanas"],
+        "Precio Base Internos": ["$1,100", "$1,650", "$2,200"],
+        "Descuento Internos": ["10%", "15%", "20%"],
+        "Precio Final Internos": ["$990", "$1,403", "$1,760"],
+        "Precio Base Externos": ["$1,400", "$2,100", "$2,800"],
+        "Descuento Externos": ["10%", "15%", "20%"],
+        "Precio Final Externos": ["$1,260", "$1,785", "$2,240"],
+        "Ahorro": ["$110-$140", "$247-$315", "$440-$560"]
+    }
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>💰 Precios y Ahorros - Nutrición Extendida:</h4>
+    </div>
+    """, unsafe_allow_html=True)
+    st.dataframe(df_nutricion, use_container_width=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul style="font-size: 1.1rem; line-height: 1.8;">
+            <li>🔄 Evaluación con bioimpedancia cada 6 semanas</li>
+            <li>📋 Menús renovados semanalmente adaptados a tu progreso</li>
+            <li>📞 Soporte continuo por WhatsApp para dudas y ajustes</li>
+            <li>📈 Seguimiento detallado de composición corporal y progreso</li>
+            <li>💪 Ajustes de macronutrientes según resultados y objetivos cambiantes</li>
+        </ul>
+        <p style="font-size: 1.15rem; margin-top: 1rem; font-weight: 600; color: #FFCC00;">
+            🎁 Menús extra: desde $80 (internos) $120 (externos) con descuento por retención
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan de Entrenamiento Extendido
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>💪 Plan de Entrenamiento Extendido - Retención</h3>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            🔥 <strong>¡Entrena con propósito y constancia!</strong> Programas renovados cada 8 semanas 
+            con progresiones científicas para maximizar fuerza, hipertrofia y rendimiento.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tabla de Entrenamiento
+    df_entrenamiento = {
+        "Duración": ["16 semanas", "24 semanas", "32 semanas"],
+        "Precio Base Internos": ["$1,300", "$1,950", "$2,600"],
+        "Descuento Internos": ["10%", "15%", "20%"],
+        "Precio Final Internos": ["$1,170", "$1,658", "$2,080"],
+        "Precio Base Externos": ["$1,600", "$2,400", "$3,200"],
+        "Descuento Externos": ["10%", "15%", "20%"],
+        "Precio Final Externos": ["$1,440", "$2,040", "$2,560"],
+        "Ahorro": ["$130-$160", "$292-$360", "$520-$640"]
+    }
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>💰 Precios y Ahorros - Entrenamiento Extendido:</h4>
+    </div>
+    """, unsafe_allow_html=True)
+    st.dataframe(df_entrenamiento, use_container_width=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul style="font-size: 1.1rem; line-height: 1.8;">
+            <li>🔄 Programa renovado cada 8 semanas con nuevas variaciones</li>
+            <li>📊 Evaluación de progresos y ajustes de volumen/intensidad</li>
+            <li>📞 Asesoría técnica continua para optimizar ejecución</li>
+            <li>📈 Progresiones periodizadas científicamente</li>
+            <li>🎯 Adaptación según disponibilidad de equipo y horarios cambiantes</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Plan Combinado Extendido
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🔥 Plan Combinado Extendido - Retención (Nutrición + Entrenamiento)</h3>
+        <p style="font-size: 1.15rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            🏆 <strong>¡La fórmula completa para transformación total!</strong> Integración perfecta entre 
+            alimentación y entrenamiento con seguimiento coordinado para resultados exponenciales.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Tabla de Plan Combinado
+    df_combinado = {
+        "Duración": ["16 semanas (N:12 + E:16)", "24 semanas (N:18 + E:24)", "32 semanas (N:24 + E:32)"],
+        "Precio Base Internos": ["$2,100", "$3,150", "$4,200"],
+        "Descuento Internos": ["15%", "18%", "20%"],
+        "Precio Final Internos": ["$1,785", "$2,583", "$3,360"],
+        "Costo/Mes Internos": ["$446", "$431", "$420"],
+        "Precio Base Externos": ["$2,700", "$4,050", "$5,400"],
+        "Descuento Externos": ["15%", "18%", "20%"],
+        "Precio Final Externos": ["$2,295", "$3,321", "$4,320"],
+        "Costo/Mes Externos": ["$574", "$554", "$540"],
+        "Ahorro Total": ["$315-$405", "$567-$729", "$840-$1,080"]
+    }
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>💰 Precios y Ahorros - Plan Combinado Extendido:</h4>
+    </div>
+    """, unsafe_allow_html=True)
+    st.dataframe(df_combinado, use_container_width=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul style="font-size: 1.1rem; line-height: 1.8;">
+            <li>🤝 Integración total: tu nutrición potencia tu entrenamiento y viceversa</li>
+            <li>🔄 Evaluaciones cada 6-8 semanas con bioimpedancia y análisis de rendimiento</li>
+            <li>📋 Menús y entrenamientos renovados coordinadamente</li>
+            <li>📞 Soporte integral por WhatsApp para ambos aspectos</li>
+            <li>📈 Ajustes simultáneos de dieta y entrenamiento según tu evolución</li>
+            <li>💎 <strong>Descuentos más agresivos: hasta 20% de ahorro</strong></li>
+        </ul>
+        <p style="font-size: 1.2rem; margin-top: 1.5rem; padding: 1rem; background: rgba(255,204,0,0.2); 
+                  border-radius: 10px; font-weight: bold; text-align: center; color: #FFD700;">
+            🎯 Inversión prorrateada: <strong>$420-$574/mes</strong> para transformación completa
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Sección explicativa: ¿Por qué funcionan estos planes?
+    st.markdown("""
+    <div class="section-header">
+        <h2>🔬 ¿Por Qué Funcionan los Planes de Retención?</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2rem; border-radius: 15px; height: 100%; 
+                    border: 2px solid #FFCC00; box-shadow: 0 4px 15px rgba(255,204,0,0.2);">
+            <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">🧬</div>
+            <h3 style="color: #FFCC00; text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">
+                Fisiología y Ciencia
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7;">
+                💪 <strong>La adaptación es progresiva:</strong> Tu cuerpo necesita entre 12-24 semanas 
+                para consolidar cambios reales en composición corporal, fuerza y metabolismo.<br><br>
+                
+                🔬 <strong>Adaptaciones neurales (4-8 sem):</strong> Mejora de coordinación y activación muscular.<br><br>
+                
+                💪 <strong>Hipertrofia real (8-16 sem):</strong> Construcción efectiva de tejido muscular.<br><br>
+                
+                🔥 <strong>Cambios metabólicos (12-24 sem):</strong> Optimización de tu maquinaria energética.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2rem; border-radius: 15px; height: 100%; 
+                    border: 2px solid #FFCC00; box-shadow: 0 4px 15px rgba(255,204,0,0.2);">
+            <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💬</div>
+            <h3 style="color: #FFCC00; text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">
+                Testimonios Reales
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7;">
+                😃 <strong>"En 16 semanas logré lo que no pude en años"</strong> - María G.<br><br>
+                
+                💪 <strong>"El seguimiento continuo marca la diferencia"</strong> - Carlos R.<br><br>
+                
+                🏆 <strong>"Perdí 12kg de grasa y gané 4kg de músculo en 24 semanas"</strong> - Jorge M.<br><br>
+                
+                ✨ <strong>"Los ajustes constantes evitaron estancamientos"</strong> - Laura P.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                    padding: 2rem; border-radius: 15px; height: 100%; 
+                    border: 2px solid #FFCC00; box-shadow: 0 4px 15px rgba(255,204,0,0.2);">
+            <div style="font-size: 3rem; text-align: center; margin-bottom: 1rem;">💰</div>
+            <h3 style="color: #FFCC00; text-align: center; font-size: 1.4rem; margin-bottom: 1rem;">
+                Finanzas Inteligentes
+            </h3>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7;">
+                💸 <strong>Ahorro real del 10-20%:</strong> Tu compromiso se recompensa con descuentos significativos.<br><br>
+                
+                📊 <strong>Costo mensual reducido:</strong> Pagas menos por mes al comprometerte más tiempo.<br><br>
+                
+                🎯 <strong>Mejor inversión/resultado:</strong> Más tiempo = más adaptación = mejores resultados.<br><br>
+                
+                🤝 <strong>Sin costos ocultos:</strong> Precio fijo incluye todos los ajustes y evaluaciones.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Explicación de retención y marketing
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); 
+                padding: 2.5rem; border-radius: 20px; margin: 2rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFCC00; font-size: 1.8rem; text-align: center; margin-bottom: 1.5rem;">
+            🔒 Retención y Compromiso Mutuo
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 1.8; margin-bottom: 1.5rem;">
+            🤝 <strong>Ganamos ambos:</strong> Tú obtienes mejores resultados con seguimiento prolongado y precios 
+            reducidos. Nosotros construimos una relación de confianza a largo plazo que nos permite planificar 
+            mejor tu transformación.<br><br>
+            
+            ⏳ <strong>Paciencia = Resultados sostenibles:</strong> Los cambios físicos reales requieren tiempo y 
+            consistencia. Estos planes eliminan la presión de resultados inmediatos y permiten una progresión natural.<br><br>
+            
+            📈 <strong>Marketing honesto:</strong> No prometemos transformaciones milagrosas en 4 semanas. 
+            Prometemos resultados reales, medibles y duraderos con el tiempo adecuado que la ciencia respalda.<br><br>
+            
+            💎 <strong>Valor agregado continuo:</strong> Cada evaluación, cada ajuste, cada menú nuevo está diseñado 
+            para acelerar tu progreso y evitar los temidos estancamientos o "plateaus".
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Call to Action final para planes de retención
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%); 
+                padding: 3rem 2rem; border-radius: 20px; text-align: center; 
+                margin: 2rem 0; color: #000; box-shadow: 0 10px 30px rgba(255,204,0,0.5);
+                border: 4px solid #FFA500;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
+            🎯 ¡Compromete, Ahorra y Transforma! 💥
+        </h2>
+        <p style="font-size: 1.4rem; margin-bottom: 1.5rem; font-weight: 600; line-height: 1.7;">
+            🔥 Los planes de retención son tu mejor inversión para resultados que permanecen.<br>
+            💸 Descuentos de hasta 20% + Seguimiento profesional + Ajustes ilimitados
+        </p>
+        <p style="font-size: 1.2rem; font-weight: 500; line-height: 1.6;">
+            📱 Contacta ahora por WhatsApp: <strong>8662580594</strong><br>
+            📧 O envía correo a: <strong>administracion@muscleupgym.fitness</strong>
+        </p>
+        <p style="font-size: 1.15rem; margin-top: 1rem; font-weight: 500;">
+            ⏳ <strong>Tu mejor versión te está esperando. ¡Comienza hoy!</strong> ✨
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
