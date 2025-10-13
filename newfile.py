@@ -453,6 +453,126 @@ st.markdown("""
     /* ========================================================================== */
     
     /* ========================================================================== */
+    /* INICIO PAGE SPECIFIC IMPROVEMENTS FOR TEXT AND VISUAL HARMONY */
+    /* ========================================================================== */
+    
+    /* Welcome title container - Better text flow and spacing */
+    .welcome-title-container {
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+        padding: 2.5rem 2rem;
+        border-radius: 20px;
+        margin: 2rem 0;
+        border: 3px solid #FFCC00;
+        box-shadow: 0 8px 25px rgba(255,204,0,0.4);
+        text-align: center;
+    }
+    
+    .welcome-title-container h1 {
+        color: #FFCC00;
+        font-size: 2.8rem;
+        font-weight: bold;
+        margin-bottom: 1rem;
+        line-height: 1.3;
+        word-spacing: 0.05em;
+        hyphens: none;
+    }
+    
+    .welcome-title-container h2 {
+        color: #FFFFFF;
+        font-size: 1.8rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.4;
+        font-weight: 500;
+        hyphens: none;
+    }
+    
+    .welcome-title-container p {
+        color: #FFFFFF;
+        font-size: 1.2rem;
+        line-height: 1.7;
+        margin: 0;
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    
+    /* Informative banner improvements */
+    .informative-banner {
+        background: rgba(255,204,0,0.15);
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        border: 2px solid #FFCC00;
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+    
+    .informative-banner p {
+        color: #FFFFFF;
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin: 0;
+    }
+    
+    /* Mobile responsive improvements for welcome section */
+    @media (max-width: 768px) {
+        .welcome-title-container {
+            padding: 2rem 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .welcome-title-container h1 {
+            font-size: 2rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-title-container h2 {
+            font-size: 1.4rem;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+        }
+        
+        .welcome-title-container p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+        
+        .informative-banner {
+            padding: 1.2rem 1rem;
+            margin: 1rem 0;
+        }
+        
+        .informative-banner p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .welcome-title-container {
+            padding: 1.5rem 1rem;
+        }
+        
+        .welcome-title-container h1 {
+            font-size: 1.7rem;
+            line-height: 1.3;
+        }
+        
+        .welcome-title-container h2 {
+            font-size: 1.2rem;
+            line-height: 1.4;
+        }
+        
+        .welcome-title-container p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        
+        .informative-banner p {
+            font-size: 0.95rem;
+        }
+    }
+    
+    /* ========================================================================== */
     /* MOBILE FIXES FOR SPECIFIC ISSUES - ADDED FOR ISSUE RESOLUTION */
     /* ========================================================================== */
     
@@ -484,11 +604,22 @@ st.markdown("""
         border-radius: 15px;
     }
     
-    /* Ensure text wrapping for long content */
+    /* Ensure text wrapping for long content - IMPROVED for better word breaks */
     * {
         word-wrap: break-word !important;
-        word-break: break-word !important;
         overflow-wrap: break-word !important;
+        /* Changed from break-word to normal to prevent mid-word breaks */
+        word-break: normal !important;
+        /* Add hyphenation support for Spanish */
+        hyphens: auto !important;
+        -webkit-hyphens: auto !important;
+        -ms-hyphens: auto !important;
+    }
+    
+    /* Preserve spaces and prevent awkward breaks in headings and important text */
+    h1, h2, h3, h4, h5, h6 {
+        word-break: keep-all !important;
+        hyphens: none !important;
     }
     
     /* Mobile First Approach - Tablet and Mobile */
@@ -515,12 +646,14 @@ st.markdown("""
         
         .main-header h1 {
             font-size: 2rem !important;
-            line-height: 1.2 !important;
+            line-height: 1.3 !important;
+            word-spacing: 0.05em !important;
         }
         
         .main-header p {
             font-size: 1rem !important;
-            line-height: 1.4 !important;
+            line-height: 1.5 !important;
+            word-spacing: normal !important;
         }
         
         /* Professional header responsive */
@@ -803,12 +936,23 @@ st.markdown("""
             text-overflow: ellipsis !important;
         }
         
-        /* Universal text wrapping */
-        p, span, div, h1, h2, h3, h4, h5, h6 {
+        /* Universal text wrapping - IMPROVED for mobile */
+        p, span, div {
             word-wrap: break-word !important;
-            word-break: break-word !important;
             overflow-wrap: break-word !important;
+            /* Changed from break-word to normal to prevent awkward mid-word breaks */
+            word-break: normal !important;
             hyphens: auto !important;
+            -webkit-hyphens: auto !important;
+        }
+        
+        /* Headings should never break words */
+        h1, h2, h3, h4, h5, h6 {
+            word-wrap: break-word !important;
+            overflow-wrap: break-word !important;
+            word-break: keep-all !important;
+            hyphens: none !important;
+            line-height: 1.3 !important;
         }
         
         /* Responsive spacing */
@@ -1700,6 +1844,8 @@ if st.session_state.page == "inicio":
         </p>
     </div>
     """, unsafe_allow_html=True)
+    </div>
+    """, unsafe_allow_html=True)
 
     # Sección del profesional/encargado
     st.markdown("""
@@ -1713,12 +1859,12 @@ if st.session_state.page == "inicio":
     with col1:
         st.markdown("""
         <div class="professional-profile">
-            <h3 style="color: #FFCC00; font-size: 2rem; margin-bottom: 1rem;">
+            <h3 style="color: #FFCC00; font-size: 2rem; margin-bottom: 1rem; line-height: 1.3;">
                 🏆 Coach Erick - MUPAI Training
             </h3>
-            <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 1.8; margin-bottom: 1.5rem;">
+            <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 1.7; margin-bottom: 1.5rem;">
                 <strong>Especialista en Entrenamiento de Fuerza, Acondicionamiento, Ganancia de Masa Muscular y Pérdida de Grasa 
-                Basado en Ciencias del Ejercicio y la Salud.</strong><br>
+                Basado en Ciencias del Ejercicio y la Salud.</strong><br><br>
                 Especialista en fisiología del ejercicio y nutrición deportiva avanzada.
             </p>
             <div style="margin-bottom: 1.5rem;">
@@ -1727,7 +1873,7 @@ if st.session_state.page == "inicio":
                 <div class="achievement-badge">🥇 Nutrición Deportiva</div>
                 <div class="achievement-badge">🤖 IA Aplicada</div>
             </div>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6;">
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.7;">
                 Experto en transformación corporal mediante metodologías científicas avanzadas, 
                 especializado en <strong style="color: #FFCC00;">balance energético inteligente</strong> 
                 y <strong style="color: #FFCC00;">asignación de macronutrientes personalizada</strong>. 
@@ -1789,10 +1935,10 @@ if st.session_state.page == "inicio":
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);
                 text-align: center;">
         <h2 style="color: #FFCC00; font-size: 2.8rem; font-weight: bold; margin-bottom: 1rem;
-                   text-shadow: 2px 2px 4px rgba(255,204,0,0.3);">
+                   text-shadow: 2px 2px 4px rgba(255,204,0,0.3); line-height: 1.3;">
             ✨ ¿Cómo Obtener Tu Plan de Transformación?
         </h2>
-        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 400; line-height: 1.6;">
+        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 400; line-height: 1.7;">
             🎯 Tu cambio físico comienza con una decisión. <strong style="color: #FFCC00;">Sigue estos pasos simples</strong> 
             y comienza tu viaje hacia el cuerpo que siempre has soñado, respaldado por ciencia e inteligencia artificial.
         </p>
@@ -1823,10 +1969,10 @@ if st.session_state.page == "inicio":
                     1
                 </div>
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🎯</div>
-                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                     Elige Tu Plan Ideal
                 </h3>
-                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.7; margin: 0;">
                     💪 Selecciona el plan que mejor se adapte a tus objetivos: nutrición, entrenamiento 
                     o el plan combinado para resultados óptimos y sostenibles.
                 </p>
@@ -1846,10 +1992,10 @@ if st.session_state.page == "inicio":
                     2
                 </div>
                 <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
-                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                     Realiza Tu Pago Seguro
                 </h3>
-                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.7; margin: 0;">
                     🔒 Efectúa la transferencia del monto exacto a nuestra cuenta bancaria. 
                     Encontrarás los datos completos más abajo. ¡Es rápido y seguro!
                 </p>
@@ -1869,10 +2015,10 @@ if st.session_state.page == "inicio":
                     3
                 </div>
                 <div style="font-size: 3rem; margin-bottom: 1rem;">🚀</div>
-                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold;">
+                <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                     ¡Comienza Tu Transformación!
                 </h3>
-                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
+                <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.7; margin: 0;">
                     🎉 Una vez confirmado tu pago, recibirás tu plan personalizado y podrás 
                     comenzar tu transformación con el respaldo de ciencia e IA.
                 </p>
@@ -1890,10 +2036,10 @@ if st.session_state.page == "inicio":
                 padding: 2.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
                 text-align: center;">
-        <h2 style="color: #000; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
+        <h2 style="color: #000; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; line-height: 1.3;">
             🚀 Nuestros Planes de Transformación Científica
         </h2>
-        <p style="color: #333; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.6;">
+        <p style="color: #333; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.7;">
             💎 Planes diseñados con ciencia actualizada para <strong>maximizar tus resultados</strong>. 
             Cada plan está personalizado según tus objetivos, preferencias y estilo de vida.
         </p>
@@ -1910,18 +2056,18 @@ if st.session_state.page == "inicio":
                     box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
                     min-height: 600px; display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🍽️</div>
-            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                 Nutrición Personalizada
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $550 - $700 MXN
             </div>
-            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 6 semanas</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
+                <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li>Evaluación inicial con bioimpedancia</li>
                     <li>6 menús semanales adaptados</li>
                     <li>Personalización según preferencias</li>
@@ -1929,13 +2075,13 @@ if st.session_state.page == "inicio":
                     <li>Menús extra: $100/$150 MXN</li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
-                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li><strong>Internos:</strong> $550 MXN</li>
                     <li><strong>Externos:</strong> $700 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem; line-height: 1.4;">
                     ✨ Perfecto para optimizar tu alimentación
                 </p>
             </div>
@@ -1949,18 +2095,18 @@ if st.session_state.page == "inicio":
                     box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
                     min-height: 600px; display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">💪</div>
-            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                 Entrenamiento Personalizado
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $650 - $800 MXN
             </div>
-            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 8 semanas</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
+                <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li>Evaluación inicial completa</li>
                     <li>Plan personalizado volumen/intensidad</li>
                     <li>Adaptación a tu horario y nivel</li>
@@ -1969,13 +2115,13 @@ if st.session_state.page == "inicio":
                     <li>Progresiones incluidas</li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
-                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li><strong>Internos:</strong> $650 MXN</li>
                     <li><strong>Externos:</strong> $800 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
+                <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem; line-height: 1.4;">
                     🔥 Ideal para maximizar tu rendimiento
                 </p>
             </div>
@@ -1994,7 +2140,7 @@ if st.session_state.page == "inicio":
                 🌟 POPULAR
             </div>
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🔥</div>
-            <h3 style="color: #FFD700; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
+            <h3 style="color: #FFD700; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
                 Plan Combinado
             </h3>
             <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
@@ -2003,11 +2149,11 @@ if st.session_state.page == "inicio":
                 💰 $1,050 - $1,350 MXN
                 <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
             </div>
-            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">Duración:</strong> Nutrición 6 sem + Entrenamiento 8 sem</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">✅ Beneficios:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
+                <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li>Ambos planes completos</li>
                     <li>Evaluación inicial y final completa</li>
                     <li>Integración total dieta/entrenamiento</li>
@@ -2015,13 +2161,13 @@ if st.session_state.page == "inicio":
                     <li><strong>Ahorro de $150 MXN</strong></li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFD700;">💰 Precios:</strong></p>
-                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem; line-height: 1.7;">
                     <li><strong>Internos:</strong> $1,050 MXN</li>
                     <li><strong>Externos:</strong> $1,350 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
-                <p style="color: #FFD700; font-weight: bold; margin: 0; font-size: 1.1rem;">
+                <p style="color: #FFD700; font-weight: bold; margin: 0; font-size: 1.1rem; line-height: 1.4;">
                     ⭐ La solución completa más efectiva
                 </p>
             </div>
@@ -2034,10 +2180,10 @@ if st.session_state.page == "inicio":
                 padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);
                 text-align: center;">
-        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; line-height: 1.3;">
             💳 Información de Transferencia Bancaria
         </h2>
-        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; line-height: 1.6;">
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; line-height: 1.7;">
             🔒 Realiza tu transferencia segura del <strong style="color: #FFCC00;">monto exacto</strong> 
             según el plan elegido. A continuación encontrarás todos los datos necesarios.
         </p>
@@ -2057,16 +2203,16 @@ if st.session_state.page == "inicio":
     st.markdown("""
     <div style="background: #fff3cd; border: 3px solid #ffc107; border-radius: 15px; 
                 padding: 2rem; margin: 2rem 0; box-shadow: 0 6px 20px rgba(255,193,7,0.3);">
-        <h3 style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.8rem; text-align: center;">
+        <h3 style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.8rem; text-align: center; line-height: 1.3;">
             📋 ¡Importante! Después de Realizar Tu Pago
         </h3>
-        <p style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.2rem; line-height: 1.8; text-align: center;">
+        <p style="color: #856404; margin: 0 0 1.5rem 0; font-size: 1.2rem; line-height: 1.7; text-align: center;">
             <strong>Envía tu comprobante de pago</strong> para confirmar tu adquisición y comenzar tu transformación:
         </p>
         <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-top: 1.5rem;">
             <div style="text-align: center;">
                 <div style="font-size: 3rem; margin-bottom: 0.5rem;">📱</div>
-                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold;">
+                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold; line-height: 1.4;">
                     WhatsApp/Teléfono
                 </p>
                 <p style="color: #000; margin: 0.5rem 0 0 0; font-size: 1.3rem; font-weight: bold;">
@@ -2075,10 +2221,10 @@ if st.session_state.page == "inicio":
             </div>
             <div style="text-align: center;">
                 <div style="font-size: 3rem; margin-bottom: 0.5rem;">📧</div>
-                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold;">
+                <p style="color: #856404; margin: 0; font-size: 1.1rem; font-weight: bold; line-height: 1.4;">
                     Correo Electrónico
                 </p>
-                <p style="color: #000; margin: 0.5rem 0 0 0; font-size: 1.3rem; font-weight: bold;">
+                <p style="color: #000; margin: 0.5rem 0 0 0; font-size: 1.3rem; font-weight: bold; word-break: break-all;">
                     administracion@muscleupgym.fitness
                 </p>
             </div>
@@ -2091,10 +2237,10 @@ if st.session_state.page == "inicio":
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                 padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
-        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center; line-height: 1.3;">
             📝 Mecánica de Adquisición - Paso a Paso
         </h2>
-        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.6;">
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.7;">
             🎯 Sigue este proceso completo para obtener tu plan personalizado y comenzar tu transformación física.
         </p>
         <ol style="color: #FFFFFF; font-size: 1.1rem; line-height: 2; margin: 0; padding-left: 1.5rem;">
@@ -2114,7 +2260,7 @@ if st.session_state.page == "inicio":
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                 padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
-        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center; line-height: 1.3;">
             📏 Medición Corporal
         </h2>
     </div>
@@ -2126,14 +2272,14 @@ if st.session_state.page == "inicio":
         st.markdown("""
         <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
                     padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; min-height: 320px;">
-            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center; line-height: 1.3;">
                 🏠 Usuarios Internos
             </h3>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Ubicación:</strong> Instalaciones de Muscle Up Gym</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Equipo:</strong> Bioimpedancia profesional</p>
                 <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
+                <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.8;">
                     <li>Medición con bioimpedancia</li>
                     <li>Antropometría completa</li>
                     <li>Asesoría presencial</li>
@@ -2147,14 +2293,14 @@ if st.session_state.page == "inicio":
         st.markdown("""
         <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
                     padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; min-height: 320px;">
-            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center; line-height: 1.3;">
                 🌍 Usuarios Externos
             </h3>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Modalidad:</strong> Por cuenta propia</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Requerimiento:</strong> Medición local</p>
                 <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
+                <ul style="margin: 0; padding-left: 1.2rem; line-height: 1.8;">
                     <li>Guía detallada para medición</li>
                     <li>Recomendaciones de equipos</li>
                     <li>Asesoría virtual incluida</li>
@@ -2169,10 +2315,10 @@ if st.session_state.page == "inicio":
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                 padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.4);">
-        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">
+        <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center; line-height: 1.3;">
             📝 Cuestionarios Especializados
         </h2>
-        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.6;">
+        <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.7;">
             🎯 Una vez confirmado tu pago y programada tu medición, tendrás acceso a cuestionarios según tu plan:
         </p>
     </div>
@@ -2181,7 +2327,7 @@ if st.session_state.page == "inicio":
     # Para todos los planes
     st.markdown("""
     <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
-        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; line-height: 1.3;">
             📊 Para TODOS los planes:
         </h3>
         <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
@@ -2193,7 +2339,7 @@ if st.session_state.page == "inicio":
     # Para planes de alimentación
     st.markdown("""
     <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
-        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; line-height: 1.3;">
             🍽️ Para planes de ALIMENTACIÓN:
         </h3>
         <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
@@ -2206,7 +2352,7 @@ if st.session_state.page == "inicio":
     # Para planes de entrenamiento
     st.markdown("""
     <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
-        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; line-height: 1.3;">
             💪 Para planes de ENTRENAMIENTO:
         </h3>
         <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
@@ -2218,7 +2364,7 @@ if st.session_state.page == "inicio":
     # Para plan combinado
     st.markdown("""
     <div style="background: rgba(255,215,0,0.15); padding: 2rem; border-radius: 15px; border: 2px solid #FFD700; margin: 1.5rem 0;">
-        <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem;">
+        <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem; line-height: 1.3;">
             🔥 Para plan COMBINADO:
         </h3>
         <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
@@ -2233,14 +2379,14 @@ if st.session_state.page == "inicio":
                 padding: 2.5rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
                 text-align: center;">
-        <h3 style="color: #000; font-size: 2rem; margin-bottom: 1rem; font-weight: bold;">
+        <h3 style="color: #000; font-size: 2rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
             ⏰ Tiempo de Entrega
         </h3>
-        <p style="color: #333; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; line-height: 1.6;">
+        <p style="color: #333; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; line-height: 1.7;">
             📦 Los planes se entregan de <strong>3 a 5 días hábiles</strong> tras completar 
             la medición corporal y los cuestionarios correspondientes.
         </p>
-        <p style="color: #333; font-size: 1.1rem; margin: 0; font-weight: 400;">
+        <p style="color: #333; font-size: 1.1rem; margin: 0; font-weight: 400; line-height: 1.6;">
             💡 <strong>Nota Importante:</strong> La calidad de tu plan depende de la precisión 
             de la información proporcionada en los cuestionarios y mediciones.
         </p>
@@ -2252,14 +2398,14 @@ if st.session_state.page == "inicio":
     <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
                 padding: 3rem 2rem; border-radius: 20px; text-align: center; 
                 margin: 3rem 0; color: #000; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
-        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold;">
+        <h2 style="font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.3;">
             🎯 ¡Comienza Tu Transformación Hoy!
         </h2>
-        <p style="font-size: 1.3rem; margin-bottom: 2rem; font-weight: 500;">
+        <p style="font-size: 1.3rem; margin-bottom: 2rem; font-weight: 500; line-height: 1.7;">
             Únete a cientos de personas que ya han transformado su físico con MUPAI
         </p>
         <div style="background: #000; color: #FFCC00; padding: 1.5rem; border-radius: 15px; 
-                    font-size: 1.2rem; font-weight: bold; display: inline-block;">
+                    font-size: 1.2rem; font-weight: bold; display: inline-block; line-height: 1.7;">
             📧 administracion@muscleupgym.fitness<br>
             📱 WhatsApp: 8662580594
         </div>
