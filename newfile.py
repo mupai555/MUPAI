@@ -1799,19 +1799,22 @@ if st.session_state.page == "inicio":
     </div>
     """, unsafe_allow_html=True)
     
-    # Pasos con estilos inline y diseño responsive
+    # Pasos con estilos inline - Paso 1
     st.markdown("""
     <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                 padding: 3rem 2rem; border-radius: 20px; margin: 2.5rem 0; 
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.3);">
-        
-        <div class="steps-flex-container" style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
-            
-            <!-- Paso 1: Elegir Plan -->
-            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+        <div style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
+    """, unsafe_allow_html=True)
+    
+    # Using columns for better Streamlit compatibility
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
                         padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
-                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
-                        transition: transform 0.3s ease;">
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2); min-height: 350px;">
                 <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
                            color: #000; width: 60px; height: 60px; border-radius: 50%; 
                            display: flex; align-items: center; justify-content: center; 
@@ -1828,12 +1831,13 @@ if st.session_state.page == "inicio":
                     o el plan combinado para resultados óptimos y sostenibles.
                 </p>
             </div>
-            
-            <!-- Paso 2: Realizar Pago -->
-            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
                         padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
-                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
-                        transition: transform 0.3s ease;">
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2); min-height: 350px;">
                 <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
                            color: #000; width: 60px; height: 60px; border-radius: 50%; 
                            display: flex; align-items: center; justify-content: center; 
@@ -1850,12 +1854,13 @@ if st.session_state.page == "inicio":
                     Encontrarás los datos completos más abajo. ¡Es rápido y seguro!
                 </p>
             </div>
-            
-            <!-- Paso 3: Recibir Plan -->
-            <div class="step-item" style="flex: 1; min-width: 250px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+            <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
                         padding: 2rem 1.5rem; border-radius: 15px; border: 2px solid #FFCC00; 
-                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2);
-                        transition: transform 0.3s ease;">
+                        text-align: center; box-shadow: 0 4px 15px rgba(255,204,0,0.2); min-height: 350px;">
                 <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
                            color: #000; width: 60px; height: 60px; border-radius: 50%; 
                            display: flex; align-items: center; justify-content: center; 
@@ -1872,7 +1877,9 @@ if st.session_state.page == "inicio":
                     comenzar tu transformación con el respaldo de ciencia e IA.
                 </p>
             </div>
-            
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1893,15 +1900,15 @@ if st.session_state.page == "inicio":
     </div>
     """, unsafe_allow_html=True)
     
-    # Planes detallados con estilos inline
-    st.markdown("""
-    <div class="plan-card-container" style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; margin: 2rem 0;">
-        
-        <!-- Plan 1: Nutrición Personalizada -->
-        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+    # Planes detallados con estilos inline usando st.columns
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                     padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFCC00; 
                     box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
-                    display: flex; flex-direction: column;">
+                    min-height: 600px; display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">🍽️</div>
             <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
                 Nutrición Personalizada
@@ -1910,31 +1917,37 @@ if st.session_state.page == "inicio":
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $550 - $700 MXN
             </div>
-            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <strong style="color: #FFCC00;">Duración:</strong> 6 semanas<br><br>
-                <strong style="color: #FFCC00;">✅ Beneficios:</strong><br>
-                • Evaluación inicial con bioimpedancia<br>
-                • 6 menús semanales adaptados (calorías, macros, micronutrientes)<br>
-                • Personalización según preferencias alimentarias<br>
-                • Evaluación final con medición corporal<br>
-                • Menús extra: $100 (internos) / $150 (externos) MXN<br><br>
-                <strong style="color: #FFCC00;">💰 Precios:</strong><br>
-                • <strong>Internos (miembros gym):</strong> $550 MXN<br>
-                • <strong>Externos:</strong> $700 MXN
-            </p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 6 semanas</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Evaluación inicial con bioimpedancia</li>
+                    <li>6 menús semanales adaptados</li>
+                    <li>Personalización según preferencias</li>
+                    <li>Evaluación final con medición</li>
+                    <li>Menús extra: $100/$150 MXN</li>
+                </ul>
+                <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                    <li><strong>Internos:</strong> $550 MXN</li>
+                    <li><strong>Externos:</strong> $700 MXN</li>
+                </ul>
+            </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
                 <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     ✨ Perfecto para optimizar tu alimentación
                 </p>
             </div>
         </div>
-        
-        <!-- Plan 2: Entrenamiento Personalizado -->
-        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                     padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFCC00; 
                     box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center; 
-                    display: flex; flex-direction: column;">
+                    min-height: 600px; display: flex; flex-direction: column;">
             <div style="font-size: 3.5rem; margin-bottom: 1rem;">💪</div>
             <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: bold;">
                 Entrenamiento Personalizado
@@ -1943,32 +1956,38 @@ if st.session_state.page == "inicio":
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
                 💰 $650 - $800 MXN
             </div>
-            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <strong style="color: #FFCC00;">Duración:</strong> 8 semanas<br><br>
-                <strong style="color: #FFCC00;">✅ Beneficios:</strong><br>
-                • Evaluación inicial con cuestionario "Designing Your Training"<br>
-                • Plan personalizado en volumen, frecuencia e intensidad<br>
-                • Adaptación a tu horario y nivel de experiencia<br>
-                • Entrega profesional en formato PDF<br>
-                • Evaluación final de progresos<br>
-                • Progresiones y variaciones incluidas<br><br>
-                <strong style="color: #FFCC00;">💰 Precios:</strong><br>
-                • <strong>Internos (miembros gym):</strong> $650 MXN<br>
-                • <strong>Externos:</strong> $800 MXN
-            </p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 8 semanas</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Evaluación inicial completa</li>
+                    <li>Plan personalizado volumen/intensidad</li>
+                    <li>Adaptación a tu horario y nivel</li>
+                    <li>Entrega profesional en PDF</li>
+                    <li>Evaluación final de progresos</li>
+                    <li>Progresiones incluidas</li>
+                </ul>
+                <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                    <li><strong>Internos:</strong> $650 MXN</li>
+                    <li><strong>Externos:</strong> $800 MXN</li>
+                </ul>
+            </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
                 <p style="color: #FFCC00; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     🔥 Ideal para maximizar tu rendimiento
                 </p>
             </div>
         </div>
-        
-        <!-- Plan 3: Plan Combinado (POPULAR) -->
-        <div class="plan-card-item" style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
                     padding: 2.5rem 2rem; border-radius: 20px; border: 3px solid #FFD700; 
                     box-shadow: 0 6px 20px rgba(255,215,0,0.4); text-align: center; 
-                    display: flex; flex-direction: column; position: relative; overflow: hidden;">
+                    min-height: 600px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
             <div style="position: absolute; top: 10px; right: -35px; background: #FFD700; 
                         color: #000; padding: 0.5rem 3rem; font-weight: bold; font-size: 0.9rem;
                         transform: rotate(45deg); box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
@@ -1984,28 +2003,30 @@ if st.session_state.page == "inicio":
                 💰 $1,050 - $1,350 MXN
                 <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
             </div>
-            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <strong style="color: #FFD700;">Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas<br><br>
-                <strong style="color: #FFD700;">✅ Beneficios:</strong><br>
-                • Ambos planes completos (nutrición + entrenamiento)<br>
-                • Evaluación inicial y final con bioimpedancia<br>
-                • Integración total entre dieta y entrenamiento<br>
-                • Seguimiento coordinado de progreso<br>
-                • <strong>Ahorro de $150 MXN</strong><br><br>
-                <strong style="color: #FFD700;">💰 Precios:</strong><br>
-                • <strong>Internos (miembros gym):</strong> $1,050 MXN<br>
-                • <strong>Externos:</strong> $1,350 MXN
-            </p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">Duración:</strong> Nutrición 6 sem + Entrenamiento 8 sem</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">✅ Beneficios:</strong></p>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Ambos planes completos</li>
+                    <li>Evaluación inicial y final completa</li>
+                    <li>Integración total dieta/entrenamiento</li>
+                    <li>Seguimiento coordinado</li>
+                    <li><strong>Ahorro de $150 MXN</strong></li>
+                </ul>
+                <p style="margin: 1rem 0 0 0;"><strong style="color: #FFD700;">💰 Precios:</strong></p>
+                <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
+                    <li><strong>Internos:</strong> $1,050 MXN</li>
+                    <li><strong>Externos:</strong> $1,350 MXN</li>
+                </ul>
+            </div>
             <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
                 <p style="color: #FFD700; font-weight: bold; margin: 0; font-size: 1.1rem;">
                     ⭐ La solución completa más efectiva
                 </p>
             </div>
         </div>
-        
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
     
     # Información de Transferencia Bancaria con imagen
     st.markdown("""
@@ -2096,45 +2117,52 @@ if st.session_state.page == "inicio":
         <h2 style="color: #FFCC00; font-size: 2.5rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
             📏 Medición Corporal
         </h2>
-        <div style="display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap;">
-            
-            <!-- Usuarios Internos -->
-            <div style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
-                        padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00;">
-                <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
-                    🏠 Usuarios Internos
-                </h3>
-                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
-                    <strong style="color: #FFCC00;">Ubicación:</strong> Instalaciones de Muscle Up Gym<br><br>
-                    <strong style="color: #FFCC00;">Equipo:</strong> Bioimpedancia profesional<br><br>
-                    <strong style="color: #FFCC00;">Incluye:</strong><br>
-                    • Medición con bioimpedancia<br>
-                    • Antropometría completa<br>
-                    • Asesoría presencial<br>
-                    • Programación de cita incluida
-                </p>
-            </div>
-            
-            <!-- Usuarios Externos -->
-            <div style="flex: 1; min-width: 280px; background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
-                        padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00;">
-                <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
-                    🌍 Usuarios Externos
-                </h3>
-                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
-                    <strong style="color: #FFCC00;">Modalidad:</strong> Por cuenta propia<br><br>
-                    <strong style="color: #FFCC00;">Requerimiento:</strong> Medición local<br><br>
-                    <strong style="color: #FFCC00;">Incluye:</strong><br>
-                    • Guía detallada para medición<br>
-                    • Recomendaciones de equipos<br>
-                    • Asesoría virtual incluida<br>
-                    • Validación de datos por el profesional
-                </p>
-            </div>
-            
-        </div>
     </div>
     """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                    padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; min-height: 320px;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+                🏠 Usuarios Internos
+            </h3>
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Ubicación:</strong> Instalaciones de Muscle Up Gym</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Equipo:</strong> Bioimpedancia profesional</p>
+                <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Medición con bioimpedancia</li>
+                    <li>Antropometría completa</li>
+                    <li>Asesoría presencial</li>
+                    <li>Programación de cita incluida</li>
+                </ul>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); 
+                    padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; min-height: 320px;">
+            <h3 style="color: #FFCC00; font-size: 1.8rem; margin-bottom: 1rem; text-align: center;">
+                🌍 Usuarios Externos
+            </h3>
+            <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Modalidad:</strong> Por cuenta propia</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Requerimiento:</strong> Medición local</p>
+                <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
+                <ul style="margin: 0; padding-left: 1.2rem;">
+                    <li>Guía detallada para medición</li>
+                    <li>Recomendaciones de equipos</li>
+                    <li>Asesoría virtual incluida</li>
+                    <li>Validación de datos por el profesional</li>
+                </ul>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
     
     # Cuestionarios Especializados
     st.markdown("""
@@ -2147,43 +2175,55 @@ if st.session_state.page == "inicio":
         <p style="color: #FFFFFF; font-size: 1.2rem; margin-bottom: 2rem; text-align: center; line-height: 1.6;">
             🎯 Una vez confirmado tu pago y programada tu medición, tendrás acceso a cuestionarios según tu plan:
         </p>
-        
-        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
-                📊 Para TODOS los planes:
-            </h3>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-                • <strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal
-            </p>
-        </div>
-        
-        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
-                🍽️ Para planes de ALIMENTACIÓN:
-            </h3>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-                • <strong>FOOD PREFERENCES:</strong> Análisis detallado de patrones y preferencias alimentarias<br>
-                • <strong>FOOD CRAVINGS:</strong> Evaluación de antojos alimentarios (versión población mexicana)
-            </p>
-        </div>
-        
-        <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin-bottom: 1.5rem;">
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
-                💪 Para planes de ENTRENAMIENTO:
-            </h3>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-                • <strong>DESIGNING YOUR TRAINING:</strong> Cuestionario especializado para diseño de rutinas de entrenamiento
-            </p>
-        </div>
-        
-        <div style="background: rgba(255,215,0,0.15); padding: 2rem; border-radius: 15px; border: 2px solid #FFD700;">
-            <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem;">
-                🔥 Para plan COMBINADO:
-            </h3>
-            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-                • <strong>TODOS los cuestionarios anteriores</strong> para una evaluación integral completa
-            </p>
-        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Para todos los planes
+    st.markdown("""
+    <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+            📊 Para TODOS los planes:
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+            • <strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Para planes de alimentación
+    st.markdown("""
+    <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+            🍽️ Para planes de ALIMENTACIÓN:
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+            • <strong>FOOD PREFERENCES:</strong> Análisis detallado de patrones y preferencias alimentarias<br>
+            • <strong>FOOD CRAVINGS:</strong> Evaluación de antojos alimentarios (versión población mexicana)
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Para planes de entrenamiento
+    st.markdown("""
+    <div style="background: rgba(255,204,0,0.1); padding: 2rem; border-radius: 15px; margin: 1.5rem 0;">
+        <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem;">
+            💪 Para planes de ENTRENAMIENTO:
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+            • <strong>DESIGNING YOUR TRAINING:</strong> Cuestionario especializado para diseño de rutinas de entrenamiento
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Para plan combinado
+    st.markdown("""
+    <div style="background: rgba(255,215,0,0.15); padding: 2rem; border-radius: 15px; border: 2px solid #FFD700; margin: 1.5rem 0;">
+        <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem;">
+            🔥 Para plan COMBINADO:
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+            • <strong>TODOS los cuestionarios anteriores</strong> para una evaluación integral completa
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
