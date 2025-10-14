@@ -2028,10 +2028,33 @@ if st.session_state.page == "inicio":
         </div>
         """, unsafe_allow_html=True)
     
-    # ==================== PLANES EXTENDIDOS MUPAI ====================
+    # ==================== INICIO: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
+    # Este bloque completo está dentro de una sola llamada a st.markdown() con unsafe_allow_html=True
+    # para garantizar que todo el HTML se renderice correctamente con estilos, fondos, bordes y emojis.
     st.markdown("""
     <style>
-        /* Responsive styles for extended plans section */
+        .extended-plans-container {
+            display: flex;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .extended-plan-card {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #FFCC00;
+            box-shadow: 0 6px 20px rgba(255,204,0,0.3);
+            flex: 1;
+            min-width: 280px;
+            max-width: 350px;
+        }
+        .extended-plan-card.premium {
+            border: 2px solid #FFD700;
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+            position: relative;
+        }
         @media (max-width: 768px) {
             .extended-plans-container {
                 flex-direction: column !important;
@@ -2042,37 +2065,18 @@ if st.session_state.page == "inicio":
             }
         }
     </style>
-    """, unsafe_allow_html=True)
     
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); 
-                padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0; 
-                border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5);
-                text-align: center;">
-        <h2 style="color: #FFD700; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">
-            ⭐ PLANES EXTENDIDOS MUPAI
-        </h2>
-        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.6;">
-            🔥 Lleva tu transformación al siguiente nivel con nuestros planes premium y servicios adicionales
-        </p>
+    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0; border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5); text-align: center;">
+        <h2 style="color: #FFD700; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">⭐ PLANES EXTENDIDOS MUPAI</h2>
+        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.6;">🔥 Lleva tu transformación al siguiente nivel con nuestros planes premium y servicios adicionales</p>
     </div>
-    """, unsafe_allow_html=True)
     
-    # Extended Plans Cards
-    st.markdown("""
-    <div class="extended-plans-container" style="display: flex; gap: 2rem; margin: 2rem 0; flex-wrap: wrap; justify-content: center;">
-        <!-- Plan Extended Nutrition -->
-        <div class="extended-plan-card" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; 
-                    box-shadow: 0 6px 20px rgba(255,204,0,0.3); flex: 1; min-width: 280px; max-width: 350px;">
+    <div class="extended-plans-container">
+        <div class="extended-plan-card">
             <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">🍽️+</div>
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">
-                Nutrición Extendida
-            </h3>
+            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Nutrición Extendida</h3>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">
-                    💰 Desde $100 MXN
-                </p>
+                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 Desde $100 MXN</p>
             </div>
             <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
                 <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
@@ -2082,25 +2086,14 @@ if st.session_state.page == "inicio":
                     <li>Actualización de macros</li>
                     <li>Nuevas preferencias alimentarias</li>
                 </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">
-                    ✨ <strong>Menú extra:</strong> $100 MXN<br>
-                    ✨ <strong>Ajuste completo:</strong> $150 MXN
-                </p>
+                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Menú extra:</strong> $100 MXN<br>✨ <strong>Ajuste completo:</strong> $150 MXN</p>
             </div>
         </div>
-        
-        <!-- Plan Extended Training -->
-        <div class="extended-plan-card" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2rem; border-radius: 15px; border: 2px solid #FFCC00; 
-                    box-shadow: 0 6px 20px rgba(255,204,0,0.3); flex: 1; min-width: 280px; max-width: 350px;">
+        <div class="extended-plan-card">
             <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">💪+</div>
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">
-                Entrenamiento Extendido
-            </h3>
+            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Entrenamiento Extendido</h3>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">
-                    💰 Desde $150 MXN
-                </p>
+                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 Desde $150 MXN</p>
             </div>
             <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
                 <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
@@ -2110,32 +2103,15 @@ if st.session_state.page == "inicio":
                     <li>Nuevos ejercicios personalizados</li>
                     <li>Adaptación a nuevos objetivos</li>
                 </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">
-                    ✨ <strong>Progresión extra:</strong> $150 MXN<br>
-                    ✨ <strong>Rutina nueva:</strong> $200 MXN
-                </p>
+                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Progresión extra:</strong> $150 MXN<br>✨ <strong>Rutina nueva:</strong> $200 MXN</p>
             </div>
         </div>
-        
-        <!-- Premium Assessment -->
-        <div class="extended-plan-card" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
-                    padding: 2rem; border-radius: 15px; border: 2px solid #FFD700; 
-                    box-shadow: 0 6px 20px rgba(255,215,0,0.4); flex: 1; min-width: 280px; max-width: 350px;
-                    position: relative;">
-            <div style="position: absolute; top: 10px; right: 10px; background: #FFD700; 
-                        color: #000; padding: 0.3rem 0.8rem; font-weight: bold; font-size: 0.8rem;
-                        border-radius: 20px;">
-                ⭐ PREMIUM
-            </div>
+        <div class="extended-plan-card premium">
+            <div style="position: absolute; top: 10px; right: 10px; background: #FFD700; color: #000; padding: 0.3rem 0.8rem; font-weight: bold; font-size: 0.8rem; border-radius: 20px;">⭐ PREMIUM</div>
             <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">📊+</div>
-            <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">
-                Evaluaciones Adicionales
-            </h3>
-            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
-                        padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #000; font-weight: bold; font-size: 1.2rem; margin: 0;">
-                    💰 $200 - $300 MXN
-                </p>
+            <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Evaluaciones Adicionales</h3>
+            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
+                <p style="color: #000; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 $200 - $300 MXN</p>
             </div>
             <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
                 <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFD700;">Incluye:</strong></p>
@@ -2145,27 +2121,16 @@ if st.session_state.page == "inicio":
                     <li>Reporte completo con gráficas</li>
                     <li>Ajustes basados en resultados</li>
                 </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">
-                    ✨ <strong>Medición + análisis:</strong> $200 MXN<br>
-                    ✨ <strong>Con ajuste de plan:</strong> $300 MXN
-                </p>
+                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Medición + análisis:</strong> $200 MXN<br>✨ <strong>Con ajuste de plan:</strong> $300 MXN</p>
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
     
-    # Call to action for extended plans
-    st.markdown("""
-    <div style="background: rgba(255,215,0,0.1); padding: 2rem; border-radius: 15px; 
-                margin: 2rem 0; border: 2px solid #FFD700; text-align: center;">
-        <p style="color: #FFFFFF; font-size: 1.1rem; margin: 0; line-height: 1.8;">
-            💡 <strong style="color: #FFD700;">¿Ya tienes un plan activo?</strong> 
-            Estos servicios extendidos te permiten ajustar, actualizar y optimizar 
-            tu plan existente sin necesidad de empezar desde cero. 
-            <strong style="color: #FFCC00;">¡Continúa tu transformación!</strong>
-        </p>
+    <div style="background: rgba(255,215,0,0.1); padding: 2rem; border-radius: 15px; margin: 2rem 0; border: 2px solid #FFD700; text-align: center;">
+        <p style="color: #FFFFFF; font-size: 1.1rem; margin: 0; line-height: 1.8;">💡 <strong style="color: #FFD700;">¿Ya tienes un plan activo?</strong> Estos servicios extendidos te permiten ajustar, actualizar y optimizar tu plan existente sin necesidad de empezar desde cero. <strong style="color: #FFCC00;">¡Continúa tu transformación!</strong></p>
     </div>
     """, unsafe_allow_html=True)
+    # ==================== FIN: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
     
     # Información de Transferencia Bancaria con imagen
     st.markdown("""
