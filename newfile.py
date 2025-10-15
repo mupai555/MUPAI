@@ -2030,104 +2030,260 @@ if st.session_state.page == "inicio":
     
     # ==================== INICIO: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
     # Este bloque completo está dentro de una sola llamada a st.markdown() con unsafe_allow_html=True
-    # para garantizar que todo el HTML se renderice correctamente con estilos, fondos, bordes y emojis.
+    # Versión profesional con narrativa científica, tablas de ciclos y enfoque motivacional MUPAI
     st.markdown("""
     <style>
-        .extended-plans-container {
-            display: flex;
-            gap: 2rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-            justify-content: center;
+        .mupai-extended-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
         }
-        .extended-plan-card {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 2px solid #FFCC00;
-            box-shadow: 0 6px 20px rgba(255,204,0,0.3);
-            flex: 1;
-            min-width: 280px;
-            max-width: 350px;
+        .mupai-extended-table th {
+            background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%);
+            color: #000;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+            font-size: 1.1rem;
         }
-        .extended-plan-card.premium {
-            border: 2px solid #FFD700;
-            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
-            position: relative;
+        .mupai-extended-table td {
+            padding: 0.9rem 1rem;
+            color: #FFFFFF;
+            border-bottom: 1px solid rgba(255,204,0,0.2);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .mupai-extended-table tr:last-child td {
+            border-bottom: none;
+        }
+        .mupai-extended-table tr:hover {
+            background: rgba(255,204,0,0.1);
         }
         @media (max-width: 768px) {
-            .extended-plans-container {
-                flex-direction: column !important;
+            .mupai-extended-table {
+                font-size: 0.9rem;
             }
-            .extended-plan-card {
-                width: 100% !important;
-                margin-bottom: 1.5rem !important;
+            .mupai-extended-table th,
+            .mupai-extended-table td {
+                padding: 0.7rem 0.5rem;
+                font-size: 0.9rem;
             }
         }
     </style>
     
-    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0; border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5); text-align: center;">
-        <h2 style="color: #FFD700; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem;">⭐ PLANES EXTENDIDOS MUPAI</h2>
-        <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0; font-weight: 500; line-height: 1.6;">🔥 Lleva tu transformación al siguiente nivel con nuestros planes premium y servicios adicionales</p>
+    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); 
+                padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0; 
+                border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5); 
+                text-align: center;">
+        <h2 style="color: #FFD700; font-size: 2.8rem; font-weight: bold; margin-bottom: 1rem;">
+            🔬 PLANES EXTENDIDOS MUPAI
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; margin: 0; font-weight: 500; line-height: 1.8;">
+            Metodología científica basada en <strong style="color: #FFCC00;">ciclos de adaptación progresiva</strong> 
+            para resultados sostenibles y duraderos
+        </p>
     </div>
     
-    <div class="extended-plans-container">
-        <div class="extended-plan-card">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">🍽️+</div>
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Nutrición Extendida</h3>
-            <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 Desde $100 MXN</p>
-            </div>
-            <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
-                <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
-                    <li>Menús adicionales personalizados</li>
-                    <li>Ajustes de plan existente</li>
-                    <li>Actualización de macros</li>
-                    <li>Nuevas preferencias alimentarias</li>
-                </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Menú extra:</strong> $100 MXN<br>✨ <strong>Ajuste completo:</strong> $150 MXN</p>
-            </div>
-        </div>
-        <div class="extended-plan-card">
-            <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">💪+</div>
-            <h3 style="color: #FFCC00; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Entrenamiento Extendido</h3>
-            <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #FFCC00; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 Desde $150 MXN</p>
-            </div>
-            <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
-                <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFCC00;">Incluye:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
-                    <li>Progresiones adicionales</li>
-                    <li>Ajuste de rutinas</li>
-                    <li>Nuevos ejercicios personalizados</li>
-                    <li>Adaptación a nuevos objetivos</li>
-                </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Progresión extra:</strong> $150 MXN<br>✨ <strong>Rutina nueva:</strong> $200 MXN</p>
-            </div>
-        </div>
-        <div class="extended-plan-card premium">
-            <div style="position: absolute; top: 10px; right: 10px; background: #FFD700; color: #000; padding: 0.3rem 0.8rem; font-weight: bold; font-size: 0.8rem; border-radius: 20px;">⭐ PREMIUM</div>
-            <div style="font-size: 2.5rem; margin-bottom: 1rem; text-align: center;">📊+</div>
-            <h3 style="color: #FFD700; font-size: 1.5rem; margin-bottom: 1rem; text-align: center; font-weight: bold;">Evaluaciones Adicionales</h3>
-            <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); padding: 1rem; border-radius: 10px; margin-bottom: 1rem; text-align: center;">
-                <p style="color: #000; font-weight: bold; font-size: 1.2rem; margin: 0;">💰 $200 - $300 MXN</p>
-            </div>
-            <div style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; text-align: left;">
-                <p style="margin: 0 0 0.5rem 0;"><strong style="color: #FFD700;">Incluye:</strong></p>
-                <ul style="margin: 0; padding-left: 1.2rem;">
-                    <li>Medición corporal intermedia</li>
-                    <li>Análisis de progreso detallado</li>
-                    <li>Reporte completo con gráficas</li>
-                    <li>Ajustes basados en resultados</li>
-                </ul>
-                <p style="margin: 1rem 0 0 0; font-size: 0.95rem; color: #aaa;">✨ <strong>Medición + análisis:</strong> $200 MXN<br>✨ <strong>Con ajuste de plan:</strong> $300 MXN</p>
-            </div>
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2.5rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFD700; font-size: 2.2rem; font-weight: bold; margin-bottom: 1.5rem; text-align: center;">
+            🧬 El Enfoque Científico MUPAI
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 2; margin-bottom: 2rem; text-align: justify;">
+            En <strong style="color: #FFCC00;">MUPAI</strong>, entendemos que la transformación física real no ocurre de un día para otro. 
+            Nuestros planes están diseñados con base en <strong style="color: #FFD700;">periodización científica</strong>, 
+            reconociendo que el cuerpo humano necesita <strong style="color: #FFCC00;">ciclos específicos de adaptación</strong> 
+            para optimizar cambios en composición corporal, fuerza, y rendimiento. La <strong style="color: #FFD700;">nutrición 
+            requiere 6 semanas</strong> para establecer nuevos patrones metabólicos, mientras que el 
+            <strong style="color: #FFCC00;">entrenamiento necesita 8 semanas</strong> para generar adaptaciones neuromusculares 
+            significativas. Este no es un enfoque arbitrario: está respaldado por décadas de investigación en 
+            <strong style="color: #FFD700;">ciencias del ejercicio y nutrición deportiva</strong>.
+        </p>
+        <div style="background: rgba(255,215,0,0.15); padding: 2rem; border-radius: 15px; 
+                    border-left: 5px solid #FFD700; margin: 2rem 0;">
+            <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 2; margin: 0; text-align: justify;">
+                💡 <strong style="color: #FFD700;">¿Por qué ciclos específicos?</strong> La adaptación fisiológica sigue principios 
+                biológicos precisos. Los cambios metabólicos en respuesta a la nutrición se estabilizan en 
+                <strong style="color: #FFCC00;">4-6 semanas</strong>, mientras que las adaptaciones del sistema nervioso y muscular 
+                requieren <strong style="color: #FFCC00;">6-8 semanas</strong> para consolidarse. Nuestros planes respetan estos 
+                <strong style="color: #FFD700;">tiempos de adaptación científicos</strong> para garantizar resultados reales y sostenibles.
+            </p>
         </div>
     </div>
     
-    <div style="background: rgba(255,215,0,0.1); padding: 2rem; border-radius: 15px; margin: 2rem 0; border: 2px solid #FFD700; text-align: center;">
-        <p style="color: #FFFFFF; font-size: 1.1rem; margin: 0; line-height: 1.8;">💡 <strong style="color: #FFD700;">¿Ya tienes un plan activo?</strong> Estos servicios extendidos te permiten ajustar, actualizar y optimizar tu plan existente sin necesidad de empezar desde cero. <strong style="color: #FFCC00;">¡Continúa tu transformación!</strong></p>
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2.5rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFCC00; font-size: 2rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+            🍽️ Ciclos de Nutrición - 6 Semanas
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.5rem; text-align: justify;">
+            Nuestro <strong style="color: #FFCC00;">programa de nutrición de 6 semanas</strong> está estructurado científicamente 
+            para permitir que tu metabolismo se adapte progresivamente. Cada semana incluye menús personalizados basados en tus 
+            preferencias, objetivos y datos de composición corporal. El <strong style="color: #FFD700;">análisis de bioimpedancia 
+            inicial y final</strong> nos permite medir con precisión los cambios en masa muscular, grasa corporal y agua, 
+            asegurando que cada caloría y macronutriente cumplan su propósito estratégico.
+        </p>
+        <table class="mupai-extended-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Fase</th>
+                    <th style="width: 35%;">Enfoque Nutricional</th>
+                    <th style="width: 45%;">Adaptaciones Esperadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 1-2</strong></td>
+                    <td>Establecimiento de balance energético personalizado</td>
+                    <td>Adaptación inicial al déficit/superávit calórico, estabilización de apetito</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 3-4</strong></td>
+                    <td>Optimización de macronutrientes según respuesta metabólica</td>
+                    <td>Cambios visibles en composición corporal, mejora en niveles de energía</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 5-6</strong></td>
+                    <td>Consolidación de hábitos alimentarios sostenibles</td>
+                    <td>Estabilización metabólica, resultados medibles en bioimpedancia final</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="background: rgba(255,204,0,0.15); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                ✅ <strong style="color: #FFCC00;">Incluye:</strong> 6 menús semanales completos • Análisis de preferencias alimentarias • 
+                Evaluación de antojos (FCI-Mx) • Bioimpedancia inicial y final • Ajustes personalizados por semana
+            </p>
+        </div>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2.5rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3);">
+        <h3 style="color: #FFCC00; font-size: 2rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+            💪 Ciclos de Entrenamiento - 8 Semanas
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.5rem; text-align: justify;">
+            El <strong style="color: #FFCC00;">programa de entrenamiento de 8 semanas</strong> sigue principios de 
+            <strong style="color: #FFD700;">periodización lineal y ondulada</strong>, permitiendo que tu sistema neuromuscular 
+            se adapte progresivamente a cargas crecientes. Diseñamos volumen, frecuencia e intensidad basándonos en tu nivel actual, 
+            disponibilidad de tiempo y objetivos específicos. Las <strong style="color: #FFD700;">evaluaciones iniciales y finales</strong> 
+            documentan mejoras reales en fuerza, resistencia y composición corporal.
+        </p>
+        <table class="mupai-extended-table">
+            <thead>
+                <tr>
+                    <th style="width: 20%;">Mesociclo</th>
+                    <th style="width: 35%;">Enfoque de Entrenamiento</th>
+                    <th style="width: 45%;">Adaptaciones Neuromusculares</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 1-3</strong></td>
+                    <td>Fase de acondicionamiento general y técnica</td>
+                    <td>Mejora de coordinación neuromuscular, aprendizaje motor, aumento de volumen de trabajo</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 4-6</strong></td>
+                    <td>Incremento progresivo de intensidad y volumen</td>
+                    <td>Hipertrofia muscular, incremento de fuerza máxima, mejora de resistencia muscular</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFCC00;">Semanas 7-8</strong></td>
+                    <td>Pico de rendimiento y consolidación</td>
+                    <td>Máxima expresión de fuerza, definición muscular, adaptaciones cardiovasculares completas</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="background: rgba(255,204,0,0.15); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                ✅ <strong style="color: #FFCC00;">Incluye:</strong> Diseño personalizado de rutina • Cuestionario "Designing Your Training" • 
+                Progresiones semanales • Variaciones de ejercicios • Evaluación inicial y final de progresos • Formato PDF profesional
+            </p>
+        </div>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); 
+                padding: 3rem 2.5rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5);">
+        <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin-bottom: 2rem; text-align: center;">
+            🔥 Plan Combinado - La Sinergia Completa
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.9; margin-bottom: 1.5rem; text-align: justify;">
+            El <strong style="color: #FFD700;">Plan Combinado</strong> representa la <strong style="color: #FFCC00;">integración 
+            total</strong> de nutrición y entrenamiento, siguiendo el principio científico de que la 
+            <strong style="color: #FFD700;">adaptación óptima requiere estímulos coordinados</strong>. Cuando nutrición y entrenamiento 
+            se diseñan en conjunto, los resultados no son simplemente aditivos: son <strong style="color: #FFCC00;">sinérgicos</strong>. 
+            Tu alimentación se calibra específicamente para soportar las demandas de tu entrenamiento, mientras que tu rutina se diseña 
+            para maximizar el uso de los nutrientes que consumes. Esta es la forma en que los atletas de élite entrenan, y ahora está 
+            disponible para ti.
+        </p>
+        <table class="mupai-extended-table">
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Componente</th>
+                    <th style="width: 30%;">Duración</th>
+                    <th style="width: 45%;">Beneficio Integrado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color: #FFD700;">Nutrición</strong></td>
+                    <td>6 semanas completas</td>
+                    <td>Calibrada para soportar demandas de entrenamiento y optimizar recuperación</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFD700;">Entrenamiento</strong></td>
+                    <td>8 semanas completas</td>
+                    <td>Diseñado para maximizar utilización de macronutrientes y timing nutricional</td>
+                </tr>
+                <tr>
+                    <td><strong style="color: #FFD700;">Sinergia Total</strong></td>
+                    <td>Seguimiento coordinado</td>
+                    <td>Ajustes continuos basados en progreso integral de ambos componentes</td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
+                    padding: 2rem; border-radius: 15px; margin-top: 2rem; text-align: center;">
+            <p style="color: #000; font-size: 1.3rem; font-weight: bold; margin: 0 0 1rem 0;">
+                💰 AHORRO ESPECIAL: $150 MXN
+            </p>
+            <p style="color: #000; font-size: 1.1rem; line-height: 1.7; margin: 0;">
+                <strong>Internos:</strong> $1,050 MXN (en lugar de $1,200) • 
+                <strong>Externos:</strong> $1,350 MXN (en lugar de $1,500)
+            </p>
+        </div>
+        <div style="background: rgba(255,215,0,0.15); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+            <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                ⭐ <strong style="color: #FFD700;">Incluye TODOS los beneficios:</strong> Todos los cuestionarios especializados • 
+                Evaluaciones completas inicial y final • Integración total dieta-entrenamiento • Seguimiento coordinado • 
+                Ajustes personalizados continuos • Máxima eficiencia en resultados
+            </p>
+        </div>
+    </div>
+    
+    <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); 
+                padding: 3rem 2.5rem; border-radius: 20px; margin: 2.5rem 0; 
+                border: 3px solid #FFCC00; box-shadow: 0 6px 20px rgba(255,204,0,0.3); text-align: center;">
+        <h3 style="color: #FFCC00; font-size: 2rem; font-weight: bold; margin-bottom: 1.5rem;">
+            🎯 Tu Transformación Comienza Aquí
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.2rem; line-height: 2; margin: 0;">
+            No vendemos <strong style="color: #FFD700;">dietas mágicas</strong> ni <strong style="color: #FFD700;">rutinas milagrosas</strong>. 
+            Ofrecemos <strong style="color: #FFCC00;">metodología científica aplicada</strong>, 
+            <strong style="color: #FFCC00;">personalización basada en datos</strong> y 
+            <strong style="color: #FFCC00;">acompañamiento profesional</strong> para que alcances tus objetivos de forma 
+            <strong style="color: #FFD700;">sostenible y permanente</strong>. Cada plan está diseñado para <em>ti</em>, 
+            respetando tus tiempos, preferencias y estilo de vida. <strong style="color: #FFD700;">La ciencia funciona cuando se aplica correctamente</strong>. 
+            🚀 <strong style="color: #FFCC00;">¡Comienza tu ciclo de transformación hoy!</strong>
+        </p>
     </div>
     """, unsafe_allow_html=True)
     # ==================== FIN: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
