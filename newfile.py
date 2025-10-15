@@ -2030,294 +2030,411 @@ if st.session_state.page == "inicio":
     
     # ==================== INICIO: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
     st.markdown("""
+    <style>
+        /* Responsive table styles for PLANES EXTENDIDOS MUPAI */
+        @media (max-width: 768px) {
+            .planes-table {
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .planes-table table {
+                min-width: 800px;
+            }
+            .planes-table th,
+            .planes-table td {
+                padding: 0.75rem !important;
+                font-size: 0.9rem !important;
+            }
+        }
+        @media (max-width: 480px) {
+            .planes-table table {
+                min-width: 600px;
+            }
+            .planes-table th,
+            .planes-table td {
+                padding: 0.5rem !important;
+                font-size: 0.85rem !important;
+            }
+        }
+    </style>
+    
     <div style="background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%); padding: 3rem 2rem; border-radius: 20px; margin: 3rem 0; border: 3px solid #FFD700; box-shadow: 0 8px 25px rgba(255,215,0,0.5);">
-    <h2 style="color: #FFD700; font-size: 2.5rem; font-weight: bold; margin-bottom: 1rem; text-align: center;">💠 PLANES EXTENDIDOS MUPAI</h2>
-    <p style="color: #FFFFFF; font-size: 1.3rem; margin: 0 0 2rem 0; font-weight: 500; line-height: 1.6; text-align: center;">Basados en ciencia. Recompensando tu constancia.</p>
     
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-    En MUPAI (Muscle Up Performance Assessment Intelligence) entendemos que el cambio corporal no es un acto de voluntad momentáneo, sino un proceso biológico que ocurre cuando la consistencia supera a la prisa.
-    </p>
-    
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-    Por eso estructuramos nuestros programas en ciclos científicos de adaptación:
-    </p>
-    
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 0.5rem;">
-    <strong style="color: #FFCC00;">Nutrición:</strong> bloques de 6 semanas (ajuste metabólico, adaptación hormonal y mejora de adherencia).
-    </p>
-    
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-    <strong style="color: #FFCC00;">Entrenamiento:</strong> bloques de 8 semanas (progresión técnica, hipertrofia y acondicionamiento).
-    </p>
-    
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
-    Cada ciclo incluye una evaluación, una actualización completa y una nueva fase de avance.<br>
-    Así, cuando eliges más semanas, estás invirtiendo en mayor control fisiológico, más retroalimentación y más resultados sostenibles.
-    </p>
-    
-    <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin: 2rem 0 1rem 0; text-align: center;">🧬 PLANES DE NUTRICIÓN</h3>
-    <p style="color: #FFFFFF; font-size: 1.1rem; text-align: center; margin-bottom: 1.5rem; font-style: italic;">
-    (Ciclos de 6 semanas — con descuentos por compromiso prolongado)
-    </p>
-    
-    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
-    <thead>
-    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
-    <th style="padding: 1rem; text-align: left; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Duración</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Ciclos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Actualizaciones</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Base Internos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Internos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Base Externos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Externos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">18 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$1,650</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">6%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$1,551</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$2,100</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">8%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$1,932</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.05);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">36 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$3,300</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">10%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$2,970</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$4,200</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">12%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$3,696</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">72 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$6,600</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">15%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$5,610</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$8,400</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">18%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$6,888</td>
-    </tr>
-    </tbody>
-    </table>
-    
-    <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
-    <strong style="color: #FFCC00;">📊 Equivalente mensual:</strong>
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Internos: entre $468 y $517/mes
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Externos: entre $574 y $644/mes
-    </p>
+    <!-- ENCABEZADO PRINCIPAL -->
+    <div style="text-align: center; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 3px solid #FFD700;">
+        <h2 style="color: #FFD700; font-size: 2.8rem; font-weight: bold; margin-bottom: 1rem; text-shadow: 0 0 20px rgba(255,215,0,0.3);">
+            💠 PLANES EXTENDIDOS MUPAI
+        </h2>
+        <p style="color: #FFFFFF; font-size: 1.4rem; margin: 0; font-weight: 500; line-height: 1.6;">
+            Basados en ciencia. Recompensando tu constancia.
+        </p>
     </div>
     
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 1.5rem 0; font-style: italic;">
-    🔬 Cada bloque de 6 semanas permite reajustar el metabolismo con precisión, evitar estancamientos y mejorar el control de apetito, hormonas y energía.<br>
-    Los resultados se construyen con reajustes constantes, no con restricciones extremas.
-    </p>
-    
-    <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin: 2rem 0 1rem 0; text-align: center;">🏋️‍♂️ PLANES DE ENTRENAMIENTO</h3>
-    <p style="color: #FFFFFF; font-size: 1.1rem; text-align: center; margin-bottom: 1.5rem; font-style: italic;">
-    (Ciclos de 8 semanas — progreso fisiológico garantizado)
-    </p>
-    
-    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
-    <thead>
-    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
-    <th style="padding: 1rem; text-align: left; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Duración</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Ciclos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Actualizaciones</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Base Internos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Internos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Base Externos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Externos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">24 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$1,950</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">6%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$1,833</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$2,400</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">8%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$2,208</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.05);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">48 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$3,900</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">10%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$3,510</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$4,800</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">12%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$4,224</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">96 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$7,800</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">15%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$6,630</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$9,600</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">18%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$7,872</td>
-    </tr>
-    </tbody>
-    </table>
-    
-    <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
-    <strong style="color: #FFCC00;">📊 Equivalente mensual:</strong>
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Internos: entre $553 y $611/mes
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Externos: entre $656 y $736/mes
-    </p>
+    <!-- INTRODUCCIÓN FILOSÓFICA -->
+    <div style="background: rgba(255,204,0,0.08); padding: 2rem; border-radius: 15px; margin-bottom: 2.5rem; border-left: 5px solid #FFCC00;">
+        <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 1.9; margin-bottom: 1.5rem; text-align: justify;">
+            En <strong style="color: #FFD700;">MUPAI</strong> (Muscle Up Performance Assessment Intelligence) entendemos que el cambio corporal no es un acto de voluntad momentáneo, sino un <strong style="color: #FFCC00;">proceso biológico</strong> que ocurre cuando la consistencia supera a la prisa.
+        </p>
+        
+        <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 1.9; margin-bottom: 1.2rem; text-align: justify;">
+            Por eso estructuramos nuestros programas en <strong style="color: #FFCC00;">ciclos científicos de adaptación:</strong>
+        </p>
+        
+        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+            <div style="margin-bottom: 1rem;">
+                <p style="color: #FFD700; font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0;">
+                    🧬 Nutrición
+                </p>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin: 0;">
+                    Bloques de <strong>6 semanas</strong> → Ajuste metabólico, adaptación hormonal y mejora de adherencia
+                </p>
+            </div>
+            
+            <div style="border-top: 1px solid rgba(255,204,0,0.2); padding-top: 1rem;">
+                <p style="color: #FFD700; font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0;">
+                    🏋️‍♂️ Entrenamiento
+                </p>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin: 0;">
+                    Bloques de <strong>8 semanas</strong> → Progresión técnica, hipertrofia y acondicionamiento
+                </p>
+            </div>
+        </div>
+        
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.9; margin: 1.5rem 0 0 0; text-align: justify; font-style: italic;">
+            ✨ Cada ciclo incluye una <strong style="color: #FFCC00;">evaluación completa</strong>, una <strong style="color: #FFCC00;">actualización personalizada</strong> y una nueva fase de avance. Así, cuando eliges más semanas, estás invirtiendo en mayor control fisiológico, más retroalimentación y resultados más sostenibles.
+        </p>
     </div>
     
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 1.5rem 0; font-style: italic;">
-    🔬 Cada bloque de 8 semanas completa una fase fisiológica: adaptación neural, hipertrofia estructural y optimización energética.<br>
-    Los cuerpos que evolucionan no son los que entrenan más fuerte, sino los que entrenan mejor y más tiempo.
-    </p>
-    
-    <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin: 2rem 0 1rem 0; text-align: center;">⚡ COMBOS MUPAI — NUTRICIÓN + ENTRENAMIENTO</h3>
-    <p style="color: #FFFFFF; font-size: 1.1rem; text-align: center; margin-bottom: 1.5rem; font-style: italic;">
-    (La sinergia entre ambos sistemas acelera los resultados)
-    </p>
-    
-    <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden;">
-    <thead>
-    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
-    <th style="padding: 1rem; text-align: left; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Combo</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Ciclos Nutrición</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Ciclos Entrenamiento</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Descuento Extra</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Tope Total</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Internos</th>
-    <th style="padding: 1rem; text-align: center; font-weight: bold; border: 1px solid rgba(255,204,0,0.3);">Precio Final Externos</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">18 + 24 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3 + 3</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3 + 3 actualizaciones</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">+3%</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">Hasta 20%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$3,282</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$4,016</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.05);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">36 + 48 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6 + 6</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6 + 6 actualizaciones</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">+4%</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">Hasta 20%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$6,221</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$7,603</td>
-    </tr>
-    <tr style="background: rgba(255,255,255,0.03);">
-    <td style="padding: 1rem; color: #FFFFFF; border: 1px solid rgba(255,204,0,0.2);">72 + 96 sem</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12 + 12</td>
-    <td style="padding: 1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12 + 12 actualizaciones</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">+5%</td>
-    <td style="padding: 1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">Hasta 20%</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$11,628</td>
-    <td style="padding: 1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold;">$14,400</td>
-    </tr>
-    </tbody>
-    </table>
-    
-    <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.6; margin: 0;">
-    <strong style="color: #FFCC00;">📊 Equivalente mensual promedio:</strong>
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Internos: desde $526/mes
-    </p>
-    <p style="color: #FFFFFF; font-size: 1rem; line-height: 1.6; margin: 0.5rem 0 0 0;">
-    Externos: desde $652/mes
-    </p>
+    <!-- ========== SECCIÓN 1: PLANES DE NUTRICIÓN ========== -->
+    <div style="background: rgba(255,215,0,0.05); padding: 2.5rem 2rem; border-radius: 15px; margin: 2.5rem 0; border: 2px solid #FFD700;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="color: #FFD700; font-size: 2.2rem; font-weight: bold; margin: 0 0 0.5rem 0; text-shadow: 0 0 15px rgba(255,215,0,0.3);">
+                🧬 PLANES DE NUTRICIÓN
+            </h3>
+            <p style="color: #FFCC00; font-size: 1.15rem; margin: 0; font-style: italic;">
+                Ciclos de 6 semanas — Con descuentos por compromiso prolongado
+            </p>
+        </div>
+        
+        <div class="planes-table">
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1.2rem; text-align: left; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Duración</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Ciclos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Actualizaciones</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Base<br>Internos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Internos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Base<br>Externos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Externos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">18 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$1,650</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">6%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$1,551</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$2,100</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">8%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$1,932</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.05); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">36 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$3,300</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">10%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$2,970</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$4,200</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">12%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$3,696</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">72 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$6,600</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">15%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$5,610</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$8,400</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">18%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$6,888</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(255,204,0,0.15) 0%, rgba(255,215,0,0.1) 100%); padding: 1.8rem; border-radius: 12px; margin: 1.5rem 0; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+            <p style="color: #FFD700; font-size: 1.2rem; font-weight: bold; margin: 0 0 1rem 0;">
+                💰 Equivalente Mensual
+            </p>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Internos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">$468 - $517/mes</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Externos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">$574 - $644/mes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border-left: 3px solid #FFD700;">
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0; font-style: italic;">
+                <strong style="color: #FFCC00;">🔬 Fundamento científico:</strong> Cada bloque de 6 semanas permite reajustar el metabolismo con precisión, evitar estancamientos y mejorar el control de apetito, hormonas y energía. Los resultados se construyen con reajustes constantes, no con restricciones extremas.
+            </p>
+        </div>
     </div>
     
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 1.5rem 0; font-style: italic;">
-    🔬 Al unir Nutrición y Entrenamiento, se optimizan simultáneamente las señales hormonales, la sensibilidad a la insulina y la composición corporal.<br>
-    La fisiología responde con coherencia: mejor recuperación, más energía y resultados medibles en menos tiempo.
-    </p>
-    
-    <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin: 2rem 0 1rem 0; text-align: center;">🧠 POR QUÉ ESTOS PLANES FUNCIONAN</h3>
-    
-    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFCC00; font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0;">
-    Porque siguen la lógica del cuerpo.
-    </p>
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-    Cada ciclo está alineado con los ritmos de adaptación muscular, metabólica y hormonal.<br>
-    Más semanas equivalen a más tiempo de consolidar esas adaptaciones.
-    </p>
+    <!-- ========== SECCIÓN 2: PLANES DE ENTRENAMIENTO ========== -->
+    <div style="background: rgba(255,215,0,0.05); padding: 2.5rem 2rem; border-radius: 15px; margin: 2.5rem 0; border: 2px solid #FFD700;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="color: #FFD700; font-size: 2.2rem; font-weight: bold; margin: 0 0 0.5rem 0; text-shadow: 0 0 15px rgba(255,215,0,0.3);">
+                🏋️‍♂️ PLANES DE ENTRENAMIENTO
+            </h3>
+            <p style="color: #FFCC00; font-size: 1.15rem; margin: 0; font-style: italic;">
+                Ciclos de 8 semanas — Progreso fisiológico garantizado
+            </p>
+        </div>
+        
+        <div class="planes-table">
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1.2rem; text-align: left; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Duración</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Ciclos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Actualizaciones</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Base<br>Internos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Internos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Base<br>Externos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Descuento</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Externos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">24 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$1,950</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">6%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$1,833</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$2,400</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">8%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$2,208</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.05); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">48 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$3,900</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">10%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$3,510</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$4,800</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">12%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$4,224</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">96 semanas</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$7,800</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">15%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$6,630</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">$9,600</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">18%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$7,872</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(255,204,0,0.15) 0%, rgba(255,215,0,0.1) 100%); padding: 1.8rem; border-radius: 12px; margin: 1.5rem 0; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+            <p style="color: #FFD700; font-size: 1.2rem; font-weight: bold; margin: 0 0 1rem 0;">
+                💰 Equivalente Mensual
+            </p>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Internos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">$553 - $611/mes</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Externos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">$656 - $736/mes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border-left: 3px solid #FFD700;">
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0; font-style: italic;">
+                <strong style="color: #FFCC00;">🔬 Fundamento científico:</strong> Cada bloque de 8 semanas completa una fase fisiológica: adaptación neural, hipertrofia estructural y optimización energética. Los cuerpos que evolucionan no son los que entrenan más fuerte, sino los que entrenan mejor y más tiempo.
+            </p>
+        </div>
     </div>
     
-    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFCC00; font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0;">
-    Porque hay retroalimentación constante.
-    </p>
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-    Cada 6 u 8 semanas se evalúa, reajusta y mejora tu estrategia.<br>
-    Esto evita estancamientos y asegura progreso fisiológico real.
-    </p>
+    <!-- ========== SECCIÓN 3: COMBOS MUPAI ========== -->
+    <div style="background: rgba(255,215,0,0.05); padding: 2.5rem 2rem; border-radius: 15px; margin: 2.5rem 0; border: 2px solid #FFD700;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="color: #FFD700; font-size: 2.2rem; font-weight: bold; margin: 0 0 0.5rem 0; text-shadow: 0 0 15px rgba(255,215,0,0.3);">
+                ⚡ COMBOS MUPAI — NUTRICIÓN + ENTRENAMIENTO
+            </h3>
+            <p style="color: #FFCC00; font-size: 1.15rem; margin: 0; font-style: italic;">
+                La sinergia entre ambos sistemas acelera los resultados
+            </p>
+        </div>
+        
+        <div class="planes-table">
+            <table style="width: 100%; border-collapse: collapse; margin: 1.5rem 0; background: rgba(255,255,255,0.05); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
+                <thead>
+                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
+                        <th style="padding: 1.2rem; text-align: left; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Combo</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Ciclos<br>Nutrición</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Ciclos<br>Entrenamiento</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Descuento<br>Extra</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Tope<br>Total</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Internos</th>
+                        <th style="padding: 1.2rem; text-align: center; font-weight: bold; font-size: 1.05rem; border: 1px solid rgba(255,204,0,0.3);">Precio Final<br>Externos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">18 + 24 sem</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3 + 3</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">3 + 3 actualizaciones</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">+3%</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.05rem;">Hasta 20%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$3,282</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$4,016</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.05); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">36 + 48 sem</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6 + 6</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">6 + 6 actualizaciones</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">+4%</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.05rem;">Hasta 20%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$6,221</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$7,603</td>
+                    </tr>
+                    <tr style="background: rgba(255,255,255,0.03); transition: background 0.3s ease;" onmouseover="this.style.background='rgba(255,204,0,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+                        <td style="padding: 1.1rem; color: #FFFFFF; font-weight: 600; border: 1px solid rgba(255,204,0,0.2);">72 + 96 sem</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12 + 12</td>
+                        <td style="padding: 1.1rem; color: #FFFFFF; text-align: center; border: 1px solid rgba(255,204,0,0.2);">12 + 12 actualizaciones</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.1rem;">+5%</td>
+                        <td style="padding: 1.1rem; color: #FFCC00; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.05rem;">Hasta 20%</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$11,628</td>
+                        <td style="padding: 1.1rem; color: #FFD700; text-align: center; border: 1px solid rgba(255,204,0,0.2); font-weight: bold; font-size: 1.15rem;">$14,400</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(255,204,0,0.15) 0%, rgba(255,215,0,0.1) 100%); padding: 1.8rem; border-radius: 12px; margin: 1.5rem 0; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+            <p style="color: #FFD700; font-size: 1.2rem; font-weight: bold; margin: 0 0 1rem 0;">
+                💰 Equivalente Mensual Promedio
+            </p>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;">
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Internos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">Desde $526/mes</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; text-align: center;">
+                    <p style="color: #FFCC00; font-size: 1.05rem; font-weight: 600; margin: 0;">Externos</p>
+                    <p style="color: #FFFFFF; font-size: 1.3rem; font-weight: bold; margin: 0.3rem 0;">Desde $652/mes</p>
+                </div>
+            </div>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border-left: 3px solid #FFD700;">
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0; font-style: italic;">
+                <strong style="color: #FFCC00;">🔬 Fundamento científico:</strong> Al unir Nutrición y Entrenamiento, se optimizan simultáneamente las señales hormonales, la sensibilidad a la insulina y la composición corporal. La fisiología responde con coherencia: mejor recuperación, más energía y resultados medibles en menos tiempo.
+            </p>
+        </div>
     </div>
     
-    <div style="background: rgba(255,255,255,0.05); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
-    <p style="color: #FFCC00; font-size: 1.2rem; font-weight: bold; margin: 0 0 0.5rem 0;">
-    Porque los descuentos no son promoción: son reconocimiento.
-    </p>
-    <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-    En MUPAI premiamos la consistencia, no la urgencia.<br>
-    Cada descuento refleja una inversión a largo plazo en tu salud y rendimiento.<br>
-    Cuanto más tiempo te comprometes con tu proceso, más accesible se vuelve.
-    </p>
+    <!-- ========== SECCIÓN 4: POR QUÉ ESTOS PLANES FUNCIONAN ========== -->
+    <div style="background: rgba(255,215,0,0.05); padding: 2.5rem 2rem; border-radius: 15px; margin: 2.5rem 0; border: 2px solid #FFD700;">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h3 style="color: #FFD700; font-size: 2.2rem; font-weight: bold; margin: 0; text-shadow: 0 0 15px rgba(255,215,0,0.3);">
+                🧠 POR QUÉ ESTOS PLANES FUNCIONAN
+            </h3>
+        </div>
+        
+        <div style="display: grid; gap: 1.5rem; margin: 1.5rem 0;">
+            <div style="background: linear-gradient(135deg, rgba(255,204,0,0.1) 0%, rgba(0,0,0,0.3) 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin-right: 1rem; flex-shrink: 0;">1</div>
+                    <h4 style="color: #FFD700; font-size: 1.3rem; font-weight: bold; margin: 0;">
+                        Siguen la lógica del cuerpo
+                    </h4>
+                </div>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                    Cada ciclo está alineado con los <strong style="color: #FFCC00;">ritmos de adaptación muscular, metabólica y hormonal.</strong> Más semanas equivalen a más tiempo para consolidar esas adaptaciones y generar cambios permanentes.
+                </p>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(255,204,0,0.1) 0%, rgba(0,0,0,0.3) 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin-right: 1rem; flex-shrink: 0;">2</div>
+                    <h4 style="color: #FFD700; font-size: 1.3rem; font-weight: bold; margin: 0;">
+                        Retroalimentación constante
+                    </h4>
+                </div>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                    Cada 6 u 8 semanas se <strong style="color: #FFCC00;">evalúa, reajusta y mejora</strong> tu estrategia. Esto evita estancamientos y asegura progreso fisiológico real, basado en datos objetivos.
+                </p>
+            </div>
+            
+            <div style="background: linear-gradient(135deg, rgba(255,204,0,0.1) 0%, rgba(0,0,0,0.3) 100%); padding: 2rem; border-radius: 12px; border-left: 5px solid #FFCC00; box-shadow: 0 3px 10px rgba(0,0,0,0.2);">
+                <div style="display: flex; align-items: center; margin-bottom: 1rem;">
+                    <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: bold; margin-right: 1rem; flex-shrink: 0;">3</div>
+                    <h4 style="color: #FFD700; font-size: 1.3rem; font-weight: bold; margin: 0;">
+                        Los descuentos son reconocimiento
+                    </h4>
+                </div>
+                <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin: 0;">
+                    En MUPAI premiamos la <strong style="color: #FFCC00;">consistencia, no la urgencia.</strong> Cada descuento refleja una inversión a largo plazo en tu salud y rendimiento. Cuanto más tiempo te comprometes con tu proceso, más accesible se vuelve.
+                </p>
+            </div>
+        </div>
     </div>
     
-    <h3 style="color: #FFD700; font-size: 2rem; font-weight: bold; margin: 2rem 0 1rem 0; text-align: center;">💬 CIERRE MOTIVACIONAL</h3>
-    
-    <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; text-align: center;">
-    <p style="color: #000; font-size: 1.2rem; font-weight: bold; line-height: 1.8; margin: 0 0 1rem 0;">
-    En MUPAI no premiamos la prisa, premiamos la constancia inteligente.<br>
-    Si te comprometes con tu proceso, nosotros te premiamos con descuentos reales.
-    </p>
-    <p style="color: #000; font-size: 1.1rem; line-height: 1.8; margin: 0;">
-    Porque el cuerpo no cambia de un mes a otro, cambia cuando aprendes a sostener el proceso.
-    </p>
+    <!-- ========== CIERRE MOTIVACIONAL ========== -->
+    <div style="margin: 3rem 0 2rem 0;">
+        <div style="background: linear-gradient(135deg, #FFD700 0%, #FFCC00 100%); padding: 2.5rem 2rem; border-radius: 15px; text-align: center; box-shadow: 0 6px 20px rgba(255,204,0,0.4);">
+            <h3 style="color: #000; font-size: 1.8rem; font-weight: bold; margin: 0 0 1.5rem 0; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                💬 COMPROMISO MUPAI
+            </h3>
+            <p style="color: #000; font-size: 1.25rem; font-weight: 600; line-height: 1.9; margin: 0 0 1rem 0;">
+                En MUPAI no premiamos la prisa, premiamos la <strong>constancia inteligente.</strong>
+            </p>
+            <p style="color: #000; font-size: 1.15rem; font-weight: 500; line-height: 1.8; margin: 0;">
+                Si te comprometes con tu proceso, nosotros te premiamos con descuentos reales.
+            </p>
+        </div>
+        
+        <div style="background: rgba(0,0,0,0.4); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; text-align: center; border: 2px solid rgba(255,215,0,0.3);">
+            <p style="color: #FFFFFF; font-size: 1.15rem; line-height: 1.8; margin: 0; font-style: italic;">
+                Porque el cuerpo <strong style="color: #FFD700;">no cambia de un mes a otro</strong>, cambia cuando aprendes a <strong style="color: #FFCC00;">sostener el proceso.</strong>
+            </p>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.05); padding: 2.5rem 2rem; border-radius: 15px; margin: 1.5rem 0 0 0; text-align: center; border: 2px solid #FFD700;">
+            <p style="color: #FFD700; font-size: 1.4rem; font-weight: bold; line-height: 2; margin: 0;">
+                🔸 El compromiso tiene un valor<br>
+                🔸 La consistencia tiene una recompensa<br>
+                🔸 Y en MUPAI, esa recompensa es científica, medible y visible
+            </p>
+        </div>
     </div>
     
-    <div style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 15px; margin: 1.5rem 0; text-align: center;">
-    <p style="color: #FFD700; font-size: 1.3rem; font-weight: bold; line-height: 2; margin: 0;">
-    🔸 El compromiso tiene un valor.<br>
-    🔸 La consistencia tiene una recompensa.<br>
-    🔸 Y en MUPAI, esa recompensa es científica, medible y visible.
-    </p>
-    </div>
     </div>
     """, unsafe_allow_html=True)
     # ==================== FIN: PLANES EXTENDIDOS MUPAI - BLOQUE CONSOLIDADO ====================
