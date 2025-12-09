@@ -2527,7 +2527,7 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Plan 2: Entrenamiento Personalizado
+    # Plan 2: Diseño de Entrenamiento Personalizado
     st.markdown("""
     <div class="corporate-section">
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
@@ -2707,7 +2707,7 @@ elif st.session_state.page == "mupcamp_1a1":
     # Page title
     st.markdown("""
     <div class="section-header">
-        <h2>🔴 MUPcamp 1:1 — Seguimiento presencial personalizado (10 semanas)</h2>
+        <h2>🔴 MUPCAMP 1:1 — Seguimiento presencial personalizado (10 semanas)</h2>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2739,10 +2739,17 @@ elif st.session_state.page == "mupcamp_1a1":
     st.markdown("""
     <div class="questionnaire-container">
         <ul style="font-size: 1.1rem; line-height: 1.8;">
-            <li><strong>Fitness:</strong> Mejorar composición corporal, perder grasa, ganar músculo, o recomposición</li>
-            <li><strong>Competencias:</strong> Preparación física para calistenia, powerlifting, crossfit, etc.</li>
-            <li><strong>Salud:</strong> Mejorar marcadores metabólicos, manejo de patologías, salud mental y física</li>
-            <li><strong>Rendimiento:</strong> Mejorar en deportes específicos (futbol, basquet, etc.)</li>
+            <li><strong>Fitness y fisicoculturismo natural:</strong> 
+    Desarrollo de masa muscular, pérdida de grasa y recomposición corporal, así como preparación específica para <em>competencias de fisicoculturismo natural</em> bajo enfoques de entrenamiento y nutrición basados en evidencia.
+  </li>
+
+  <li><strong>Rendimiento deportivo:</strong> 
+    Optimización de capacidades físicas (fuerza, potencia, velocidad, resistencia, agilidad) y de la composición corporal para competir en diferentes niveles: recreativo, amateur, semiprofesional y alto rendimiento, en deportes individuales y de equipo.
+  </li>
+
+  <li><strong>Salud y bienestar:</strong> 
+    Mejora de la composición corporal y de la salud músculo-esquelética, articular, inmunológica y hormonal a través de programas integrales de entrenamiento y nutrición, adaptados al contexto de vida y, cuando aplica, en coordinación con el criterio médico del usuario.
+  </li>
         </ul>
         <p style="font-size: 0.9rem; color: #888; margin-top: 1.5rem; font-style: italic;">
             Programa diseñado por Erick De Luna, formado en ciencias del ejercicio, hipertrofia, fisiología del ejercicio y nutrición aplicada a la composición corporal y a la mujer deportista.
