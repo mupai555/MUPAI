@@ -2740,7 +2740,7 @@ elif st.session_state.page == "mupcamp_1a1":
     <div class="questionnaire-container">
         <ul style="font-size: 1.1rem; line-height: 1.8;">
        
-            <li><strong>Fitness y fisicoculturismo natural:</strong> 
+ <li><strong>Fitness y fisicoculturismo natural:</strong> 
     Desarrollo de masa muscular, pérdida de grasa y recomposición corporal, así como preparación específica para <em>competencias de fisicoculturismo natural</em> bajo enfoques de entrenamiento y nutrición basados en evidencia.
   </li>
 
