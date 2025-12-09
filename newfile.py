@@ -2759,59 +2759,6 @@ elif st.session_state.page == "mupcamp_1a1":
     </div>
     """, unsafe_allow_html=True)
     
-    # Coach section
-    st.markdown("""
-    <div class="section-header">
-        <h2>👨‍🏫 Sobre tu coach — Erick Francisco De Luna Hernández</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Try to show coach image
-    coach_image_path = "Copia de Anfitrión_20250809_125513_0000.png"
-    try:
-        st.image(coach_image_path, use_container_width=True, caption="Erick De Luna - Coach MUPCAMP 1:1")
-    except (FileNotFoundError, Exception) as e:
-        st.markdown("""
-        <div style="padding: 20px; background-color: #f0f0f0; border-radius: 10px; text-align: center;">
-            <p style="color: #666; font-size: 1rem;">📷 Imagen del coach no disponible</p>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="corporate-section">
-        <h3>Formación principal:</h3>
-        <ul style="font-size: 1.05rem; line-height: 1.7;">
-            <li>Licenciatura en Ciencias del Ejercicio y la Salud (UANL)</li>
-            <li>Certificación en Hipertrofia Muscular (ISSA)</li>
-            <li>Especialización en Fisiología del Ejercicio Aplicada</li>
-            <li>Nutrición Aplicada a la Composición Corporal</li>
-            <li>Entrenamiento de la Mujer Deportista</li>
-        </ul>
-        
-        <h3>Formación complementaria:</h3>
-        <ul style="font-size: 1.05rem; line-height: 1.7;">
-            <li>Metodología del entrenamiento de la fuerza (Powerlifting, Halterofilia)</li>
-            <li>Biomecánica aplicada a ejercicios de resistencia</li>
-            <li>Evaluación de composición corporal y metabolismo</li>
-            <li>Diseño de rutinas periodizadas</li>
-        </ul>
-        
-        <h3>Experiencia:</h3>
-        <ul style="font-size: 1.05rem; line-height: 1.7;">
-            <li>Director de programación de entrenamiento en Muscle Up Gym</li>
-            <li>Más de 100 planes personalizados entregados</li>
-            <li>Seguimiento de atletas amateur y recreativos</li>
-            <li>Formador de entrenadores en biomecánica y progresión</li>
-        </ul>
-        
-        <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem; font-weight: 500;">
-            El enfoque del MUPcamp no es "hacer ejercicio y comer bien" de forma genérica. Es entender que tu cuerpo responde al estrés del entrenamiento, 
-            a la alimentación, al sueño, al trabajo y a tu vida personal como un sistema. No puedes pedirle a tu cuerpo que cambie si no estás 
-            alineando todos esos factores. Por eso el trabajo es 1:1, porque cada persona tiene un contexto distinto y requiere ajustes constantes.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # What is included section
     st.markdown("""
     <div class="section-header">
