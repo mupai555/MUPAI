@@ -10,6 +10,7 @@ import base64
 from collections import Counter
 import os
 import glob
+import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -3098,11 +3099,21 @@ elif st.session_state.page == "mupcamp_1a1":
                     if not os.path.exists(comprobantes_dir):
                         os.makedirs(comprobantes_dir)
                     
-                    # Generate safe filename
-                    safe_name = "".join(c for c in nombre_completo if c.isalnum() or c in (' ', '-', '_')).replace(' ', '_')
+                    # Generate safe filename with robust sanitization
+                    # Remove all non-alphanumeric characters except spaces and hyphens, then replace spaces with underscores
+                    safe_name = re.sub(r'[^\w\s-]', '', nombre_completo).strip().replace(' ', '_')
+                    if not safe_name:  # Fallback if name becomes empty after sanitization
+                        safe_name = "usuario"
+                    
+                    # Sanitize the original filename as well
+                    original_filename_base = os.path.splitext(comprobante_file.name)[0]
+                    original_filename_ext = os.path.splitext(comprobante_file.name)[1]
+                    safe_original_filename = re.sub(r'[^\w\s-]', '', original_filename_base).strip().replace(' ', '_')
+                    if not safe_original_filename:  # Fallback if filename becomes empty
+                        safe_original_filename = "comprobante"
+                    
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    original_filename = comprobante_file.name
-                    filename = f"{safe_name}_{timestamp}_{original_filename}"
+                    filename = f"{safe_name}_{timestamp}_{safe_original_filename}{original_filename_ext}"
                     filepath = os.path.join(comprobantes_dir, filename)
                     
                     # Save uploaded file
