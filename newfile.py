@@ -9,6 +9,7 @@ from datetime import datetime
 import base64
 from collections import Counter
 import os
+import glob
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -2862,7 +2863,7 @@ elif st.session_state.page == "mupcamp_1a1":
     coach_image_path = "Copia de Anfitrión_20250809_125513_0000.png"
     try:
         st.image(coach_image_path, use_container_width=True, caption="Erick De Luna - Coach MUPCAMP 1:1")
-    except:
+    except (FileNotFoundError, Exception) as e:
         st.markdown("""
         <div style="padding: 20px; background-color: #f0f0f0; border-radius: 10px; text-align: center;">
             <p style="color: #666; font-size: 1rem;">📷 Imagen del coach no disponible</p>
@@ -3093,9 +3094,6 @@ elif st.session_state.page == "mupcamp_1a1":
             else:
                 try:
                     # Create comprobantes folder if it doesn't exist
-                    import os
-                    from datetime import datetime
-                    
                     comprobantes_dir = "comprobantes"
                     if not os.path.exists(comprobantes_dir):
                         os.makedirs(comprobantes_dir)
@@ -3139,7 +3137,7 @@ elif st.session_state.page == "mupcamp_1a1":
                     </div>
                     """.format(correo), unsafe_allow_html=True)
                     
-                except Exception as e:
+                except (IOError, OSError) as e:
                     st.error(f"❌ Error al guardar el comprobante: {str(e)}")
                     st.info("Por favor intenta nuevamente o contacta directamente a administracion@muscleupgym.fitness")
     
@@ -3151,8 +3149,6 @@ elif st.session_state.page == "mupcamp_1a1":
     """, unsafe_allow_html=True)
     
     # Try to find and display diploma images
-    import glob
-    
     diploma_patterns = [
         "*diploma*",
         "*cert*",
@@ -3184,7 +3180,7 @@ elif st.session_state.page == "mupcamp_1a1":
             try:
                 with cols[idx % 2]:
                     st.image(diploma_file, use_container_width=True, caption=f"Certificación {idx + 1}")
-            except:
+            except (FileNotFoundError, Exception):
                 pass
     else:
         st.markdown("""
