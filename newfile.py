@@ -9,6 +9,8 @@ from datetime import datetime
 import base64
 from collections import Counter
 import os
+import glob
+import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -1630,6 +1632,9 @@ if st.sidebar.button("🏠 Inicio", use_container_width=True):
 if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
     st.session_state.page = "planes_costos"
 
+if st.sidebar.button("🔴 MUPcamp 1:1", use_container_width=True):
+    st.session_state.page = "mupcamp_1a1"
+
 if st.sidebar.button("🏢 ¿Quiénes somos?", use_container_width=True):
     st.session_state.page = "quienes_somos"
 
@@ -2793,6 +2798,422 @@ elif st.session_state.page == "planes_costos":
         </p>
         <p style="text-align: center; margin-top: 1rem;">
             💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+
+# ==================== PÁGINA DE MUPCAMP 1:1 ====================
+elif st.session_state.page == "mupcamp_1a1":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
+    # Page title
+    st.markdown("""
+    <div class="section-header">
+        <h2>🔴 MUPcamp 1:1 — Seguimiento presencial personalizado (10 semanas)</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Intro paragraph
+    st.markdown("""
+    <div class="corporate-section">
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Programa exclusivo de Muscle Up Gym / MUPAI.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Este no es un "mes de rutina" más. Es un acompañamiento 100% 1:1 durante 10 semanas, donde trabajamos tu cuerpo como un sistema completo: entrenamiento, nutrición, sueño, estrés, trabajo, familia y contexto real de tu vida.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            👤 Todas las sesiones son 1:1. En tu horario estoy trabajando únicamente contigo: correcciones técnicas, ajustes en tiempo real y feedback constante.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            📌 Cupo máximo: 5 personas al mismo tiempo. Cuando los lugares están completos, se abre lista de espera hasta que termina algún proceso.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Enfoques posibles section
+    st.markdown("""
+    <div class="section-header">
+        <h2>Enfoques posibles del MUPCAMP</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <ul style="font-size: 1.1rem; line-height: 1.8;">
+            <li><strong>Fitness:</strong> Mejorar composición corporal, perder grasa, ganar músculo, o recomposición</li>
+            <li><strong>Competencias:</strong> Preparación física para calistenia, powerlifting, crossfit, etc.</li>
+            <li><strong>Salud:</strong> Mejorar marcadores metabólicos, manejo de patologías, salud mental y física</li>
+            <li><strong>Rendimiento:</strong> Mejorar en deportes específicos (futbol, basquet, etc.)</li>
+        </ul>
+        <p style="font-size: 0.9rem; color: #888; margin-top: 1.5rem; font-style: italic;">
+            Programa diseñado por Erick De Luna, formado en ciencias del ejercicio, hipertrofia, fisiología del ejercicio y nutrición aplicada a la composición corporal y a la mujer deportista.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Coach section
+    st.markdown("""
+    <div class="section-header">
+        <h2>👨‍🏫 Sobre tu coach — Erick Francisco De Luna Hernández</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Try to show coach image
+    coach_image_path = "Copia de Anfitrión_20250809_125513_0000.png"
+    try:
+        st.image(coach_image_path, use_container_width=True, caption="Erick De Luna - Coach MUPCAMP 1:1")
+    except (FileNotFoundError, Exception) as e:
+        st.markdown("""
+        <div style="padding: 20px; background-color: #f0f0f0; border-radius: 10px; text-align: center;">
+            <p style="color: #666; font-size: 1rem;">📷 Imagen del coach no disponible</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>Formación principal:</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Licenciatura en Ciencias del Ejercicio y la Salud (UANL)</li>
+            <li>Certificación en Hipertrofia Muscular (ISSA)</li>
+            <li>Especialización en Fisiología del Ejercicio Aplicada</li>
+            <li>Nutrición Aplicada a la Composición Corporal</li>
+            <li>Entrenamiento de la Mujer Deportista</li>
+        </ul>
+        
+        <h3>Formación complementaria:</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Metodología del entrenamiento de la fuerza (Powerlifting, Halterofilia)</li>
+            <li>Biomecánica aplicada a ejercicios de resistencia</li>
+            <li>Evaluación de composición corporal y metabolismo</li>
+            <li>Diseño de rutinas periodizadas</li>
+        </ul>
+        
+        <h3>Experiencia:</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Director de programación de entrenamiento en Muscle Up Gym</li>
+            <li>Más de 100 planes personalizados entregados</li>
+            <li>Seguimiento de atletas amateur y recreativos</li>
+            <li>Formador de entrenadores en biomecánica y progresión</li>
+        </ul>
+        
+        <p style="font-size: 1.1rem; line-height: 1.8; margin-top: 1.5rem; font-weight: 500;">
+            El enfoque del MUPcamp no es "hacer ejercicio y comer bien" de forma genérica. Es entender que tu cuerpo responde al estrés del entrenamiento, 
+            a la alimentación, al sueño, al trabajo y a tu vida personal como un sistema. No puedes pedirle a tu cuerpo que cambie si no estás 
+            alineando todos esos factores. Por eso el trabajo es 1:1, porque cada persona tiene un contexto distinto y requiere ajustes constantes.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # What is included section
+    st.markdown("""
+    <div class="section-header">
+        <h2>¿Qué incluye exactamente?</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <ul style="font-size: 1.1rem; line-height: 1.8;">
+            <li><strong>Evaluación inicial completa:</strong> Composición corporal, historial de entrenamiento, alimentación actual, patrones de sueño, nivel de estrés, lesiones, contexto laboral y familiar</li>
+            <li><strong>Sesiones de entrenamiento 1:1:</strong> De 3 a 5 sesiones semanales según tu disponibilidad y objetivo (explicado más abajo)</li>
+            <li><strong>Plan de alimentación personalizado:</strong> Ajustado semana a semana según tu progreso, preferencias y contexto</li>
+            <li><strong>Planificación de entrenamiento periodizada:</strong> Diseñada para las 10 semanas con progresiones lógicas</li>
+            <li><strong>Ajustes semanales:</strong> Revisión de progreso, ajuste de cargas, volumen, calorías, macros</li>
+            <li><strong>Educación continua:</strong> Entiendes el porqué de cada decisión (no solo sigues instrucciones)</li>
+            <li><strong>Acceso directo vía WhatsApp:</strong> Para dudas, reportar cómo te sientes, ajustar algo urgente</li>
+            <li><strong>Evaluación final:</strong> Con reporte completo de cambios físicos, de rendimiento y aprendizajes clave</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Horarios disponibles
+    st.markdown("""
+    <div class="section-header">
+        <h2>Horarios disponibles</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Los bloques de horario son los siguientes (se elige 1 bloque, y ese bloque queda reservado exclusivamente para ti):
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>6:00 AM - 7:00 AM</li>
+            <li>7:00 AM - 8:00 AM</li>
+            <li>8:00 AM - 9:00 AM</li>
+            <li>5:00 PM - 6:00 PM</li>
+            <li>6:00 PM - 7:00 PM</li>
+            <li>7:00 PM - 8:00 PM</li>
+        </ul>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem; font-weight: 500;">
+            Una vez que eliges tu bloque, ese horario es tuyo durante las 10 semanas. Si hay días que no puedes asistir, se puede reprogramar dentro de la misma semana según disponibilidad.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Frequency decision
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>¿Cómo decido si entreno 3, 4 o 5 veces por semana?</h3>
+        <p style="font-size: 1.05rem; line-height: 1.7;">
+            Esto depende de tu disponibilidad real de tiempo, tu capacidad de recuperación actual, tu experiencia previa y tu objetivo.
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li><strong>3 sesiones:</strong> Ideal si tienes poco tiempo, eres principiante, o tu prioridad es crear el hábito sin saturarte. Se puede progresar perfectamente.</li>
+            <li><strong>4 sesiones:</strong> El punto medio. Suficiente estímulo para progresar de forma consistente sin generar fatiga excesiva. Funciona bien para la mayoría de personas.</li>
+            <li><strong>5 sesiones:</strong> Para quienes tienen experiencia previa, alta capacidad de recuperación, o un objetivo muy específico (competencia, evento importante, etc.).</li>
+        </ul>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem; font-style: italic;">
+            Lo importante no es "cuántas más mejor", sino que puedas sostenerlo durante 10 semanas y que tu cuerpo responda bien. Esto se decide en la evaluación inicial.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Investment and policy
+    st.markdown("""
+    <div class="results-container">
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – 10 semanas: $7,500 MXN</h3>
+        <p style="font-size: 1.1rem; line-height: 1.7; text-align: center;">
+            Pago único por adelantado para reservar tu lugar y tu horario.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.7; text-align: center; margin-top: 1rem; font-weight: 500;">
+            Debido al cupo reducido y al formato 100% 1:1, la inversión no es reembolsable. En casos de fuerza mayor (lesión grave, enfermedad, etc.) se puede valorar una pausa del proceso, pero no devolución.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Who is not a good candidate
+    st.markdown("""
+    <div class="section-header">
+        <h2>¿Para quién NO es el MUPcamp?</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">
+            Este programa NO es para ti si:
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Solo quieres "un mes de rutina" para hacer por tu cuenta sin seguimiento</li>
+            <li>No estás dispuesto a comprometerte 10 semanas completas</li>
+            <li>Buscas resultados milagrosos sin esfuerzo ni consistencia</li>
+            <li>No puedes ajustar tu horario para asistir a las sesiones (el cupo es limitado y el horario es fijo)</li>
+            <li>Esperas que el coach "haga magia" sin que tú pongas de tu parte en alimentación, descanso y adherencia</li>
+        </ul>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem; font-weight: 500;">
+            Este programa es intenso, personalizado y requiere compromiso real. Si no estás en ese momento de tu vida, mejor espera a estarlo.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Banking data and acquisition mechanic
+    st.markdown("""
+    <div class="section-header">
+        <h2>💳 Datos para Transferencia</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div style="text-align: center; margin: 2rem 0;">
+    """ + load_banking_image_base64() + """
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="section-header">
+        <h2>📝 Mecánica de Adquisición - Paso a Paso</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <ol style="font-size: 1.1rem; line-height: 1.8;">
+            <li><strong>Realiza la transferencia:</strong> $7,500 MXN a la cuenta mostrada arriba</li>
+            <li><strong>Llena el formulario de esta página:</strong> Con tus datos y sube el comprobante de pago</li>
+            <li><strong>Confirmación de pago:</strong> En máximo 24 horas hábiles recibirás confirmación de que tu lugar está reservado</li>
+            <li><strong>Programación de evaluación inicial:</strong> Se agenda tu primera sesión de evaluación completa</li>
+            <li><strong>Evaluación inicial (presencial):</strong> Composición corporal, historial, objetivos, contexto de vida</li>
+            <li><strong>Diseño del plan:</strong> En 3-5 días hábiles recibes tu plan de entrenamiento y alimentación inicial</li>
+            <li><strong>Inicio oficial del MUPcamp:</strong> Comienzas tus sesiones 1:1 en el horario reservado</li>
+        </ol>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1.5rem; font-weight: 500; text-align: center;">
+            ⚠️ El pago reserva tu lugar. Si el cupo está completo, entras a lista de espera hasta que se abra un lugar.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Registration form
+    st.markdown("""
+    <div class="section-header">
+        <h2>📋 Formulario de Registro y Envío de Comprobante</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <p style="font-size: 1.05rem; margin-bottom: 1rem;">
+            Completa este formulario después de haber realizado la transferencia. Tu comprobante será guardado de forma segura 
+            y recibirás confirmación por correo electrónico.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Form inputs
+    with st.form("mupcamp_registration_form"):
+        nombre_completo = st.text_input("Nombre completo *", placeholder="Ej: Juan Pérez García")
+        correo = st.text_input("Correo electrónico *", placeholder="Ej: juan.perez@email.com")
+        telefono = st.text_input("WhatsApp / Teléfono *", placeholder="Ej: 8661234567")
+        
+        horario_options = [
+            "6:00 AM - 7:00 AM",
+            "7:00 AM - 8:00 AM",
+            "8:00 AM - 9:00 AM",
+            "5:00 PM - 6:00 PM",
+            "6:00 PM - 7:00 PM",
+            "7:00 PM - 8:00 PM"
+        ]
+        horario_preferido = st.selectbox("Horario preferido", horario_options)
+        
+        comprobante_file = st.file_uploader(
+            "Comprobante de pago *", 
+            type=["png", "jpg", "jpeg", "pdf"],
+            help="Sube una foto clara de tu comprobante de transferencia"
+        )
+        
+        submit_button = st.form_submit_button("Enviar comprobante y solicitar reserva")
+        
+        if submit_button:
+            # Validate required fields
+            if not nombre_completo or not correo or not telefono:
+                st.error("❌ Por favor completa todos los campos obligatorios (nombre, correo, teléfono)")
+            elif not comprobante_file:
+                st.error("❌ Por favor sube tu comprobante de pago")
+            else:
+                try:
+                    # Create comprobantes folder if it doesn't exist
+                    comprobantes_dir = "comprobantes"
+                    if not os.path.exists(comprobantes_dir):
+                        os.makedirs(comprobantes_dir)
+                    
+                    # Generate safe filename with robust sanitization
+                    # Remove all non-alphanumeric characters except spaces and hyphens, then replace spaces with underscores
+                    safe_name = re.sub(r'[^\w\s-]', '', nombre_completo).strip().replace(' ', '_')
+                    if not safe_name:  # Fallback if name becomes empty after sanitization
+                        safe_name = "usuario"
+                    
+                    # Sanitize the original filename as well
+                    original_filename_base = os.path.splitext(comprobante_file.name)[0]
+                    original_filename_ext = os.path.splitext(comprobante_file.name)[1]
+                    safe_original_filename = re.sub(r'[^\w\s-]', '', original_filename_base).strip().replace(' ', '_')
+                    if not safe_original_filename:  # Fallback if filename becomes empty
+                        safe_original_filename = "comprobante"
+                    
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    filename = f"{safe_name}_{timestamp}_{safe_original_filename}{original_filename_ext}"
+                    filepath = os.path.join(comprobantes_dir, filename)
+                    
+                    # Save uploaded file
+                    with open(filepath, "wb") as f:
+                        f.write(comprobante_file.getbuffer())
+                    
+                    st.success(f"✅ ¡Comprobante guardado exitosamente!")
+                    st.info(f"📁 Archivo guardado: {filename}")
+                    
+                    # Email notification (simulated - commented for future SMTP integration)
+                    # Real implementation would use enviar_email_resultados with actual SMTP
+                    # email_content = f"""
+                    # Nueva solicitud de reserva MUPcamp 1:1
+                    # 
+                    # Nombre: {nombre_completo}
+                    # Correo: {correo}
+                    # Teléfono: {telefono}
+                    # Horario preferido: {horario_preferido}
+                    # Comprobante: {filename}
+                    # """
+                    # enviar_email_resultados("administracion@muscleupgym.fitness", "Nueva reserva MUPcamp 1:1", email_content)
+                    
+                    st.markdown("""
+                    <div class="results-container" style="margin-top: 1.5rem;">
+                        <h3 style="text-align: center;">📧 Próximos pasos</h3>
+                        <p style="font-size: 1.1rem; text-align: center; margin: 1rem 0;">
+                            Tu solicitud ha sido recibida. Recibirás confirmación en máximo 24 horas hábiles al correo: <strong>{}</strong>
+                        </p>
+                        <p style="font-size: 1rem; text-align: center; color: #666;">
+                            También puedes escribir directamente por WhatsApp al <strong>8662580594</strong> mencionando que ya enviaste tu comprobante.
+                        </p>
+                    </div>
+                    """.format(correo), unsafe_allow_html=True)
+                    
+                except (IOError, OSError) as e:
+                    st.error(f"❌ Error al guardar el comprobante: {str(e)}")
+                    st.info("Por favor intenta nuevamente o contacta directamente a administracion@muscleupgym.fitness")
+    
+    # Diplomas and certifications section
+    st.markdown("""
+    <div class="section-header">
+        <h2>📜 Certificaciones y Formación del Coach</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Try to find and display diploma images
+    diploma_patterns = [
+        "*diploma*",
+        "*cert*",
+        "*certificacion*",
+        "Copia de Anfitrión_20250809_125513_0000.png",
+        "20250728_220454.jpg"
+    ]
+    
+    diploma_files = []
+    for pattern in diploma_patterns:
+        matches = glob.glob(pattern)
+        diploma_files.extend(matches)
+    
+    # Remove duplicates
+    diploma_files = list(set(diploma_files))
+    
+    if diploma_files:
+        st.markdown("""
+        <div class="questionnaire-container">
+            <p style="font-size: 1.05rem; margin-bottom: 1rem;">
+                A continuación se muestran algunas de las certificaciones y formaciones del coach:
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Display diplomas in columns
+        cols = st.columns(2)
+        for idx, diploma_file in enumerate(diploma_files):
+            try:
+                with cols[idx % 2]:
+                    st.image(diploma_file, use_container_width=True, caption=f"Certificación {idx + 1}")
+            except (FileNotFoundError, Exception):
+                pass
+    else:
+        st.markdown("""
+        <div class="questionnaire-container">
+            <p style="font-size: 1.05rem; text-align: center; color: #888;">
+                Las certificaciones están disponibles para consulta en la evaluación inicial presencial.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    # Final CTA
+    st.markdown("""
+    <div class="results-container">
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">📞 Contacto Directo</h3>
+        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+            <strong>📧 Email:</strong> administracion@muscleupgym.fitness
+        </p>
+        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+            <strong>📱 WhatsApp:</strong> 8662580594
+        </p>
+        <p style="font-size: 1rem; text-align: center; margin-top: 1.5rem; color: #666;">
+            ¿Tienes dudas sobre el programa? Contáctanos directamente y con gusto te atendemos.
         </p>
     </div>
     """, unsafe_allow_html=True)
