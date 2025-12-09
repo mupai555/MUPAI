@@ -10,7 +10,6 @@ import base64
 from collections import Counter
 import os
 import glob
-import re
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -2899,111 +2898,85 @@ elif st.session_state.page == "mupcamp_1a1":
     </div>
     """, unsafe_allow_html=True)
     
-    # Registration form
+    # Contact CTA section for reservation and availability verification
     st.markdown("""
     <div class="section-header">
-        <h2>📋 Formulario de Registro y Envío de Comprobante</h2>
+        <h2>📩 Reserva y Verificación de Disponibilidad</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
-        <p style="font-size: 1.05rem; margin-bottom: 1rem;">
-            Completa este formulario después de haber realizado la transferencia. Tu comprobante será guardado de forma segura 
-            y recibirás confirmación por correo electrónico.
+        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+            Para verificar disponibilidad de lugares y horarios, o para reservar tu espacio en el 
+            <strong>MUPCAMP 1:1</strong>, envíanos un mensaje por correo electrónico o WhatsApp.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            <strong style="color: #FFCC00;">Por favor incluye en tu mensaje:</strong>
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7; margin-bottom: 1.5rem;">
+            <li>Tu nombre completo</li>
+            <li>Horario(s) preferido(s)</li>
+            <li>Tu correo electrónico o número de teléfono</li>
+            <li>Si ya realizaste el pago (adjunta el comprobante) o solo deseas consultar disponibilidad</li>
+        </ul>
+        <p style="font-size: 1rem; line-height: 1.6; color: #888; margin-top: 1.5rem; font-style: italic;">
+            💡 <strong>Nota:</strong> Recibirás una respuesta dentro de las siguientes 24 horas hábiles con la 
+            confirmación de disponibilidad o instrucciones para completar tu reserva.
         </p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Form inputs
-    with st.form("mupcamp_registration_form"):
-        nombre_completo = st.text_input("Nombre completo *", placeholder="Ej: Juan Pérez García")
-        correo = st.text_input("Correo electrónico *", placeholder="Ej: juan.perez@email.com")
-        telefono = st.text_input("WhatsApp / Teléfono *", placeholder="Ej: 8661234567")
-        
-        horario_options = [
-            "6:00 AM - 7:00 AM",
-            "7:00 AM - 8:00 AM",
-            "8:00 AM - 9:00 AM",
-            "5:00 PM - 6:00 PM",
-            "6:00 PM - 7:00 PM",
-            "7:00 PM - 8:00 PM"
-        ]
-        horario_preferido = st.selectbox("Horario preferido", horario_options)
-        
-        comprobante_file = st.file_uploader(
-            "Comprobante de pago *", 
-            type=["png", "jpg", "jpeg", "pdf"],
-            help="Sube una foto clara de tu comprobante de transferencia"
-        )
-        
-        submit_button = st.form_submit_button("Enviar comprobante y solicitar reserva")
-        
-        if submit_button:
-            # Validate required fields
-            if not nombre_completo or not correo or not telefono:
-                st.error("❌ Por favor completa todos los campos obligatorios (nombre, correo, teléfono)")
-            elif not comprobante_file:
-                st.error("❌ Por favor sube tu comprobante de pago")
-            else:
-                try:
-                    # Create comprobantes folder if it doesn't exist
-                    comprobantes_dir = "comprobantes"
-                    if not os.path.exists(comprobantes_dir):
-                        os.makedirs(comprobantes_dir)
-                    
-                    # Generate safe filename with robust sanitization
-                    # Remove all non-alphanumeric characters except spaces and hyphens, then replace spaces with underscores
-                    safe_name = re.sub(r'[^\w\s-]', '', nombre_completo).strip().replace(' ', '_')
-                    if not safe_name:  # Fallback if name becomes empty after sanitization
-                        safe_name = "usuario"
-                    
-                    # Sanitize the original filename as well
-                    original_filename_base = os.path.splitext(comprobante_file.name)[0]
-                    original_filename_ext = os.path.splitext(comprobante_file.name)[1]
-                    safe_original_filename = re.sub(r'[^\w\s-]', '', original_filename_base).strip().replace(' ', '_')
-                    if not safe_original_filename:  # Fallback if filename becomes empty
-                        safe_original_filename = "comprobante"
-                    
-                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    filename = f"{safe_name}_{timestamp}_{safe_original_filename}{original_filename_ext}"
-                    filepath = os.path.join(comprobantes_dir, filename)
-                    
-                    # Save uploaded file
-                    with open(filepath, "wb") as f:
-                        f.write(comprobante_file.getbuffer())
-                    
-                    st.success(f"✅ ¡Comprobante guardado exitosamente!")
-                    st.info(f"📁 Archivo guardado: {filename}")
-                    
-                    # Email notification (simulated - commented for future SMTP integration)
-                    # Real implementation would use enviar_email_resultados with actual SMTP
-                    # email_content = f"""
-                    # Nueva solicitud de reserva MUPcamp 1:1
-                    # 
-                    # Nombre: {nombre_completo}
-                    # Correo: {correo}
-                    # Teléfono: {telefono}
-                    # Horario preferido: {horario_preferido}
-                    # Comprobante: {filename}
-                    # """
-                    # enviar_email_resultados("administracion@muscleupgym.fitness", "Nueva reserva MUPcamp 1:1", email_content)
-                    
-                    st.markdown("""
-                    <div class="results-container" style="margin-top: 1.5rem;">
-                        <h3 style="text-align: center;">📧 Próximos pasos</h3>
-                        <p style="font-size: 1.1rem; text-align: center; margin: 1rem 0;">
-                            Tu solicitud ha sido recibida. Recibirás confirmación en máximo 24 horas hábiles al correo: <strong>{}</strong>
-                        </p>
-                        <p style="font-size: 1rem; text-align: center; color: #666;">
-                            También puedes escribir directamente por WhatsApp al <strong>8662580594</strong> mencionando que ya enviaste tu comprobante.
-                        </p>
-                    </div>
-                    """.format(correo), unsafe_allow_html=True)
-                    
-                except (IOError, OSError) as e:
-                    st.error(f"❌ Error al guardar el comprobante: {str(e)}")
-                    st.info("Por favor intenta nuevamente o contacta directamente a administracion@muscleupgym.fitness")
+    # Contact buttons
+    st.markdown("""
+    <div style="display: flex; justify-content: center; gap: 2rem; margin: 2rem 0; flex-wrap: wrap;">
+        <a href="mailto:administracion@muscleupgym.fitness?subject=Consulta%20MUPCAMP%201%3A1&body=Hola%2C%20me%20interesa%20el%20MUPCAMP%201%3A1.%0A%0ANombre%20completo%3A%20%0AHorario%20preferido%3A%20%0ATeléfono%2FEmail%3A%20%0AEstatus%20de%20pago%3A%20" 
+           target="_blank" 
+           style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #EA4335 0%, #D33B2C 100%); 
+                        padding: 1.5rem 2rem; 
+                        border-radius: 15px; 
+                        box-shadow: 0 4px 15px rgba(234, 67, 53, 0.4); 
+                        text-align: center; 
+                        transition: all 0.3s ease;
+                        border: 2px solid #EA4335;
+                        cursor: pointer;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📧</div>
+                <div style="color: white; font-size: 1.2rem; font-weight: bold;">Enviar Email</div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 0.3rem;">
+                    administracion@muscleupgym.fitness
+                </div>
+            </div>
+        </a>
+        <a href="https://wa.me/528662580594?text=Hola%2C%20me%20interesa%20el%20MUPCAMP%201%3A1.%0A%0ANombre%20completo%3A%20%0AHorario%20preferido%3A%20%0ATeléfono%2FEmail%3A%20%0AEstatus%20de%20pago%3A%20" 
+           target="_blank" 
+           style="text-decoration: none;">
+            <div style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); 
+                        padding: 1.5rem 2rem; 
+                        border-radius: 15px; 
+                        box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); 
+                        text-align: center; 
+                        transition: all 0.3s ease;
+                        border: 2px solid #25D366;
+                        cursor: pointer;">
+                <div style="font-size: 2.5rem; margin-bottom: 0.5rem;">📱</div>
+                <div style="color: white; font-size: 1.2rem; font-weight: bold;">WhatsApp</div>
+                <div style="color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 0.3rem;">
+                    8662580594
+                </div>
+            </div>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container" style="margin-top: 2rem;">
+        <p style="font-size: 1rem; text-align: center; color: #888;">
+            <strong>Si ya realizaste el pago:</strong> Adjunta tu comprobante de transferencia en el mensaje 
+            junto con tu información de contacto y horario preferido.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Diplomas and certifications section
     st.markdown("""
