@@ -2794,12 +2794,12 @@ elif st.session_state.page == "mupcamp_1a1":
             Los bloques de horario son los siguientes (se elige 1 bloque, y ese bloque queda reservado exclusivamente para ti):
         </p>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
-            <li>6:00 AM - 7:00 AM</li>
-            <li>7:00 AM - 8:00 AM</li>
-            <li>8:00 AM - 9:00 AM</li>
-            <li>5:00 PM - 6:00 PM</li>
-            <li>6:00 PM - 7:00 PM</li>
-            <li>7:00 PM - 8:00 PM</li>
+            <li>7:30 AM - 9:00 AM</li>
+            <li>9:00 AM - 10:30 AM</li>
+            <li>3:00 PM - 4:30 PM</li>
+            <li>4:30 PM - 6:00 PM</li>
+            <li>6:00 PM - 7:30 PM</li>
+            <li>8:30 PM - 10:00 PM</li>
         </ul>
         <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem; font-weight: 500;">
             Una vez que eliges tu bloque, ese horario es tuyo durante las 10 semanas. Si hay días que no puedes asistir, se puede reprogramar dentro de la misma semana según disponibilidad.
@@ -3033,7 +3033,70 @@ elif st.session_state.page == "mupcamp_1a1":
         st.markdown("""
         <div class="questionnaire-container">
             <p style="font-size: 1.05rem; margin-bottom: 1rem;">
-                A continuación se muestran algunas de las certificaciones y formaciones del coach:
+             Quién te va a acompañar en el MUPCAMP 1:1
+
+Erick Francisco De Luna Hernández
+Responsable del área de metodología de entrenamiento y nutrición en Muscle Up Gym (más de 6 años de experiencia).
+
+Formación académica
+
+Licenciado en Ciencias del Ejercicio por la UANL, con:
+
+Reconocimiento al Mérito Académico por el promedio más alto de su generación.
+
+1er lugar de generación en la Licenciatura en Ciencias del Ejercicio.
+
+Pertenencia al Programa Institucional Desarrollo de Talentos Universitarios durante 3 años, con beca del 100 % para titulación.
+
+Estancia académica en la Universidad de Sevilla (España) en Ciencias de la Actividad Física y del Deporte.
+
+Especialización y formación continua
+
+ICEN Institute – Instituto de Ciencias del Ejercicio y Nutrición
+
+Diplomado en Entrenamiento para Hipertrofia y Fisiología del Ejercicio.
+
+Curso “Nutrición Inteligente para Mujeres: Ciencia, Ciclo Menstrual y Disponibilidad Energética”.
+
+Participación en el I International Congress for the Improvement of Body Composition ICEN x MASS (enfoque en mejora de composición corporal basada en evidencia).
+
+Football Science Institute (FSI) – Granada, España
+
+Alumno del programa FSI Master Football Strength and Conditioning Coach (fuerza y acondicionamiento aplicados al fútbol).
+
+Asistencia a la IV FSI Conference on High Performance in Football en el Estadio Benito Villamarín (Sevilla).
+
+Otros cursos y certificaciones en:
+
+Acondicionamiento cardiovascular y rendimiento.
+
+Evaluación y mejora de la composición corporal.
+
+Actualización continua en entrenamiento de fuerza, nutrición deportiva y disponibilidad energética.
+
+Experiencia profesional
+
+Más de 6 años como encargado del área de metodología de entrenamiento y nutrición en Muscle Up Gym:
+
+Diseño de sistemas de entrenamiento de fuerza y acondicionamiento para:
+
+Fitness estético (ganancia de músculo y pérdida de grasa, únicamente con enfoque natural).
+
+Salud y bienestar (mejora de marcadores de salud, calidad de vida y función).
+
+Rendimiento deportivo, con énfasis en deportes de campo como el fútbol.
+
+Planificación nutricional personalizada (déficit, mantenimiento, superávit) integrada al entrenamiento.
+
+Seguimiento 1:1 de procesos de cambio de composición corporal y preparación para fases específicas (mini-cuts, recomposición, fases de volumen controlado).
+
+Enfoque de trabajo
+
+Integra ciencia del ejercicio, nutrición y contexto real de la persona (estrés, sueño, trabajo, familia).
+
+Aplica principios de sistemas complejos y planificación inteligente, ajustando la dosis de entrenamiento (3, 4 o 5 sesiones/sem) y la nutrición al sistema de vida de cada persona.
+
+Trabaja con cupos muy limitados para poder ofrecer un seguimiento cercano, detallado y profesional, similar al esquema de consulta de un especialista.
             </p>
         </div>
         """, unsafe_allow_html=True)
