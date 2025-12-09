@@ -27,3 +27,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 tmp/__pycache__/
+
+# Payment receipts
+comprobantes/
