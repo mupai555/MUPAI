@@ -1919,23 +1919,23 @@ if st.session_state.page == "inicio":
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $550 - $700 MXN
+                💰 $600 - $750 MXN
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 6 semanas</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 5 semanas</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
                 <ul style="margin: 0; padding-left: 1.2rem;">
                     <li>Evaluación inicial con bioimpedancia</li>
-                    <li>6 menús semanales adaptados</li>
+                    <li>5 menús semanales adaptados</li>
                     <li>Personalización según preferencias</li>
                     <li>Evaluación final con medición</li>
                     <li>Menús extra: $100/$150 MXN</li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $550 MXN</li>
-                    <li><strong>Externos:</strong> $700 MXN</li>
+                    <li><strong>Internos:</strong> $600 MXN</li>
+                    <li><strong>Externos:</strong> $750 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -1958,11 +1958,11 @@ if st.session_state.page == "inicio":
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $650 - $800 MXN
+                💰 $750 - $900 MXN
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 8 semanas</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 10 semanas</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
                 <ul style="margin: 0; padding-left: 1.2rem;">
                     <li>Evaluación inicial completa</li>
@@ -1974,8 +1974,8 @@ if st.session_state.page == "inicio":
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $650 MXN</li>
-                    <li><strong>Externos:</strong> $800 MXN</li>
+                    <li><strong>Internos:</strong> $750 MXN</li>
+                    <li><strong>Externos:</strong> $900 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -2004,7 +2004,7 @@ if st.session_state.page == "inicio":
             <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
                         color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $1,050 - $1,350 MXN
+                💰 $1,200 - $1,500 MXN
                 <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
@@ -2020,8 +2020,8 @@ if st.session_state.page == "inicio":
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFD700;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $1,050 MXN</li>
-                    <li><strong>Externos:</strong> $1,350 MXN</li>
+                    <li><strong>Internos:</strong> $1,200 MXN</li>
+                    <li><strong>Externos:</strong> $1,500 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -2503,7 +2503,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>🍽️ Plan de Nutrición Personalizada</h3>
-        <p><strong>Duración:</strong> 6 semanas</p>
+        <p><strong>Duración:</strong> 5 semanas</p>
         <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2512,13 +2512,13 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $550 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $700 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $750 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
             <li>Evaluación inicial completa con bioimpedancia</li>
-            <li>6 menús semanales adaptados (calorías, macros, micronutrientes)</li>
+            <li>5 menús semanales adaptados (calorías, macros, micronutrientes)</li>
             <li>Personalización según preferencias alimentarias</li>
             <li>Evaluación final con medición corporal</li>
             <li>Menús extra desde $100 (internos) $150 (externos) MXN</li>
@@ -2530,7 +2530,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
-        <p><strong>Duración:</strong> 8 semanas</p>
+        <p><strong>Duración:</strong> 10 semanas (bloque de 10 semanas)</p>
         <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2539,8 +2539,8 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $650 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $800 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $750 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $900 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
@@ -2558,7 +2558,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
-        <p><strong>Duración:</strong> Nutrición 6 semanas + Entrenamiento 8 semanas</p>
+        <p><strong>Duración:</strong> Nutrición 5 sem + Entrenamiento 10 sem</p>
         <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2567,8 +2567,8 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $1050 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $1350 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $1,200 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $1,500 MXN</li>
         </ul>
         <h4>✅ Beneficios Incluidos:</h4>
         <ul>
