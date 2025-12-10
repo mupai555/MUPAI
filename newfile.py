@@ -2780,6 +2780,10 @@ elif st.session_state.page == "mupcamp_1a1":
     </div>
     """, unsafe_allow_html=True)
     
+    st.markdown("""
+    
+""", unsafe_allow_html=True)
+    
     # Horarios disponibles
     st.markdown("""
     <div class="section-header">
@@ -2839,6 +2843,19 @@ elif st.session_state.page == "mupcamp_1a1":
         </p>
     </div>
     """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <p>
+        ✅ El pago incluye la membresía al Muscle Up Gym durante las 10 semanas del programa, con acceso completo a las instalaciones en el horario reservado.
+    </p>
+    <p>
+        ✨ Atención 100% personalizada: seguimiento 1:1, ajustes semanales y comunicación directa por WhatsApp. 
+        <strong>Desde $232 MXN por sesión</strong> — una forma simple y clara de entender el valor real de tu inversión.
+    </p>
+    <p>
+        *Pago total: $11,599 MXN. Mostramos el costo por sesión para facilitar la comparación y ayudar a decidir con confianza.
+    </p>
+""", unsafe_allow_html=True)
     
     # Who is not a good candidate
     st.markdown("""
@@ -3041,6 +3058,8 @@ Football Science Institute (FSI) – Granada, España
 Alumno del programa FSI Master Football Strength and Conditioning Coach (fuerza y acondicionamiento aplicados al fútbol).
 
 Asistencia a la IV FSI Conference on High Performance in Football en el Estadio Benito Villamarín (Sevilla).
+
+🎓 Formación destacada: <strong>Master FSI (Football Strength and Conditioning Coach)</strong> — concluido y aplicado en la práctica profesional.
 
 Otros cursos y certificaciones en:
 
