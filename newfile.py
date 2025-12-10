@@ -2831,12 +2831,11 @@ elif st.session_state.page == "mupcamp_1a1":
     # Investment and policy
     st.markdown("""
     <div class="results-container">
-        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – Vigencia 10 semanas: $11,599 MXN</h3>
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – Vigencia 10 semanas: Desde $232 por sesiónMXN</h3>
         <p style="font-size: 1.1rem; line-height: 1.7; text-align: center;">
-            Pago único por adelantado para reservar tu lugar y tu horario.
+           $11,599 MXN Pago único por adelantado para reservar tu lugar y tu horario.
         </p>
         <p style="font-size: 1.05rem; line-height: 1.7; text-align: center; margin-top: 1rem; font-weight: 500;">
-            🔥 <strong>Promoción Semanal:</strong> Descuento especial disponible por tiempo limitado.
         </p>
         <p style="font-size: 1.05rem; line-height: 1.7; text-align: center; margin-top: 1rem; font-weight: 500;">
             Debido al cupo reducido y al formato 100% 1:1, la inversión no es reembolsable. En casos de fuerza mayor (lesión grave, enfermedad, etc.) se puede valorar una pausa del proceso, pero no devolución.
