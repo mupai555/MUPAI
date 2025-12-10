@@ -2827,7 +2827,7 @@ elif st.session_state.page == "mupcamp_1a1":
     # Investment and policy
     st.markdown("""
     <div class="results-container">
-        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – 10 semanas: $10,999 MXN</h3>
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – Vigencia 10 semanas: $11,599 MXN</h3>
         <p style="font-size: 1.1rem; line-height: 1.7; text-align: center;">
             Pago único por adelantado para reservar tu lugar y tu horario.
         </p>
@@ -2887,7 +2887,7 @@ elif st.session_state.page == "mupcamp_1a1":
     st.markdown("""
     <div class="questionnaire-container">
         <ol style="font-size: 1.1rem; line-height: 1.8;">
-            <li><strong>Realiza la transferencia:</strong> $10,999 MXN a la cuenta mostrada arriba</li>
+            <li><strong>Realiza la transferencia:</strong> $11,599 MXN a la cuenta mostrada arriba (vigencia: 10 semanas)</li>
             <li><strong>Llena el formulario de esta página:</strong> Con tus datos y sube el comprobante de pago</li>
             <li><strong>Confirmación de pago:</strong> En máximo 24 horas hábiles recibirás confirmación de que tu lugar está reservado</li>
             <li><strong>Programación de evaluación inicial:</strong> Se agenda tu primera sesión de evaluación completa</li>
