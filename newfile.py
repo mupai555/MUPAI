@@ -2827,9 +2827,12 @@ elif st.session_state.page == "mupcamp_1a1":
     # Investment and policy
     st.markdown("""
     <div class="results-container">
-        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – 10 semanas: $7,500 MXN</h3>
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">💰 MUPCAMP 1:1 – 10 semanas: $10,999 MXN</h3>
         <p style="font-size: 1.1rem; line-height: 1.7; text-align: center;">
             Pago único por adelantado para reservar tu lugar y tu horario.
+        </p>
+        <p style="font-size: 1.05rem; line-height: 1.7; text-align: center; margin-top: 1rem; font-weight: 500;">
+            🔥 <strong>Promoción Semanal:</strong> Descuento especial disponible por tiempo limitado.
         </p>
         <p style="font-size: 1.05rem; line-height: 1.7; text-align: center; margin-top: 1rem; font-weight: 500;">
             Debido al cupo reducido y al formato 100% 1:1, la inversión no es reembolsable. En casos de fuerza mayor (lesión grave, enfermedad, etc.) se puede valorar una pausa del proceso, pero no devolución.
@@ -2884,7 +2887,7 @@ elif st.session_state.page == "mupcamp_1a1":
     st.markdown("""
     <div class="questionnaire-container">
         <ol style="font-size: 1.1rem; line-height: 1.8;">
-            <li><strong>Realiza la transferencia:</strong> $7,500 MXN a la cuenta mostrada arriba</li>
+            <li><strong>Realiza la transferencia:</strong> $10,999 MXN a la cuenta mostrada arriba</li>
             <li><strong>Llena el formulario de esta página:</strong> Con tus datos y sube el comprobante de pago</li>
             <li><strong>Confirmación de pago:</strong> En máximo 24 horas hábiles recibirás confirmación de que tu lugar está reservado</li>
             <li><strong>Programación de evaluación inicial:</strong> Se agenda tu primera sesión de evaluación completa</li>
