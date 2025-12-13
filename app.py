@@ -1389,7 +1389,7 @@ def show_main_questionnaire():
                                          min_value=5.0, max_value=50.0, value=20.0, step=0.1)
             
             grasa_visceral = st.number_input("Grasa visceral (en gramos)", 
-                                            min_value=0.0, max_value=10000.0, value=0.0, step=0.1,
+                                            min_value=0.0, max_value=5000.0, value=0.0, step=0.1,
                                             help="Ingresa el valor de grasa visceral en gramos. Si no tienes esta medición, deja el valor en 0.")
             
             num_folds = None
