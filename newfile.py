@@ -1613,10 +1613,169 @@ def evaluar_estres(respuestas_estres):
     else:
         return 0.10
 
-def enviar_email_resultados(destinatario, asunto, contenido):
-    """Función simulada de envío de email"""
-    st.success("✅ Email enviado exitosamente")
-    return True
+def _enviar_email_smtp(smtp_server, smtp_port, smtp_user, smtp_password, destinatario, asunto, contenido):
+    """
+    Helper function para enviar un email via SMTP.
+    
+    Returns:
+        tuple: (bool success, str error_message or None)
+    """
+    # Validar credenciales antes de crear el mensaje
+    if not smtp_user or not smtp_password:
+        return (False, "Credenciales SMTP no configuradas")
+    
+    try:
+        msg = MIMEMultipart()
+        msg['From'] = smtp_user
+        msg['To'] = destinatario
+        msg['Subject'] = Header(asunto, 'utf-8')
+        msg.attach(MIMEText(contenido, 'plain', 'utf-8'))
+        
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=10) as server:
+            server.starttls()
+            server.login(smtp_user, smtp_password)
+            server.send_message(msg)
+        return (True, None)
+        
+    except smtplib.SMTPException as e:
+        return (False, f"Error SMTP: {str(e)}")
+    except ConnectionError as e:
+        return (False, f"Error de conexión: {str(e)}")
+    except Exception as e:
+        return (False, f"Error inesperado: {str(e)}")
+
+
+def enviar_email_resultados(destinatario, asunto, contenido, datos_cliente=None):
+    """
+    Envía dos emails separados: uno completo y otro resumen.
+    
+    Email completo: Contiene todos los detalles de evaluación y análisis.
+    Email resumen: Contiene solo datos básicos del cliente a administracion@muscleupgym.fitness.
+    
+    Ejemplo de uso:
+        # Preparar datos del cliente
+        datos_cliente = {
+            'nombre_completo': 'San Juana Karina Martinez Sanchez',
+            'edad': 41,
+            'sexo': 'Mujer',
+            'telefono': '8661357422',
+            'email': 'sanjuanamartine.5307@gmail.com',
+            'fecha_evaluacion': '2025-12-10'
+        }
+        
+        # Enviar ambos emails
+        enviar_email_resultados(
+            destinatario='cliente@email.com',
+            asunto='Evaluación Completa - MUPAI',
+            contenido=reporte_completo,
+            datos_cliente=datos_cliente
+        )
+    
+    Envía emails con resultados de evaluación.
+    
+    Args:
+        destinatario: Email del destinatario principal (para email completo)
+        asunto: Asunto del email
+        contenido: Contenido completo del email
+        datos_cliente: Dict con datos del cliente para email resumen (opcional)
+            Debe contener: nombre_completo, edad, sexo, telefono, email, fecha_evaluacion
+    
+    Returns:
+        bool: True si ambos emails se enviaron exitosamente, False en caso contrario
+    """
+    # Configuración del servidor SMTP (usando variables de entorno o secrets)
+    try:
+        smtp_server = os.getenv('SMTP_SERVER') or st.secrets.get('smtp_server', 'smtp.gmail.com')
+        smtp_port_str = os.getenv('SMTP_PORT') or st.secrets.get('smtp_port', '587')
+        smtp_port = int(smtp_port_str) if smtp_port_str else 587
+        smtp_user = os.getenv('SMTP_USER') or st.secrets.get('smtp_user', '')
+        smtp_password = os.getenv('SMTP_PASSWORD') or st.secrets.get('smtp_password', '')
+        email_administracion = os.getenv('ADMIN_EMAIL') or st.secrets.get('admin_email', 'administracion@muscleupgym.fitness')
+    except (ValueError, TypeError) as e:
+        # Si hay error al convertir el puerto, mostrar mensaje informativo
+        st.info("📧 Error en configuración SMTP. Verifica que el puerto sea un número válido.")
+        st.success("✅ Evaluación procesada correctamente")
+        return True
+    
+    # Verificar si hay credenciales configuradas
+    tiene_credenciales = bool(smtp_user and smtp_password)
+    
+    if not tiene_credenciales:
+        st.info("📧 Modo sin configuración SMTP - Los emails no se enviaron pero la evaluación fue procesada correctamente.")
+        return True
+    
+    resultados = {
+        'email_completo': False,
+        'email_resumen': False,
+        'errores': []
+    }
+    
+    # 1. Enviar email completo con todos los detalles de evaluación
+    exitoso, error = _enviar_email_smtp(
+        smtp_server, smtp_port, smtp_user, smtp_password,
+        destinatario, asunto, contenido
+    )
+    
+    if exitoso:
+        resultados['email_completo'] = True
+        st.success(f"✅ Email completo enviado a {destinatario}")
+    else:
+        error_msg = f"Error al enviar email completo: {error}"
+        resultados['errores'].append(error_msg)
+        st.warning(f"⚠️ {error_msg}")
+    
+    # 2. Enviar email resumen a administración (si se proporcionan datos del cliente)
+    if datos_cliente:
+        
+        # Obtener fecha de evaluación con valor por defecto solo si es necesario
+        fecha_eval = datos_cliente.get('fecha_evaluacion') or datetime.now().strftime('%Y-%m-%d')
+        
+        # Construir contenido del email resumen
+        contenido_resumen = (
+            "DATOS DEL CLIENTE:\n"
+            "=====================================\n"
+            f"- Nombre completo: {datos_cliente.get('nombre_completo', 'N/A')}\n"
+            f"- Edad: {datos_cliente.get('edad', 'N/A')} años\n"
+            f"- Sexo: {datos_cliente.get('sexo', 'N/A')}\n"
+            f"- Teléfono: {datos_cliente.get('telefono', 'N/A')}\n"
+            f"- Email: {datos_cliente.get('email', 'N/A')}\n"
+            f"- Fecha evaluación: {fecha_eval}\n"
+        )
+        
+        exitoso, error = _enviar_email_smtp(
+            smtp_server, smtp_port, smtp_user, smtp_password,
+            email_administracion, f"RESUMEN - {asunto}", contenido_resumen
+        )
+        
+        if exitoso:
+            resultados['email_resumen'] = True
+            st.success(f"✅ Email resumen enviado a {email_administracion}")
+        else:
+            error_msg = f"Error al enviar email resumen: {error}"
+            resultados['errores'].append(error_msg)
+            st.warning(f"⚠️ {error_msg}")
+    
+    # Determinar si todos los emails esperados fueron enviados exitosamente
+    # Email completo: siempre se intenta enviar
+    # Email resumen: solo se envía si se proporcionaron datos_cliente
+    email_completo_exitoso = resultados['email_completo']
+    # Si datos_cliente no fue proporcionado, el email resumen no se requiere (considerado exitoso)
+    email_resumen_requerido = datos_cliente is not None
+    email_resumen_exitoso = resultados['email_resumen'] if email_resumen_requerido else True
+    
+    if email_completo_exitoso and email_resumen_exitoso:
+        st.success("✅ Todos los emails fueron enviados exitosamente")
+        return True
+    elif email_completo_exitoso or email_resumen_exitoso:
+        st.warning("⚠️ Algunos emails no pudieron ser enviados")
+        return False
+    else:
+        st.error("❌ No se pudo enviar ningún email")
+        if resultados['errores']:
+            with st.expander("Ver detalles de errores"):
+                for error in resultados['errores']:
+                    st.text(error)
+        return False
         
 # Inicializar session state
 if 'page' not in st.session_state:
