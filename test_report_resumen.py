@@ -138,7 +138,7 @@ def test_karina_case():
     checks = {
         'FFMI not in report': 'FFMI' not in reporte,
         'Clasificación FFMI not in report': 'Clasificación FFMI' not in reporte,
-        'Novato/Intermedio/Avanzado not in report': all(term not in reporte for term in ['Novato', 'Novata', 'Intermedio', 'Intermedia', 'Avanzado', 'Avanzada', 'Elite']),
+        'FFMI classifications not in report': all(term not in reporte for term in ['Novato', 'Novata', 'Intermedio', 'Intermedia', 'Avanzado', 'Avanzada', 'Elite']),
         'Contains name': 'San Juana Karina Martinez Sanchez' in reporte,
         'Contains age': '41 años' in reporte,
         'Contains sex': 'Mujer' in reporte,
