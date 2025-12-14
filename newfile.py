@@ -1620,6 +1620,10 @@ def _enviar_email_smtp(smtp_server, smtp_port, smtp_user, smtp_password, destina
     Returns:
         tuple: (bool success, str error_message or None)
     """
+    # Validar credenciales antes de crear el mensaje
+    if not smtp_user or not smtp_password:
+        return (False, "Credenciales SMTP no configuradas")
+    
     try:
         msg = MIMEMultipart()
         msg['From'] = smtp_user
@@ -1627,13 +1631,11 @@ def _enviar_email_smtp(smtp_server, smtp_port, smtp_user, smtp_password, destina
         msg['Subject'] = Header(asunto, 'utf-8')
         msg.attach(MIMEText(contenido, 'plain', 'utf-8'))
         
-        if smtp_user and smtp_password:
-            with smtplib.SMTP(smtp_server, smtp_port, timeout=10) as server:
-                server.starttls()
-                server.login(smtp_user, smtp_password)
-                server.send_message(msg)
-            return (True, None)
-        return (False, "Credenciales SMTP no configuradas")
+        with smtplib.SMTP(smtp_server, smtp_port, timeout=10) as server:
+            server.starttls()
+            server.login(smtp_user, smtp_password)
+            server.send_message(msg)
+        return (True, None)
         
     except smtplib.SMTPException as e:
         return (False, f"Error SMTP: {str(e)}")
@@ -1683,13 +1685,15 @@ def enviar_email_resultados(destinatario, asunto, contenido, datos_cliente=None)
     """
     # Configuración del servidor SMTP (usando variables de entorno o secrets)
     try:
-        smtp_server = os.getenv('SMTP_SERVER') or st.secrets.get('smtp_server', 'smtp.gmail.com') or 'smtp.gmail.com'
-        smtp_port = int(os.getenv('SMTP_PORT') or st.secrets.get('smtp_port', 587) or 587)
-        smtp_user = os.getenv('SMTP_USER') or st.secrets.get('smtp_user', '') or ''
-        smtp_password = os.getenv('SMTP_PASSWORD') or st.secrets.get('smtp_password', '') or ''
-    except (KeyError, AttributeError, ValueError, TypeError) as e:
-        # Si no hay configuración, mostrar mensaje informativo
-        st.info("📧 Para activar el envío automático de emails, configura las credenciales SMTP.")
+        smtp_server = os.getenv('SMTP_SERVER') or st.secrets.get('smtp_server', 'smtp.gmail.com')
+        smtp_port_str = os.getenv('SMTP_PORT') or st.secrets.get('smtp_port', '587')
+        smtp_port = int(smtp_port_str) if smtp_port_str else 587
+        smtp_user = os.getenv('SMTP_USER') or st.secrets.get('smtp_user', '')
+        smtp_password = os.getenv('SMTP_PASSWORD') or st.secrets.get('smtp_password', '')
+        email_administracion = os.getenv('ADMIN_EMAIL') or st.secrets.get('admin_email', 'administracion@muscleupgym.fitness')
+    except (ValueError, TypeError) as e:
+        # Si hay error al convertir el puerto, mostrar mensaje informativo
+        st.info("📧 Error en configuración SMTP. Verifica que el puerto sea un número válido.")
         st.success("✅ Evaluación procesada correctamente")
         return True
     
@@ -1722,8 +1726,6 @@ def enviar_email_resultados(destinatario, asunto, contenido, datos_cliente=None)
     
     # 2. Enviar email resumen a administración (si se proporcionan datos del cliente)
     if datos_cliente:
-        # Email de administración
-        email_administracion = "administracion@muscleupgym.fitness"
         
         # Obtener fecha de evaluación con valor por defecto solo si es necesario
         fecha_eval = datos_cliente.get('fecha_evaluacion') or datetime.now().strftime('%Y-%m-%d')
