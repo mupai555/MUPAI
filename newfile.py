@@ -1651,16 +1651,13 @@ def enviar_email_resultados(destinatario, asunto, contenido, datos_cliente=None)
     Returns:
         bool: True si ambos emails se enviaron exitosamente, False en caso contrario
     """
-    import os
-    from datetime import datetime
-    
     # Configuración del servidor SMTP (usando variables de entorno o secrets)
     try:
-        smtp_server = os.getenv('SMTP_SERVER', st.secrets.get('smtp_server', 'smtp.gmail.com'))
-        smtp_port = int(os.getenv('SMTP_PORT', st.secrets.get('smtp_port', 587)))
-        smtp_user = os.getenv('SMTP_USER', st.secrets.get('smtp_user', ''))
-        smtp_password = os.getenv('SMTP_PASSWORD', st.secrets.get('smtp_password', ''))
-    except:
+        smtp_server = os.getenv('SMTP_SERVER') or st.secrets.get('smtp_server', 'smtp.gmail.com')
+        smtp_port = int(os.getenv('SMTP_PORT') or st.secrets.get('smtp_port', 587))
+        smtp_user = os.getenv('SMTP_USER') or st.secrets.get('smtp_user', '')
+        smtp_password = os.getenv('SMTP_PASSWORD') or st.secrets.get('smtp_password', '')
+    except (KeyError, AttributeError, ValueError) as e:
         # Si no hay configuración, mostrar mensaje informativo
         st.info("📧 Para activar el envío automático de emails, configura las credenciales SMTP.")
         st.success("✅ Evaluación procesada correctamente")
@@ -1712,16 +1709,16 @@ def enviar_email_resultados(destinatario, asunto, contenido, datos_cliente=None)
             email_administracion = "administracion@muscleupgym.fitness"
             
             # Construir contenido del email resumen
-            contenido_resumen = f"""
-DATOS DEL CLIENTE:
-=====================================
-- Nombre completo: {datos_cliente.get('nombre_completo', 'N/A')}
-- Edad: {datos_cliente.get('edad', 'N/A')} años
-- Sexo: {datos_cliente.get('sexo', 'N/A')}
-- Teléfono: {datos_cliente.get('telefono', 'N/A')}
-- Email: {datos_cliente.get('email', 'N/A')}
-- Fecha evaluación: {datos_cliente.get('fecha_evaluacion', datetime.now().strftime('%Y-%m-%d'))}
-"""
+            contenido_resumen = (
+                "DATOS DEL CLIENTE:\n"
+                "=====================================\n"
+                f"- Nombre completo: {datos_cliente.get('nombre_completo', 'N/A')}\n"
+                f"- Edad: {datos_cliente.get('edad', 'N/A')} años\n"
+                f"- Sexo: {datos_cliente.get('sexo', 'N/A')}\n"
+                f"- Teléfono: {datos_cliente.get('telefono', 'N/A')}\n"
+                f"- Email: {datos_cliente.get('email', 'N/A')}\n"
+                f"- Fecha evaluación: {datos_cliente.get('fecha_evaluacion', datetime.now().strftime('%Y-%m-%d'))}\n"
+            )
             
             msg_resumen = MIMEMultipart()
             msg_resumen['From'] = smtp_user
@@ -1759,13 +1756,18 @@ DATOS DEL CLIENTE:
         st.info("📧 Modo sin configuración SMTP - Los emails no se enviaron pero la evaluación fue procesada correctamente.")
         return True
     
-    if resultados['email_completo'] or resultados['email_resumen']:
-        if resultados['email_completo'] and (not datos_cliente or resultados['email_resumen']):
-            st.success("✅ Todos los emails fueron enviados exitosamente")
-            return True
-        else:
-            st.warning("⚠️ Algunos emails no pudieron ser enviados")
-            return False
+    # Determinar si todos los emails esperados fueron enviados exitosamente
+    # Email completo siempre se intenta enviar
+    # Email resumen solo se envía si se proporcionaron datos_cliente
+    email_completo_exitoso = resultados['email_completo']
+    email_resumen_exitoso = resultados['email_resumen'] if datos_cliente else True  # True si no se necesita
+    
+    if email_completo_exitoso and email_resumen_exitoso:
+        st.success("✅ Todos los emails fueron enviados exitosamente")
+        return True
+    elif email_completo_exitoso or email_resumen_exitoso:
+        st.warning("⚠️ Algunos emails no pudieron ser enviados")
+        return False
     else:
         st.error("❌ No se pudo enviar ningún email")
         if resultados['errores']:
