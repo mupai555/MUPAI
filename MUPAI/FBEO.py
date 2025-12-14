@@ -263,8 +263,8 @@ def build_report_resumen(data):
     reporte += f"1. Peso: {data['peso']:.1f} kg\n"
     reporte += f"2. Estatura: {data['estatura']:.0f} cm\n"
     reporte += f"3. IMC: {data['imc']:.1f} kg/m²\n"
-    reporte += f"4. % Grasa medido: {data['grasa_medida']:.1f}%\n"
-    reporte += f"5. % Grasa corregido (DEXA/4C): {data['grasa_corregida']:.1f}%\n"
+    reporte += f"4. % Grasa medida: {data['grasa_medida']:.1f}%\n"
+    reporte += f"5. % Grasa corregida (DEXA/4C): {data['grasa_corregida']:.1f}%\n"
     
     # Grasa visceral (N/D si no disponible)
     grasa_visceral = data.get('grasa_visceral')

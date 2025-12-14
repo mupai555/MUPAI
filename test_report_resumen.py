@@ -7,7 +7,7 @@ Tests with Karina's case data
 import sys
 import os
 
-# Inline the build_report_resumen function to avoid streamlit import issues
+# Inline the build_report_resumen function for test isolation and to avoid module dependencies
 def build_report_resumen(data):
     """
     Genera el reporte resumido para el usuario.
@@ -45,8 +45,8 @@ def build_report_resumen(data):
     reporte += f"1. Peso: {data['peso']:.1f} kg\n"
     reporte += f"2. Estatura: {data['estatura']:.0f} cm\n"
     reporte += f"3. IMC: {data['imc']:.1f} kg/m²\n"
-    reporte += f"4. % Grasa medido: {data['grasa_medida']:.1f}%\n"
-    reporte += f"5. % Grasa corregido (DEXA/4C): {data['grasa_corregida']:.1f}%\n"
+    reporte += f"4. % Grasa medida: {data['grasa_medida']:.1f}%\n"
+    reporte += f"5. % Grasa corregida (DEXA/4C): {data['grasa_corregida']:.1f}%\n"
     
     # Grasa visceral (N/D si no disponible)
     grasa_visceral = data.get('grasa_visceral')
@@ -145,8 +145,8 @@ def test_karina_case():
         'Contains peso': str(peso) in reporte,
         'Contains estatura': '160 cm' in reporte,
         'Contains IMC': 'IMC:' in reporte,
-        'Contains grasa medida': 'Grasa medido:' in reporte,
-        'Contains grasa corregida': 'Grasa corregido (DEXA/4C):' in reporte,
+        'Contains grasa medida': 'Grasa medida:' in reporte,
+        'Contains grasa corregida': 'Grasa corregida (DEXA/4C):' in reporte,
         'Contains MLG': 'Masa libre de grasa:' in reporte,
         'Contains masa grasa': 'Masa grasa:' in reporte,
         'Contains categoría': 'Categoría de grasa corporal:' in reporte,
