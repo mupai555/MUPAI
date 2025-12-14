@@ -951,7 +951,7 @@ def generate_warnings(fri: Dict[str, Any], goal: Dict[str, Any], body_fat: float
 
 
 def generate_complete_report(full_name, email, age, gender, weight, height, bf_method, bf_original, 
-                           bf_adjusted, lean_mass, ffmi, grasa_visceral, activity_level, occupation, training_minutes, 
+                           bf_adjusted, lean_mass, ffmi, activity_level, occupation, training_minutes, 
                            training_days, daily_steps, ger_final, ger_method, geaf, gee_daily, 
                            get_total, sleep_score, stress_score, fri, goal, final_calories, 
                            macros, warnings):
@@ -984,7 +984,6 @@ BF Ajustado: {bf_adjusted:.1f}%
 Ajuste aplicado: {bf_adjusted - bf_original:+.1f}%
 Masa Magra: {lean_mass:.1f} kg
 FFMI: {ffmi:.1f}
-Grasa visceral: {grasa_visceral:.1f} g
 
 ========================================
 🏃‍♂️ ACTIVIDAD FÍSICA
@@ -1388,10 +1387,6 @@ def show_main_questionnaire():
             bf_original = st.number_input("Porcentaje de grasa corporal original (%)*", 
                                          min_value=5.0, max_value=50.0, value=20.0, step=0.1)
             
-            grasa_visceral = st.number_input("Grasa visceral (en gramos)", 
-                                            min_value=0.0, max_value=5000.0, value=0.0, step=0.1,
-                                            help="Ingresa el valor de grasa visceral en gramos. Si no tienes esta medición, deja el valor en 0.")
-            
             num_folds = None
             if bf_method == "Antropometría":
                 num_folds = st.selectbox("Número de pliegues cutáneos", [3, 4, 7])
@@ -1409,8 +1404,6 @@ def show_main_questionnaire():
             
             st.metric("Masa Magra", f"{lean_mass:.1f} kg")
             st.metric("FFMI", f"{ffmi:.1f}")
-            if grasa_visceral > 0:
-                st.metric("Grasa Visceral", f"{grasa_visceral:.1f} g")
             
             # FFMI interpretation
             if gender == "Masculino":
@@ -1836,7 +1829,7 @@ def show_main_questionnaire():
                 # Generate complete report
                 report = generate_complete_report(
                     full_name, email, age, gender, weight, height, bf_method, bf_original, 
-                    bf_adjusted, lean_mass, ffmi, grasa_visceral, activity_level, occupation, training_minutes, 
+                    bf_adjusted, lean_mass, ffmi, activity_level, occupation, training_minutes, 
                     training_days, daily_steps, ger_final, ger_method, geaf, gee_daily, 
                     get_total, sleep_score, stress_score, fri, goal, final_calories, 
                     macros, warnings
