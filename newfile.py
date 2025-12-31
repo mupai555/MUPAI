@@ -3043,8 +3043,8 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
 <li><b>Recomendado:</b> 12–24 h sin entrenamiento intenso (especialmente pierna o sesiones con sudoración alta)</li>
 <li><b>Evitar</b> ducha caliente/sauna/vapor 2–3 h antes (puede alterar conductancia y perfusión periférica)</li>
 <li><b>Sin alcohol 24 h</b> (disminuye variación por cambios en hidratación)</li>
-<li><strong>Hombre:</strong> sin camisa + short ajustado no compresivo (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
-<li><strong>Mujer:</strong> top ajustado + short/licra corta no compresiva (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
+<li><strong>Vestimenta para medición precisa/Hombre:</strong> sin camisa + short ajustado no compresivo (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
+<li><strong>Vestimenta para medición precisa/Mujer:</strong> top ajustado + short/licra corta no compresiva (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
 </ul>
 </div>
         """).strip(), unsafe_allow_html=True)
@@ -3117,7 +3117,7 @@ No ajustar dieta/entrenamiento por un solo número. Se decide con:<br>
 <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
 padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
 <h2 style="margin: 0 0 0.5rem 0; font-size: 2rem;">1️⃣</h2>
-<h4 style="margin: 0 0 0.5rem 0;">PHOTO3</h4>
+<h4 style="margin: 0 0 0.5rem 0;">PHOTO4</h4>
 <p style="margin: 0; font-size: 0.9rem;">(incluye Pose Libre)</p>
 </div>
 <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
@@ -3222,7 +3222,7 @@ y <strong>mantenla en cada evaluación</strong> para ver tu progreso.
 <h3 style="text-align: center;">💡 Recuerda</h3>
 <p style="font-size: 1.1rem; text-align: center; margin: 0;">
 Las primeras <strong>3 fotos son relajadas</strong> (frontal, perfil, posterior).<br>
-La ">Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión muscular o pose estética.<br>
+La Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión muscular o pose estética.<br>
 <strong>Mantén siempre la misma pose libre para comparar tu progreso.</strong>
 </p>
 </div>
