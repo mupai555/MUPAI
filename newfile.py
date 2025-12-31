@@ -1631,6 +1631,10 @@ if st.sidebar.button("🏠 Inicio", use_container_width=True):
 if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
     st.session_state.page = "planes_costos"
 
+# botón nuevo: Protocolos de medición MUPAI (colocar justo debajo de "💸 Planes y Costos")
+if st.sidebar.button("📐 Protocolos de medición MUPAI", use_container_width=True):
+    st.session_state.page = "protocolos_medicion"
+
 if st.sidebar.button("🔴 MUPcamp 1:1", use_container_width=True):
     st.session_state.page = "mupcamp_1a1"
 
@@ -2697,6 +2701,293 @@ elif st.session_state.page == "planes_costos":
         </p>
     </div>
     """, unsafe_allow_html=True)
+
+# ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN MUPAI ====================
+elif st.session_state.page == "protocolos_medicion":
+    st.markdown("""
+    
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    1) PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC) — Versión detallada
+
+    Objetivo
+
+    Medir tu rendimiento físico real (fuerza–resistencia y control) de forma comparable en el tiempo para ajustar entrenamiento.
+
+    Método
+
+    AMRAP (As Many Reps As Possible): máximo de repeticiones válidas con técnica correcta.
+    La prueba termina cuando:
+
+    - Se rompe la técnica (repetición no válida), o
+    - Te detienes &gt; 3 segundos
+
+    Core: se mide tiempo máximo manteniendo forma válida.
+
+    Condiciones previas (para que sea comparable)
+
+    Realizar pruebas antes de entrenar (sin fatiga acumulada).
+
+    Calentamiento ligero 5–10 min (movilidad + 1–2 series suaves del patrón).
+
+    Mismo calzado y superficie (si aplica).
+
+    Mismo ejercicio elegido por dominio en cada reevaluación.
+
+    Reglas de validez (lo que hace que una repetición cuente)
+
+    Reps con rango de movimiento completo (ROM) y control.
+
+    Sin "trampa" (rebotes, kipping, acortar ROM).
+
+    Ritmo libre, pero sin pausas largas.
+
+    Qué registramos (siempre)
+
+    Reps o tiempo final.
+
+    Opción elegida por dominio (push-ups vs dips, etc.).
+
+    Nota rápida: "técnica sólida / falló ROM / dolor / fatiga".
+
+    (Opcional) RPE final (0–10): esfuerzo percibido.
+
+    PRUEBAS (elige UNA por dominio)
+    1️⃣ Tren superior — EMPUJE (elige una)
+
+    Push-ups: https://youtu.be/WDIpL0pjun0?si=bcBYm0k00TN0Pp6Z
+
+    Dips: https://youtube.com/shorts/1xKgLFm4Hg4?si=btuWz7uG6u2tBwzU
+
+    📌 Método: AMRAP
+
+    2️⃣ Tren superior — TRACCIÓN (elige una)
+
+    Pull-ups estrictas: https://youtu.be/jgFel4wZl3I?si=BUGSZnaYLSIrD3Iu
+
+    Inverted row: https://youtube.com/shorts/vZy_Eu_Z0WA?si=NsyS8SKwfjpA6E5j
+
+    📌 Método: AMRAP
+
+    3️⃣ Tren inferior — EMPUJE UNILATERAL
+
+    Búlgara: https://youtu.be/kBQ1krvKFBU?si=SzBAJmMXnep2NwET
+
+    📌 Método: AMRAP por pierna (misma altura de apoyo siempre)
+
+    4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL
+
+    Hip thrust unilateral: https://youtube.com/shorts/54XDbJgwIj4?si=OpxDW6gTccdJR6-A
+
+    📌 Método: AMRAP por pierna
+
+    5️⃣ CORE
+
+    Plancha: https://youtu.be/ao5nY7lb088?si=vomVIsycB1a8ORd0
+
+    📌 Método: tiempo máximo con forma correcta
+
+    Regla clave: el ejercicio elegido NO se cambia en futuras evaluaciones.
+
+    --
+
+    2) PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI (Fotos + OMRON)
+
+    Este es el bloque que te faltaba: cómo medimos composición corporal de forma fiable, con instrucciones claras para el cliente y para staff.
+
+    A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)
+    Objetivo
+
+    Registrar cambios reales de grasa y forma corporal con comparabilidad longitudinal.
+
+    Fotos requeridas (3)
+
+    Frontal relajado
+
+    Perfil lateral relajado (derecho)
+
+    Posterior relajado
+
+    Momento ideal (OFICIAL) vs realista (ESTÁNDAR)
+
+    OFICIAL (óptima):
+
+    Por la mañana
+
+    Antes de entrenar
+
+    Sin comida grande previa
+
+    ESTÁNDAR (válida):
+
+    Antes de entrenar el mismo día
+
+    Evitar comida grande 2–3 h antes
+
+    Para fotos NO es obligatorio 24 h sin entrenar. Lo crítico es no entrenar antes (evitar "pump").
+
+    Set-up técnico (NO negociable)
+
+    Cámara a altura del ombligo
+
+    Ángulo horizontal (sin inclinar)
+
+    Distancia fija 2.5 m
+
+    Zoom 1x
+
+    Luz frontal homogénea
+
+    Fondo liso y neutro
+
+    Encuadre: cuerpo completo (pies y cabeza)
+
+    Formato vertical
+
+    Vestimenta (precisión)
+
+    Recomendado (máxima precisión):
+
+    Hombre: sin camisa + short ajustado no compresivo
+
+    Mujer: top ajustado + short/licra corta no compresiva
+
+    Alternativa válida (menos precisa):
+
+    Playera athletic/slim + short ajustado
+    Regla: misma prenda/talla siempre.
+
+    Instrucción estándar (una línea)
+
+    "Colócate natural, relajado, sin posar. Mantén respiración normal."
+
+    Control de calidad
+
+    Si falla cualquiera: luz muy distinta, cámara inclinada, distancia distinta, ropa distinta → repetir.
+
+    B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)
+    Objetivo
+
+    Medición reproducible para seguimiento (tendencia). No se interpreta como verdad absoluta aislada.
+
+    Preparación (OFICIAL vs ESTÁNDAR)
+
+    OFICIAL (óptima):
+
+    Mañana
+
+    Ayuno 8–10 h
+
+    No entrenar antes de medir
+
+    Recomendado: 12–24 h sin entrenamiento intenso (si se puede)
+
+    Evitar ducha caliente/sauna 2–3 h antes
+
+    Sin alcohol 24 h
+
+    ESTÁNDAR (válida):
+
+    Antes de entrenar ese día
+
+    Sin comida grande 3–4 h antes
+
+    Vejiga vacía (30–60 min antes)
+
+    Registrar si entrenaste fuerte el día anterior
+
+    Checklist crítico (siempre)
+
+    Piso duro y nivelado (no alfombra)
+
+    Pies/manos limpios y secos (sin crema; sin sudor)
+
+    Sin metal
+
+    Mismo perfil (edad/sexo/estatura correctos)
+
+    Ejecución exacta (paso a paso)
+
+    Encender y esperar 0.0
+
+    Seleccionar perfil
+
+    Subir descalzo, pies centrados en electrodos
+
+    Tomar manerales con contacto completo
+
+    Quedarte quieto hasta finalizar
+
+    Registrar resultados
+
+    Qué registramos
+
+    Fecha y hora
+
+    Peso del día
+
+    Resultado OMRON (lo que muestre el equipo)
+
+    Calidad: OFICIAL o ESTÁNDAR
+
+    Observaciones: ayuno sí/no, cafeína, entrenamiento previo, ducha caliente reciente
+
+    Regla de interpretación (muy importante)
+
+    No ajustar dieta/entrenamiento por un solo número. Se decide con:
+    tendencia OMRON + PHOTO3 + rendimiento funcional.
+
+    C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN
+
+    PHOTO3
+
+    OMRON HBF-516
+
+    MUPAI-FUNC (con calentamiento breve)
+
+    """, unsafe_allow_html=True)
+    
+    # Example images display block for PHOTO3
+    st.markdown("""
+    <div class="section-header">
+        <h2>📸 Ejemplos de Fotos PHOTO3</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Define image list
+    example_images = [
+        ("Frontal relajado", "FRONTAL.png"),
+        ("Perfil lateral (derecho)", "PERFIL.png"),
+        ("Posterior relajado", "POSTERIOR.png"),
+        ("Libre 2 (pose adicional)", "LIBRE 2.png"),
+        ("Libre 1 (pose adicional)", "LIBRE 1.png")
+    ]
+    
+    # Display first three images in 3 columns
+    col1, col2, col3 = st.columns(3)
+    for idx, (label, fname) in enumerate(example_images[:3]):
+        with [col1, col2, col3][idx]:
+            if os.path.exists(fname):
+                try:
+                    st.image(fname, caption=label, use_container_width=True)
+                except Exception as e:
+                    st.info(f"Ejemplo: {label} — Error al cargar: {fname}")
+            else:
+                st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
+    
+    # Display next two images in 2 columns
+    if len(example_images) > 3:
+        col4, col5 = st.columns(2)
+        for idx, (label, fname) in enumerate(example_images[3:5]):
+            with [col4, col5][idx]:
+                if os.path.exists(fname):
+                    try:
+                        st.image(fname, caption=label, use_container_width=True)
+                    except Exception as e:
+                        st.info(f"Ejemplo: {label} — Error al cargar: {fname}")
+                else:
+                    st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
 
 # ==================== PÁGINA DE MUPCAMP 1:1 ====================
 elif st.session_state.page == "mupcamp_1a1":
