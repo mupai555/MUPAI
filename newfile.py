@@ -3191,9 +3191,11 @@ elif st.session_state.page == "protocolos_medicion":
     </div>
     """, unsafe_allow_html=True)
     
-    if len(example_images) > 3:
+    # Display remaining images (Pose Libre examples) - typically images 4 and 5
+    pose_libre_images = example_images[3:]  # Get all images after the first 3
+    if len(pose_libre_images) > 0:
         col4, col5 = st.columns(2)
-        for idx, (label, fname, description) in enumerate(example_images[3:5]):
+        for idx, (label, fname, description) in enumerate(pose_libre_images[:2]):
             with [col4, col5][idx]:
                 if os.path.exists(fname):
                     try:
