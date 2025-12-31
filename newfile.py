@@ -2868,10 +2868,10 @@ Cómo medimos composición corporal de forma fiable, con instrucciones claras pa
 </div>
     """).strip(), unsafe_allow_html=True)
     
-    # PHOTO3 Protocol with Pose Libre
+    # PHOTO4 Protocol with Pose Libre
     st.markdown(textwrap.dedent("""
 <div class="section-header">
-<h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)</h3>
+<h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">A) FOTO-PROGRESO: MUPAI PHOTO4 (obligatorio)</h3>
 </div>
     """).strip(), unsafe_allow_html=True)
     
@@ -3043,6 +3043,8 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
 <li><b>Recomendado:</b> 12–24 h sin entrenamiento intenso (especialmente pierna o sesiones con sudoración alta)</li>
 <li><b>Evitar</b> ducha caliente/sauna/vapor 2–3 h antes (puede alterar conductancia y perfusión periférica)</li>
 <li><b>Sin alcohol 24 h</b> (disminuye variación por cambios en hidratación)</li>
+<li><strong>Hombre:</strong> sin camisa + short ajustado no compresivo (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
+<li><strong>Mujer:</strong> top ajustado + short/licra corta no compresiva (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)</li>
 </ul>
 </div>
         """).strip(), unsafe_allow_html=True)
@@ -3097,7 +3099,7 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
 <h3 style="text-align: center;">⚠️ Regla de interpretación (muy importante)</h3>
 <p style="font-size: 1.2rem; text-align: center; margin: 0;">
 No ajustar dieta/entrenamiento por un solo número. Se decide con:<br>
-<strong>tendencia OMRON + PHOTO3 + rendimiento funcional</strong>
+<strong>tendencia OMRON + PHOTO4 + rendimiento funcional</strong>
 </p>
 </div>
     """).strip(), unsafe_allow_html=True)
@@ -3136,7 +3138,7 @@ padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
     # Example images display block for PHOTO3
     st.markdown(textwrap.dedent("""
 <div class="section-header">
-<h2>📸 Ejemplos de Fotos PHOTO3</h2>
+<h2>📸 Ejemplos de Fotos PHOTO4</h2>
 </div>
     """).strip(), unsafe_allow_html=True)
     
@@ -3144,7 +3146,7 @@ padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
 <div class="corporate-section">
 <p style="font-size: 1.1rem; line-height: 1.8; text-align: center;">
 A continuación se muestran ejemplos de las <strong style="color: #FFCC00;">4 fotos requeridas</strong> 
-para el protocolo PHOTO3. Sigue estos ejemplos para asegurar la comparabilidad de tus mediciones.
+para el protocolo PHOTO4. Sigue estos ejemplos para asegurar la comparabilidad de tus mediciones.
 </p>
 </div>
     """).strip(), unsafe_allow_html=True)
@@ -3220,7 +3222,7 @@ y <strong>mantenla en cada evaluación</strong> para ver tu progreso.
 <h3 style="text-align: center;">💡 Recuerda</h3>
 <p style="font-size: 1.1rem; text-align: center; margin: 0;">
 Las primeras <strong>3 fotos son relajadas</strong> (frontal, perfil, posterior).<br>
-La <strong style="color: #FFD700;">Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión muscular o pose estética.<br>
+La ">Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión muscular o pose estética.<br>
 <strong>Mantén siempre la misma pose libre para comparar tu progreso.</strong>
 </p>
 </div>
