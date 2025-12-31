@@ -2734,13 +2734,13 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="corporate-section">
-        <h3>🎯 Objetivo</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
             Medir tu rendimiento físico real (fuerza–resistencia y control) de forma comparable en el tiempo 
             para ajustar entrenamiento.
         </p>
         
-        <h3>⚙️ Método</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">⚙️ Método</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
             <strong style="color: #FFCC00;">AMRAP (As Many Reps As Possible):</strong> máximo de repeticiones 
             válidas con técnica correcta.
@@ -2760,7 +2760,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>✅ Condiciones previas (para que sea comparable)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Condiciones previas (para que sea comparable)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li>Realizar pruebas antes de entrenar (sin fatiga acumulada)</li>
             <li>Calentamiento ligero 5–10 min (movilidad + 1–2 series suaves del patrón)</li>
@@ -2768,14 +2768,14 @@ elif st.session_state.page == "protocolos_medicion":
             <li>Mismo ejercicio elegido por dominio en cada reevaluación</li>
         </ul>
         
-        <h3>📋 Reglas de validez (lo que hace que una repetición cuente)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">📋 Reglas de validez (lo que hace que una repetición cuente)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li>Reps con rango de movimiento completo (ROM) y control</li>
             <li>Sin "trampa" (rebotes, kipping, acortar ROM)</li>
             <li>Ritmo libre, pero sin pausas largas</li>
         </ul>
         
-        <h3>📊 Qué registramos (siempre)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">📊 Qué registramos (siempre)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li>Reps o tiempo final</li>
             <li>Opción elegida por dominio (push-ups vs dips, etc.)</li>
@@ -2787,7 +2787,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="corporate-section">
-        <h3>🏋️ PRUEBAS (elige UNA por dominio)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🏋️ PRUEBAS (elige UNA por dominio)</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2796,7 +2796,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col1:
         st.markdown("""
         <div class="metric-card">
-            <h4>1️⃣ Tren superior — EMPUJE</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">1️⃣ Tren superior — EMPUJE</h4>
             <p><strong>Elige una:</strong></p>
             <ul>
                 <li><a href="https://youtu.be/WDIpL0pjun0?si=bcBYm0k00TN0Pp6Z" target="_blank" style="color: #FFCC00;">Push-ups</a></li>
@@ -2808,7 +2808,7 @@ elif st.session_state.page == "protocolos_medicion":
         
         st.markdown("""
         <div class="metric-card">
-            <h4>3️⃣ Tren inferior — EMPUJE UNILATERAL</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">3️⃣ Tren inferior — EMPUJE UNILATERAL</h4>
             <p><a href="https://youtu.be/kBQ1krvKFBU?si=SzBAJmMXnep2NwET" target="_blank" style="color: #FFCC00;">Búlgara</a></p>
             <p>📌 <strong>Método: AMRAP por pierna</strong> (misma altura de apoyo siempre)</p>
         </div>
@@ -2816,7 +2816,7 @@ elif st.session_state.page == "protocolos_medicion":
         
         st.markdown("""
         <div class="metric-card">
-            <h4>5️⃣ CORE</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">5️⃣ CORE</h4>
             <p><a href="https://youtu.be/ao5nY7lb088?si=vomVIsycB1a8ORd0" target="_blank" style="color: #FFCC00;">Plancha</a></p>
             <p>📌 <strong>Método: tiempo máximo con forma correcta</strong></p>
         </div>
@@ -2825,7 +2825,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col2:
         st.markdown("""
         <div class="metric-card">
-            <h4>2️⃣ Tren superior — TRACCIÓN</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">2️⃣ Tren superior — TRACCIÓN</h4>
             <p><strong>Elige una:</strong></p>
             <ul>
                 <li><a href="https://youtu.be/jgFel4wZl3I?si=BUGSZnaYLSIrD3Iu" target="_blank" style="color: #FFCC00;">Pull-ups estrictas</a></li>
@@ -2837,7 +2837,7 @@ elif st.session_state.page == "protocolos_medicion":
         
         st.markdown("""
         <div class="metric-card">
-            <h4>4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL</h4>
             <p><a href="https://youtube.com/shorts/54XDbJgwIj4?si=OpxDW6gTccdJR6-A" target="_blank" style="color: #FFCC00;">Hip thrust unilateral</a></p>
             <p>📌 <strong>Método: AMRAP por pierna</strong></p>
         </div>
@@ -2870,18 +2870,18 @@ elif st.session_state.page == "protocolos_medicion":
     # PHOTO3 Protocol with Pose Libre
     st.markdown("""
     <div class="section-header">
-        <h3>A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)</h3>
+        <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)</h3>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h3>🎯 Objetivo</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
             Registrar cambios reales de grasa y forma corporal con comparabilidad longitudinal.
         </p>
         
-        <h3>📷 Fotos requeridas (4)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">📷 Fotos requeridas (4)</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
             <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
                 <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">1. Frontal relajado</h4>
@@ -2915,7 +2915,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🌟 Guía para la Pose Libre</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🌟 Guía para la Pose Libre</h3>
         <p style="font-size: 1.05rem; line-height: 1.7;">
             La <strong style="color: #FFCC00;">Pose Libre</strong> te permite mostrar tu progreso de forma personalizada:
         </p>
@@ -2937,7 +2937,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col1:
         st.markdown("""
         <div class="metric-card">
-            <h4>⏰ Momento OFICIAL (óptima)</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Momento OFICIAL (óptima)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
                 <li>Por la mañana</li>
                 <li>Antes de entrenar</li>
@@ -2949,7 +2949,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col2:
         st.markdown("""
         <div class="metric-card">
-            <h4>⏰ Momento ESTÁNDAR (válida)</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Momento ESTÁNDAR (válida)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
                 <li>Antes de entrenar el mismo día</li>
                 <li>Evitar comida grande 2–3 h antes</li>
@@ -2960,7 +2960,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="corporate-section">
-        <h3>📐 Set-up técnico (NO negociable)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">📐 Set-up técnico (NO negociable)</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
             <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
                 <p style="margin: 0;"><strong style="color: #FFCC00;">📷 Cámara:</strong> Altura del ombligo</p>
@@ -2988,7 +2988,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>👕 Vestimenta (precisión)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">👕 Vestimenta (precisión)</h3>
         <h4 style="color: #FFCC00;">Recomendado (máxima precisión):</h4>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li><strong>Hombre:</strong> sin camisa + short ajustado no compresivo</li>
@@ -3000,13 +3000,13 @@ elif st.session_state.page == "protocolos_medicion":
             <li><strong style="color: #FFD700;">Regla:</strong> misma prenda/talla siempre</li>
         </ul>
         
-        <h3>💬 Instrucción estándar</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">💬 Instrucción estándar</h3>
         <p style="font-size: 1.1rem; line-height: 1.8; text-align: center; background: rgba(255,204,0,0.1); padding: 1rem; border-radius: 8px;">
             <em>"Colócate natural, relajado, sin posar. Mantén respiración normal."</em><br>
             <strong style="color: #FFD700;">(Excepto en la Pose Libre, donde sí puedes tensar)</strong>
         </p>
         
-        <h3>✅ Control de calidad</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">✅ Control de calidad</h3>
         <p style="font-size: 1.05rem; line-height: 1.7;">
             Si falla cualquiera: luz muy distinta, cámara inclinada, distancia distinta, ropa distinta → <strong style="color: #FFCC00;">repetir</strong>.
         </p>
@@ -3016,13 +3016,13 @@ elif st.session_state.page == "protocolos_medicion":
     # Bioimpedance section
     st.markdown("""
     <div class="section-header">
-        <h3>B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)</h3>
+        <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)</h3>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h3>🎯 Objetivo</h3>
+        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
             Medición reproducible para seguimiento (tendencia). No se interpreta como verdad absoluta aislada.
         </p>
@@ -3034,7 +3034,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col1:
         st.markdown("""
         <div class="metric-card">
-            <h4>⏰ Preparación OFICIAL (óptima)</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación OFICIAL (óptima)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
                 <li>Mañana</li>
                 <li>Ayuno 8–10 h</li>
@@ -3049,7 +3049,7 @@ elif st.session_state.page == "protocolos_medicion":
     with col2:
         st.markdown("""
         <div class="metric-card">
-            <h4>⏰ Preparación ESTÁNDAR (válida)</h4>
+            <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación ESTÁNDAR (válida)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
                 <li>Antes de entrenar ese día</li>
                 <li>Sin comida grande 3–4 h antes</li>
@@ -3061,7 +3061,7 @@ elif st.session_state.page == "protocolos_medicion":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>✅ Checklist crítico (siempre)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Checklist crítico (siempre)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li>Piso duro y nivelado (no alfombra)</li>
             <li>Pies/manos limpios y secos (sin crema; sin sudor)</li>
@@ -3069,7 +3069,7 @@ elif st.session_state.page == "protocolos_medicion":
             <li>Mismo perfil (edad/sexo/estatura correctos)</li>
         </ul>
         
-        <h3>🔄 Ejecución exacta (paso a paso)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">🔄 Ejecución exacta (paso a paso)</h3>
         <ol style="font-size: 1.05rem; line-height: 1.7;">
             <li>Encender y esperar 0.0</li>
             <li>Seleccionar perfil</li>
@@ -3079,7 +3079,7 @@ elif st.session_state.page == "protocolos_medicion":
             <li>Registrar resultados</li>
         </ol>
         
-        <h3>📊 Qué registramos</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">📊 Qué registramos</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
             <li>Fecha y hora</li>
             <li>Peso del día</li>
@@ -3103,7 +3103,7 @@ elif st.session_state.page == "protocolos_medicion":
     # Recommended order
     st.markdown("""
     <div class="section-header">
-        <h3>C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN</h3>
+        <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -3159,7 +3159,7 @@ elif st.session_state.page == "protocolos_medicion":
     # Display first three standard images in 3 columns
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🔹 Fotos Estándar Relajadas (Obligatorias)</h3>
+        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🔹 Fotos Estándar Relajadas (Obligatorias)</h3>
     </div>
     """, unsafe_allow_html=True)
     
@@ -3183,7 +3183,7 @@ elif st.session_state.page == "protocolos_medicion":
     # Display Pose Libre images in 2 columns with special highlighting
     st.markdown("""
     <div class="questionnaire-container" style="margin-top: 2rem;">
-        <h3 style="color: #FFD700;">⭐ Pose Libre (Nueva - Obligatoria)</h3>
+        <h3 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 0.5rem; margin-bottom: 1rem;">⭐ Pose Libre (Nueva - Obligatoria)</h3>
         <p style="font-size: 1.05rem; line-height: 1.7;">
             Estos son ejemplos de <strong style="color: #FFCC00;">Pose Libre</strong>. Elige una pose que te represente 
             y <strong>mantenla en cada evaluación</strong> para ver tu progreso.
