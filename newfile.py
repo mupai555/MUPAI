@@ -3032,64 +3032,65 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
     
     col1, col2 = st.columns(2)
     
-    with col1:
-        st.markdown(textwrap.dedent("""
+   with col1:
+    st.markdown(textwrap.dedent("""
 <div class="metric-card">
 <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación OFICIAL (óptima)</h4>
 <ul style="font-size: 1rem; line-height: 1.6;">
-<li>Mañana</li>
-<li>Ayuno 8–10 h</li>
-<li>No entrenar antes de medir</li>
-<li>Recomendado: 12–24 h sin entrenamiento intenso</li>
-<li>Evitar ducha caliente/sauna 2–3 h antes</li>
-<li>Sin alcohol 24 h</li>
+<li><b>Mañana</b> (idealmente en la misma franja horaria para maximizar comparabilidad)</li>
+<li><b>Ayuno 8–10 h</b> (reduce variación aguda por ingesta reciente y cambios transitorios de fluidos)</li>
+<li><b>No entrenar antes de medir</b> (evita sesgo por “pump”, sudoración y redistribución de líquidos)</li>
+<li><b>Recomendado:</b> 12–24 h sin entrenamiento intenso (especialmente pierna o sesiones con sudoración alta)</li>
+<li><b>Evitar</b> ducha caliente/sauna/vapor 2–3 h antes (puede alterar conductancia y perfusión periférica)</li>
+<li><b>Sin alcohol 24 h</b> (disminuye variación por cambios en hidratación)</li>
 </ul>
 </div>
         """).strip(), unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown(textwrap.dedent("""
+
+with col2:
+    st.markdown(textwrap.dedent("""
 <div class="metric-card">
 <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación ESTÁNDAR (válida)</h4>
 <ul style="font-size: 1rem; line-height: 1.6;">
-<li>Antes de entrenar ese día</li>
-<li>Sin comida grande 3–4 h antes</li>
-<li>Vejiga vacía (30–60 min antes)</li>
-<li>Registrar si entrenaste fuerte el día anterior</li>
+<li><b>Antes de entrenar ese día</b> (sin ejercicio previo; condición crítica)</li>
+<li><b>Sin comida grande 3–4 h antes</b> (ideal: patrón similar entre mediciones)</li>
+<li><b>Vejiga vacía</b> (30–60 min antes; reduce variación por contenido de líquidos)</li>
+<li><b>Registrar</b> si entrenaste fuerte el día anterior (contextualiza variaciones por fatiga/sudoración)</li>
 </ul>
 </div>
         """).strip(), unsafe_allow_html=True)
-    
-    st.markdown(textwrap.dedent("""
+
+st.markdown(textwrap.dedent("""
 <div class="questionnaire-container">
 <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Checklist crítico (siempre)</h3>
 <ul style="font-size: 1.05rem; line-height: 1.7;">
-<li>Piso duro y nivelado (no alfombra)</li>
-<li>Pies/manos limpios y secos (sin crema; sin sudor)</li>
-<li>Sin metal</li>
-<li>Mismo perfil (edad/sexo/estatura correctos)</li>
+<li><b>Piso duro y nivelado</b> (no alfombra)</li>
+<li><b>Pies/manos limpios y secos</b> (sin crema/aceite/gel; sin sudor)</li>
+<li><b>Retirar metales externos</b>: reloj, anillos, pulseras, collares/cadenas, aretes y piercings removibles (evitar también monedas/llaves en bolsillos)</li>
+<li><b>Mismo perfil</b> (edad/sexo/estatura correctos; no improvisar)</li>
 </ul>
         
 <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">🔄 Ejecución exacta (paso a paso)</h3>
 <ol style="font-size: 1.05rem; line-height: 1.7;">
-<li>Encender y esperar 0.0</li>
-<li>Seleccionar perfil</li>
-<li>Subir descalzo, pies centrados en electrodos</li>
-<li>Tomar manerales con contacto completo</li>
-<li>Quedarte quieto hasta finalizar</li>
-<li>Registrar resultados</li>
+<li><b>Encender</b> y esperar 0.0</li>
+<li><b>Seleccionar perfil</b> (usuario correcto)</li>
+<li><b>Subir descalzo</b>, pies centrados en electrodos</li>
+<li><b>Tomar manerales</b> con contacto completo en los sensores</li>
+<li><b>Quedarte quieto</b> y respirar normal hasta finalizar</li>
+<li><b>Registrar resultados</b> (exactamente lo que muestre el equipo)</li>
 </ol>
         
 <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem; margin-top: 1.5rem;">📊 Qué registramos</h3>
 <ul style="font-size: 1.05rem; line-height: 1.7;">
-<li>Fecha y hora</li>
-<li>Peso del día</li>
-<li>Resultado OMRON (lo que muestre el equipo)</li>
-<li>Calidad: OFICIAL o ESTÁNDAR</li>
-<li>Observaciones: ayuno sí/no, cafeína, entrenamiento previo, ducha caliente reciente</li>
+<li><b>Fecha y hora</b></li>
+<li><b>Peso del día</b></li>
+<li><b>Resultado OMRON</b> (lo que muestre el equipo)</li>
+<li><b>Calidad:</b> OFICIAL o ESTÁNDAR</li>
+<li><b>Observaciones:</b> ayuno (sí/no), cafeína (sí/no), ejercicio previo ese día (sí/no), entrenamiento fuerte el día anterior (sí/no), ducha caliente reciente (sí/no)</li>
 </ul>
 </div>
     """).strip(), unsafe_allow_html=True)
+
     
     st.markdown(textwrap.dedent("""
 <div class="results-container">
