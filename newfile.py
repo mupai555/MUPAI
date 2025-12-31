@@ -2573,8 +2573,8 @@ elif st.session_state.page == "planes_costos":
         </ul>
         <h4>➕ Menús extra (opcional):</h4>
         <ul>
-            <li><strong>Internos:</strong> desde $100 MXN</li>
-            <li><strong>Externos:</strong> desde $150 MXN</li>
+            <li><strong>Internos:</strong> desde $200 MXN</li>
+            <li><strong>Externos:</strong> desde $400 MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -2859,13 +2859,10 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Nota final
-    st.markdown("""
+       # Nota final
+    st. markdown("""
     <div class="results-container">
-        <h3>💪 Tu salud y bienestar son nuestra misión</h3>
-        <p style="font-size: 1.1rem; text-align: center; margin: 0;">
-            Estamos comprometidos en darte el mejor servicio profesional personalizado.
-        </p>
+        <h3 style="text-align: center;">💪 Tu salud y bienestar son nuestra misión</h3>
     </div>
     """, unsafe_allow_html=True)
 # ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN MUPAI ====================
