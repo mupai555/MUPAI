@@ -2704,248 +2704,431 @@ elif st.session_state.page == "planes_costos":
 
 # ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN MUPAI ====================
 elif st.session_state.page == "protocolos_medicion":
-    st.markdown("""
+    # Professional banner
+    mostrar_banner_profesional()
     
-    """, unsafe_allow_html=True)
-
+    # Main header
     st.markdown("""
-    1) PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC) — Versión detallada
-
-    Objetivo
-
-    Medir tu rendimiento físico real (fuerza–resistencia y control) de forma comparable en el tiempo para ajustar entrenamiento.
-
-    Método
-
-    AMRAP (As Many Reps As Possible): máximo de repeticiones válidas con técnica correcta.
-    La prueba termina cuando:
-
-    - Se rompe la técnica (repetición no válida), o
-    - Te detienes &gt; 3 segundos
-
-    Core: se mide tiempo máximo manteniendo forma válida.
-
-    Condiciones previas (para que sea comparable)
-
-    Realizar pruebas antes de entrenar (sin fatiga acumulada).
-
-    Calentamiento ligero 5–10 min (movilidad + 1–2 series suaves del patrón).
-
-    Mismo calzado y superficie (si aplica).
-
-    Mismo ejercicio elegido por dominio en cada reevaluación.
-
-    Reglas de validez (lo que hace que una repetición cuente)
-
-    Reps con rango de movimiento completo (ROM) y control.
-
-    Sin "trampa" (rebotes, kipping, acortar ROM).
-
-    Ritmo libre, pero sin pausas largas.
-
-    Qué registramos (siempre)
-
-    Reps o tiempo final.
-
-    Opción elegida por dominio (push-ups vs dips, etc.).
-
-    Nota rápida: "técnica sólida / falló ROM / dolor / fatiga".
-
-    (Opcional) RPE final (0–10): esfuerzo percibido.
-
-    PRUEBAS (elige UNA por dominio)
-    1️⃣ Tren superior — EMPUJE (elige una)
-
-    Push-ups: https://youtu.be/WDIpL0pjun0?si=bcBYm0k00TN0Pp6Z
-
-    Dips: https://youtube.com/shorts/1xKgLFm4Hg4?si=btuWz7uG6u2tBwzU
-
-    📌 Método: AMRAP
-
-    2️⃣ Tren superior — TRACCIÓN (elige una)
-
-    Pull-ups estrictas: https://youtu.be/jgFel4wZl3I?si=BUGSZnaYLSIrD3Iu
-
-    Inverted row: https://youtube.com/shorts/vZy_Eu_Z0WA?si=NsyS8SKwfjpA6E5j
-
-    📌 Método: AMRAP
-
-    3️⃣ Tren inferior — EMPUJE UNILATERAL
-
-    Búlgara: https://youtu.be/kBQ1krvKFBU?si=SzBAJmMXnep2NwET
-
-    📌 Método: AMRAP por pierna (misma altura de apoyo siempre)
-
-    4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL
-
-    Hip thrust unilateral: https://youtube.com/shorts/54XDbJgwIj4?si=OpxDW6gTccdJR6-A
-
-    📌 Método: AMRAP por pierna
-
-    5️⃣ CORE
-
-    Plancha: https://youtu.be/ao5nY7lb088?si=vomVIsycB1a8ORd0
-
-    📌 Método: tiempo máximo con forma correcta
-
-    Regla clave: el ejercicio elegido NO se cambia en futuras evaluaciones.
-
-    --
-
-    2) PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI (Fotos + OMRON)
-
-    Este es el bloque que te faltaba: cómo medimos composición corporal de forma fiable, con instrucciones claras para el cliente y para staff.
-
-    A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)
-    Objetivo
-
-    Registrar cambios reales de grasa y forma corporal con comparabilidad longitudinal.
-
-    Fotos requeridas (3)
-
-    Frontal relajado
-
-    Perfil lateral relajado (derecho)
-
-    Posterior relajado
-
-    Momento ideal (OFICIAL) vs realista (ESTÁNDAR)
-
-    OFICIAL (óptima):
-
-    Por la mañana
-
-    Antes de entrenar
-
-    Sin comida grande previa
-
-    ESTÁNDAR (válida):
-
-    Antes de entrenar el mismo día
-
-    Evitar comida grande 2–3 h antes
-
-    Para fotos NO es obligatorio 24 h sin entrenar. Lo crítico es no entrenar antes (evitar "pump").
-
-    Set-up técnico (NO negociable)
-
-    Cámara a altura del ombligo
-
-    Ángulo horizontal (sin inclinar)
-
-    Distancia fija 2.5 m
-
-    Zoom 1x
-
-    Luz frontal homogénea
-
-    Fondo liso y neutro
-
-    Encuadre: cuerpo completo (pies y cabeza)
-
-    Formato vertical
-
-    Vestimenta (precisión)
-
-    Recomendado (máxima precisión):
-
-    Hombre: sin camisa + short ajustado no compresivo
-
-    Mujer: top ajustado + short/licra corta no compresiva
-
-    Alternativa válida (menos precisa):
-
-    Playera athletic/slim + short ajustado
-    Regla: misma prenda/talla siempre.
-
-    Instrucción estándar (una línea)
-
-    "Colócate natural, relajado, sin posar. Mantén respiración normal."
-
-    Control de calidad
-
-    Si falla cualquiera: luz muy distinta, cámara inclinada, distancia distinta, ropa distinta → repetir.
-
-    B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)
-    Objetivo
-
-    Medición reproducible para seguimiento (tendencia). No se interpreta como verdad absoluta aislada.
-
-    Preparación (OFICIAL vs ESTÁNDAR)
-
-    OFICIAL (óptima):
-
-    Mañana
-
-    Ayuno 8–10 h
-
-    No entrenar antes de medir
-
-    Recomendado: 12–24 h sin entrenamiento intenso (si se puede)
-
-    Evitar ducha caliente/sauna 2–3 h antes
-
-    Sin alcohol 24 h
-
-    ESTÁNDAR (válida):
-
-    Antes de entrenar ese día
-
-    Sin comida grande 3–4 h antes
-
-    Vejiga vacía (30–60 min antes)
-
-    Registrar si entrenaste fuerte el día anterior
-
-    Checklist crítico (siempre)
-
-    Piso duro y nivelado (no alfombra)
-
-    Pies/manos limpios y secos (sin crema; sin sudor)
-
-    Sin metal
-
-    Mismo perfil (edad/sexo/estatura correctos)
-
-    Ejecución exacta (paso a paso)
-
-    Encender y esperar 0.0
-
-    Seleccionar perfil
-
-    Subir descalzo, pies centrados en electrodos
-
-    Tomar manerales con contacto completo
-
-    Quedarte quieto hasta finalizar
-
-    Registrar resultados
-
-    Qué registramos
-
-    Fecha y hora
-
-    Peso del día
-
-    Resultado OMRON (lo que muestre el equipo)
-
-    Calidad: OFICIAL o ESTÁNDAR
-
-    Observaciones: ayuno sí/no, cafeína, entrenamiento previo, ducha caliente reciente
-
-    Regla de interpretación (muy importante)
-
-    No ajustar dieta/entrenamiento por un solo número. Se decide con:
-    tendencia OMRON + PHOTO3 + rendimiento funcional.
-
-    C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN
-
-    PHOTO3
-
-    OMRON HBF-516
-
-    MUPAI-FUNC (con calentamiento breve)
-
+    <div class="section-header">
+        <h2>📏 Protocolos de Medición MUPAI</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Introduction
+    st.markdown("""
+    <div class="corporate-section">
+        <p style="font-size: 1.2rem; line-height: 1.8; text-align: center;">
+            En MUPAI medimos tu progreso con <strong style="color: #FFCC00;">protocolos científicos y reproducibles</strong> 
+            para asegurar que cada evaluación sea comparable en el tiempo y te permita tomar decisiones informadas 
+            sobre tu entrenamiento y nutrición.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Protocol 1: Functional Performance
+    st.markdown("""
+    <div class="section-header">
+        <h2>💪 1) PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC)</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🎯 Objetivo</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Medir tu rendimiento físico real (fuerza–resistencia y control) de forma comparable en el tiempo 
+            para ajustar entrenamiento.
+        </p>
+        
+        <h3>⚙️ Método</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            <strong style="color: #FFCC00;">AMRAP (As Many Reps As Possible):</strong> máximo de repeticiones 
+            válidas con técnica correcta.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            La prueba termina cuando:
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Se rompe la técnica (repetición no válida), o</li>
+            <li>Te detienes &gt; 3 segundos</li>
+        </ul>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            <strong>Core:</strong> se mide tiempo máximo manteniendo forma válida.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>✅ Condiciones previas (para que sea comparable)</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Realizar pruebas antes de entrenar (sin fatiga acumulada)</li>
+            <li>Calentamiento ligero 5–10 min (movilidad + 1–2 series suaves del patrón)</li>
+            <li>Mismo calzado y superficie (si aplica)</li>
+            <li>Mismo ejercicio elegido por dominio en cada reevaluación</li>
+        </ul>
+        
+        <h3>📋 Reglas de validez (lo que hace que una repetición cuente)</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Reps con rango de movimiento completo (ROM) y control</li>
+            <li>Sin "trampa" (rebotes, kipping, acortar ROM)</li>
+            <li>Ritmo libre, pero sin pausas largas</li>
+        </ul>
+        
+        <h3>📊 Qué registramos (siempre)</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Reps o tiempo final</li>
+            <li>Opción elegida por dominio (push-ups vs dips, etc.)</li>
+            <li>Nota rápida: "técnica sólida / falló ROM / dolor / fatiga"</li>
+            <li>(Opcional) RPE final (0–10): esfuerzo percibido</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🏋️ PRUEBAS (elige UNA por dominio)</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>1️⃣ Tren superior — EMPUJE</h4>
+            <p><strong>Elige una:</strong></p>
+            <ul>
+                <li><a href="https://youtu.be/WDIpL0pjun0?si=bcBYm0k00TN0Pp6Z" target="_blank" style="color: #FFCC00;">Push-ups</a></li>
+                <li><a href="https://youtube.com/shorts/1xKgLFm4Hg4?si=btuWz7uG6u2tBwzU" target="_blank" style="color: #FFCC00;">Dips</a></li>
+            </ul>
+            <p>📌 <strong>Método: AMRAP</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="metric-card">
+            <h4>3️⃣ Tren inferior — EMPUJE UNILATERAL</h4>
+            <p><a href="https://youtu.be/kBQ1krvKFBU?si=SzBAJmMXnep2NwET" target="_blank" style="color: #FFCC00;">Búlgara</a></p>
+            <p>📌 <strong>Método: AMRAP por pierna</strong> (misma altura de apoyo siempre)</p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="metric-card">
+            <h4>5️⃣ CORE</h4>
+            <p><a href="https://youtu.be/ao5nY7lb088?si=vomVIsycB1a8ORd0" target="_blank" style="color: #FFCC00;">Plancha</a></p>
+            <p>📌 <strong>Método: tiempo máximo con forma correcta</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>2️⃣ Tren superior — TRACCIÓN</h4>
+            <p><strong>Elige una:</strong></p>
+            <ul>
+                <li><a href="https://youtu.be/jgFel4wZl3I?si=BUGSZnaYLSIrD3Iu" target="_blank" style="color: #FFCC00;">Pull-ups estrictas</a></li>
+                <li><a href="https://youtube.com/shorts/vZy_Eu_Z0WA?si=NsyS8SKwfjpA6E5j" target="_blank" style="color: #FFCC00;">Inverted row</a></li>
+            </ul>
+            <p>📌 <strong>Método: AMRAP</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="metric-card">
+            <h4>4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL</h4>
+            <p><a href="https://youtube.com/shorts/54XDbJgwIj4?si=OpxDW6gTccdJR6-A" target="_blank" style="color: #FFCC00;">Hip thrust unilateral</a></p>
+            <p>📌 <strong>Método: AMRAP por pierna</strong></p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="results-container">
+        <h3 style="text-align: center;">⚠️ Regla clave</h3>
+        <p style="font-size: 1.2rem; text-align: center; margin: 0;">
+            El ejercicio elegido <strong>NO se cambia en futuras evaluaciones</strong> para mantener la comparabilidad.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Protocol 2: Body Composition
+    st.markdown("""
+    <div class="section-header">
+        <h2>📸 2) PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Cómo medimos composición corporal de forma fiable, con instrucciones claras para el cliente y para staff.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # PHOTO3 Protocol with Pose Libre
+    st.markdown("""
+    <div class="section-header">
+        <h3>A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🎯 Objetivo</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Registrar cambios reales de grasa y forma corporal con comparabilidad longitudinal.
+        </p>
+        
+        <h3>📷 Fotos requeridas (4)</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">1. Frontal relajado</h4>
+                <p style="font-size: 1rem; line-height: 1.6;">
+                    Posición frontal completamente relajada, brazos a los lados, vista al frente.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">2. Perfil lateral relajado (derecho)</h4>
+                <p style="font-size: 1rem; line-height: 1.6;">
+                    Vista de perfil del lado derecho, completamente relajado, brazos a los lados.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
+                <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">3. Posterior relajado</h4>
+                <p style="font-size: 1rem; line-height: 1.6;">
+                    Vista de espalda completamente relajada, brazos a los lados.
+                </p>
+            </div>
+            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFD700;">
+                <h4 style="color: #FFD700; margin-bottom: 0.8rem;">4. Pose Libre ⭐</h4>
+                <p style="font-size: 1rem; line-height: 1.6;">
+                    <strong>NUEVA:</strong> Una pose de tu elección que muestre tu progreso. 
+                    Puede ser con tensión muscular, una pose estética o funcional que te represente. 
+                    <strong>Mantén la misma pose en cada evaluación.</strong>
+                </p>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>🌟 Guía para la Pose Libre</h3>
+        <p style="font-size: 1.05rem; line-height: 1.7;">
+            La <strong style="color: #FFCC00;">Pose Libre</strong> te permite mostrar tu progreso de forma personalizada:
+        </p>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li><strong>Poses de fuerza:</strong> Flexión de bíceps frontal, doble bíceps posterior, abdominales contraídos</li>
+            <li><strong>Poses estéticas:</strong> Pose de vacío abdominal, cuádriceps contraído, poses de culturismo clásicas</li>
+            <li><strong>Poses funcionales:</strong> Posición atlética, pose de tu deporte favorito</li>
+            <li><strong>Lo más importante:</strong> Mantén exactamente la misma pose en cada evaluación para ver tu progreso real</li>
+        </ul>
+        <p style="font-size: 1rem; line-height: 1.6; color: #888; margin-top: 1rem; font-style: italic;">
+            💡 <strong>Consejo:</strong> Elige una pose que te motive y en la que quieras ver mejoras específicas.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Timing section
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>⏰ Momento OFICIAL (óptima)</h4>
+            <ul style="font-size: 1rem; line-height: 1.6;">
+                <li>Por la mañana</li>
+                <li>Antes de entrenar</li>
+                <li>Sin comida grande previa</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>⏰ Momento ESTÁNDAR (válida)</h4>
+            <ul style="font-size: 1rem; line-height: 1.6;">
+                <li>Antes de entrenar el mismo día</li>
+                <li>Evitar comida grande 2–3 h antes</li>
+                <li>No entrenar antes (evitar "pump")</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>📐 Set-up técnico (NO negociable)</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">📷 Cámara:</strong> Altura del ombligo</p>
+            </div>
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">📏 Distancia:</strong> 2.5 metros fija</p>
+            </div>
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">🔍 Zoom:</strong> 1x (sin zoom)</p>
+            </div>
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">💡 Luz:</strong> Frontal homogénea</p>
+            </div>
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">🎨 Fondo:</strong> Liso y neutro</p>
+            </div>
+            <div style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px;">
+                <p style="margin: 0;"><strong style="color: #FFCC00;">📱 Formato:</strong> Vertical</p>
+            </div>
+        </div>
+        <p style="font-size: 1rem; margin-top: 1rem;"><strong>Ángulo:</strong> Horizontal (sin inclinar)</p>
+        <p style="font-size: 1rem;"><strong>Encuadre:</strong> Cuerpo completo (pies y cabeza visibles)</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>👕 Vestimenta (precisión)</h3>
+        <h4 style="color: #FFCC00;">Recomendado (máxima precisión):</h4>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li><strong>Hombre:</strong> sin camisa + short ajustado no compresivo</li>
+            <li><strong>Mujer:</strong> top ajustado + short/licra corta no compresiva</li>
+        </ul>
+        <h4 style="color: #FFCC00;">Alternativa válida (menos precisa):</h4>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Playera athletic/slim + short ajustado</li>
+            <li><strong style="color: #FFD700;">Regla:</strong> misma prenda/talla siempre</li>
+        </ul>
+        
+        <h3>💬 Instrucción estándar</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: center; background: rgba(255,204,0,0.1); padding: 1rem; border-radius: 8px;">
+            <em>"Colócate natural, relajado, sin posar. Mantén respiración normal."</em><br>
+            <strong style="color: #FFD700;">(Excepto en la Pose Libre, donde sí puedes tensar)</strong>
+        </p>
+        
+        <h3>✅ Control de calidad</h3>
+        <p style="font-size: 1.05rem; line-height: 1.7;">
+            Si falla cualquiera: luz muy distinta, cámara inclinada, distancia distinta, ropa distinta → <strong style="color: #FFCC00;">repetir</strong>.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Bioimpedance section
+    st.markdown("""
+    <div class="section-header">
+        <h3>B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <h3>🎯 Objetivo</h3>
+        <p style="font-size: 1.1rem; line-height: 1.8;">
+            Medición reproducible para seguimiento (tendencia). No se interpreta como verdad absoluta aislada.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>⏰ Preparación OFICIAL (óptima)</h4>
+            <ul style="font-size: 1rem; line-height: 1.6;">
+                <li>Mañana</li>
+                <li>Ayuno 8–10 h</li>
+                <li>No entrenar antes de medir</li>
+                <li>Recomendado: 12–24 h sin entrenamiento intenso</li>
+                <li>Evitar ducha caliente/sauna 2–3 h antes</li>
+                <li>Sin alcohol 24 h</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="metric-card">
+            <h4>⏰ Preparación ESTÁNDAR (válida)</h4>
+            <ul style="font-size: 1rem; line-height: 1.6;">
+                <li>Antes de entrenar ese día</li>
+                <li>Sin comida grande 3–4 h antes</li>
+                <li>Vejiga vacía (30–60 min antes)</li>
+                <li>Registrar si entrenaste fuerte el día anterior</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>✅ Checklist crítico (siempre)</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Piso duro y nivelado (no alfombra)</li>
+            <li>Pies/manos limpios y secos (sin crema; sin sudor)</li>
+            <li>Sin metal</li>
+            <li>Mismo perfil (edad/sexo/estatura correctos)</li>
+        </ul>
+        
+        <h3>🔄 Ejecución exacta (paso a paso)</h3>
+        <ol style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Encender y esperar 0.0</li>
+            <li>Seleccionar perfil</li>
+            <li>Subir descalzo, pies centrados en electrodos</li>
+            <li>Tomar manerales con contacto completo</li>
+            <li>Quedarte quieto hasta finalizar</li>
+            <li>Registrar resultados</li>
+        </ol>
+        
+        <h3>📊 Qué registramos</h3>
+        <ul style="font-size: 1.05rem; line-height: 1.7;">
+            <li>Fecha y hora</li>
+            <li>Peso del día</li>
+            <li>Resultado OMRON (lo que muestre el equipo)</li>
+            <li>Calidad: OFICIAL o ESTÁNDAR</li>
+            <li>Observaciones: ayuno sí/no, cafeína, entrenamiento previo, ducha caliente reciente</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="results-container">
+        <h3 style="text-align: center;">⚠️ Regla de interpretación (muy importante)</h3>
+        <p style="font-size: 1.2rem; text-align: center; margin: 0;">
+            No ajustar dieta/entrenamiento por un solo número. Se decide con:<br>
+            <strong>tendencia OMRON + PHOTO3 + rendimiento funcional</strong>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Recommended order
+    st.markdown("""
+    <div class="section-header">
+        <h3>C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown("""
+    <div class="corporate-section">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
+            <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                        padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
+                <h2 style="margin: 0 0 0.5rem 0; font-size: 2rem;">1️⃣</h2>
+                <h4 style="margin: 0 0 0.5rem 0;">PHOTO3</h4>
+                <p style="margin: 0; font-size: 0.9rem;">(incluye Pose Libre)</p>
+            </div>
+            <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                        padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
+                <h2 style="margin: 0 0 0.5rem 0; font-size: 2rem;">2️⃣</h2>
+                <h4 style="margin: 0;">OMRON HBF-516</h4>
+            </div>
+            <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
+                        padding: 2rem; border-radius: 15px; text-align: center; color: #000;">
+                <h2 style="margin: 0 0 0.5rem 0; font-size: 2rem;">3️⃣</h2>
+                <h4 style="margin: 0 0 0.5rem 0;">MUPAI-FUNC</h4>
+                <p style="margin: 0; font-size: 0.9rem;">(con calentamiento breve)</p>
+            </div>
+        </div>
+    </div>
     """, unsafe_allow_html=True)
     
     # Example images display block for PHOTO3
@@ -2955,39 +3138,91 @@ elif st.session_state.page == "protocolos_medicion":
     </div>
     """, unsafe_allow_html=True)
     
-    # Define image list
+    st.markdown("""
+    <div class="corporate-section">
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: center;">
+            A continuación se muestran ejemplos de las <strong style="color: #FFCC00;">4 fotos requeridas</strong> 
+            para el protocolo PHOTO3. Sigue estos ejemplos para asegurar la comparabilidad de tus mediciones.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Define image list with updated descriptions
     example_images = [
-        ("Frontal relajado", "FRONTAL.png"),
-        ("Perfil lateral (derecho)", "PERFIL.png"),
-        ("Posterior relajado", "POSTERIOR.png"),
-        ("Libre 2 (pose adicional)", "LIBRE 2.png"),
-        ("Libre 1 (pose adicional)", "LIBRE 1.png")
+        ("1. Frontal relajado", "FRONTAL.png", "Posición frontal relajada, brazos a los lados"),
+        ("2. Perfil lateral (derecho)", "PERFIL.png", "Vista de perfil del lado derecho relajado"),
+        ("3. Posterior relajado", "POSTERIOR.png", "Vista de espalda completamente relajada"),
+        ("4. Pose Libre - Ejemplo 1 ⭐", "LIBRE 1.png", "Ejemplo de Pose Libre con tensión muscular"),
+        ("4. Pose Libre - Ejemplo 2 ⭐", "LIBRE 2.png", "Otro ejemplo de Pose Libre personalizada")
     ]
     
-    # Display first three images in 3 columns
+    # Display first three standard images in 3 columns
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3>🔹 Fotos Estándar Relajadas (Obligatorias)</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
     col1, col2, col3 = st.columns(3)
-    for idx, (label, fname) in enumerate(example_images[:3]):
+    for idx, (label, fname, description) in enumerate(example_images[:3]):
         with [col1, col2, col3][idx]:
             if os.path.exists(fname):
                 try:
                     st.image(fname, caption=label, use_container_width=True)
+                    st.markdown(f"""
+                    <div style="text-align: center; padding: 0.5rem; background: rgba(255,204,0,0.05); 
+                                border-radius: 8px; margin-top: 0.5rem;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #FFFFFF;">{description}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
                 except Exception as e:
                     st.info(f"Ejemplo: {label} — Error al cargar: {fname}")
             else:
                 st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
     
-    # Display next two images in 2 columns
-    if len(example_images) > 3:
+    # Display Pose Libre images in 2 columns with special highlighting
+    st.markdown("""
+    <div class="questionnaire-container" style="margin-top: 2rem;">
+        <h3 style="color: #FFD700;">⭐ Pose Libre (Nueva - Obligatoria)</h3>
+        <p style="font-size: 1.05rem; line-height: 1.7;">
+            Estos son ejemplos de <strong style="color: #FFCC00;">Pose Libre</strong>. Elige una pose que te represente 
+            y <strong>mantenla en cada evaluación</strong> para ver tu progreso.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Display remaining images (Pose Libre examples) - typically images 4 and 5
+    pose_libre_images = example_images[3:]  # Get all images after the first 3
+    if len(pose_libre_images) > 0:
         col4, col5 = st.columns(2)
-        for idx, (label, fname) in enumerate(example_images[3:5]):
+        for idx, (label, fname, description) in enumerate(pose_libre_images[:2]):
             with [col4, col5][idx]:
                 if os.path.exists(fname):
                     try:
                         st.image(fname, caption=label, use_container_width=True)
+                        st.markdown(f"""
+                        <div style="text-align: center; padding: 0.8rem; 
+                                    background: linear-gradient(135deg, rgba(255,204,0,0.2) 0%, rgba(255,215,0,0.1) 100%); 
+                                    border-radius: 8px; margin-top: 0.5rem; border: 1px solid #FFD700;">
+                            <p style="margin: 0; font-size: 0.95rem; color: #FFFFFF; font-weight: 500;">{description}</p>
+                        </div>
+                        """, unsafe_allow_html=True)
                     except Exception as e:
                         st.info(f"Ejemplo: {label} — Error al cargar: {fname}")
                 else:
                     st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
+    
+    # Final note about Pose Libre
+    st.markdown("""
+    <div class="results-container" style="margin-top: 2rem;">
+        <h3 style="text-align: center;">💡 Recuerda</h3>
+        <p style="font-size: 1.1rem; text-align: center; margin: 0;">
+            Las primeras <strong>3 fotos son relajadas</strong> (frontal, perfil, posterior).<br>
+            La <strong style="color: #FFD700;">Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión muscular o pose estética.<br>
+            <strong>Mantén siempre la misma pose libre para comparar tu progreso.</strong>
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ==================== PÁGINA DE MUPCAMP 1:1 ====================
 elif st.session_state.page == "mupcamp_1a1":
