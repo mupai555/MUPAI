@@ -1924,23 +1924,23 @@ if st.session_state.page == "inicio":
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $600 - $750 MXN
+                💰 $700 - $900 MXN
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> 5 semanas</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">Duración:</strong> Ciclo de 5 semanas (4 semanas de ejecución + 1 semana de reevaluación)</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFCC00;">✅ Beneficios:</strong></p>
                 <ul style="margin: 0; padding-left: 1.2rem;">
                     <li>Evaluación inicial con bioimpedancia</li>
-                    <li>5 menús semanales adaptados</li>
+                    <li>7 menús personalizados (semana tipo)</li>
                     <li>Personalización según preferencias</li>
                     <li>Evaluación final con medición</li>
-                    <li>Menús extra: $100/$150 MXN</li>
+                    <li>Menús extra: <strong>Internos:</strong> desde $200 MXN / <strong>Externos:</strong> desde $400 MXN</li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $600 MXN</li>
-                    <li><strong>Externos:</strong> $750 MXN</li>
+                    <li><strong>Internos:</strong> $700 MXN</li>
+                    <li><strong>Externos:</strong> $900 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -1963,7 +1963,7 @@ if st.session_state.page == "inicio":
             </h3>
             <div style="background: #FFCC00; color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $750 - $900 MXN
+                💰 $950 - $1,100 MXN
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
@@ -1979,8 +1979,8 @@ if st.session_state.page == "inicio":
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFCC00;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $750 MXN</li>
-                    <li><strong>Externos:</strong> $900 MXN</li>
+                    <li><strong>Internos:</strong> $950 MXN</li>
+                    <li><strong>Externos:</strong> $1,100 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,204,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -2009,24 +2009,24 @@ if st.session_state.page == "inicio":
             <div style="background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); 
                         color: #000; padding: 1rem; border-radius: 10px; 
                         margin-bottom: 1.5rem; font-weight: bold; font-size: 1.4rem;">
-                💰 $1,200 - $1,500 MXN
-                <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $150 MXN</div>
+                💰 $1,500 - $1,850 MXN
+                <div style="font-size: 1rem; margin-top: 0.5rem;">💸 Ahorra $100 MXN</div>
             </div>
             <div style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.6; margin-bottom: 1.5rem; 
                       text-align: left; flex-grow: 1;">
-                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">Duración:</strong> Nutrición 6 sem + Entrenamiento 8 sem</p>
+                <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">Duración:</strong> 10 semanas (Nutrición 5 semanas + Entrenamiento 10 semanas)</p>
                 <p style="margin: 0 0 1rem 0;"><strong style="color: #FFD700;">✅ Beneficios:</strong></p>
                 <ul style="margin: 0; padding-left: 1.2rem;">
                     <li>Ambos planes completos</li>
                     <li>Evaluación inicial y final completa</li>
                     <li>Integración total dieta/entrenamiento</li>
                     <li>Seguimiento coordinado</li>
-                    <li><strong>Ahorro de $150 MXN</strong></li>
+                    <li><strong>Ahorro de $100 MXN</strong></li>
                 </ul>
                 <p style="margin: 1rem 0 0 0;"><strong style="color: #FFD700;">💰 Precios:</strong></p>
                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.2rem;">
-                    <li><strong>Internos:</strong> $1,200 MXN</li>
-                    <li><strong>Externos:</strong> $1,500 MXN</li>
+                    <li><strong>Internos:</strong> $1,500 MXN</li>
+                    <li><strong>Externos:</strong> $1,850 MXN</li>
                 </ul>
             </div>
             <div style="background: rgba(255,215,0,0.2); padding: 1rem; border-radius: 10px;">
@@ -2108,13 +2108,13 @@ if st.session_state.page == "inicio":
             🎯 Sigue este proceso completo para obtener tu plan personalizado y comenzar tu transformación física.
         </p>
         <ol style="color: #FFFFFF; font-size: 1.1rem; line-height: 2; margin: 0; padding-left: 1.5rem;">
-            <li><strong style="color: #FFCC00;">Selección del Plan:</strong> Elige el plan que mejor se adapte a tus objetivos y presupuesto.</li>
-            <li><strong style="color: #FFCC00;">Transferencia Bancaria:</strong> Realiza la transferencia del monto exacto a la cuenta mostrada arriba.</li>
-            <li><strong style="color: #FFCC00;">Envío de Comprobante:</strong> Envía tu comprobante de pago por correo (administracion@muscleupgym.fitness) o WhatsApp (8662580594).</li>
-            <li><strong style="color: #FFCC00;">Programación de Medición:</strong> Agenda tu medición corporal inicial (detalles más abajo).</li>
-            <li><strong style="color: #FFCC00;">Acceso a Cuestionarios:</strong> Se autoriza el acceso a los cuestionarios especializados correspondientes a tu plan.</li>
-            <li><strong style="color: #FFCC00;">Llenado de Cuestionarios:</strong> Completa los cuestionarios con información precisa y detallada.</li>
-            <li><strong style="color: #FFCC00;">Entrega del Plan:</strong> Recibe tu plan personalizado en <strong>3 a 5 días hábiles</strong>.</li>
+            <li><strong style="color: #FFCC00;">Elige tu plan</strong></li>
+            <li><strong style="color: #FFCC00;">Realiza el pago</strong></li>
+            <li><strong style="color: #FFCC00;">Envía comprobante</strong> (WhatsApp o correo)</li>
+            <li><strong style="color: #FFCC00;">Abre en la barra lateral: </strong> "Protocolo de Medición MUPAI"</li>
+            <li><strong style="color: #FFCC00;">Agenda tu medición</strong> (Lun–Mié; Jue si hay cupo)</li>
+            <li><strong style="color: #FFCC00;">Contesta tus cuestionarios</strong> y carga lo obligatorio (especialmente fotos)</li>
+            <li><strong style="color: #FFCC00;">Recibe tu plan</strong> en ventana Vie–Sáb–Dom</li>
         </ol>
     </div>
     """, unsafe_allow_html=True)
@@ -2244,15 +2244,21 @@ if st.session_state.page == "inicio":
                 border: 3px solid #FFCC00; box-shadow: 0 8px 25px rgba(255,204,0,0.5);
                 text-align: center;">
         <h3 style="color: #000; font-size: 2rem; margin-bottom: 1rem; font-weight: bold;">
-            ⏰ Tiempo de Entrega
+            ⏰ Tiempo de Entrega (Ventana oficial)
         </h3>
-        <p style="color: #333; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500; line-height: 1.6;">
-            📦 Los planes se entregan de <strong>3 a 5 días hábiles</strong> tras completar 
-            la medición corporal y los cuestionarios correspondientes.
+        <p style="color: #333; font-size: 1.3rem; margin-bottom: 1rem; font-weight: 500; line-height: 1.6;">
+            <strong>Entregamos planes en Viernes, Sábado o Domingo.</strong>
         </p>
+        <p style="color: #333; font-size: 1.1rem; margin-bottom: 1rem; line-height: 1.6;">
+            Para recibir tu plan ese fin de semana, necesitas:
+        </p>
+        <ul style="color: #333; font-size: 1.1rem; margin: 0 auto 1rem auto; max-width: 600px; text-align: left; display: inline-block;">
+            <li>Medición a más tardar miércoles</li>
+            <li>Cuestionarios completos</li>
+            <li>Fotos/archivos obligatorios cargados</li>
+        </ul>
         <p style="color: #333; font-size: 1.1rem; margin: 0; font-weight: 400;">
-            💡 <strong>Nota Importante:</strong> La calidad de tu plan depende de la precisión 
-            de la información proporcionada en los cuestionarios y mediciones.
+            💡 <strong>Importante:</strong> Si completas tarde, tu entrega pasa al siguiente fin de semana.
         </p>
     </div>
     """, unsafe_allow_html=True)
