@@ -2703,6 +2703,9 @@ elif st.session_state.page == "planes_costos":
 
 # ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN ====================
 elif st.session_state.page == "protocolos_medicion":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
     st.markdown("""
     <div class="section-header">
         <h2>📐 Protocolos de medición MUPAI</h2>
