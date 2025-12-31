@@ -2467,57 +2467,11 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # 🎯 Primer Paso: Elige el Plan Adecuado
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🎯 Primer Paso: Elige el Plan Adecuado</h3>
-        <p style="font-size: 1.1rem; line-height: 1.8;">
-            El primer paso para transformar tu físico y salud es <strong>elegir el plan que mejor se adapte a tus objetivos</strong>. 
-            Una vez seleccionado, realiza la transferencia del monto exacto a la tarjeta bancaria que se muestra a continuación.
-        </p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem;">
-            Revisa detenidamente cada opción, sus beneficios incluidos y el proceso completo de adquisición antes de tomar tu decisión.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # 🗓️ Organización Semanal
-    st.markdown("""
-    <div class="section-header">
-        <h2>🗓️ Organización Semanal</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="corporate-section">
-        <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            📅 Estructura de los Planes
-        </h3>
-        <p style="font-size: 1.1rem; line-height: 1.8;">
-            Nuestros planes están organizados por semanas para ofrecerte un seguimiento estructurado y resultados medibles:
-        </p>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
-            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
-                <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">🍽️ Plan de Nutrición</h4>
-                <p style="font-size: 1rem; line-height: 1.6;">
-                    <strong>5 semanas</strong> de menús personalizados<br>
-                    Ajustes semanales según tu progreso<br>
-                    Evaluación inicial y final incluida
-                </p>
-            </div>
-            <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00;">
-                <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">💪 Plan de Entrenamiento</h4>
-                <p style="font-size: 1rem; line-height: 1.6;">
-                    <strong>10 semanas</strong> de programación periodizada<br>
-                    Progresiones inteligentes de volumen e intensidad<br>
-                    Evaluación de rendimiento funcional
-                </p>
-            </div>
-        </div>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem; font-style: italic; text-align: center;">
-            💡 <strong>Nota:</strong> Los planes están diseñados para complementarse perfectamente. 
-            El plan combinado ofrece la integración óptima entre nutrición y entrenamiento.
-        </p>
+        <h3>🎯 Primer Paso: Elije el Plan Adecuado</h3>
+        <p>El primer paso para transformar tu físico y salud es <strong>elegir el plan que mejor se adapte a tus objetivos</strong>. 
+        Una vez seleccionado, realiza la transferencia del monto exacto a la tarjeta bancaria que se muestra a continuación.</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2700,63 +2654,17 @@ elif st.session_state.page == "planes_costos":
         </div>
         """, unsafe_allow_html=True)
     
-    # 📌 Antes de contestar cuestionarios
-    st.markdown("""
-    <div class="section-header">
-        <h2>📌 Antes de Contestar los Cuestionarios</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="questionnaire-container">
-        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            ⚠️ Instrucciones Importantes
-        </h3>
-        <p style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 1rem;">
-            Para garantizar la <strong>máxima efectividad de tu plan personalizado</strong>, es fundamental que sigas estas recomendaciones:
-        </p>
-        
-        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00; margin: 1rem 0;">
-            <h4 style="color: #FFCC00; margin-bottom: 0.8rem;">🎯 Requisitos Previos</h4>
-            <ul style="font-size: 1.05rem; line-height: 1.7;">
-                <li><strong>Pago confirmado:</strong> Asegúrate de que tu transferencia haya sido validada</li>
-                <li><strong>Medición corporal realizada:</strong> Completa tu evaluación inicial (presencial para internos, con guía para externos)</li>
-                <li><strong>Acceso autorizado:</strong> Espera la confirmación de acceso a los cuestionarios correspondientes a tu plan</li>
-            </ul>
-        </div>
-        
-        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFD700; margin: 1rem 0;">
-            <h4 style="color: #FFD700; margin-bottom: 0.8rem;">📝 Consejos para Completar los Cuestionarios</h4>
-            <ul style="font-size: 1.05rem; line-height: 1.7;">
-                <li><strong>Tiempo necesario:</strong> Reserva 30-45 minutos sin interrupciones para completar los cuestionarios</li>
-                <li><strong>Honestidad absoluta:</strong> Responde con total sinceridad; no hay respuestas "correctas" o "incorrectas"</li>
-                <li><strong>Detalles precisos:</strong> Mientras más información proporciones, más personalizado será tu plan</li>
-                <li><strong>Fotos requeridas:</strong> Prepara las fotos de composición corporal según los protocolos MUPAI (consulta la sección "Protocolos de Medición")</li>
-                <li><strong>Horarios y disponibilidad:</strong> Ten clara tu disponibilidad real de tiempo para entrenar o preparar alimentos</li>
-            </ul>
-        </div>
-        
-        <p style="font-size: 1rem; line-height: 1.6; color: #888; margin-top: 1.5rem; font-style: italic; text-align: center;">
-            💡 <strong>Recuerda:</strong> La calidad de tu plan personalizado depende directamente de la precisión 
-            y honestidad de la información que proporciones en los cuestionarios.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
     # Direccionamiento a cuestionarios
     st.markdown("""
     <div class="section-header">
-        <h2>🧠 Cuestionarios Especializados</h2>
+        <h2>📝 Acceso a Cuestionarios Especializados</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
         <h3>🎯 Cuestionarios Según Tu Plan</h3>
-        <p style="font-size: 1.1rem; line-height: 1.8;">
-            Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios especializados. 
-            Cada cuestionario está científicamente diseñado para recopilar la información necesaria para tu plan:
-        </p>
+        <p>Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios:</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2785,196 +2693,12 @@ elif st.session_state.page == "planes_costos":
     # Nota final
     st.markdown("""
     <div class="results-container">
-        <h3>⏱️ Tiempo de Entrega</h3>
+        <h3>⏰ Tiempo de Entrega</h3>
         <p style="font-size: 1.2rem; text-align: center; margin: 0;">
             <strong>Los planes se entregan de 3 a 5 días hábiles</strong> tras completar la medición corporal y los cuestionarios correspondientes.
         </p>
         <p style="text-align: center; margin-top: 1rem;">
             💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # ❓ FAQ Section
-    st.markdown("""
-    <div class="section-header">
-        <h2>❓ Preguntas Frecuentes (FAQ)</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # FAQ items
-    st.markdown("""
-    <div class="corporate-section">
-        <div style="margin: 1rem 0;">
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Qué diferencia hay entre usuario interno y externo?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    <strong>Usuarios Internos:</strong> Son miembros activos de Muscle Up Gym con membresía vigente. 
-                    Tienen acceso a mediciones presenciales en las instalaciones con bioimpedancia profesional y asesoría directa.<br><br>
-                    <strong>Usuarios Externos:</strong> Personas que no tienen membresía en el gym. Realizan sus mediciones 
-                    por cuenta propia siguiendo nuestras guías detalladas y reciben asesoría virtual.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Puedo cambiar mi plan después de pagarlo?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Sí, pero solo <strong>antes de completar los cuestionarios</strong>. Una vez iniciado el diseño de tu plan 
-                    personalizado, no es posible realizar cambios. Si necesitas un cambio, contacta lo antes posible a 
-                    administracion@muscleupgym.fitness o al WhatsApp 8662580594.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Qué pasa si no puedo asistir a mi medición inicial?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    <strong>Usuarios Internos:</strong> Puedes reagendar tu cita contactando al gym.<br>
-                    <strong>Usuarios Externos:</strong> Puedes realizar tu medición cuando estés listo, siguiendo la guía proporcionada. 
-                    El tiempo de entrega de tu plan comenzará a contar desde que completes medición y cuestionarios.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Los menús extra tienen el mismo nivel de personalización?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Sí, los menús extra mantienen el mismo nivel de personalización y ajuste calórico/macro que tus menús incluidos. 
-                    Son ideales si deseas extender tu plan de nutrición más allá de las 5 semanas iniciales.<br><br>
-                    <strong>Precio:</strong> $100 MXN (internos) / $150 MXN (externos) por menú semanal adicional.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Puedo entrenar en casa o necesito un gimnasio completo?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Tu plan de entrenamiento se adapta al equipamiento que tengas disponible. En el cuestionario 
-                    "Designing Your Training" indicarás tu equipamiento disponible (gimnasio completo, mancuernas en casa, 
-                    peso corporal, etc.) y el plan se diseñará acorde a tus recursos.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Qué sucede después de las 5 semanas del plan de nutrición?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Al finalizar las 5 semanas, recibes una evaluación final que incluye:<br>
-                    - Medición corporal de cierre<br>
-                    - Análisis de resultados obtenidos<br>
-                    - Recomendaciones para continuar tu progreso<br><br>
-                    Puedes adquirir menús adicionales o renovar el plan completo si deseas seguimiento continuo.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Qué incluye exactamente la "evaluación inicial completa"?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    La evaluación inicial incluye:<br>
-                    - <strong>Medición con bioimpedancia</strong> (OMRON HBF-516 para internos)<br>
-                    - <strong>Fotos de composición corporal</strong> siguiendo protocolo PHOTO4<br>
-                    - <strong>Análisis de datos antropométricos</strong><br>
-                    - <strong>Revisión de historial</strong> de entrenamiento y alimentación<br>
-                    - <strong>Evaluación de objetivos</strong> y expectativas realistas
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿El plan combinado es realmente más económico?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Sí. Veamos los números:<br><br>
-                    <strong>Comprando por separado:</strong><br>
-                    - Plan Nutrición (interno): $600<br>
-                    - Plan Entrenamiento (interno): $750<br>
-                    - <strong>Total: $1,350 MXN</strong><br><br>
-                    <strong>Plan Combinado (interno): $1,200 MXN</strong><br>
-                    <strong>Ahorro: $150 MXN</strong><br><br>
-                    Lo mismo aplica para usuarios externos ($1,500 vs $1,650 - ahorro de $150).
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Necesito experiencia previa para seguir los planes?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    No necesitas experiencia previa. Los planes se adaptan a tu nivel actual (principiante, intermedio o avanzado) 
-                    según la información que proporciones en los cuestionarios. Cada ejercicio incluye explicaciones claras y, 
-                    para los usuarios internos, hay opción de asesoría presencial adicional.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Puedo contactar al profesional durante mi plan?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Sí. Una vez adquirido tu plan, tienes acceso de contacto directo para:<br>
-                    - Dudas sobre ejercicios o alimentos<br>
-                    - Ajustes menores necesarios<br>
-                    - Reportar progreso o dificultades<br><br>
-                    Contacto: administracion@muscleupgym.fitness o WhatsApp 8662580594<br>
-                    <em>Nota: Ajustes mayores pueden requerir adquisición de menús extra o extensión de plan.</em>
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Los planes consideran restricciones alimentarias o condiciones médicas?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Sí, el cuestionario "Food Preferences" incluye secciones para:<br>
-                    - Alergias e intolerancias alimentarias<br>
-                    - Preferencias dietéticas (vegetariano, vegano, etc.)<br>
-                    - Restricciones médicas<br>
-                    - Alimentos que no consumes por cualquier motivo<br><br>
-                    <strong>Importante:</strong> Si tienes una condición médica seria (diabetes, hipertensión, etc.), 
-                    recomendamos trabajar en coordinación con tu médico tratante.
-                </p>
-            </details>
-            
-            <details style="background: rgba(255,204,0,0.05); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #FFCC00;">
-                <summary style="font-size: 1.1rem; font-weight: bold; color: #FFCC00; cursor: pointer; padding: 0.5rem 0;">
-                    ❓ ¿Qué formato tiene la entrega del plan?
-                </summary>
-                <p style="margin-top: 1rem; font-size: 1rem; line-height: 1.7; color: #FFFFFF;">
-                    Los planes se entregan en formato <strong>PDF profesional</strong> que incluye:<br>
-                    - <strong>Plan de Nutrición:</strong> Menús semanales detallados, lista de compras, recetas, 
-                    cantidades específicas, distribución de macros<br>
-                    - <strong>Plan de Entrenamiento:</strong> Rutinas semanales, ejercicios con links a videos demostrativos, 
-                    series/repeticiones/descansos, notas técnicas, progresiones planificadas<br><br>
-                    El PDF es descargable y puedes imprimirlo o consultarlo desde tu dispositivo móvil.
-                </p>
-            </details>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Contact CTA at the end
-    st.markdown("""
-    <div class="results-container">
-        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">📞 ¿Tienes Más Preguntas?</h3>
-        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
-            <strong>📧 Email:</strong> administracion@muscleupgym.fitness
-        </p>
-        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
-            <strong>📱 WhatsApp:</strong> 8662580594
-        </p>
-        <p style="font-size: 1rem; text-align: center; margin-top: 1.5rem; color: #666;">
-            Estamos aquí para ayudarte a tomar la mejor decisión para tus objetivos. 
-            ¡Contáctanos sin compromiso!
         </p>
     </div>
     """, unsafe_allow_html=True)
