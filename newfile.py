@@ -2469,19 +2469,9 @@ elif st.session_state.page == "planes_costos":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🎯 ¿Cómo Elegir Tu Plan Ideal?</h3>
-        <p style="font-size: 1.1rem; line-height: 1.8;">
-            Nuestros planes están diseñados para adaptarse a diferentes objetivos y necesidades. 
-            <strong>Todos los planes incluyen evaluación profesional, diseño personalizado basado en ciencia, 
-            y seguimiento estructurado de tus progresos.</strong>
-        </p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem;">
-            📋 <strong>Paso 1:</strong> Revisa los planes disponibles y sus beneficios<br>
-            💳 <strong>Paso 2:</strong> Realiza la transferencia del monto exacto<br>
-            📱 <strong>Paso 3:</strong> Envía tu comprobante de pago<br>
-            📏 <strong>Paso 4:</strong> Agenda tu evaluación inicial<br>
-            🚀 <strong>Paso 5:</strong> ¡Comienza tu transformación!
-        </p>
+        <h3>🎯 Primer Paso: Elije el Plan Adecuado</h3>
+        <p>El primer paso para transformar tu físico y salud es <strong>elegir el plan que mejor se adapte a tus objetivos</strong>. 
+        Una vez seleccionado, realiza la transferencia del monto exacto a la tarjeta bancaria que se muestra a continuación.</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2518,40 +2508,25 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>🍽️ Plan de Nutrición Personalizada</h3>
-        <p style="font-size: 1.1rem; line-height: 1.7;"><strong>Duración:</strong> 5 semanas de seguimiento nutricional estructurado</p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem;">
-            <strong>Descripción:</strong> Plan alimentario completamente personalizado basado en evidencia científica, 
-            diseñado específicamente para tus objetivos (pérdida de grasa, ganancia muscular, recomposición corporal o mantenimiento). 
-            Se considera tu composición corporal actual, nivel de actividad física, preferencias alimentarias, 
-            restricciones dietéticas y estilo de vida real.
-        </p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 0.8rem; color: #FFCC00;">
-            🎯 <strong>Ideal para:</strong> Personas que buscan mejorar su alimentación con un enfoque científico, 
-            sostenible y adaptado a su vida diaria, sin dietas extremas ni restricciones innecesarias.
-        </p>
+        <p><strong>Duración:</strong> 5 semanas</p>
+        <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem;">💰 Inversión:</h4>
-        <div style="background: rgba(255,204,0,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Internos (miembros activos del gym):</strong> $600 MXN
-            </p>
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Externos (personas foráneas o no miembros):</strong> $750 MXN
-            </p>
-        </div>
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-top: 1.5rem;">✅ Todo lo que Incluye:</h4>
-        <ul style="font-size: 1.05rem; line-height: 1.8;">
-            <li><strong>Evaluación inicial completa:</strong> Bioimpedancia profesional, antropometría y análisis de composición corporal</li>
-            <li><strong>5 menús semanales personalizados:</strong> Cada uno ajustado en calorías, macronutrientes (proteínas, carbohidratos, grasas) y micronutrientes esenciales</li>
-            <li><strong>Diseño individualizado:</strong> Basado en tus preferencias alimentarias, horarios de comida, presupuesto y acceso a alimentos</li>
-            <li><strong>Flexibilidad incluida:</strong> Opciones de intercambio y alternativas para cada comida</li>
-            <li><strong>Educación nutricional:</strong> Comprenderás el porqué de cada decisión alimentaria</li>
-            <li><strong>Evaluación final:</strong> Medición corporal para documentar tus cambios y progreso</li>
-            <li><strong>Extensión disponible:</strong> Menús adicionales desde $100 MXN (internos) o $150 MXN (externos) por semana</li>
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $750 MXN</li>
+        </ul>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Evaluación inicial completa con bioimpedancia</li>
+            <li>5 menús semanales adaptados (calorías, macros, micronutrientes)</li>
+            <li>Personalización según preferencias alimentarias</li>
+            <li>Evaluación final con medición corporal</li>
+            <li>Menús extra desde $100 (internos) $150 (externos) MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -2560,40 +2535,26 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
-        <p style="font-size: 1.1rem; line-height: 1.7;"><strong>Duración:</strong> 10 semanas - Bloque completo de programación periodizada</p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem;">
-            <strong>Descripción:</strong> Programa de entrenamiento diseñado científicamente según principios de periodización, 
-            adaptado a tu nivel actual de experiencia, objetivos específicos (hipertrofia, fuerza, rendimiento deportivo, salud), 
-            disponibilidad de tiempo real, y equipamiento al que tienes acceso (gimnasio completo, equipamiento casero, o calistenia).
-        </p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 0.8rem; color: #FFCC00;">
-            🎯 <strong>Ideal para:</strong> Personas que buscan un entrenamiento estructurado, progresivo y basado en ciencia, 
-            ya sea principiantes que necesitan una base sólida o avanzados que buscan optimizar su rendimiento y romper mesetas.
-        </p>
+        <p><strong>Duración:</strong> 10 semanas (bloque de 10 semanas)</p>
+        <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem;">💰 Inversión:</h4>
-        <div style="background: rgba(255,204,0,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Internos (miembros activos del gym):</strong> $750 MXN
-            </p>
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Externos (personas foráneas o no miembros):</strong> $900 MXN
-            </p>
-        </div>
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-top: 1.5rem;">✅ Todo lo que Incluye:</h4>
-        <ul style="font-size: 1.05rem; line-height: 1.8;">
-            <li><strong>Evaluación completa inicial:</strong> Cuestionario especializado "Designing Your Training" para analizar experiencia, objetivos, disponibilidad y contexto</li>
-            <li><strong>Programación periodizada completa:</strong> 10 semanas de entrenamiento con progresiones lógicas en volumen, intensidad y complejidad</li>
-            <li><strong>Personalización total:</strong> Adaptado a tu nivel (principiante, intermedio, avanzado), horarios reales y equipamiento disponible</li>
-            <li><strong>Estructura profesional:</strong> Ejercicios específicos, series, repeticiones, descansos, tempo y notas técnicas detalladas</li>
-            <li><strong>Variaciones incluidas:</strong> Opciones alternativas para cada ejercicio según tu capacidad o limitaciones</li>
-            <li><strong>Formato profesional PDF:</strong> Documento completo, organizado y fácil de seguir en el gimnasio o en casa</li>
-            <li><strong>Evaluación de progreso:</strong> Medición de rendimiento funcional (fuerza y resistencia) al inicio y final del bloque</li>
-            <li><strong>Educación incluida:</strong> Entenderás la lógica del programa y cómo ajustarlo según tus respuestas</li>
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $750 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $900 MXN</li>
+        </ul>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Evaluación inicial con cuestionario "Designing Your Training"</li>
+            <li>Plan personalizado en volumen, frecuencia e intensidad</li>
+            <li>Adaptación a tu horario y nivel de experiencia</li>
+            <li>Entrega profesional en formato PDF</li>
+            <li>Evaluación final de progresos</li>
+            <li>Progresiones y variaciones incluidas</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -2602,61 +2563,26 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
-        <p style="font-size: 1.1rem; line-height: 1.7;"><strong>Duración:</strong> Nutrición 5 semanas + Entrenamiento 10 semanas (ambos programas completos)</p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 1rem;">
-            <strong>Descripción:</strong> La solución más completa y efectiva que integra nutrición y entrenamiento 
-            personalizados de forma coordinada. Este plan garantiza que tu alimentación y tu entrenamiento trabajen 
-            en sinergia perfecta para maximizar tus resultados, ya sea que busques perder grasa, ganar músculo, 
-            recomponer tu cuerpo o mejorar tu rendimiento deportivo.
-        </p>
-        <p style="font-size: 1.05rem; line-height: 1.7; margin-top: 0.8rem; color: #FFCC00;">
-            🎯 <strong>Ideal para:</strong> Personas comprometidas con lograr una transformación real y sostenible, 
-            que entienden que los mejores resultados vienen de la combinación inteligente de nutrición y entrenamiento. 
-            <strong>Esta es nuestra recomendación #1 para resultados óptimos.</strong>
-        </p>
-        <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
-                    padding: 1rem; border-radius: 10px; margin: 1rem 0; color: #000; text-align: center;">
-            <p style="font-size: 1.15rem; font-weight: bold; margin: 0;">
-                ⭐ PLAN MÁS POPULAR - Mejor relación valor-resultados ⭐
-            </p>
-        </div>
+        <p><strong>Duración:</strong> Nutrición 5 sem + Entrenamiento 10 sem</p>
+        <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem;">💰 Inversión con Ahorro Incluido:</h4>
-        <div style="background: rgba(255,204,0,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Internos (miembros activos del gym):</strong> $1,200 MXN 
-                <span style="color: #FFCC00; font-weight: bold;">(Ahorras $150 MXN vs. comprar planes por separado)</span>
-            </p>
-            <p style="font-size: 1.1rem; margin: 0.5rem 0;">
-                <strong>Usuarios Externos (personas foráneas o no miembros):</strong> $1,500 MXN 
-                <span style="color: #FFCC00; font-weight: bold;">(Ahorras $150 MXN vs. comprar planes por separado)</span>
-            </p>
-        </div>
-        <h4 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-top: 1.5rem;">✅ Todo lo que Incluye (Paquete Completo):</h4>
-        <ul style="font-size: 1.05rem; line-height: 1.8;">
-            <li><strong>AMBOS planes completos:</strong> Todo lo incluido en el Plan de Nutrición + Todo lo incluido en el Plan de Entrenamiento</li>
-            <li><strong>Evaluación inicial integral:</strong> Bioimpedancia, composición corporal, cuestionarios especializados de nutrición y entrenamiento</li>
-            <li><strong>Integración estratégica:</strong> Tu alimentación está diseñada específicamente para soportar tu entrenamiento y viceversa</li>
-            <li><strong>5 menús semanales personalizados:</strong> Ajustados a tus necesidades calóricas y de macronutrientes según tu fase de entrenamiento</li>
-            <li><strong>10 semanas de entrenamiento periodizado:</strong> Programa completo con progresiones lógicas y adaptado a tu nivel</li>
-            <li><strong>Coordinación nutricional-entrenamiento:</strong> Timing de nutrientes, estrategias pre/post entrenamiento, días de entrenamiento vs. descanso</li>
-            <li><strong>Seguimiento integrado de progreso:</strong> Mediciones de composición corporal y rendimiento funcional coordinadas</li>
-            <li><strong>Flexibilidad y adaptación:</strong> Ajustes disponibles según tu respuesta y progreso</li>
-            <li><strong>Máximo valor por inversión:</strong> Descuento automático de $150 MXN + resultados superiores por sinergia entre planes</li>
+        <h4>💰 Precios:</h4>
+        <ul>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $1,200 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $1,500 MXN</li>
         </ul>
-        <div style="background: rgba(255,204,0,0.15); padding: 1.2rem; border-radius: 10px; 
-                    margin-top: 1.5rem; border-left: 4px solid #FFCC00;">
-            <p style="font-size: 1.05rem; line-height: 1.7; margin: 0; color: #FFFFFF;">
-                <strong style="color: #FFCC00;">💡 Por qué este plan es superior:</strong><br>
-                No es solo la suma de dos planes, es la integración estratégica que multiplica resultados. 
-                Tu nutrición soporta tu entrenamiento, y tu entrenamiento maximiza los beneficios de tu nutrición. 
-                Esta sinergia es lo que marca la diferencia entre resultados buenos y resultados excepcionales.
-            </p>
-        </div>
+        <h4>✅ Beneficios Incluidos:</h4>
+        <ul>
+            <li>Ambos planes completos (nutrición + entrenamiento)</li>
+            <li>Evaluación inicial y final con bioimpedancia</li>
+            <li>Integración total entre dieta y entrenamiento</li>
+            <li>Seguimiento coordinado de progreso</li>
+            <li><strong>Ahorro de $150 MXN (internos) o $150 MXN (externos)</strong></li>
+        </ul>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2767,297 +2693,12 @@ elif st.session_state.page == "planes_costos":
     # Nota final
     st.markdown("""
     <div class="results-container">
-        <h3>⏰ Tiempo de Entrega y Proceso</h3>
-        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0; line-height: 1.8;">
-            <strong>Los planes se entregan de 3 a 5 días hábiles</strong> después de que completes tu medición corporal 
-            inicial y todos los cuestionarios correspondientes a tu plan.
+        <h3>⏰ Tiempo de Entrega</h3>
+        <p style="font-size: 1.2rem; text-align: center; margin: 0;">
+            <strong>Los planes se entregan de 3 a 5 días hábiles</strong> tras completar la medición corporal y los cuestionarios correspondientes.
         </p>
-        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
-            <h4 style="color: #FFCC00; margin-bottom: 1rem;">📋 Línea de Tiempo Típica:</h4>
-            <ul style="font-size: 1.05rem; line-height: 1.8; text-align: left;">
-                <li><strong>Día 0:</strong> Realizas el pago y envías comprobante</li>
-                <li><strong>Día 1:</strong> Confirmación de pago y programación de medición (24h hábiles)</li>
-                <li><strong>Día 2-3:</strong> Realizas tu medición corporal y completas cuestionarios</li>
-                <li><strong>Día 4-8:</strong> Diseño y entrega de tu plan personalizado (3-5 días hábiles)</li>
-                <li><strong>Día 9:</strong> ¡Comienzas tu transformación con tu plan en mano!</li>
-            </ul>
-        </div>
-        <p style="text-align: center; margin-top: 1.5rem; font-size: 1.05rem;">
-            💡 <strong>Nota Importante:</strong> La calidad y precisión de tu plan dependen directamente de la 
-            exactitud de la información que proporciones en los cuestionarios y mediciones. 
-            <strong>Sé honesto y detallado</strong> - esto nos permite diseñar el plan más efectivo para ti.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Preguntas Frecuentes
-    st.markdown("""
-    <div class="section-header">
-        <h2>❓ Preguntas Frecuentes sobre Planes y Costos</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="questionnaire-container">
-        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            💰 Sobre Precios y Pagos
-        </h3>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Por qué hay diferencia de precio entre usuarios internos y externos?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Los usuarios internos (miembros activos del gym) tienen acceso a evaluaciones presenciales con equipamiento 
-                profesional de bioimpedancia, mediciones antropométricas directas, y asesoría presencial incluida. 
-                Los usuarios externos requieren realizar sus propias mediciones localmente, por lo que el costo refleja 
-                esta diferencia en el servicio y recursos utilizados.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Puedo pagar en cuotas o a plazos?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Actualmente solo aceptamos pago único por adelantado mediante transferencia bancaria. 
-                Esto nos permite comenzar inmediatamente con tu evaluación y diseño de plan sin demoras administrativas.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Qué métodos de pago aceptan?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Aceptamos transferencia bancaria o depósito a la cuenta que se muestra en esta página. 
-                Después del pago, debes enviar tu comprobante por WhatsApp (8662580594) o 
-                correo (administracion@muscleupgym.fitness) para confirmar tu inscripción.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Hay algún costo adicional después de pagar el plan?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                No. El precio del plan incluye TODO lo descrito en los beneficios (evaluaciones, cuestionarios, diseño del plan, 
-                seguimiento y entrega). Los únicos costos adicionales opcionales son extensiones de menús nutricionales 
-                después de las 5 semanas iniciales ($100-150 MXN por semana adicional).
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="questionnaire-container">
-        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            📋 Sobre los Planes y Contenido
-        </h3>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Qué plan me recomienda si soy principiante?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Si eres completamente principiante, recomendamos el <strong>Plan Combinado</strong> porque aprenderás 
-                tanto a entrenar correctamente como a alimentarte de forma adecuada desde el inicio. Esto crea una base 
-                sólida para resultados sostenibles. Sin embargo, si tu presupuesto es limitado, puedes empezar con 
-                el plan de Entrenamiento y después agregar el de Nutrición, o viceversa según tu prioridad.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Puedo renovar o extender mi plan después de que termine?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Sí. Para el plan de Nutrición, puedes solicitar menús adicionales por $100-150 MXN por semana. 
-                Para el plan de Entrenamiento, puedes adquirir un nuevo bloque de 10 semanas con nueva programación 
-                progresiva. Muchos usuarios eligen renovar sus planes para mantener su progreso y obtener nuevas 
-                progresiones adaptadas a su nivel mejorado.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿El plan de entrenamiento funciona si entreno en casa?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Absolutamente. En el cuestionario "Designing Your Training" especificas qué equipamiento tienes disponible 
-                (gimnasio completo, equipamiento casero básico, solo peso corporal, etc.) y tu plan se diseña específicamente 
-                para ese contexto. Ya sea que entrenes en casa, en un parque, o en un gimnasio equipado, tu programa 
-                será 100% funcional para tu situación.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿El plan de nutrición considera mis restricciones alimentarias?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Sí. El cuestionario "Food Preferences" incluye secciones detalladas sobre alergias, intolerancias, 
-                restricciones dietéticas (vegetariano, vegano, sin gluten, etc.), alimentos que no te gustan, y 
-                preferencias culturales o religiosas. Tu plan se diseña respetando completamente todas estas necesidades.
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="questionnaire-container">
-        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            ⏰ Sobre Tiempo y Resultados
-        </h3>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Cuánto tiempo tengo para completar los cuestionarios?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Te recomendamos completar los cuestionarios dentro de las primeras 48 horas después de tu medición 
-                corporal, mientras la información está fresca. Sin embargo, no hay un límite estricto. Ten en cuenta 
-                que el tiempo de entrega de tu plan (3-5 días hábiles) comienza a contar DESPUÉS de que completes 
-                todos los cuestionarios requeridos.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Qué resultados puedo esperar con estos planes?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Los resultados varían según tu adherencia, punto de partida, y genética. Dicho esto, con adherencia 
-                consistente, puedes esperar: pérdida de 0.5-1% de peso corporal por semana en déficit, ganancia de 
-                0.5-2 kg de masa muscular por mes en superávit (principiantes más, avanzados menos), mejoras medibles 
-                en rendimiento funcional cada 2-3 semanas, y lo más importante: <strong>aprendizaje de hábitos sostenibles 
-                a largo plazo</strong>. No vendemos transformaciones milagrosas, vendemos procesos científicos y realistas.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Tendré soporte o seguimiento durante mi plan?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                El plan incluye la evaluación inicial, el diseño del programa, y la evaluación final. Para seguimiento 
-                semanal continuo con ajustes personalizados y comunicación directa, tenemos el programa 
-                <strong>MUPCAMP 1:1</strong> que ofrece acompañamiento presencial completo durante 10 semanas. 
-                Los planes digitales estándar están diseñados para ser autosuficientes, pero puedes contactarnos 
-                si tienes dudas específicas sobre tu plan.
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="questionnaire-container">
-        <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">
-            🔄 Sobre Proceso y Logística
-        </h3>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Qué pasa si no puedo ir presencialmente para la medición (soy usuario externo)?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Si eres usuario externo/foráneo, recibirás una guía detallada para realizar tus propias mediciones 
-                con el equipamiento que tengas disponible localmente (báscula con bioimpedancia, cinta métrica, fotos 
-                de progreso). También te orientaremos sobre qué equipo recomendamos y cómo obtener mediciones precisas. 
-                Aunque no es tan preciso como una medición presencial profesional, es completamente funcional para 
-                diseñar tu plan personalizado.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿En qué formato recibo mi plan?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Recibes tu plan en formato <strong>PDF profesional</strong> por correo electrónico. El plan incluye 
-                toda la información necesaria: para nutrición (menús semanales, cantidades, horarios, intercambios), 
-                para entrenamiento (ejercicios con videos de referencia, series, repeticiones, descansos, progresiones). 
-                El formato es claro, visual y fácil de seguir en tu día a día.
-            </p>
-        </div>
-        
-        <div style="margin-bottom: 1.5rem;">
-            <h4 style="color: #FFCC00; font-size: 1.1rem;">¿Puedo cambiar de plan después de pagar?</h4>
-            <p style="font-size: 1.05rem; line-height: 1.7;">
-                Una vez confirmado el pago, puedes solicitar un cambio de plan antes de realizar tu medición corporal 
-                y comenzar los cuestionarios. Contacta inmediatamente a administracion@muscleupgym.fitness o WhatsApp 
-                8662580594 para coordinar el cambio. Después de completar cuestionarios y medición, ya no es posible 
-                cambiar de plan pues el proceso de diseño ya ha iniciado.
-            </p>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # Comparación rápida de planes
-    st.markdown("""
-    <div class="section-header">
-        <h2>📊 Comparación Rápida de Planes</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div class="results-container">
-        <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
-            Usa esta tabla para comparar rápidamente los planes y tomar tu decisión:
-        </p>
-        
-        <div style="overflow-x: auto;">
-            <table style="width: 100%; border-collapse: collapse; background: rgba(255,255,255,0.05); border-radius: 10px;">
-                <thead>
-                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000;">
-                        <th style="padding: 1rem; text-align: left; border: 1px solid #FFCC00;">Característica</th>
-                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00;">🍽️ Nutrición</th>
-                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00;">💪 Entrenamiento</th>
-                        <th style="padding: 1rem; text-align: center; border: 1px solid #FFCC00;">🔥 Combinado</th>
-                    </tr>
-                </thead>
-                <tbody style="color: #000;">
-                    <tr style="background: rgba(255,204,0,0.1);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Duración</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">5 semanas</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">10 semanas</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">5 + 10 semanas</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.05);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Precio Internos</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$600 MXN</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$750 MXN</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$1,200 MXN ⭐</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.1);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Precio Externos</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$750 MXN</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$900 MXN</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">$1,500 MXN ⭐</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.05);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Evaluación Inicial</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅✅</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.1);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Menús Personalizados</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">5 semanas</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">5 semanas</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.05);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Programa de Entrenamiento</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">10 semanas</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">10 semanas</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.1);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Integración Estratégica</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅ Completa</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.05);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Evaluación Final</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">✅✅</td>
-                    </tr>
-                    <tr style="background: rgba(255,204,0,0.15);">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Ahorro</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;">—</td>
-                        <td style="padding: 0.8rem; text-align: center; border: 1px solid #FFCC00;"><strong>$150 MXN</strong></td>
-                    </tr>
-                    <tr style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); color: #000; font-weight: bold;">
-                        <td style="padding: 0.8rem; border: 1px solid #FFCC00;"><strong>Recomendado Para</strong></td>
-                        <td style="padding: 0.8rem; text-align: center; font-size: 0.9rem; border: 1px solid #FFCC00;">Mejorar alimentación</td>
-                        <td style="padding: 0.8rem; text-align: center; font-size: 0.9rem; border: 1px solid #FFCC00;">Optimizar entrenamiento</td>
-                        <td style="padding: 0.8rem; text-align: center; font-size: 0.9rem; border: 1px solid #FFCC00;">Máximos resultados 🏆</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <p style="font-size: 1rem; text-align: center; margin-top: 1.5rem; color: #888; font-style: italic;">
-            💡 El Plan Combinado es nuestra recomendación principal por la sinergia entre nutrición y entrenamiento, 
-            además del ahorro de $150 MXN y resultados superiores.
+        <p style="text-align: center; margin-top: 1rem;">
+            💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
         </p>
     </div>
     """, unsafe_allow_html=True)
