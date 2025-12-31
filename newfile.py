@@ -3032,8 +3032,8 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
     
     col1, col2 = st.columns(2)
     
-   with col1:
-    st.markdown(textwrap.dedent("""
+    with col1:
+        st.markdown(textwrap.dedent("""
 <div class="metric-card">
 <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación OFICIAL (óptima)</h4>
 <ul style="font-size: 1rem; line-height: 1.6;">
@@ -3047,8 +3047,8 @@ Medición reproducible para seguimiento (tendencia). No se interpreta como verda
 </div>
         """).strip(), unsafe_allow_html=True)
 
-with col2:
-    st.markdown(textwrap.dedent("""
+    with col2:
+        st.markdown(textwrap.dedent("""
 <div class="metric-card">
 <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación ESTÁNDAR (válida)</h4>
 <ul style="font-size: 1rem; line-height: 1.6;">
@@ -3060,7 +3060,7 @@ with col2:
 </div>
         """).strip(), unsafe_allow_html=True)
 
-st.markdown(textwrap.dedent("""
+    st.markdown(textwrap.dedent("""
 <div class="questionnaire-container">
 <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Checklist crítico (siempre)</h3>
 <ul style="font-size: 1.05rem; line-height: 1.7;">
