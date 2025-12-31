@@ -2573,8 +2573,8 @@ elif st.session_state.page == "planes_costos":
         </ul>
         <h4>➕ Menús extra (opcional):</h4>
         <ul>
-            <li><strong>Internos:</strong> desde $100 MXN</li>
-            <li><strong>Externos:</strong> desde $150 MXN</li>
+            <li><strong>Internos:</strong> desde $200 MXN</li>
+            <li><strong>Externos:</strong> desde $300 MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -2758,7 +2758,8 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Qué debo llevar o cómo debo ir vestido a la medición?</h4>
-        <p>Ropa cómoda.  Para fotos:  ropa deportiva/ajustada. Si traes calcetines, se te pedirán sin calzado para la medición (según equipo).</p>
+        <p>Vestimenta para medición precisa/Hombre: sin camisa + short ajustado no compresivo (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)
+           Vestimenta para medición precisa/Mujer: top ajustado + short/licra corta no compresiva (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA).</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2818,29 +2819,29 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # FAQ 13-17 (Preguntas rápidas)
-    st.markdown("""
-    <div class="corporate-section">
-        <h4>¿Qué puede retrasar mi entrega?</h4>
-        <p>Cuestionarios incompletos, fotos/archivos obligatorios sin cargar, o reprogramación de medición. </p>
-        
-        <h4>¿Puedo pagar cualquier día?</h4>
-        <p>Sí.  Si pagas viernes a domingo, se procesa el lunes y tu medición se agenda para la siguiente semana.</p>
-        
-        <h4>¿Qué días miden?</h4>
-        <p>Lun–Mié; Jue solo si hay cupo. No Vie–Dom.</p>
-        
-        <h4>¿Qué es el ciclo de 5 semanas?</h4>
-        <p>4 semanas de ejecución + semana 5 de reevaluación para ajustar o continuar.</p>
-    </div>
-    """, unsafe_allow_html=True)
+   # FAQ 13-17 (Preguntas rápidas)
+st.markdown("""
+<div class="corporate-section">
+    <h4>¿Qué puede retrasar mi entrega?</h4>
+    <p>Cuestionarios incompletos, fotos/archivos obligatorios sin cargar, o reprogramación de medición. </p>
+    
+    <h4>¿Puedo pagar cualquier día?</h4>
+    <p>Sí.  Si pagas viernes a domingo, se procesa el lunes y tu medición se agenda para la siguiente semana.</p>
+    
+    <h4>¿Qué días miden?</h4>
+    <p>Lun–Mié; Jue solo si hay cupo. No Vie–Dom.</p>
+    
+    <h4>¿Qué es el ciclo de 5 semanas?</h4>
+    <p>4 semanas de ejecución + semana 5 de reevaluación para ajustar o continuar.</p>
+</div>
+""", unsafe_allow_html=True)
     
     # Nota final
     st.markdown("""
     <div class="results-container">
         <h3>💪 Tu salud y bienestar son nuestra misión</h3>
         <p style="font-size: 1.1rem; text-align: center; margin: 0;">
-            Estamos comprometidos en darte el mejor servicio profesional personalizado.
+          
         </p>
     </div>
     """, unsafe_allow_html=True)
