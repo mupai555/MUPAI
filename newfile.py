@@ -2469,31 +2469,74 @@ elif st.session_state.page == "planes_costos":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🎯 Primer Paso: Elije el Plan Adecuado</h3>
-        <p>El primer paso para transformar tu físico y salud es <strong>elegir el plan que mejor se adapte a tus objetivos</strong>. 
-        Una vez seleccionado, realiza la transferencia del monto exacto a la tarjeta bancaria que se muestra a continuación.</p>
+        <h3>🎯 Primer Paso:  Elige el Plan Adecuado</h3>
+        <p>Elige el plan que mejor se adapte a tus objetivos.  Después realiza la transferencia del monto exacto y envía tu comprobante para iniciar tu proceso.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Nueva sección:  Organización Semanal
+    st.markdown("""
+    <div class="section-header">
+        <h2>🗓️ Organización Semanal (Importante)</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
-    <div style="background-color: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin: 15px 0;">
-        <h4 style="color: #856404; margin: 0 0 10px 0;">📋 Instrucciones de Pago</h4>
+    <div class="questionnaire-container">
+        <p>Cada plan se construye a la medida con tus mediciones y cuestionarios. Por eso trabajamos por ciclos semanales con cupo limitado.</p>
+        <ul style="font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Mediciones:</strong> Lunes, Martes y Miércoles</li>
+            <li><strong>Jueves: </strong> solo si hay cupo disponible esa semana</li>
+            <li><strong>No hay mediciones</strong> viernes, sábado ni domingo</li>
+            <li><strong>Entrega del plan:</strong> Viernes, Sábado o Domingo</li>
+        </ul>
+        <p style="margin-top: 1rem; font-size: 1.05rem;">
+            <strong>Nota:</strong> Pagos confirmados en fin de semana (Vie–Dom): se procesan el lunes y la medición se agenda para la siguiente semana. 
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Instrucciones de pago actualizadas
+    st.markdown("""
+    <div style="background-color: #fff3cd; border:  2px solid #ffc107; border-radius: 8px; padding: 15px; margin: 15px 0;">
+        <h4 style="color: #856404; margin: 0 0 10px 0;">🧾 Instrucciones de Pago</h4>
         <p style="color: #856404; margin: 0 0 10px 0; font-size: 16px;">
-            <strong>Paso importante:</strong> Después de realizar la transferencia del monto exacto, 
-            debes enviar el comprobante de pago a:
+            Después de transferir, envía tu comprobante a: 
         </p>
         <ul style="color: #856404; margin: 0; font-size: 16px; font-weight: bold;">
-            <li>📱 <strong>WhatsApp/Teléfono:</strong> 8662580594</li>
+            <li>📱 <strong>WhatsApp:</strong> 8662580594</li>
             <li>📧 <strong>Correo:</strong> administracion@muscleupgym.fitness</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
     
     # Imagen de la tarjeta bancaria
-    st.markdown("### 💳 Información de Transferencia")
+    st.markdown("### 🏦 Información de Transferencia")
     st.markdown("""
     <div style="text-align: center; margin: 2rem 0;">
     """ + load_banking_image_base64() + """
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # NUEVA SECCIÓN: Protocolo OBLIGATORIO
+    st.markdown("""
+    <div style="background-color: #f8d7da; border: 2px solid #dc3545; border-radius: 8px; padding: 15px; margin: 15px 0;">
+        <h4 style="color: #721c24; margin: 0 0 10px 0;">📌 Antes de contestar cuestionarios (OBLIGATORIO)</h4>
+        <p style="color: #721c24; margin:  0 0 10px 0; font-size: 16px;">
+            Después de pagar, ve a la barra lateral y abre: <strong>"Protocolo de Medición MUPAI"</strong>. 
+        </p>
+        <p style="color: #721c24; margin: 0 0 10px 0; font-size: 16px;">
+            Ahí verás cómo preparar:
+        </p>
+        <ul style="color: #721c24; margin: 0 0 10px 0; font-size: 16px;">
+            <li>Tu medición (bioimpedancia/perímetros, según modalidad)</li>
+            <li>Tus fotografías obligatorias (se cargan dentro del cuestionario)</li>
+            <li>Tus pruebas funcionales (aplican para TODOS los planes, porque forman parte del cálculo)</li>
+        </ul>
+        <p style="color: #721c24; margin:  0; font-size: 16px;">
+            <strong>Importante:</strong> Si se te complica realizar las pruebas porque eres muy novato o por alguna condición, 
+            en el apartado de pruebas funcionales de tus cuestionarios escribe las repeticiones en <strong>0 (cero)</strong>. No adivines datos.
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2504,39 +2547,43 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # Plan 1: Nutrición Personalizada
+    # Plan 1: Nutrición Personalizada (ACTUALIZADO)
     st.markdown("""
     <div class="corporate-section">
         <h3>🍽️ Plan de Nutrición Personalizada</h3>
-        <p><strong>Duración:</strong> 5 semanas</p>
-        <p><strong>Descripción:</strong> Plan alimentario completamente personalizado basado en tus objetivos, composición corporal, preferencias alimentarias y estilo de vida.</p>
+        <p><strong>Duración:</strong> Ciclo de 5 semanas (4 semanas de ejecución + 1 semana de reevaluación)</p>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="corporate-section">
-        <h4>💰 Precios:</h4>
+        <h4>💰 Precios: </h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $600 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $750 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $700 MXN</li>
+            <li><strong>Usuarios Externos: </strong> $900 MXN</li>
         </ul>
-        <h4>✅ Beneficios Incluidos:</h4>
+        <h4>✅ Incluye:</h4>
         <ul>
-            <li>Evaluación inicial completa con bioimpedancia</li>
-            <li>5 menús semanales adaptados (calorías, macros, micronutrientes)</li>
-            <li>Personalización según preferencias alimentarias</li>
-            <li>Evaluación final con medición corporal</li>
-            <li>Menús extra desde $100 (internos) $150 (externos) MXN</li>
+            <li>Evaluación inicial (según modalidad): medición + perímetros + fotos (si aplica)</li>
+            <li>7 menús personalizados (semana tipo)</li>
+            <li>Lista de despensa</li>
+            <li>Calorías + macronutrientes optimizados</li>
+            <li>Micronutrientes priorizados para salud/rendimiento</li>
+            <li>Semana 5: reevaluación para decidir ajustes o continuidad</li>
+        </ul>
+        <h4>➕ Menús extra (opcional):</h4>
+        <ul>
+            <li><strong>Internos:</strong> desde $100 MXN</li>
+            <li><strong>Externos:</strong> desde $150 MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
     
-    # Plan 2: Diseño de Entrenamiento Personalizado
+    # Plan 2: Diseño de Entrenamiento Personalizado (ACTUALIZADO)
     st.markdown("""
     <div class="corporate-section">
         <h3>💪 Plan de Entrenamiento Personalizado</h3>
-        <p><strong>Duración:</strong> 10 semanas (bloque de 10 semanas)</p>
-        <p><strong>Descripción:</strong> Programa de entrenamiento científicamente diseñado según tu nivel, objetivos, disponibilidad de tiempo y equipamiento.</p>
+        <p><strong>Duración:</strong> 10 semanas</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2544,27 +2591,25 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $750 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $900 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $950 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $1,100 MXN</li>
         </ul>
-        <h4>✅ Beneficios Incluidos:</h4>
+        <h4>✅ Incluye:</h4>
         <ul>
-            <li>Evaluación inicial con cuestionario "Designing Your Training"</li>
-            <li>Plan personalizado en volumen, frecuencia e intensidad</li>
-            <li>Adaptación a tu horario y nivel de experiencia</li>
-            <li>Entrega profesional en formato PDF</li>
-            <li>Evaluación final de progresos</li>
-            <li>Progresiones y variaciones incluidas</li>
+            <li>Cuestionario Designing Your Training</li>
+            <li>Programa personalizado (volumen, frecuencia, intensidad)</li>
+            <li>Progresiones y variaciones</li>
+            <li>Entrega en PDF</li>
+            <li>Evaluación final</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
     
-    # Plan 3: Plan Combinado
+    # Plan 3: Plan Combinado (ACTUALIZADO)
     st.markdown("""
     <div class="corporate-section">
-        <h3>🔥 Plan Combinado - Entrenamiento + Nutrición</h3>
-        <p><strong>Duración:</strong> Nutrición 5 sem + Entrenamiento 10 sem</p>
-        <p><strong>Descripción:</strong> La solución completa que integra nutrición y entrenamiento personalizado para resultados óptimos y sostenibles.</p>
+        <h3>🔥 Plan Combinado:  Entrenamiento + Nutrición</h3>
+        <p><strong>Duración total:</strong> 10 semanas (Nutrición 5 semanas + Entrenamiento 10 semanas)</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2572,137 +2617,233 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>💰 Precios:</h4>
         <ul>
-            <li><strong>Usuarios Internos (miembros del gym):</strong> $1,200 MXN</li>
-            <li><strong>Usuarios Externos:</strong> $1,500 MXN</li>
+            <li><strong>Usuarios Internos (miembros del gym):</strong> $1,500 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $1,850 MXN</li>
         </ul>
-        <h4>✅ Beneficios Incluidos:</h4>
+        <h4>✅ Incluye:</h4>
         <ul>
             <li>Ambos planes completos (nutrición + entrenamiento)</li>
+            <li>Planes integrados y coordinados</li>
             <li>Evaluación inicial y final con bioimpedancia</li>
-            <li>Integración total entre dieta y entrenamiento</li>
             <li>Seguimiento coordinado de progreso</li>
-            <li><strong>Ahorro de $150 MXN (internos) o $150 MXN (externos)</strong></li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
     
-    # Mecánica de adquisición
+    # Mecánica de adquisición (ACTUALIZADA)
     st.markdown("""
     <div class="section-header">
-        <h2>📝 Mecánica de Adquisición - Paso a Paso</h2>
+        <h2>🧩 Mecánica de Adquisición — Paso a Paso</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🔄 Proceso Completo de Adquisición</h3>
         <ol style="font-size: 1.1rem; line-height: 1.8;">
-            <li><strong>Selección del Plan:</strong> Elige el plan que mejor se adapte a tus objetivos y presupuesto</li>
-            <li><strong>Transferencia Bancaria:</strong> Realiza la transferencia del monto exacto a la cuenta mostrada arriba</li>
-            <li><strong>Envío de Comprobante:</strong> Envía tu comprobante de pago por:
-                <ul>
-                    <li>📧 Correo: administracion@muscleupgym.fitness</li>
-                    <li>📱 WhatsApp: 8662580594</li>
-                </ul>
-            </li>
-            <li><strong>Programación de Medición:</strong> Agenda tu medición corporal inicial (ver detalles abajo)</li>
-            <li><strong>Acceso a Cuestionarios:</strong> Se autoriza el acceso a los cuestionarios especializados</li>
-            <li><strong>Llenado de Cuestionarios:</strong> Completa los cuestionarios correspondientes a tu plan</li>
-            <li><strong>Entrega del Plan:</strong> Recibe tu plan personalizado en 3 a 5 días hábiles</li>
+            <li><strong>Elige tu plan</strong></li>
+            <li><strong>Realiza el pago</strong></li>
+            <li><strong>Envía comprobante</strong> (WhatsApp o correo)</li>
+            <li><strong>Abre en la barra lateral: </strong> "Protocolo de Medición MUPAI"</li>
+            <li><strong>Agenda tu medición</strong> (Lun–Mié; Jue si hay cupo)</li>
+            <li><strong>Contesta tus cuestionarios</strong> y carga lo obligatorio (especialmente fotos)</li>
+            <li><strong>Recibe tu plan</strong> en ventana Vie–Sáb–Dom</li>
         </ol>
     </div>
     """, unsafe_allow_html=True)
     
-    # Explicación sobre medición corporal
+    # Cuestionarios según plan (ACTUALIZADO)
     st.markdown("""
     <div class="section-header">
-        <h2>📏 Medición Corporal</h2>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        <div class="metric-card">
-            <h3>🏠 Usuarios Internos (Miembros del Gym)</h3>
-            <p><strong>Ubicación:</strong> Instalaciones de Muscle Up Gym</p>
-            <p><strong>Equipo:</strong> Bioimpedancia profesional</p>
-            <p><strong>Incluye:</strong></p>
-            <ul>
-                <li>Medición con bioimpedancia</li>
-                <li>Antropometría completa</li>
-                <li>Asesoría presencial</li>
-                <li>Programación de cita incluida</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    with col2:
-        st.markdown("""
-        <div class="metric-card">
-            <h3>🌍 Usuarios Externos (Foráneos)</h3>
-            <p><strong>Modalidad:</strong> Por cuenta propia</p>
-            <p><strong>Requerimiento:</strong> Medición local</p>
-            <p><strong>Incluye:</strong></p>
-            <ul>
-                <li>Guía detallada para medición</li>
-                <li>Recomendaciones de equipos</li>
-                <li>Asesoría virtual incluida</li>
-                <li>Validación de datos por el profesional</li>
-            </ul>
-        </div>
-        """, unsafe_allow_html=True)
-    
-    # Direccionamiento a cuestionarios
-    st.markdown("""
-    <div class="section-header">
-        <h2>📝 Acceso a Cuestionarios Especializados</h2>
+        <h2>🧠 Cuestionarios (según tu plan)</h2>
     </div>
     """, unsafe_allow_html=True)
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🎯 Cuestionarios Según Tu Plan</h3>
-        <p>Una vez confirmado tu pago y programada tu medición, tendrás acceso a los siguientes cuestionarios:</p>
+        <ul style="font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Todos: </strong> MUPAI BODY AND ENERGY</li>
+            <li><strong>Alimentación:</strong> FoodPreference + FoodCravings</li>
+            <li><strong>Entrenamiento:</strong> Designing Your Training</li>
+            <li><strong>Combinado:</strong> todos los anteriores</li>
+        </ul>
+        <p style="margin-top: 1rem; font-size: 1.05rem;">
+            <strong>Nota:</strong> Las pruebas funcionales se registran en los cuestionarios y aplican para Nutrición, Entrenamiento y Combinado.  
+            Si eres muy novato y se te complica, coloca <strong>0</strong> en repeticiones en ese apartado.
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
+    # Tiempo de entrega (ACTUALIZADO)
     st.markdown("""
-    <div class="questionnaire-container">
-        <h4>📊 Para TODOS los planes:</h4>
-        <ul>
-            <li><strong>MUPAI BODY AND ENERGY:</strong> Evaluación avanzada de balance energético y composición corporal</li>
+    <div class="results-container">
+        <h3>⏱️ Tiempo de Entrega (Ventana oficial)</h3>
+        <p style="font-size: 1.15rem; text-align: center; margin: 1rem 0;">
+            <strong>Entregamos planes en Viernes, Sábado o Domingo. </strong>
+        </p>
+        <p style="font-size: 1.05rem; text-align: center; margin: 0.5rem 0;">
+            Para recibir tu plan ese fin de semana, necesitas: 
+        </p>
+        <ul style="font-size: 1.05rem; margin: 1rem auto; max-width: 600px;">
+            <li>Medición a más tardar miércoles</li>
+            <li>Cuestionarios completos</li>
+            <li>Fotos/archivos obligatorios cargados</li>
         </ul>
-        <h4>🍽️ Para planes de ALIMENTACIÓN:</h4>
+        <p style="text-align: center; margin-top: 1rem; font-size: 1.05rem;">
+            💡 <strong>Importante: </strong> Si completas tarde, tu entrega pasa al siguiente fin de semana.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # NUEVA SECCIÓN: FAQ
+    st.markdown("""
+    <div class="section-header">
+        <h2>❓ Preguntas Frecuentes (FAQ)</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 1
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Cuántos menús incluye mi Plan de Nutrición?</h4>
+        <p>Incluye 7 menús totalmente personalizados (una semana tipo) + lista de despensa.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 2
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Cuántas comidas tiene cada menú (frecuencia diaria)?</h4>
+        <p>La cantidad y distribución de comidas por día se define con tu información, usando lo que reportas en cuestionarios y mediciones 
+        (objetivo, horarios, apetito, estilo de vida, composición corporal, etc.). No es una cifra fija para todos.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 3
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Cuándo se toma el baseline (referencia inicial)?</h4>
+        <p>Tu referencia inicial se toma el mismo día de tu primera medición, ya sea lunes, martes, miércoles o jueves (según cupo). 
+        Ese día se consideran tus mediciones iniciales y, cuando aplique, tus fotos iniciales.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 4
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Cuándo se repite la medición y las fotos?</h4>
+        <p>En la Semana 5 se realiza la reevaluación:  se repite la medición y se toman/actualizan fotografías para comparar progreso 
+        y decidir ajustes o continuidad. </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 5
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Cuánto tiempo tarda la medición con bioimpedancia?</h4>
+        <p>La medición en el equipo toma aprox. 2 a 5 minutos.  Considera 10 a 15 minutos en total para el proceso completo 
+        (registro, preparación rápida, medición y anotación de datos).</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 6
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Tengo que ir en ayunas para la bioimpedancia?</h4>
+        <p>Es lo más recomendable. Seguir el protocolo mejora precisión (hidratación y retención de agua influyen en el resultado). 
+        El protocolo completo se muestra en la barra lateral en "Protocolo de Medición MUPAI".</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 7
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué debo llevar o cómo debo ir vestido a la medición?</h4>
+        <p>Ropa cómoda.  Para fotos:  ropa deportiva/ajustada. Si traes calcetines, se te pedirán sin calzado para la medición (según equipo).</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 8
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Puedo estimar datos en los cuestionarios?</h4>
+        <p>Puedes estimar únicamente datos difíciles de medir (por ejemplo: horarios, hábitos, nivel de actividad diaria). 
+        Los datos que dependen de mediciones o pruebas deben ser reales y obtenidos, no aproximados.</p>
+        <p><strong>Regla clave:</strong> los datos deben ser verídicos y realistas.  Si se ingresan datos inventados, 
+        los cálculos pueden quedar mal calibrados y el plan no reflejará tu situación real.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 9
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Son obligatorias las fotografías?  ¿Por qué?</h4>
+        <p>Sí.  Las fotografías son obligatorias cuando el cuestionario las solicita. En composición corporal, la evaluación más útil es multidimensional: 
+        la foto complementa mediciones como cintura/perímetros y bioimpedancia, y permite interpretar mejor el progreso 
+        (forma, proporciones y distribución), incluso cuando hay cambios de agua o variaciones normales.</p>
+        <p><strong>Para que la comparación sea válida:</strong></p>
         <ul>
-            <li><strong>FOOD PREFERENCES:</strong> Análisis detallado de patrones y preferencias alimentarias</li>
-            <li><strong>FOOD CRAVINGS:</strong> Evaluación de antojos alimentarios (versión población mexicana)</li>
+            <li>Fotos de frente/lado/espalda</li>
+            <li>Buena luz, fondo limpio, sin filtros</li>
+            <li>Cuerpo completo, postura relajada</li>
         </ul>
-        <h4>💪 Para planes de ENTRENAMIENTO:</h4>
-        <ul>
-            <li><strong>DESIGNING YOUR TRAINING:</strong> Cuestionario especializado para diseño de rutinas de entrenamiento</li>
-        </ul>
-        <h4>🔥 Para plan COMBINADO:</h4>
-        <ul>
-            <li><strong>TODOS los cuestionarios anteriores</strong> para una evaluación integral completa</li>
-        </ul>
+        <p>Si no se cargan las fotos requeridas, no es posible cerrar el análisis con el nivel de personalización esperado.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 10
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué pasa si no puedo tomarme fotos el mismo día?</h4>
+        <p>Puedes tomar las fotos ese mismo día o lo más cercano posible, siguiendo el protocolo. Si el sistema solicita fotos 
+        y no las cargas, tu evaluación queda incompleta y el plan puede pasar a la siguiente ventana de entrega.</p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 11
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué pasa si soy muy novato y se me complican las pruebas funcionales?</h4>
+        <p>Las pruebas funcionales forman parte del cálculo y ayudan a calibrar tu plan con datos reales. 
+        Si se te complica por ser muy novato o por alguna condición, en el apartado de pruebas funcionales de tus cuestionarios 
+        escribe las repeticiones en <strong>0 (cero)</strong>. No adivines datos. </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 12
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué pasa si pongo números inventados o "aproximados" en pruebas? </h4>
+        <p>El sistema asumirá capacidades que no tienes y el plan puede quedar irreal (cargas/volúmenes mal calibrados). 
+        Por eso es clave registrar datos reales o usar 0 cuando aplique. </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # FAQ 13-17 (Preguntas rápidas)
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué puede retrasar mi entrega?</h4>
+        <p>Cuestionarios incompletos, fotos/archivos obligatorios sin cargar, o reprogramación de medición. </p>
+        
+        <h4>¿Puedo pagar cualquier día?</h4>
+        <p>Sí.  Si pagas viernes a domingo, se procesa el lunes y tu medición se agenda para la siguiente semana.</p>
+        
+        <h4>¿Qué días miden?</h4>
+        <p>Lun–Mié; Jue solo si hay cupo. No Vie–Dom.</p>
+        
+        <h4>¿Qué es el ciclo de 5 semanas?</h4>
+        <p>4 semanas de ejecución + semana 5 de reevaluación para ajustar o continuar.</p>
     </div>
     """, unsafe_allow_html=True)
     
     # Nota final
     st.markdown("""
     <div class="results-container">
-        <h3>⏰ Tiempo de Entrega</h3>
-        <p style="font-size: 1.2rem; text-align: center; margin: 0;">
-            <strong>Los planes se entregan de 3 a 5 días hábiles</strong> tras completar la medición corporal y los cuestionarios correspondientes.
-        </p>
-        <p style="text-align: center; margin-top: 1rem;">
-            💡 <strong>Nota:</strong> La calidad de tu plan depende de la precisión de la información proporcionada en los cuestionarios y mediciones.
+        <h3>💪 Tu salud y bienestar son nuestra misión</h3>
+        <p style="font-size: 1.1rem; text-align: center; margin: 0;">
+            Estamos comprometidos en darte el mejor servicio profesional personalizado.
         </p>
     </div>
     """, unsafe_allow_html=True)
-
 # ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN MUPAI ====================
 elif st.session_state.page == "protocolos_medicion":
     # Professional banner
