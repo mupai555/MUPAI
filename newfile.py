@@ -10,6 +10,7 @@ import base64
 from collections import Counter
 import os
 import glob
+import textwrap
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -2708,14 +2709,14 @@ elif st.session_state.page == "protocolos_medicion":
     mostrar_banner_profesional()
     
     # Main header
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h2>📏 Protocolos de Medición MUPAI</h2>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Introduction
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <p style="font-size: 1.2rem; line-height: 1.8; text-align: center;">
             En MUPAI medimos tu progreso con <strong style="color: #FFCC00;">protocolos científicos y reproducibles</strong> 
@@ -2723,16 +2724,16 @@ elif st.session_state.page == "protocolos_medicion":
             sobre tu entrenamiento y nutrición.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Protocol 1: Functional Performance
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h2>💪 1) PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC)</h2>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
@@ -2756,9 +2757,9 @@ elif st.session_state.page == "protocolos_medicion":
             <strong>Core:</strong> se mide tiempo máximo manteniendo forma válida.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container">
         <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Condiciones previas (para que sea comparable)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
@@ -2783,18 +2784,18 @@ elif st.session_state.page == "protocolos_medicion":
             <li>(Opcional) RPE final (0–10): esfuerzo percibido</li>
         </ul>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🏋️ PRUEBAS (elige UNA por dominio)</h3>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">1️⃣ Tren superior — EMPUJE</h4>
             <p><strong>Elige una:</strong></p>
@@ -2804,26 +2805,26 @@ elif st.session_state.page == "protocolos_medicion":
             </ul>
             <p>📌 <strong>Método: AMRAP</strong></p>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
         
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">3️⃣ Tren inferior — EMPUJE UNILATERAL</h4>
             <p><a href="https://youtu.be/kBQ1krvKFBU?si=SzBAJmMXnep2NwET" target="_blank" style="color: #FFCC00;">Búlgara</a></p>
             <p>📌 <strong>Método: AMRAP por pierna</strong> (misma altura de apoyo siempre)</p>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
         
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">5️⃣ CORE</h4>
             <p><a href="https://youtu.be/ao5nY7lb088?si=vomVIsycB1a8ORd0" target="_blank" style="color: #FFCC00;">Plancha</a></p>
             <p>📌 <strong>Método: tiempo máximo con forma correcta</strong></p>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
     with col2:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">2️⃣ Tren superior — TRACCIÓN</h4>
             <p><strong>Elige una:</strong></p>
@@ -2833,48 +2834,48 @@ elif st.session_state.page == "protocolos_medicion":
             </ul>
             <p>📌 <strong>Método: AMRAP</strong></p>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
         
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">4️⃣ Tren inferior — HIP-DOMINANTE UNILATERAL</h4>
             <p><a href="https://youtube.com/shorts/54XDbJgwIj4?si=OpxDW6gTccdJR6-A" target="_blank" style="color: #FFCC00;">Hip thrust unilateral</a></p>
             <p>📌 <strong>Método: AMRAP por pierna</strong></p>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="results-container">
         <h3 style="text-align: center;">⚠️ Regla clave</h3>
         <p style="font-size: 1.2rem; text-align: center; margin: 0;">
             El ejercicio elegido <strong>NO se cambia en futuras evaluaciones</strong> para mantener la comparabilidad.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Protocol 2: Body Composition
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h2>📸 2) PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI</h2>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <p style="font-size: 1.1rem; line-height: 1.8;">
             Cómo medimos composición corporal de forma fiable, con instrucciones claras para el cliente y para staff.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # PHOTO3 Protocol with Pose Libre
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">A) FOTO-PROGRESO: MUPAI PHOTO3 (obligatorio)</h3>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
@@ -2911,9 +2912,9 @@ elif st.session_state.page == "protocolos_medicion":
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container">
         <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🌟 Guía para la Pose Libre</h3>
         <p style="font-size: 1.05rem; line-height: 1.7;">
@@ -2929,13 +2930,13 @@ elif st.session_state.page == "protocolos_medicion":
             💡 <strong>Consejo:</strong> Elige una pose que te motive y en la que quieras ver mejoras específicas.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Timing section
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Momento OFICIAL (óptima)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
@@ -2944,10 +2945,10 @@ elif st.session_state.page == "protocolos_medicion":
                 <li>Sin comida grande previa</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
     with col2:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Momento ESTÁNDAR (válida)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
@@ -2956,9 +2957,9 @@ elif st.session_state.page == "protocolos_medicion":
                 <li>No entrenar antes (evitar "pump")</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">📐 Set-up técnico (NO negociable)</h3>
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
@@ -2984,9 +2985,9 @@ elif st.session_state.page == "protocolos_medicion":
         <p style="font-size: 1rem; margin-top: 1rem;"><strong>Ángulo:</strong> Horizontal (sin inclinar)</p>
         <p style="font-size: 1rem;"><strong>Encuadre:</strong> Cuerpo completo (pies y cabeza visibles)</p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container">
         <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">👕 Vestimenta (precisión)</h3>
         <h4 style="color: #FFCC00;">Recomendado (máxima precisión):</h4>
@@ -3011,28 +3012,28 @@ elif st.session_state.page == "protocolos_medicion":
             Si falla cualquiera: luz muy distinta, cámara inclinada, distancia distinta, ropa distinta → <strong style="color: #FFCC00;">repetir</strong>.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Bioimpedance section
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">B) BIOIMPEDANCIA: OMRON HBF-516 (obligatorio)</h3>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <h3 style="color: #FFCC00; border-bottom: 3px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🎯 Objetivo</h3>
         <p style="font-size: 1.1rem; line-height: 1.8;">
             Medición reproducible para seguimiento (tendencia). No se interpreta como verdad absoluta aislada.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     
     with col1:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación OFICIAL (óptima)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
@@ -3044,10 +3045,10 @@ elif st.session_state.page == "protocolos_medicion":
                 <li>Sin alcohol 24 h</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
     with col2:
-        st.markdown("""
+        st.markdown(textwrap.dedent("""
         <div class="metric-card">
             <h4 style="color: #FFCC00; margin-bottom: 0.8rem; font-size: 1.1rem;">⏰ Preparación ESTÁNDAR (válida)</h4>
             <ul style="font-size: 1rem; line-height: 1.6;">
@@ -3057,9 +3058,9 @@ elif st.session_state.page == "protocolos_medicion":
                 <li>Registrar si entrenaste fuerte el día anterior</li>
             </ul>
         </div>
-        """, unsafe_allow_html=True)
+        """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container">
         <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">✅ Checklist crítico (siempre)</h3>
         <ul style="font-size: 1.05rem; line-height: 1.7;">
@@ -3088,9 +3089,9 @@ elif st.session_state.page == "protocolos_medicion":
             <li>Observaciones: ayuno sí/no, cafeína, entrenamiento previo, ducha caliente reciente</li>
         </ul>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="results-container">
         <h3 style="text-align: center;">⚠️ Regla de interpretación (muy importante)</h3>
         <p style="font-size: 1.2rem; text-align: center; margin: 0;">
@@ -3098,16 +3099,16 @@ elif st.session_state.page == "protocolos_medicion":
             <strong>tendencia OMRON + PHOTO3 + rendimiento funcional</strong>
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Recommended order
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h3 style="color: #FFCC00; margin: 0; font-size: 1.3rem;">C) ORDEN RECOMENDADO EL DÍA DE EVALUACIÓN</h3>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0;">
             <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFD700 100%); 
@@ -3129,23 +3130,23 @@ elif st.session_state.page == "protocolos_medicion":
             </div>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Example images display block for PHOTO3
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="section-header">
         <h2>📸 Ejemplos de Fotos PHOTO3</h2>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="corporate-section">
         <p style="font-size: 1.1rem; line-height: 1.8; text-align: center;">
             A continuación se muestran ejemplos de las <strong style="color: #FFCC00;">4 fotos requeridas</strong> 
             para el protocolo PHOTO3. Sigue estos ejemplos para asegurar la comparabilidad de tus mediciones.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Define image list with updated descriptions
     example_images = [
@@ -3157,11 +3158,11 @@ elif st.session_state.page == "protocolos_medicion":
     ]
     
     # Display first three standard images in 3 columns
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container">
         <h3 style="color: #FFCC00; border-bottom: 2px solid #FFCC00; padding-bottom: 0.5rem; margin-bottom: 1rem;">🔹 Fotos Estándar Relajadas (Obligatorias)</h3>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     for idx, (label, fname, description) in enumerate(example_images[:3]):
@@ -3181,7 +3182,7 @@ elif st.session_state.page == "protocolos_medicion":
                 st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
     
     # Display Pose Libre images in 2 columns with special highlighting
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="questionnaire-container" style="margin-top: 2rem;">
         <h3 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 0.5rem; margin-bottom: 1rem;">⭐ Pose Libre (Nueva - Obligatoria)</h3>
         <p style="font-size: 1.05rem; line-height: 1.7;">
@@ -3189,7 +3190,7 @@ elif st.session_state.page == "protocolos_medicion":
             y <strong>mantenla en cada evaluación</strong> para ver tu progreso.
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
     
     # Display remaining images (Pose Libre examples) - typically images 4 and 5
     pose_libre_images = example_images[3:]  # Get all images after the first 3
@@ -3213,7 +3214,7 @@ elif st.session_state.page == "protocolos_medicion":
                     st.info(f"Ejemplo: {label} — Archivo no encontrado: {fname}")
     
     # Final note about Pose Libre
-    st.markdown("""
+    st.markdown(textwrap.dedent("""
     <div class="results-container" style="margin-top: 2rem;">
         <h3 style="text-align: center;">💡 Recuerda</h3>
         <p style="font-size: 1.1rem; text-align: center; margin: 0;">
@@ -3222,7 +3223,7 @@ elif st.session_state.page == "protocolos_medicion":
             <strong>Mantén siempre la misma pose libre para comparar tu progreso.</strong>
         </p>
     </div>
-    """, unsafe_allow_html=True)
+    """).strip(), unsafe_allow_html=True)
 
 # ==================== PÁGINA DE MUPCAMP 1:1 ====================
 elif st.session_state.page == "mupcamp_1a1":
