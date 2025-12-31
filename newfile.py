@@ -2469,12 +2469,12 @@ elif st.session_state.page == "planes_costos":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <h3>🎯 Primer Paso:  Elige el Plan Adecuado</h3>
-        <p>Elige el plan que mejor se adapte a tus objetivos.  Después realiza la transferencia del monto exacto y envía tu comprobante para iniciar tu proceso.</p>
+        <h3>🎯 Primer Paso: Elige el Plan Adecuado</h3>
+        <p>Elige el plan que mejor se adapte a tus objetivos.   Después realiza la transferencia del monto exacto y envía tu comprobante para iniciar tu proceso.</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # Nueva sección:  Organización Semanal
+    # Nueva sección: Organización Semanal
     st.markdown("""
     <div class="section-header">
         <h2>🗓️ Organización Semanal (Importante)</h2>
@@ -2483,28 +2483,28 @@ elif st.session_state.page == "planes_costos":
     
     st.markdown("""
     <div class="questionnaire-container">
-        <p>Cada plan se construye a la medida con tus mediciones y cuestionarios. Por eso trabajamos por ciclos semanales con cupo limitado.</p>
+        <p>Cada plan se construye a la medida con tus mediciones y cuestionarios.  Por eso trabajamos por ciclos semanales con cupo limitado.</p>
         <ul style="font-size: 1.05rem; line-height: 1.8;">
             <li><strong>Mediciones:</strong> Lunes, Martes y Miércoles</li>
-            <li><strong>Jueves: </strong> solo si hay cupo disponible esa semana</li>
+            <li><strong>Jueves:</strong> solo si hay cupo disponible esa semana</li>
             <li><strong>No hay mediciones</strong> viernes, sábado ni domingo</li>
             <li><strong>Entrega del plan:</strong> Viernes, Sábado o Domingo</li>
         </ul>
         <p style="margin-top: 1rem; font-size: 1.05rem;">
-            <strong>Nota:</strong> Pagos confirmados en fin de semana (Vie–Dom): se procesan el lunes y la medición se agenda para la siguiente semana. 
+            <strong>Nota:</strong> Pagos confirmados en fin de semana (Vie–Dom): se procesan el lunes y la medición se agenda para la siguiente semana.
         </p>
     </div>
     """, unsafe_allow_html=True)
     
     # Instrucciones de pago actualizadas
     st.markdown("""
-    <div style="background-color: #fff3cd; border:  2px solid #ffc107; border-radius: 8px; padding: 15px; margin: 15px 0;">
-        <h4 style="color: #856404; margin: 0 0 10px 0;">🧾 Instrucciones de Pago</h4>
+    <div style="background-color: #fff3cd; border:  2px solid #ffc107; border-radius: 8px; padding: 15px; margin:  15px 0;">
+        <h4 style="color: #856404; margin:  0 0 10px 0;">🧾 Instrucciones de Pago</h4>
         <p style="color: #856404; margin: 0 0 10px 0; font-size: 16px;">
             Después de transferir, envía tu comprobante a: 
         </p>
         <ul style="color: #856404; margin: 0; font-size: 16px; font-weight: bold;">
-            <li>📱 <strong>WhatsApp:</strong> 8662580594</li>
+            <li>📱 <strong>WhatsApp: </strong> 8662580594</li>
             <li>📧 <strong>Correo:</strong> administracion@muscleupgym.fitness</li>
         </ul>
     </div>
@@ -2518,24 +2518,24 @@ elif st.session_state.page == "planes_costos":
     </div>
     """, unsafe_allow_html=True)
     
-    # NUEVA SECCIÓN: Protocolo OBLIGATORIO
+    # NUEVA SECCIÓN:  Protocolo OBLIGATORIO
     st.markdown("""
     <div style="background-color: #f8d7da; border: 2px solid #dc3545; border-radius: 8px; padding: 15px; margin: 15px 0;">
         <h4 style="color: #721c24; margin: 0 0 10px 0;">📌 Antes de contestar cuestionarios (OBLIGATORIO)</h4>
-        <p style="color: #721c24; margin:  0 0 10px 0; font-size: 16px;">
-            Después de pagar, ve a la barra lateral y abre: <strong>"Protocolo de Medición MUPAI"</strong>. 
-        </p>
         <p style="color: #721c24; margin: 0 0 10px 0; font-size: 16px;">
-            Ahí verás cómo preparar:
+            Después de pagar, ve a la barra lateral y abre:  <strong>"Protocolo de Medición MUPAI"</strong>.  
+        </p>
+        <p style="color: #721c24; margin: 0 0 10px 0; font-size:  16px;">
+            Ahí verás cómo preparar:  
         </p>
         <ul style="color: #721c24; margin: 0 0 10px 0; font-size: 16px;">
             <li>Tu medición (bioimpedancia/perímetros, según modalidad)</li>
             <li>Tus fotografías obligatorias (se cargan dentro del cuestionario)</li>
             <li>Tus pruebas funcionales (aplican para TODOS los planes, porque forman parte del cálculo)</li>
         </ul>
-        <p style="color: #721c24; margin:  0; font-size: 16px;">
-            <strong>Importante:</strong> Si se te complica realizar las pruebas porque eres muy novato o por alguna condición, 
-            en el apartado de pruebas funcionales de tus cuestionarios escribe las repeticiones en <strong>0 (cero)</strong>. No adivines datos.
+        <p style="color: #721c24; margin: 0; font-size: 16px;">
+            <strong>Importante: </strong> Si se te complica realizar las pruebas porque eres muy novato o por alguna condición,
+            en el apartado de pruebas funcionales de tus cuestionarios escribe las repeticiones en <strong>0 (cero)</strong>. No adivines datos.  
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2560,7 +2560,7 @@ elif st.session_state.page == "planes_costos":
         <h4>💰 Precios: </h4>
         <ul>
             <li><strong>Usuarios Internos (miembros del gym):</strong> $700 MXN</li>
-            <li><strong>Usuarios Externos: </strong> $900 MXN</li>
+            <li><strong>Usuarios Externos:</strong> $900 MXN</li>
         </ul>
         <h4>✅ Incluye:</h4>
         <ul>
@@ -2573,8 +2573,8 @@ elif st.session_state.page == "planes_costos":
         </ul>
         <h4>➕ Menús extra (opcional):</h4>
         <ul>
-            <li><strong>Internos:</strong> desde $200 MXN</li>
-            <li><strong>Externos:</strong> desde $300 MXN</li>
+            <li><strong>Internos:</strong> desde $100 MXN</li>
+            <li><strong>Externos:</strong> desde $150 MXN</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -2666,8 +2666,8 @@ elif st.session_state.page == "planes_costos":
             <li><strong>Entrenamiento:</strong> Designing Your Training</li>
             <li><strong>Combinado:</strong> todos los anteriores</li>
         </ul>
-        <p style="margin-top: 1rem; font-size: 1.05rem;">
-            <strong>Nota:</strong> Las pruebas funcionales se registran en los cuestionarios y aplican para Nutrición, Entrenamiento y Combinado.  
+        <p style="margin-top:  1rem; font-size:  1.05rem;">
+            <strong>Nota:</strong> Las pruebas funcionales se registran en los cuestionarios y aplican para Nutrición, Entrenamiento y Combinado.
             Si eres muy novato y se te complica, coloca <strong>0</strong> en repeticiones en ese apartado.
         </p>
     </div>
@@ -2677,19 +2677,19 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="results-container">
         <h3>⏱️ Tiempo de Entrega (Ventana oficial)</h3>
-        <p style="font-size: 1.15rem; text-align: center; margin: 1rem 0;">
+        <p style="font-size: 1.15rem; text-align: center; margin:  1rem 0;">
             <strong>Entregamos planes en Viernes, Sábado o Domingo. </strong>
         </p>
         <p style="font-size: 1.05rem; text-align: center; margin: 0.5rem 0;">
-            Para recibir tu plan ese fin de semana, necesitas: 
+            Para recibir tu plan ese fin de semana, necesitas:
         </p>
-        <ul style="font-size: 1.05rem; margin: 1rem auto; max-width: 600px;">
+        <ul style="font-size:  1.05rem; margin: 1rem auto; max-width: 600px;">
             <li>Medición a más tardar miércoles</li>
             <li>Cuestionarios completos</li>
             <li>Fotos/archivos obligatorios cargados</li>
         </ul>
         <p style="text-align: center; margin-top: 1rem; font-size: 1.05rem;">
-            💡 <strong>Importante: </strong> Si completas tarde, tu entrega pasa al siguiente fin de semana.
+            💡 <strong>Importante:</strong> Si completas tarde, tu entrega pasa al siguiente fin de semana.
         </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2705,7 +2705,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Cuántos menús incluye mi Plan de Nutrición?</h4>
-        <p>Incluye 7 menús totalmente personalizados (una semana tipo) + lista de despensa.</p>
+        <p>Incluye 7 menús totalmente personalizados (una semana tipo) + lista de despensa. </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2713,7 +2713,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Cuántas comidas tiene cada menú (frecuencia diaria)?</h4>
-        <p>La cantidad y distribución de comidas por día se define con tu información, usando lo que reportas en cuestionarios y mediciones 
+        <p>La cantidad y distribución de comidas por día se define con tu información, usando lo que reportas en cuestionarios y mediciones
         (objetivo, horarios, apetito, estilo de vida, composición corporal, etc.). No es una cifra fija para todos.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2722,7 +2722,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Cuándo se toma el baseline (referencia inicial)?</h4>
-        <p>Tu referencia inicial se toma el mismo día de tu primera medición, ya sea lunes, martes, miércoles o jueves (según cupo). 
+        <p>Tu referencia inicial se toma el mismo día de tu primera medición, ya sea lunes, martes, miércoles o jueves (según cupo).
         Ese día se consideran tus mediciones iniciales y, cuando aplique, tus fotos iniciales.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2731,7 +2731,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Cuándo se repite la medición y las fotos?</h4>
-        <p>En la Semana 5 se realiza la reevaluación:  se repite la medición y se toman/actualizan fotografías para comparar progreso 
+        <p>En la Semana 5 se realiza la reevaluación:  se repite la medición y se toman/actualizan fotografías para comparar progreso
         y decidir ajustes o continuidad. </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2740,7 +2740,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Cuánto tiempo tarda la medición con bioimpedancia?</h4>
-        <p>La medición en el equipo toma aprox. 2 a 5 minutos.  Considera 10 a 15 minutos en total para el proceso completo 
+        <p>La medición en el equipo toma aprox.  2 a 5 minutos.  Considera 10 a 15 minutos en total para el proceso completo
         (registro, preparación rápida, medición y anotación de datos).</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2749,17 +2749,25 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Tengo que ir en ayunas para la bioimpedancia?</h4>
-        <p>Es lo más recomendable. Seguir el protocolo mejora precisión (hidratación y retención de agua influyen en el resultado). 
+        <p>Es lo más recomendable.  Seguir el protocolo mejora precisión (hidratación y retención de agua influyen en el resultado).
         El protocolo completo se muestra en la barra lateral en "Protocolo de Medición MUPAI".</p>
     </div>
     """, unsafe_allow_html=True)
     
-    # FAQ 7
+    # FAQ 7 (ACTUALIZADA CON VESTIMENTA)
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Qué debo llevar o cómo debo ir vestido a la medición?</h4>
-        <p>Vestimenta para medición precisa/Hombre: sin camisa + short ajustado no compresivo (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA)
-           Vestimenta para medición precisa/Mujer: top ajustado + short/licra corta no compresiva (alternativa: Playera athletic/slim + short ajustado, NOTA:MEDICIÓN MENOS PRECISA).</p>
+        <p><strong>Vestimenta requerida:</strong></p>
+        <ul>
+            <li><strong>Hombres:</strong> Sin camisa y short</li>
+            <li><strong>Mujeres:</strong> Top deportivo y short</li>
+        </ul>
+        <p style="margin-top: 10px;">
+            <strong>Importante: </strong> Consulta el <strong>Protocolo de Vestimenta completo</strong> en el apartado 
+            <strong>"Protocolos de Evaluación MUPAI"</strong> en la barra lateral para conocer todos los detalles 
+            y especificaciones adicionales (calzado, accesorios, etc.).
+        </p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -2767,9 +2775,9 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Puedo estimar datos en los cuestionarios?</h4>
-        <p>Puedes estimar únicamente datos difíciles de medir (por ejemplo: horarios, hábitos, nivel de actividad diaria). 
+        <p>Puedes estimar únicamente datos difíciles de medir (por ejemplo:  horarios, hábitos, nivel de actividad diaria).
         Los datos que dependen de mediciones o pruebas deben ser reales y obtenidos, no aproximados.</p>
-        <p><strong>Regla clave:</strong> los datos deben ser verídicos y realistas.  Si se ingresan datos inventados, 
+        <p><strong>Regla clave:</strong> los datos deben ser verídicos y realistas.  Si se ingresan datos inventados,
         los cálculos pueden quedar mal calibrados y el plan no reflejará tu situación real.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2779,7 +2787,7 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>¿Son obligatorias las fotografías?  ¿Por qué?</h4>
         <p>Sí.  Las fotografías son obligatorias cuando el cuestionario las solicita. En composición corporal, la evaluación más útil es multidimensional: 
-        la foto complementa mediciones como cintura/perímetros y bioimpedancia, y permite interpretar mejor el progreso 
+        la foto complementa mediciones como cintura/perímetros y bioimpedancia, y permite interpretar mejor el progreso
         (forma, proporciones y distribución), incluso cuando hay cambios de agua o variaciones normales.</p>
         <p><strong>Para que la comparación sea válida:</strong></p>
         <ul>
@@ -2795,7 +2803,7 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Qué pasa si no puedo tomarme fotos el mismo día?</h4>
-        <p>Puedes tomar las fotos ese mismo día o lo más cercano posible, siguiendo el protocolo. Si el sistema solicita fotos 
+        <p>Puedes tomar las fotos ese mismo día o lo más cercano posible, siguiendo el protocolo.  Si el sistema solicita fotos
         y no las cargas, tu evaluación queda incompleta y el plan puede pasar a la siguiente ventana de entrega.</p>
     </div>
     """, unsafe_allow_html=True)
@@ -2805,7 +2813,7 @@ elif st.session_state.page == "planes_costos":
     <div class="corporate-section">
         <h4>¿Qué pasa si soy muy novato y se me complican las pruebas funcionales?</h4>
         <p>Las pruebas funcionales forman parte del cálculo y ayudan a calibrar tu plan con datos reales. 
-        Si se te complica por ser muy novato o por alguna condición, en el apartado de pruebas funcionales de tus cuestionarios 
+        Si se te complica por ser muy novato o por alguna condición, en el apartado de pruebas funcionales de tus cuestionarios
         escribe las repeticiones en <strong>0 (cero)</strong>. No adivines datos. </p>
     </div>
     """, unsafe_allow_html=True)
@@ -2814,34 +2822,49 @@ elif st.session_state.page == "planes_costos":
     st.markdown("""
     <div class="corporate-section">
         <h4>¿Qué pasa si pongo números inventados o "aproximados" en pruebas? </h4>
-        <p>El sistema asumirá capacidades que no tienes y el plan puede quedar irreal (cargas/volúmenes mal calibrados). 
+        <p>El sistema asumirá capacidades que no tienes y el plan puede quedar irreal (cargas/volúmenes mal calibrados).
         Por eso es clave registrar datos reales o usar 0 cuando aplique. </p>
     </div>
     """, unsafe_allow_html=True)
     
-   # FAQ 13-17 (Preguntas rápidas)
-st.markdown("""
-<div class="corporate-section">
-    <h4>¿Qué puede retrasar mi entrega?</h4>
-    <p>Cuestionarios incompletos, fotos/archivos obligatorios sin cargar, o reprogramación de medición. </p>
+    # FAQ 13
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué puede retrasar mi entrega?</h4>
+        <p>Cuestionarios incompletos, fotos/archivos obligatorios sin cargar, o reprogramación de medición. </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    <h4>¿Puedo pagar cualquier día?</h4>
-    <p>Sí.  Si pagas viernes a domingo, se procesa el lunes y tu medición se agenda para la siguiente semana.</p>
+    # FAQ 14
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Puedo pagar cualquier día?</h4>
+        <p>Sí.  Si pagas viernes a domingo, se procesa el lunes y tu medición se agenda para la siguiente semana. </p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    <h4>¿Qué días miden?</h4>
-    <p>Lun–Mié; Jue solo si hay cupo. No Vie–Dom.</p>
+    # FAQ 15
+    st.markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué días miden? </h4>
+        <p>Lun–Mié; Jue solo si hay cupo. No Vie–Dom.</p>
+    </div>
+    """, unsafe_allow_html=True)
     
-    <h4>¿Qué es el ciclo de 5 semanas?</h4>
-    <p>4 semanas de ejecución + semana 5 de reevaluación para ajustar o continuar.</p>
-</div>
-""", unsafe_allow_html=True)
+    # FAQ 16
+    st. markdown("""
+    <div class="corporate-section">
+        <h4>¿Qué es el ciclo de 5 semanas?</h4>
+        <p>4 semanas de ejecución + semana 5 de reevaluación para ajustar o continuar. </p>
+    </div>
+    """, unsafe_allow_html=True)
     
     # Nota final
     st.markdown("""
     <div class="results-container">
         <h3>💪 Tu salud y bienestar son nuestra misión</h3>
         <p style="font-size: 1.1rem; text-align: center; margin: 0;">
-          
+            Estamos comprometidos en darte el mejor servicio profesional personalizado.
         </p>
     </div>
     """, unsafe_allow_html=True)
