@@ -144,8 +144,12 @@ st.markdown("""
     }
 }
 </style>
-    
-    .main-header {  
+""", unsafe_allow_html=True)
+
+# CSS completo para toda la aplicación
+st.markdown("""
+<style>
+.main-header {  
         background: #000000;  
         padding: 2rem;  
         border-radius: 15px;  
