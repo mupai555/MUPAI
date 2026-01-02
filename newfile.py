@@ -107,14 +107,20 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
-    /* Ocultar solo la toolbar (Share, GitHub, etc.) pero mantener el header para la sidebar */
-    div[data-testid="stToolbar"] {
+    /* Ocultar solo los botones de la toolbar (Share, GitHub, Deploy) manteniendo el header visible */
+    section[data-testid="stToolbar"] {
         display: none !important;
     }
     
-    /* Ocultar botones específicos del header pero NO el botón de sidebar */
-    button[kind="header"]:not([data-testid*="sidebar"]) {
-        display: none !important;
+    /* Mantener el header visible para el botón de sidebar */
+    [data-testid="stHeader"] {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
+    header, #MainMenu {
+        visibility: visible !important;
+        display: block !important;
     }
     
     /* Tema principal: Negro, amarillo mostaza, blanco */
