@@ -107,29 +107,25 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
-    /* Ocultar botones individuales de la toolbar sin ocultar el contenedor */
-    [data-testid="stToolbar"] button[kind="header"],
-    [data-testid="stToolbar"] a,
-    [data-testid="stToolbar"] > div > div {
-        opacity: 0 !important;
-        pointer-events: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
+    /* Ocultar el MainMenu completo (botones Share, GitHub, etc.) */
+    #MainMenu {
+        visibility: hidden !important;
+        display: none !important;
     }
     
-    /* Mantener el contenedor toolbar pero vacío visualmente */
-    [data-testid="stToolbar"] {
-        background: transparent !important;
+    /* Ocultar toolbar y sus elementos */
+    [data-testid="stToolbar"],
+    [data-testid="stDecoration"],
+    [data-testid="stStatusWidget"],
+    .css-18e3th9,
+    .css-1dp5vir {
+        display: none !important;
+        visibility: hidden !important;
     }
     
-    /* Asegurar que el botón >> de sidebar permanezca visible */
-    [data-testid="collapsedControl"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        width: auto !important;
-        height: auto !important;
+    footer {
+        visibility: hidden !important;
+        display: none !important;
     }
     
     /* Tema principal: Negro, amarillo mostaza, blanco */
