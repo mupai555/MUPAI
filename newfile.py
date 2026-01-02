@@ -112,26 +112,33 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Botón de sidebar (hamburguesa) amarillo y visible */
-    [data-testid="collapsedControl"] {
-        color: #FFCC00 !important;
-        opacity: 1 !important;
-    }
-    
-    [data-testid="collapsedControl"] svg {
-        fill: #FFCC00 !important;
-    }
-    
-    /* Hacer invisibles los botones de la toolbar (Share, GitHub, etc.) */
-    [data-testid="stToolbar"] button {
-        color: #000000 !important;
+    /* Hacer invisibles SOLO los botones de la toolbar (Share, GitHub, etc.) */
+    [data-testid="stToolbar"] {
         opacity: 0 !important;
         pointer-events: none !important;
     }
     
-    [data-testid="stToolbar"] svg {
-        fill: #000000 !important;
-        opacity: 0 !important;
+    /* Asegurar que TODOS los botones del header estén visibles por defecto */
+    [data-testid="stHeader"] button {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        color: #FFCC00 !important;
+    }
+    
+    [data-testid="stHeader"] button svg {
+        fill: #FFCC00 !important;
+        color: #FFCC00 !important;
+    }
+    
+    /* Botón de sidebar específicamente amarillo y visible */
+    [data-testid="collapsedControl"],
+    [data-testid="stSidebarNav"] button,
+    button[kind="header"] {
+        color: #FFCC00 !important;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
     
     /* Tema principal: Negro, amarillo mostaza, blanco */
