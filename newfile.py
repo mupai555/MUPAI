@@ -121,30 +121,48 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Ocultar elementos del toolbar sin afectar el header completo */
-    [data-testid="stToolbar"] {
+    /* Estrategia: ocultar botones individuales del toolbar, no el contenedor */
+    /* Ocultar botón de Share */
+    [data-testid="stToolbar"] button[kind="secondary"],
+    [data-testid="stToolbar"] button[title*="Share"],
+    button[aria-label="Share this app"] {
         display: none !important;
     }
     
-    /* Forzar visibilidad del botón sidebar en cualquier contexto */
-    button[kind="header"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
+    /* Ocultar iconos y enlaces de GitHub */
+    [data-testid="stToolbar"] a[href*="github"],
+    [data-testid="stToolbar"] svg[aria-label*="GitHub"],
+    a[aria-label="View source on GitHub"] {
+        display: none !important;
     }
     
-    /* Selector alternativo para el botón de sidebar */
-    [data-testid="baseButton-header"] {
-        display: block !important;
-        visibility: visible !important;
-    }
-    
-    /* Ocultar menú hamburguesa y otros elementos del header */
-    [data-testid="stHeader"] button[aria-label*="Share"],
-    [data-testid="stHeader"] button[aria-label*="GitHub"],
-    [data-testid="stHeader"] a[href*="github"],
+    /* Ocultar menú de tres puntos y otros elementos */
+    [data-testid="stToolbar"] button[aria-label="More options"],
+    [data-testid="stToolbar"] [data-testid="baseButton-headerNoPadding"],
     #MainMenu {
         display: none !important;
+    }
+    
+    /* Ocultar elementos hermanos del botón de sidebar en el toolbar */
+    [data-testid="stToolbar"] > div:not(:first-child) {
+        display: none !important;
+    }
+    
+    /* Método alternativo: hacer invisibles los elementos del toolbar excepto el primero */
+    [data-testid="stToolbar"] > * {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        overflow: hidden !important;
+    }
+    
+    /* Restaurar el primer elemento (botón sidebar) */
+    [data-testid="stToolbar"] > *:first-child {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: auto !important;
+        height: auto !important;
     }
 </style>
 """, unsafe_allow_html=True)
