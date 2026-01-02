@@ -121,48 +121,18 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Estrategia: ocultar botones individuales del toolbar, no el contenedor */
-    /* Ocultar botón de Share */
-    [data-testid="stToolbar"] button[kind="secondary"],
-    [data-testid="stToolbar"] button[title*="Share"],
-    button[aria-label="Share this app"] {
+    /* Ocultar todos los elementos del toolbar excepto el primer hijo (botón sidebar) */
+    [data-testid="stToolbar"] > div:nth-child(n+2),
+    [data-testid="stToolbar"] > button:nth-child(n+2),
+    [data-testid="stToolbar"] > *:nth-child(n+2) {
         display: none !important;
     }
     
-    /* Ocultar iconos y enlaces de GitHub */
-    [data-testid="stToolbar"] a[href*="github"],
-    [data-testid="stToolbar"] svg[aria-label*="GitHub"],
-    a[aria-label="View source on GitHub"] {
-        display: none !important;
-    }
-    
-    /* Ocultar menú de tres puntos y otros elementos */
-    [data-testid="stToolbar"] button[aria-label="More options"],
-    [data-testid="stToolbar"] [data-testid="baseButton-headerNoPadding"],
-    #MainMenu {
-        display: none !important;
-    }
-    
-    /* Ocultar elementos hermanos del botón de sidebar en el toolbar */
-    [data-testid="stToolbar"] > div:not(:first-child) {
-        display: none !important;
-    }
-    
-    /* Método alternativo: hacer invisibles los elementos del toolbar excepto el primero */
-    [data-testid="stToolbar"] > * {
-        opacity: 0 !important;
-        pointer-events: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-    }
-    
-    /* Restaurar el primer elemento (botón sidebar) */
+    /* Mantener visible el primer elemento */
     [data-testid="stToolbar"] > *:first-child {
+        display: block !important;
+        visibility: visible !important;
         opacity: 1 !important;
-        pointer-events: auto !important;
-        width: auto !important;
-        height: auto !important;
     }
 </style>
 """, unsafe_allow_html=True)
