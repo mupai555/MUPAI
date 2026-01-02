@@ -121,6 +121,36 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
+    /* Agregar indicador visual amarillo sobre el botón de sidebar */
+    [data-testid="collapsedControl"]::before {
+        content: "»";
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        font-weight: bold;
+        color: #FFCC00;
+        text-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00;
+        animation: pulse-glow 2s ease-in-out infinite;
+        z-index: 9999;
+    }
+    
+    [data-testid="collapsedControl"] {
+        position: relative;
+    }
+    
+    @keyframes pulse-glow {
+        0%, 100% { 
+            opacity: 1;
+            text-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00;
+        }
+        50% { 
+            opacity: 0.7;
+            text-shadow: 0 0 20px #FFCC00, 0 0 30px #FFCC00, 0 0 40px #FFCC00;
+        }
+    }
+    
     .main-header {  
         background: #000000;  
         padding: 2rem;  
