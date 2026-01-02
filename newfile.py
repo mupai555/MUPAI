@@ -120,36 +120,30 @@ st.markdown("""
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
-    
-    /* Agregar indicador visual amarillo sobre el botón de sidebar */
-    [data-testid="collapsedControl"]::before {
-        content: "»";
-        position: absolute;
-        top: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 2rem;
-        font-weight: bold;
-        color: #FFCC00;
-        text-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00;
-        animation: pulse-glow 2s ease-in-out infinite;
-        z-index: 9999;
+</style>
+""", unsafe_allow_html=True)
+
+# Indicador flotante amarillo sobre el botón de sidebar
+st.markdown("""
+<div style="position: fixed; top: 5px; left: 10px; z-index: 9999; 
+            font-size: 2.5rem; color: #FFCC00; font-weight: bold;
+            text-shadow: 0 0 15px #FFCC00, 0 0 25px #FFCC00;
+            animation: pulse-indicator 2s ease-in-out infinite;
+            pointer-events: none;">
+    »
+</div>
+<style>
+@keyframes pulse-indicator {
+    0%, 100% { 
+        opacity: 1;
+        transform: scale(1);
     }
-    
-    [data-testid="collapsedControl"] {
-        position: relative;
+    50% { 
+        opacity: 0.6;
+        transform: scale(1.1);
     }
-    
-    @keyframes pulse-glow {
-        0%, 100% { 
-            opacity: 1;
-            text-shadow: 0 0 10px #FFCC00, 0 0 20px #FFCC00;
-        }
-        50% { 
-            opacity: 0.7;
-            text-shadow: 0 0 20px #FFCC00, 0 0 30px #FFCC00, 0 0 40px #FFCC00;
-        }
-    }
+}
+</style>
     
     .main-header {  
         background: #000000;  
