@@ -107,34 +107,34 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
-    /* Ocultar solo los botones de la toolbar (Share, GitHub, Deploy) */
-    section[data-testid="stToolbar"] {
-        display: none !important;
+    /* Hacer invisibles los botones de toolbar cambiando su color a negro */
+    [data-testid="stToolbar"] {
+        color: #000000 !important;
     }
     
-    /* Header negro para que coincida con el tema y botón de sidebar visible */
+    [data-testid="stToolbar"] button {
+        color: #000000 !important;
+        opacity: 0 !important;
+    }
+    
+    [data-testid="stToolbar"] svg {
+        fill: #000000 !important;
+        color: #000000 !important;
+    }
+    
+    /* Header negro para que coincida con el tema */
     [data-testid="stHeader"] {
         background-color: #000000 !important;
-        display: block !important;
-        visibility: visible !important;
     }
     
-    /* Asegurar que el botón de sidebar sea visible con color amarillo */
-    [data-testid="stHeader"] button {
+    /* Botón de sidebar visible con color amarillo */
+    button[kind="header"]:first-child {
         color: #FFCC00 !important;
-        visibility: visible !important;
-        display: block !important;
+        opacity: 1 !important;
     }
     
-    [data-testid="stHeader"] button svg {
+    button[kind="header"]:first-child svg {
         fill: #FFCC00 !important;
-        color: #FFCC00 !important;
-    }
-    
-    header, #MainMenu {
-        visibility: visible !important;
-        display: block !important;
-        background-color: #000000 !important;
     }
     
     /* Tema principal: Negro, amarillo mostaza, blanco */
