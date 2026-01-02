@@ -1618,50 +1618,74 @@ def enviar_email_resultados(destinatario, asunto, contenido):
     """Función simulada de envío de email"""
     st.success("✅ Email enviado exitosamente")
     return True
-        
-# Inicializar session state
+
+# Inicializar session state con soporte para query parameters
 if 'page' not in st.session_state:
-    st.session_state.page = "inicio"
+    # Leer el parámetro 'page' de la URL si existe
+    query_params = st.query_params
+    page_from_url = query_params.get("page", "inicio")
+    
+    # Validar que la página existe
+    valid_pages = [
+        "inicio", "planes_costos", "protocolos_medicion", "mupcamp_1a1", 
+        "quienes_somos", "about", "contacto", "body_and_energy", 
+        "food_preferences", "designing_training"
+    ]
+    
+    if page_from_url in valid_pages:
+        st.session_state.page = page_from_url
+    else:
+        st.session_state.page = "inicio"
 
 # Navegación principal - reorganizada según requerimientos
 st.sidebar.markdown("### 📋 NAVEGACIÓN")
 
 if st.sidebar.button("🏠 Inicio", use_container_width=True):
     st.session_state.page = "inicio"
+    st.query_params.clear()
 
 if st.sidebar.button("💸 Planes y Costos", use_container_width=True):
     st.session_state.page = "planes_costos"
+    st.query_params["page"] = "planes_costos"
 
 # botón nuevo: Protocolos de medición MUPAI (colocar justo debajo de "💸 Planes y Costos")
 if st.sidebar.button("📐 Protocolos de medición MUPAI", use_container_width=True):
     st.session_state.page = "protocolos_medicion"
+    st.query_params["page"] = "protocolos_medicion"
 
 if st.sidebar.button("🔴 MUPcamp 1:1", use_container_width=True):
     st.session_state.page = "mupcamp_1a1"
+    st.query_params["page"] = "mupcamp_1a1"
 
 if st.sidebar.button("🏢 ¿Quiénes somos?", use_container_width=True):
     st.session_state.page = "quienes_somos"
+    st.query_params["page"] = "quienes_somos"
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 👨‍🎓 SOBRE EL PROFESIONAL Y CONTACTO")
 
 if st.sidebar.button("👨‍🎓 Acerca del Profesional", use_container_width=True):
     st.session_state.page = "about"
+    st.query_params["page"] = "about"
 
 if st.sidebar.button("📞 Contacto", use_container_width=True):
     st.session_state.page = "contacto"
+    st.query_params["page"] = "contacto"
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🧪 TEST MUPAI")
 
 if st.sidebar.button("BODY AND ENERGY", use_container_width=True):
     st.session_state.page = "body_and_energy"
+    st.query_params["page"] = "body_and_energy"
 
 if st.sidebar.button("FOOD PREFERENCES", use_container_width=True):
     st.session_state.page = "food_preferences"
+    st.query_params["page"] = "food_preferences"
 
 if st.sidebar.button("DESIGNING YOUR TRAINING", use_container_width=True):
     st.session_state.page = "designing_training"
+    st.query_params["page"] = "designing_training"
 
 st.sidebar.markdown("---")
 
