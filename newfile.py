@@ -107,6 +107,17 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
+    /* Ocultar SOLO la toolbar (botones de la derecha: Share, GitHub, etc.) */
+    [data-testid="stToolbar"] {
+        display: none !important;
+    }
+    
+    /* Asegurar que el botón >> de sidebar sea visible */
+    [data-testid="collapsedControl"] {
+        display: block !important;
+        visibility: visible !important;
+    }
+    
     /* Tema principal: Negro, amarillo mostaza, blanco */
     .stApp > div:first-child {
         background-color: #000000;
