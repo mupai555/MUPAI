@@ -120,6 +120,33 @@ st.markdown("""
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
+    
+    /* Ocultar toolbar derecho (Share, GitHub, etc.) sin afectar botón sidebar */
+    [data-testid="stToolbar"] {
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Mantener visible el botón de sidebar >> */
+    [data-testid="collapsedControl"] {
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        display: block !important;
+    }
+    
+    /* Alternativa: ocultar elementos específicos del toolbar */
+    [data-testid="stToolbar"] > div,
+    [data-testid="stToolbar"] button,
+    [data-testid="stToolbar"] a {
+        display: none !important;
+    }
+    
+    /* Asegurar que el header mantenga el botón sidebar visible */
+    [data-testid="stHeader"] > div:first-child {
+        visibility: visible !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
