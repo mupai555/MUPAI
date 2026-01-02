@@ -107,6 +107,21 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
+    /* Ocultar botones del header superior (Share, GitHub, etc.) sin afectar sidebar */
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    
+    /* Asegurar que la toolbar superior esté oculta */
+    div[data-testid="stToolbar"] {
+        display: none !important;
+    }
+    
+    /* Ocultar el botón de deploy y otros botones del header */
+    button[kind="header"] {
+        display: none !important;
+    }
+    
     /* Tema principal: Negro, amarillo mostaza, blanco */
     .stApp > div:first-child {
         background-color: #000000;
