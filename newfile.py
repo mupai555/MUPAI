@@ -121,18 +121,32 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Ocultar todos los elementos del toolbar excepto el primer hijo (botón sidebar) */
-    [data-testid="stToolbar"] > div:nth-child(n+2),
-    [data-testid="stToolbar"] > button:nth-child(n+2),
-    [data-testid="stToolbar"] > *:nth-child(n+2) {
+    /* Ocultar el lado derecho del toolbar (todos los botones) */
+    [data-testid="stToolbar"] > div:last-child,
+    [data-testid="stToolbar"] div[style*="flex"],
+    [data-testid="stToolbar"] div[style*="gap"] {
         display: none !important;
     }
     
-    /* Mantener visible el primer elemento */
-    [data-testid="stToolbar"] > *:first-child {
+    /* Alternativa: ocultar directamente por clases de Streamlit */
+    section[data-testid="stToolbar"] > div:not(:first-child) {
+        display: none !important;
+    }
+    
+    /* Ocultar menú MainMenu */
+    #MainMenu {
+        display: none !important;
+    }
+    
+    /* Método agresivo: ocultar todo dentro del toolbar y mostrar solo collapsedControl */
+    [data-testid="stToolbar"] * {
+        display: none !important;
+    }
+    
+    [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] * {
         display: block !important;
         visibility: visible !important;
-        opacity: 1 !important;
     }
 </style>
 """, unsafe_allow_html=True)
