@@ -107,30 +107,18 @@ st.set_page_config(
 # CSS personalizado con tema negro y amarillo mostaza
 st.markdown("""
 <style>  
-    /* Ocultar el MainMenu completo (botones Share, GitHub, etc.) */
-    #MainMenu {
-        visibility: hidden !important;
-        display: none !important;
+    /* Tema principal: Negro, amarillo mostaza, blanco - aplicado a toda la página */
+    .stApp {
+        background-color: #000000;
     }
     
-    /* Ocultar toolbar y sus elementos */
-    [data-testid="stToolbar"],
-    [data-testid="stDecoration"],
-    [data-testid="stStatusWidget"],
-    .css-18e3th9,
-    .css-1dp5vir {
-        display: none !important;
-        visibility: hidden !important;
-    }
-    
-    footer {
-        visibility: hidden !important;
-        display: none !important;
-    }
-    
-    /* Tema principal: Negro, amarillo mostaza, blanco */
     .stApp > div:first-child {
         background-color: #000000;
+    }
+    
+    /* Header negro para que coincida con el tema */
+    [data-testid="stHeader"] {
+        background-color: #000000 !important;
     }
     
     .main-header {  
