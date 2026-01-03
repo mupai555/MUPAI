@@ -143,15 +143,19 @@ st.markdown("""
         stroke: #FFCC00 !important;
     }
     
-    /* CUARTO: Poner los botones de estrella, edit y GitHub en negro COMPLETAMENTE */
+    /* CUARTO: Poner los botones de estrella, edit y GitHub SOLO en color negro */
     [data-testid="stToolbar"] button[kind="tertiary"],
     [data-testid="stToolbar"] button[kind="tertiary"] *,
+    [data-testid="stToolbar"] button[kind="tertiary"] svg,
+    [data-testid="stToolbar"] button[kind="tertiary"] path,
     [data-testid="stToolbar"] a[href*="github"],
-    [data-testid="stToolbar"] a[href*="github"] * {
+    [data-testid="stToolbar"] a[href*="github"] *,
+    [data-testid="stToolbar"] a[href*="github"] svg,
+    [data-testid="stToolbar"] a[href*="github"] path {
         color: #000000 !important;
         fill: #000000 !important;
-        opacity: 0 !important;
-        visibility: hidden !important;
+        stroke: #000000 !important;
+        background-color: transparent !important;
     }
 
     
