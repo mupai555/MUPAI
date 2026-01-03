@@ -142,6 +142,16 @@ st.markdown("""
         fill: #FFCC00 !important;
         stroke: #FFCC00 !important;
     }
+    
+    /* CUARTO: Poner los botones de estrella, edit y GitHub en negro */
+    [data-testid="stToolbar"] button[kind="tertiary"],
+    [data-testid="stToolbar"] button[kind="tertiary"] *,
+    [data-testid="stToolbar"] a[href*="github"],
+    [data-testid="stToolbar"] a[href*="github"] * {
+        color: #000000 !important;
+        fill: #000000 !important;
+        opacity: 0.3 !important;
+    }
 
     
     /* Ocultar menú de tres puntos */
