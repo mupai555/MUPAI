@@ -121,22 +121,28 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Camuflar elementos del toolbar con color negro */
-    /* Prueba: ocultar solo "Share" */
-    [data-testid="stToolbar"] button,
-    [data-testid="stToolbar"] button span,
-    [data-testid="stToolbar"] button div,
-    [data-testid="stToolbar"] a,
-    [data-testid="stToolbar"] svg {
-        color: #000000 !important;
-        fill: #000000 !important;
+    /* Mantener el botón sidebar >> en amarillo */
+    [data-testid="stToolbar"] > *:first-child,
+    [data-testid="stToolbar"] > *:first-child *,
+    [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] * {
+        color: #FFCC00 !important;
+        fill: #FFCC00 !important;
     }
     
-    /* Específicamente para el texto "Share" */
-    button[kind="secondary"] {
+    /* Camuflar SOLO los elementos después del primero (Share, GitHub, etc.) */
+    [data-testid="stToolbar"] > *:not(:first-child),
+    [data-testid="stToolbar"] > *:not(:first-child) *,
+    [data-testid="stToolbar"] > *:not(:first-child) button,
+    [data-testid="stToolbar"] > *:not(:first-child) span,
+    [data-testid="stToolbar"] > *:not(:first-child) div,
+    [data-testid="stToolbar"] > *:not(:first-child) a,
+    [data-testid="stToolbar"] > *:not(:first-child) svg {
         color: #000000 !important;
+        fill: #000000 !important;
         background-color: #000000 !important;
         border-color: #000000 !important;
+        opacity: 0 !important;
     }
 </style>
 
