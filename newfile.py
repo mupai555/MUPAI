@@ -120,6 +120,24 @@ st.markdown("""
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
+    
+    /* Camuflar elementos del toolbar con color negro */
+    /* Prueba: ocultar solo "Share" */
+    [data-testid="stToolbar"] button,
+    [data-testid="stToolbar"] button span,
+    [data-testid="stToolbar"] button div,
+    [data-testid="stToolbar"] a,
+    [data-testid="stToolbar"] svg {
+        color: #000000 !important;
+        fill: #000000 !important;
+    }
+    
+    /* Específicamente para el texto "Share" */
+    button[kind="secondary"] {
+        color: #000000 !important;
+        background-color: #000000 !important;
+        border-color: #000000 !important;
+    }
 </style>
 
 <script>
