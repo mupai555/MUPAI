@@ -121,39 +121,39 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Mantener el botón sidebar >> en amarillo brillante */
-    [data-testid="collapsedControl"],
-    [data-testid="collapsedControl"] *,
-    button[kind="header"] {
-        color: #FFCC00 !important;
-        fill: #FFCC00 !important;
-    }
-    
-    /* Camuflar elementos del lado derecho del toolbar */
-    /* Método 1: Ocultar por posición - último hijo del toolbar */
-    [data-testid="stToolbar"] > div:last-child {
-        opacity: 0 !important;
-        pointer-events: none !important;
-    }
-    
-    /* Método 2: Camuflar todos los botones y enlaces excepto el de header */
-    [data-testid="stToolbar"] button:not([kind="header"]),
-    [data-testid="stToolbar"] button:not([kind="header"]) *,
-    [data-testid="stToolbar"] a,
-    [data-testid="stToolbar"] a * {
+    /* Poner TODO el toolbar en negro primero */
+    [data-testid="stToolbar"],
+    [data-testid="stToolbar"] *,
+    [data-testid="stToolbar"] button,
+    [data-testid="stToolbar"] span,
+    [data-testid="stToolbar"] svg,
+    [data-testid="stToolbar"] path,
+    [data-testid="stToolbar"] a {
         color: #000000 !important;
         fill: #000000 !important;
-        background-color: #000000 !important;
+        background-color: transparent !important;
         border-color: #000000 !important;
-        opacity: 0 !important;
     }
     
-    /* Método 3: Ocultar específicamente elementos con ciertos atributos */
-    button[kind="secondary"],
-    button[kind="tertiary"],
-    a[target="_blank"] {
-        opacity: 0 !important;
-        color: #000000 !important;
+    /* SOLO el botón >> en amarillo tráfico */
+    [data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] *,
+    [data-testid="collapsedControl"] svg,
+    [data-testid="collapsedControl"] path,
+    button[kind="header"],
+    button[kind="header"] *,
+    button[kind="header"] svg,
+    button[kind="header"] path {
+        color: #FFCC00 !important;
+        fill: #FFCC00 !important;
+        stroke: #FFCC00 !important;
+    }
+
+    
+    /* Ocultar menú de tres puntos */
+    #MainMenu,
+    button[aria-label="More options"] {
+        display: none !important;
     }
 </style>
 
