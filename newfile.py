@@ -121,18 +121,26 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Mantener >> y Share en amarillo (no tocar nada general) */
+    /* PRIMERO: Todo el toolbar en amarillo */
+    [data-testid="stToolbar"],
+    [data-testid="stToolbar"] *,
+    [data-testid="stToolbar"] button,
+    [data-testid="stToolbar"] span {
+        color: #FFCC00 !important;
+    }
     
-    /* Poner SOLO los iconos SVG en negro */
-    [data-testid="stToolbar"] svg:not([kind="header"] svg),
-    [data-testid="stToolbar"] path:not([kind="header"] path),
-    [data-testid="stToolbar"] a svg,
-    [data-testid="stToolbar"] a path,
-    [data-testid="stToolbar"] button[kind="tertiary"] svg,
-    [data-testid="stToolbar"] button[kind="tertiary"] path {
-        color: #000000 !important;
+    /* SEGUNDO: Solo iconos SVG en negro (excepto el del >>) */
+    [data-testid="stToolbar"] svg,
+    [data-testid="stToolbar"] path {
         fill: #000000 !important;
         stroke: #000000 !important;
+    }
+    
+    /* TERCERO: Restaurar el SVG del >> en amarillo */
+    button[kind="header"] svg,
+    button[kind="header"] path {
+        fill: #FFCC00 !important;
+        stroke: #FFCC00 !important;
     }
 
     
