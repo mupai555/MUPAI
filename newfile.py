@@ -121,32 +121,21 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Poner TODO el toolbar en negro primero */
-    [data-testid="stToolbar"],
-    [data-testid="stToolbar"] *,
-    [data-testid="stToolbar"] button,
-    [data-testid="stToolbar"] span,
-    [data-testid="stToolbar"] svg,
-    [data-testid="stToolbar"] path,
-    [data-testid="stToolbar"] a {
-        color: #000000 !important;
-        fill: #000000 !important;
-        background-color: transparent !important;
-        border-color: #000000 !important;
-    }
-    
-    /* SOLO el botón >> en amarillo tráfico */
-    [data-testid="collapsedControl"],
-    [data-testid="collapsedControl"] *,
-    [data-testid="collapsedControl"] svg,
-    [data-testid="collapsedControl"] path,
-    button[kind="header"],
-    button[kind="header"] *,
-    button[kind="header"] svg,
-    button[kind="header"] path {
+    /* TODO en amarillo primero */
+    [data-testid="stToolbar"] * {
         color: #FFCC00 !important;
         fill: #FFCC00 !important;
-        stroke: #FFCC00 !important;
+    }
+    
+    /* Poner Share y otros botones en NEGRO */
+    button[kind="secondary"],
+    button[kind="secondary"] *,
+    button[kind="tertiary"],
+    button[kind="tertiary"] *,
+    [data-testid="stToolbar"] a,
+    [data-testid="stToolbar"] a * {
+        color: #000000 !important;
+        fill: #000000 !important;
     }
 
     
