@@ -121,63 +121,50 @@ st.markdown("""
         background-color: #000000 !important;
     }
 </style>
-""", unsafe_allow_html=True)
 
-# JavaScript para ocultar elementos del toolbar preservando el botón sidebar
-import streamlit.components.v1 as components
-components.html("""
 <script>
+// JavaScript para ocultar elementos del toolbar preservando el botón sidebar
 (function() {
     function hideToolbarElements() {
-        // Encontrar el toolbar
-        const toolbar = document.querySelector('[data-testid="stToolbar"]');
-        if (!toolbar) return false;
+        // Buscar en el documento padre (puede estar en iframe)
+        const doc = window.parent.document || document;
+        const toolbar = doc.querySelector('[data-testid="stToolbar"]');
         
-        // Obtener todos los hijos directos del toolbar
+        if (!toolbar) {
+            return false;
+        }
+        
+        // Obtener todos los hijos directos
         const children = Array.from(toolbar.children);
         
-        // Ocultar todos excepto el primero (botón sidebar)
+        // Ocultar todos excepto el primero
         children.forEach((child, index) => {
             if (index > 0) {
                 child.style.display = 'none';
                 child.style.visibility = 'hidden';
                 child.style.opacity = '0';
-                child.style.pointerEvents = 'none';
             }
         });
-        
-        // También ocultar MainMenu si existe
-        const mainMenu = document.getElementById('MainMenu');
-        if (mainMenu) {
-            mainMenu.style.display = 'none';
-        }
         
         return true;
     }
     
-    // Intentar ocultar inmediatamente
+    // Ejecutar múltiples veces para asegurar que funcione
     setTimeout(hideToolbarElements, 100);
     setTimeout(hideToolbarElements, 500);
     setTimeout(hideToolbarElements, 1000);
+    setTimeout(hideToolbarElements, 2000);
     
-    // Observar cambios en el DOM por si Streamlit recrea elementos
-    const observer = new MutationObserver(() => {
-        hideToolbarElements();
-    });
+    // Observador para cambios en el DOM
+    const observer = new MutationObserver(hideToolbarElements);
     
-    // Esperar a que el documento esté listo
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-            hideToolbarElements();
-            observer.observe(document.body, { childList: true, subtree: true });
-        });
-    } else {
-        hideToolbarElements();
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
+    setTimeout(() => {
+        const doc = window.parent.document || document;
+        observer.observe(doc.body, { childList: true, subtree: true });
+    }, 100);
 })();
 </script>
-""", height=0)
+""", unsafe_allow_html=True)
 
 # Indicador flotante amarillo sobre el botón de sidebar
 st.markdown("""
