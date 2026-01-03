@@ -120,36 +120,64 @@ st.markdown("""
     [data-testid="stHeader"] {
         background-color: #000000 !important;
     }
-    
-    /* Ocultar el lado derecho del toolbar (todos los botones) */
-    [data-testid="stToolbar"] > div:last-child,
-    [data-testid="stToolbar"] div[style*="flex"],
-    [data-testid="stToolbar"] div[style*="gap"] {
-        display: none !important;
-    }
-    
-    /* Alternativa: ocultar directamente por clases de Streamlit */
-    section[data-testid="stToolbar"] > div:not(:first-child) {
-        display: none !important;
-    }
-    
-    /* Ocultar menú MainMenu */
-    #MainMenu {
-        display: none !important;
-    }
-    
-    /* Método agresivo: ocultar todo dentro del toolbar y mostrar solo collapsedControl */
-    [data-testid="stToolbar"] * {
-        display: none !important;
-    }
-    
-    [data-testid="collapsedControl"],
-    [data-testid="collapsedControl"] * {
-        display: block !important;
-        visibility: visible !important;
-    }
 </style>
 """, unsafe_allow_html=True)
+
+# JavaScript para ocultar elementos del toolbar preservando el botón sidebar
+import streamlit.components.v1 as components
+components.html("""
+<script>
+(function() {
+    function hideToolbarElements() {
+        // Encontrar el toolbar
+        const toolbar = document.querySelector('[data-testid="stToolbar"]');
+        if (!toolbar) return false;
+        
+        // Obtener todos los hijos directos del toolbar
+        const children = Array.from(toolbar.children);
+        
+        // Ocultar todos excepto el primero (botón sidebar)
+        children.forEach((child, index) => {
+            if (index > 0) {
+                child.style.display = 'none';
+                child.style.visibility = 'hidden';
+                child.style.opacity = '0';
+                child.style.pointerEvents = 'none';
+            }
+        });
+        
+        // También ocultar MainMenu si existe
+        const mainMenu = document.getElementById('MainMenu');
+        if (mainMenu) {
+            mainMenu.style.display = 'none';
+        }
+        
+        return true;
+    }
+    
+    // Intentar ocultar inmediatamente
+    setTimeout(hideToolbarElements, 100);
+    setTimeout(hideToolbarElements, 500);
+    setTimeout(hideToolbarElements, 1000);
+    
+    // Observar cambios en el DOM por si Streamlit recrea elementos
+    const observer = new MutationObserver(() => {
+        hideToolbarElements();
+    });
+    
+    // Esperar a que el documento esté listo
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            hideToolbarElements();
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    } else {
+        hideToolbarElements();
+        observer.observe(document.body, { childList: true, subtree: true });
+    }
+})();
+</script>
+""", height=0)
 
 # Indicador flotante amarillo sobre el botón de sidebar
 st.markdown("""
