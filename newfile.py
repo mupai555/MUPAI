@@ -1647,7 +1647,7 @@ def mostrar_banner_profesional():
     <div class="professional-banner">
         <h4>👉 ¡Descubre Todo el Contenido de MUPAI!</h4>
         <p>
-            Haz clic en el ícono <span class="sidebar-icon">☰</span> en la esquina superior izquierda 
+            Haz clic en el ícono <span class="sidebar-icon">>></span> en la esquina superior izquierda 
             para desplegar el menú lateral y acceder a todo el contenido y menús detallados de MUPAI.
         </p>
     </div>
@@ -1659,10 +1659,10 @@ def mostrar_banner_informativo():
     Displays an informative banner only on the home page with overview and sidebar instructions.
     """
     st.markdown("""
-    <div class="informative-banner">
+    <div class="professional-banner">
         <p>
             Esta página te muestra un overview general de MUPAI y nuestros servicios principales. 
-            Si quieres conocer más detalles, despliega la barra lateral (haz clic en ☰ arriba a la izquierda) 
+            Si quieres conocer más detalles, despliega la barra lateral (haz clic en <span class="sidebar-icon">>></span> arriba a la izquierda) 
             y elige el apartado que quieras conocer a fondo.
         </p>
     </div>
