@@ -121,21 +121,18 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* TODO en amarillo primero */
-    [data-testid="stToolbar"] * {
-        color: #FFCC00 !important;
-        fill: #FFCC00 !important;
-    }
+    /* Mantener >> y Share en amarillo (no tocar nada general) */
     
-    /* Poner Share y otros botones en NEGRO */
-    button[kind="secondary"],
-    button[kind="secondary"] *,
-    button[kind="tertiary"],
-    button[kind="tertiary"] *,
-    [data-testid="stToolbar"] a,
-    [data-testid="stToolbar"] a * {
+    /* Poner SOLO los iconos SVG en negro */
+    [data-testid="stToolbar"] svg:not([kind="header"] svg),
+    [data-testid="stToolbar"] path:not([kind="header"] path),
+    [data-testid="stToolbar"] a svg,
+    [data-testid="stToolbar"] a path,
+    [data-testid="stToolbar"] button[kind="tertiary"] svg,
+    [data-testid="stToolbar"] button[kind="tertiary"] path {
         color: #000000 !important;
         fill: #000000 !important;
+        stroke: #000000 !important;
     }
 
     
