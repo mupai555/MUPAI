@@ -121,28 +121,39 @@ st.markdown("""
         background-color: #000000 !important;
     }
     
-    /* Mantener el botón sidebar >> en amarillo */
-    [data-testid="stToolbar"] > *:first-child,
-    [data-testid="stToolbar"] > *:first-child *,
+    /* Mantener el botón sidebar >> en amarillo brillante */
     [data-testid="collapsedControl"],
-    [data-testid="collapsedControl"] * {
+    [data-testid="collapsedControl"] *,
+    button[kind="header"] {
         color: #FFCC00 !important;
         fill: #FFCC00 !important;
     }
     
-    /* Camuflar SOLO los elementos después del primero (Share, GitHub, etc.) */
-    [data-testid="stToolbar"] > *:not(:first-child),
-    [data-testid="stToolbar"] > *:not(:first-child) *,
-    [data-testid="stToolbar"] > *:not(:first-child) button,
-    [data-testid="stToolbar"] > *:not(:first-child) span,
-    [data-testid="stToolbar"] > *:not(:first-child) div,
-    [data-testid="stToolbar"] > *:not(:first-child) a,
-    [data-testid="stToolbar"] > *:not(:first-child) svg {
+    /* Camuflar elementos del lado derecho del toolbar */
+    /* Método 1: Ocultar por posición - último hijo del toolbar */
+    [data-testid="stToolbar"] > div:last-child {
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+    
+    /* Método 2: Camuflar todos los botones y enlaces excepto el de header */
+    [data-testid="stToolbar"] button:not([kind="header"]),
+    [data-testid="stToolbar"] button:not([kind="header"]) *,
+    [data-testid="stToolbar"] a,
+    [data-testid="stToolbar"] a * {
         color: #000000 !important;
         fill: #000000 !important;
         background-color: #000000 !important;
         border-color: #000000 !important;
         opacity: 0 !important;
+    }
+    
+    /* Método 3: Ocultar específicamente elementos con ciertos atributos */
+    button[kind="secondary"],
+    button[kind="tertiary"],
+    a[target="_blank"] {
+        opacity: 0 !important;
+        color: #000000 !important;
     }
 </style>
 
