@@ -1041,8 +1041,8 @@ st.markdown("""
     .sidebar-icon {
         font-size: 1.4rem;
         font-weight: bold;
-        color: #000;
-        background: rgba(0,0,0,0.1);
+        color: #FFCC00;
+        background: #000000;
         padding: 0.2rem 0.5rem;
         border-radius: 8px;
         display: inline-block;
