@@ -1777,6 +1777,9 @@ if st.sidebar.button("📐 Protocolos de medición MUPAI", use_container_width=T
     st.session_state.page = "protocolos_medicion"
     st.query_params["page"] = "protocolos_medicion"
 
+if st.sidebar.button("📐 Protocolos de medición MUPAI", use_container_width=True):
+    st.session_state.page = "protocolos_medicion"
+
 if st.sidebar.button("🔴 MUPcamp 1:1", use_container_width=True):
     st.session_state.page = "mupcamp_1a1"
     st.query_params["page"] = "mupcamp_1a1"
@@ -3543,6 +3546,335 @@ La Pose Libre</strong> es donde puedes mostrar tu mejor versión con tensión mu
 </p>
 </div>
     """).strip(), unsafe_allow_html=True)
+
+# ==================== PÁGINA DE PROTOCOLOS DE MEDICIÓN ====================
+elif st.session_state.page == "protocolos_medicion":
+    # Professional banner - visible on all pages
+    mostrar_banner_profesional()
+    
+    st.markdown("""
+    <div class="section-header">
+        <h2>📐 Protocolos de medición MUPAI</h2>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC)
+    st.markdown("""
+    <div class="corporate-section">
+        <h3 style="color: #FFCC00; font-size: 2rem; margin-bottom: 1rem;">
+            🏃 PROTOCOLO DE PRUEBA DE RENDIMIENTO FUNCIONAL (MUPAI-FUNC)
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+            Este protocolo evalúa el rendimiento funcional a través de pruebas específicas que miden 
+            fuerza, resistencia, movilidad y capacidad cardiovascular. Se utiliza para establecer 
+            líneas base y medir progreso en programas de entrenamiento.
+        </p>
+        
+        <h4 style="color: #FFCC00; font-size: 1.4rem; margin: 1.5rem 0 1rem 0;">Componentes de la Evaluación:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong style="color: #FFCC00;">Fuerza Máxima:</strong> Evaluación de 1RM o estimación mediante repeticiones submáximas en ejercicios básicos (sentadilla, press de banca, peso muerto)</li>
+            <li><strong style="color: #FFCC00;">Resistencia Muscular:</strong> Pruebas de máximas repeticiones con porcentaje de 1RM o peso corporal (flexiones, dominadas, fondos)</li>
+            <li><strong style="color: #FFCC00;">Movilidad Articular:</strong> Evaluación de rangos de movimiento en articulaciones clave (hombro, cadera, columna)</li>
+            <li><strong style="color: #FFCC00;">Capacidad Cardiovascular:</strong> Test de VO2 máx estimado, test de Cooper, o protocolos específicos según disponibilidad</li>
+            <li><strong style="color: #FFCC00;">Composición Corporal:</strong> Medición mediante bioimpedancia y antropometría (ver protocolo PHOTO3 + OMRON)</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.4rem; margin: 1.5rem 0 1rem 0;">Preparación:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li>Descanso adecuado (mínimo 48h desde último entrenamiento intenso)</li>
+            <li>Hidratación óptima</li>
+            <li>Ayuno de 2-3 horas previas (opcional según prueba)</li>
+            <li>Calentamiento general y específico de 10-15 minutos</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.4rem; margin: 1.5rem 0 1rem 0;">Ejecución:</h4>
+        <ol style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li>Registro de datos antropométricos básicos (peso, talla)</li>
+            <li>Evaluación de movilidad articular</li>
+            <li>Pruebas de fuerza máxima (con incrementos progresivos y descansos adecuados)</li>
+            <li>Pruebas de resistencia muscular</li>
+            <li>Evaluación cardiovascular (al final de la sesión)</li>
+            <li>Registro y análisis de resultados</li>
+        </ol>
+        
+        <h4 style="color: #FFCC00; font-size: 1.4rem; margin: 1.5rem 0 1rem 0;">Interpretación de Resultados:</h4>
+        <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            Los resultados se comparan con estándares normativos según edad, sexo y nivel de entrenamiento.
+            Se establecen objetivos específicos y se diseña la programación de entrenamiento basada en 
+            las capacidades actuales y déficits identificados.
+        </p>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border-left: 4px solid #FFCC00;">
+            <p style="color: #FFCC00; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">
+                💡 Nota Importante:
+            </p>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin: 0;">
+                Este protocolo debe ser supervisado por un profesional certificado en ciencias del ejercicio.
+                Las pruebas de fuerza máxima están contraindicadas en personas sin experiencia previa o con
+                condiciones médicas que lo desaconsejen.
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI (PHOTO3 + OMRON)
+    st.markdown("""
+    <div class="corporate-section" style="margin-top: 2rem;">
+        <h3 style="color: #FFCC00; font-size: 2rem; margin-bottom: 1rem;">
+            📸 PROTOCOLO DE MEDICIÓN DE COMPOSICIÓN CORPORAL — MUPAI (PHOTO3 + OMRON)
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.1rem; line-height: 1.8; margin-bottom: 1.5rem;">
+            Este protocolo combina fotografías estandarizadas (PHOTO3) con medición por bioimpedancia (OMRON)
+            para una evaluación completa y precisa de la composición corporal.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # PHOTO3 Instructions
+    st.markdown("""
+    <div class="questionnaire-container">
+        <h3 style="color: #FFCC00; font-size: 1.6rem; margin-bottom: 1rem;">
+            📷 PHOTO3 — Protocolo Fotográfico Estandarizado
+        </h3>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Instrucciones PHOTO3:</h4>
+        <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            El protocolo PHOTO3 requiere <strong>3 fotografías obligatorias</strong> en poses estandarizadas:
+        </p>
+        <ol style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong style="color: #FFCC00;">FRONTAL:</strong> De frente, brazos a los lados, postura relajada pero erguida</li>
+            <li><strong style="color: #FFCC00;">PERFIL (Lateral):</strong> De lado, brazos a los lados, postura natural</li>
+            <li><strong style="color: #FFCC00;">POSTERIOR (Espalda):</strong> De espaldas, brazos a los lados, postura relajada</li>
+        </ol>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border-left: 4px solid #FFCC00;">
+            <p style="color: #FFCC00; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">
+                📸 Fotografía Adicional Opcional:
+            </p>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin: 0;">
+                Se puede incluir una <strong>4ta foto en pose libre</strong> donde el usuario elija la postura
+                (pose de bíceps, abdominales, etc.). Esta foto ayuda a documentar áreas específicas de interés
+                o progreso del usuario.
+            </p>
+        </div>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Timing Oficial vs Timing Estándar:</h4>
+        
+        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #FFCC00;">
+            <h5 style="color: #FFCC00; font-size: 1.2rem; margin-bottom: 1rem;">🔬 Timing Oficial (Recomendado para máxima precisión):</h5>
+            <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+                <li><strong>Momento:</strong> Primera hora de la mañana, inmediatamente al despertar</li>
+                <li><strong>Estado:</strong> En ayunas (sin desayunar)</li>
+                <li><strong>Hidratación:</strong> Antes de beber agua</li>
+                <li><strong>Evacuación:</strong> Después de ir al baño</li>
+                <li><strong>Ventaja:</strong> Máxima consistencia y reproducibilidad en las mediciones</li>
+            </ul>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #FFD700;">
+            <h5 style="color: #FFD700; font-size: 1.2rem; margin-bottom: 1rem;">⏰ Timing Estándar (Alternativa práctica):</h5>
+            <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+                <li><strong>Momento:</strong> Cualquier hora del día, preferiblemente a la misma hora en mediciones futuras</li>
+                <li><strong>Ayuno:</strong> Mínimo 3-4 horas sin comer</li>
+                <li><strong>Hidratación:</strong> Hidratación normal del día</li>
+                <li><strong>Evacuación:</strong> Después de ir al baño</li>
+                <li><strong>Nota:</strong> Mantener las mismas condiciones en evaluaciones de seguimiento</li>
+            </ul>
+        </div>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Setup Fotográfico:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Iluminación:</strong> Luz natural uniforme o iluminación artificial constante (evitar contraluz)</li>
+            <li><strong>Fondo:</strong> Pared lisa de color neutro (blanco, gris, beige)</li>
+            <li><strong>Distancia:</strong> Cámara a 2-3 metros del sujeto</li>
+            <li><strong>Altura:</strong> Cámara a la altura del pecho del sujeto</li>
+            <li><strong>Encuadre:</strong> Cuerpo completo visible, de cabeza a pies, con pequeño margen</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Vestimenta:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Hombres:</strong> Short o traje de baño (sin camisa)</li>
+            <li><strong>Mujeres:</strong> Conjunto deportivo ajustado (top y shorts) o traje de baño de dos piezas</li>
+            <li><strong>Importante:</strong> Usar la misma vestimenta en todas las evaluaciones de seguimiento</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Control de Calidad:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li>Foto nítida, sin desenfoques</li>
+            <li>Postura natural y relajada (no tensar músculos artificialmente)</li>
+            <li>Cuerpo completo visible en el encuadre</li>
+            <li>Brazos ligeramente separados del torso para ver contorno</li>
+            <li>Sin filtros, edición o modificaciones de ningún tipo</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Example Images Section
+    st.markdown("""
+    <div class="questionnaire-container" style="margin-top: 2rem;">
+        <h3 style="color: #FFCC00; font-size: 1.6rem; margin-bottom: 1rem; text-align: center;">
+            📸 Ejemplos de Fotografías PHOTO3
+        </h3>
+        <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; text-align: center; margin-bottom: 1.5rem;">
+            A continuación se muestran ejemplos de las fotografías estandarizadas requeridas:
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # First row: FRONTAL, PERFIL, POSTERIOR (3 columns)
+    try:
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            if os.path.exists("FRONTAL.png"):
+                try:
+                    st.image("FRONTAL.png", caption="FRONTAL - Vista de frente", use_container_width=True)
+                except Exception as e:
+                    st.info("📷 FRONTAL.png - Imagen no disponible temporalmente")
+            else:
+                st.info("📷 FRONTAL.png no encontrado")
+        
+        with col2:
+            if os.path.exists("PERFIL.png"):
+                try:
+                    st.image("PERFIL.png", caption="PERFIL - Vista lateral", use_container_width=True)
+                except Exception as e:
+                    st.info("📷 PERFIL.png - Imagen no disponible temporalmente")
+            else:
+                st.info("📷 PERFIL.png no encontrado")
+        
+        with col3:
+            if os.path.exists("POSTERIOR.png"):
+                try:
+                    st.image("POSTERIOR.png", caption="POSTERIOR - Vista de espalda", use_container_width=True)
+                except Exception as e:
+                    st.info("📷 POSTERIOR.png - Imagen no disponible temporalmente")
+            else:
+                st.info("📷 POSTERIOR.png no encontrado")
+    except Exception as e:
+        st.error(f"Error al mostrar imágenes de la primera fila: {str(e)}")
+    
+    # Second row: LIBRE 2, LIBRE 1 (2 columns)
+    st.markdown("""
+    <div style="margin-top: 2rem; margin-bottom: 1rem;">
+        <h4 style="color: #FFCC00; font-size: 1.3rem; text-align: center;">
+            Ejemplos de Poses Libres Opcionales:
+        </h4>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    try:
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if os.path.exists("LIBRE 2.png"):
+                try:
+                    st.image("LIBRE 2.png", caption="LIBRE 2 - Ejemplo de pose libre opcional", use_container_width=True)
+                except Exception as e:
+                    st.info("📷 LIBRE 2.png - Imagen no disponible temporalmente")
+            else:
+                st.info("📷 LIBRE 2.png no encontrado")
+        
+        with col2:
+            if os.path.exists("LIBRE 1.png"):
+                try:
+                    st.image("LIBRE 1.png", caption="LIBRE 1 - Ejemplo de pose libre opcional", use_container_width=True)
+                except Exception as e:
+                    st.info("📷 LIBRE 1.png - Imagen no disponible temporalmente")
+            else:
+                st.info("📷 LIBRE 1.png no encontrado")
+    except Exception as e:
+        st.error(f"Error al mostrar imágenes de la segunda fila: {str(e)}")
+    
+    # OMRON Protocol
+    st.markdown("""
+    <div class="corporate-section" style="margin-top: 3rem;">
+        <h3 style="color: #FFCC00; font-size: 1.6rem; margin-bottom: 1rem;">
+            ⚡ OMRON — Protocolo de Bioimpedancia
+        </h3>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Preparación del Participante:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li>Seguir el mismo timing que para PHOTO3 (oficial o estándar)</li>
+            <li>Evacuar vejiga antes de la medición</li>
+            <li>No realizar ejercicio intenso 12 horas antes</li>
+            <li>Evitar alcohol 24-48 horas antes</li>
+            <li>Hidratación normal (no deshidratado ni sobre-hidratado)</li>
+            <li>Retirar objetos metálicos (joyas, relojes, etc.)</li>
+            <li>Usar ropa ligera (descontar peso aproximado de ropa en medición)</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Ejecución de la Medición:</h4>
+        <ol style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Ingreso de datos personales:</strong> Edad, sexo, altura (datos precisos son críticos)</li>
+            <li><strong>Posicionamiento:</strong> De pie sobre la báscula, descalzo, contacto completo de pies con electrodos</li>
+            <li><strong>Postura:</strong> Erguido, brazos ligeramente separados del cuerpo, sin moverse</li>
+            <li><strong>Medición:</strong> Sostener manijas con contacto firme en electrodos palmares</li>
+            <li><strong>Espera:</strong> Permanecer inmóvil durante 15-30 segundos hasta que el equipo complete análisis</li>
+            <li><strong>Registro:</strong> Anotar todos los valores mostrados por el equipo</li>
+        </ol>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Campos a Registrar:</h4>
+        <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li><strong>Peso Corporal Total (kg)</strong></li>
+            <li><strong>Porcentaje de Grasa Corporal (%)</strong></li>
+            <li><strong>Masa Grasa (kg)</strong></li>
+            <li><strong>Masa Libre de Grasa (kg)</strong></li>
+            <li><strong>Masa Muscular Esquelética (kg)</strong></li>
+            <li><strong>IMC (Índice de Masa Corporal)</strong></li>
+            <li><strong>Grasa Visceral (nivel)</strong></li>
+            <li><strong>Tasa Metabólica Basal (kcal)</strong></li>
+            <li><strong>Edad Metabólica (años)</strong> - si disponible</li>
+        </ul>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Regla de Interpretación:</h4>
+        <div style="background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%); padding: 1.5rem; border-radius: 12px; margin: 1rem 0; border: 2px solid #FFCC00;">
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8; margin-bottom: 1rem;">
+                Los resultados se interpretan considerando:
+            </p>
+            <ul style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+                <li><strong style="color: #FFCC00;">Rangos normativos:</strong> Según edad, sexo y nivel de actividad</li>
+                <li><strong style="color: #FFCC00;">Tendencias temporales:</strong> Cambios en mediciones sucesivas son más relevantes que valores absolutos</li>
+                <li><strong style="color: #FFCC00;">Contexto individual:</strong> Objetivos personales, historial deportivo, condición de salud</li>
+                <li><strong style="color: #FFCC00;">Limitaciones del método:</strong> La bioimpedancia puede verse afectada por hidratación, ingesta reciente, etc.</li>
+            </ul>
+        </div>
+        
+        <h4 style="color: #FFCC00; font-size: 1.3rem; margin: 1.5rem 0 1rem 0;">Orden Recomendado en Día de Evaluación:</h4>
+        <ol style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.8;">
+            <li>Medición OMRON (bioimpedancia)</li>
+            <li>Fotografías PHOTO3</li>
+            <li>Antropometría adicional si aplica (circunferencias, pliegues cutáneos)</li>
+            <li>Prueba de rendimiento funcional MUPAI-FUNC (si se programa el mismo día, realizarla al final)</li>
+        </ol>
+        
+        <div style="background: rgba(255,204,0,0.1); padding: 1.5rem; border-radius: 10px; margin-top: 1.5rem; border-left: 4px solid #FFCC00;">
+            <p style="color: #FFCC00; font-size: 1.1rem; font-weight: bold; margin-bottom: 0.5rem;">
+                📋 Importante:
+            </p>
+            <p style="color: #FFFFFF; font-size: 1.05rem; line-height: 1.7; margin: 0;">
+                Para máxima precisión y seguimiento efectivo, es fundamental <strong>mantener las mismas condiciones</strong>
+                en todas las evaluaciones de seguimiento: mismo timing, misma vestimenta, mismo equipo, mismo protocolo.
+            </p>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Final CTA
+    st.markdown("""
+    <div class="results-container" style="margin-top: 2rem;">
+        <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 1rem;">📞 ¿Necesitas Agendar tu Evaluación?</h3>
+        <p style="font-size: 1.1rem; text-align: center; margin: 1rem 0;">
+            Contáctanos para programar tu medición de composición corporal y evaluación funcional:
+        </p>
+        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+            <strong>📧 Email:</strong> administracion@muscleupgym.fitness
+        </p>
+        <p style="font-size: 1.2rem; text-align: center; margin: 1rem 0;">
+            <strong>📱 WhatsApp:</strong> 8662580594
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 # ==================== PÁGINA DE MUPCAMP 1:1 ====================
 elif st.session_state.page == "mupcamp_1a1":
