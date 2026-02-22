@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """
-MUPAI - Advanced Energy Balance and Macronutrient Allocation Questionnaire
-==========================================================================
+MUPAI - Advanced Energy Balance, Macronutrient Allocation & Training Program Design
+===================================================================================
 
-A comprehensive scientific questionnaire system for optimal energy balance calculation
-and intelligent macronutrient distribution based on individual characteristics,
-activity levels, sleep quality, stress levels, and recovery factors.
+A comprehensive scientific questionnaire system for optimal energy balance calculation,
+intelligent macronutrient distribution, and personalized training program generation
+based on individual characteristics, activity levels, sleep quality, stress levels,
+recovery factors, and training history.
 
 Author: MUPAI Team
-Version: 2.0
+Version: 3.0
 """
 
 import streamlit as st

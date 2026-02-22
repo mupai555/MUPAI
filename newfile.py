@@ -11,6 +11,7 @@ from collections import Counter
 import os
 import glob
 import textwrap
+import json
 # Temporarily comment out if the module doesn't exist yet
 # from cuestionario_fbeo import mostrar_cuestionario_fbeo
 
@@ -95,6 +96,424 @@ def load_mupai_logo_base64():
             return f'data:image/png;base64,{encoded_image}'
     except (FileNotFoundError, Exception):
         return None
+
+
+# =============================================================================
+# BIBLIOTECA DE EJERCICIOS MUPAI (Datos Estructurados)
+# =============================================================================
+# Cada ejercicio: nombre, equipo necesario, nivel minimo, musculos principales
+
+BIBLIOTECA_EJERCICIOS = {
+    "Empuje Horizontal": {
+        "Pecho / Triceps / Deltoides Anterior": [
+            {"nombre": "Press de banca con barra", "equipo": "Barra + Banco", "nivel": "Intermedio", "musculos": ["Pecho", "Triceps", "Deltoides anterior"]},
+            {"nombre": "Press de banca con mancuernas", "equipo": "Mancuernas + Banco", "nivel": "Principiante", "musculos": ["Pecho", "Triceps", "Deltoides anterior"]},
+            {"nombre": "Press inclinado con barra", "equipo": "Barra + Banco inclinado", "nivel": "Intermedio", "musculos": ["Pecho superior", "Deltoides anterior"]},
+            {"nombre": "Press inclinado con mancuernas", "equipo": "Mancuernas + Banco inclinado", "nivel": "Principiante", "musculos": ["Pecho superior", "Deltoides anterior"]},
+            {"nombre": "Press declinado con barra", "equipo": "Barra + Banco declinado", "nivel": "Intermedio", "musculos": ["Pecho inferior", "Triceps"]},
+            {"nombre": "Aperturas con mancuernas", "equipo": "Mancuernas + Banco", "nivel": "Principiante", "musculos": ["Pecho"]},
+            {"nombre": "Aperturas inclinadas con mancuernas", "equipo": "Mancuernas + Banco inclinado", "nivel": "Principiante", "musculos": ["Pecho superior"]},
+            {"nombre": "Crossover en polea alta", "equipo": "Poleas", "nivel": "Principiante", "musculos": ["Pecho"]},
+            {"nombre": "Crossover en polea baja", "equipo": "Poleas", "nivel": "Principiante", "musculos": ["Pecho superior"]},
+            {"nombre": "Press en maquina", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Pecho", "Triceps"]},
+            {"nombre": "Fondos en paralelas", "equipo": "Paralelas", "nivel": "Intermedio", "musculos": ["Pecho inferior", "Triceps"]},
+            {"nombre": "Lagartijas (push-ups)", "equipo": "Peso corporal", "nivel": "Principiante", "musculos": ["Pecho", "Triceps"]},
+        ]
+    },
+    "Empuje Vertical": {
+        "Deltoides / Triceps": [
+            {"nombre": "Press militar con barra", "equipo": "Barra", "nivel": "Intermedio", "musculos": ["Deltoides anterior", "Triceps"]},
+            {"nombre": "Press militar con mancuernas", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Deltoides anterior", "Triceps"]},
+            {"nombre": "Press Arnold", "equipo": "Mancuernas", "nivel": "Intermedio", "musculos": ["Deltoides anterior", "Deltoides lateral"]},
+            {"nombre": "Elevaciones laterales con mancuernas", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Deltoides lateral"]},
+            {"nombre": "Elevaciones laterales en polea", "equipo": "Polea", "nivel": "Principiante", "musculos": ["Deltoides lateral"]},
+            {"nombre": "Elevaciones frontales", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Deltoides anterior"]},
+            {"nombre": "Press en maquina de hombro", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Deltoides", "Triceps"]},
+            {"nombre": "Face pulls", "equipo": "Polea", "nivel": "Principiante", "musculos": ["Deltoides posterior", "Rotadores externos"]},
+            {"nombre": "Pajaros (reverse fly)", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Deltoides posterior"]},
+            {"nombre": "Pajaros en maquina (pec deck inverso)", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Deltoides posterior"]},
+        ]
+    },
+    "Jalon Horizontal": {
+        "Espalda / Biceps": [
+            {"nombre": "Remo con barra", "equipo": "Barra", "nivel": "Intermedio", "musculos": ["Dorsal", "Romboides", "Biceps"]},
+            {"nombre": "Remo con mancuerna a una mano", "equipo": "Mancuerna + Banco", "nivel": "Principiante", "musculos": ["Dorsal", "Romboides"]},
+            {"nombre": "Remo en maquina", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Dorsal", "Romboides"]},
+            {"nombre": "Remo en polea baja (sentado)", "equipo": "Polea", "nivel": "Principiante", "musculos": ["Dorsal", "Romboides", "Biceps"]},
+            {"nombre": "Remo T-bar", "equipo": "Barra T / Landmine", "nivel": "Intermedio", "musculos": ["Dorsal", "Romboides"]},
+            {"nombre": "Remo Pendlay", "equipo": "Barra", "nivel": "Avanzado", "musculos": ["Dorsal", "Romboides", "Erectores"]},
+            {"nombre": "Remo invertido (bodyweight row)", "equipo": "Barra fija / Smith", "nivel": "Principiante", "musculos": ["Dorsal", "Romboides"]},
+        ]
+    },
+    "Jalon Vertical": {
+        "Espalda / Biceps": [
+            {"nombre": "Jalon al pecho (lat pulldown)", "equipo": "Polea alta", "nivel": "Principiante", "musculos": ["Dorsal", "Biceps"]},
+            {"nombre": "Jalon con agarre cerrado", "equipo": "Polea alta", "nivel": "Principiante", "musculos": ["Dorsal", "Biceps"]},
+            {"nombre": "Dominadas (pull-ups)", "equipo": "Barra fija", "nivel": "Intermedio", "musculos": ["Dorsal", "Biceps"]},
+            {"nombre": "Dominadas con agarre supino (chin-ups)", "equipo": "Barra fija", "nivel": "Intermedio", "musculos": ["Dorsal", "Biceps"]},
+            {"nombre": "Dominadas asistidas", "equipo": "Maquina asistida / Banda", "nivel": "Principiante", "musculos": ["Dorsal", "Biceps"]},
+            {"nombre": "Pullover con mancuerna", "equipo": "Mancuerna + Banco", "nivel": "Intermedio", "musculos": ["Dorsal", "Pecho"]},
+            {"nombre": "Pullover en polea", "equipo": "Polea alta", "nivel": "Principiante", "musculos": ["Dorsal"]},
+        ]
+    },
+    "Sentadilla / Dominante de Rodilla": {
+        "Cuadriceps / Gluteos": [
+            {"nombre": "Sentadilla con barra (back squat)", "equipo": "Barra + Rack", "nivel": "Intermedio", "musculos": ["Cuadriceps", "Gluteos", "Erectores"]},
+            {"nombre": "Sentadilla frontal (front squat)", "equipo": "Barra + Rack", "nivel": "Avanzado", "musculos": ["Cuadriceps", "Core"]},
+            {"nombre": "Sentadilla goblet", "equipo": "Mancuerna / Kettlebell", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Sentadilla bulgara", "equipo": "Mancuernas + Banco", "nivel": "Intermedio", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Sentadilla en Smith", "equipo": "Maquina Smith", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Prensa de pierna (leg press)", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Hack squat", "equipo": "Maquina", "nivel": "Intermedio", "musculos": ["Cuadriceps"]},
+            {"nombre": "Extension de pierna", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Cuadriceps"]},
+            {"nombre": "Zancadas (lunges) con mancuernas", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Step-ups", "equipo": "Mancuernas + Cajon", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+            {"nombre": "Sentadilla con peso corporal", "equipo": "Peso corporal", "nivel": "Principiante", "musculos": ["Cuadriceps", "Gluteos"]},
+        ]
+    },
+    "Bisagra de Cadera / Dominante de Cadera": {
+        "Isquiotibiales / Gluteos / Erectores": [
+            {"nombre": "Peso muerto convencional", "equipo": "Barra", "nivel": "Intermedio", "musculos": ["Isquiotibiales", "Gluteos", "Erectores"]},
+            {"nombre": "Peso muerto sumo", "equipo": "Barra", "nivel": "Intermedio", "musculos": ["Gluteos", "Aductores", "Isquiotibiales"]},
+            {"nombre": "Peso muerto rumano (RDL) con barra", "equipo": "Barra", "nivel": "Intermedio", "musculos": ["Isquiotibiales", "Gluteos"]},
+            {"nombre": "Peso muerto rumano con mancuernas", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Isquiotibiales", "Gluteos"]},
+            {"nombre": "Hip thrust con barra", "equipo": "Barra + Banco", "nivel": "Intermedio", "musculos": ["Gluteos"]},
+            {"nombre": "Hip thrust en maquina", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Gluteos"]},
+            {"nombre": "Puente de gluteos (glute bridge)", "equipo": "Peso corporal / Barra", "nivel": "Principiante", "musculos": ["Gluteos"]},
+            {"nombre": "Curl de pierna acostado", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Isquiotibiales"]},
+            {"nombre": "Curl de pierna sentado", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Isquiotibiales"]},
+            {"nombre": "Hiperextensiones", "equipo": "Banco de hiperextensiones", "nivel": "Principiante", "musculos": ["Erectores", "Gluteos"]},
+            {"nombre": "Swing con kettlebell", "equipo": "Kettlebell", "nivel": "Intermedio", "musculos": ["Gluteos", "Isquiotibiales"]},
+        ]
+    },
+    "Brazos - Biceps": {
+        "Biceps": [
+            {"nombre": "Curl con barra recta", "equipo": "Barra", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl con barra Z", "equipo": "Barra Z", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl con mancuernas alterno", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl martillo", "equipo": "Mancuernas", "nivel": "Principiante", "musculos": ["Biceps", "Braquial"]},
+            {"nombre": "Curl concentrado", "equipo": "Mancuerna", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl en banco Scott (predicador)", "equipo": "Barra / Mancuerna + Banco Scott", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl en polea baja", "equipo": "Polea", "nivel": "Principiante", "musculos": ["Biceps"]},
+            {"nombre": "Curl inclinado con mancuernas", "equipo": "Mancuernas + Banco inclinado", "nivel": "Intermedio", "musculos": ["Biceps"]},
+        ]
+    },
+    "Brazos - Triceps": {
+        "Triceps": [
+            {"nombre": "Press frances con barra Z", "equipo": "Barra Z + Banco", "nivel": "Intermedio", "musculos": ["Triceps"]},
+            {"nombre": "Press frances con mancuernas", "equipo": "Mancuernas + Banco", "nivel": "Principiante", "musculos": ["Triceps"]},
+            {"nombre": "Extension de triceps en polea (pushdown)", "equipo": "Polea", "nivel": "Principiante", "musculos": ["Triceps"]},
+            {"nombre": "Extension de triceps con cuerda", "equipo": "Polea + Cuerda", "nivel": "Principiante", "musculos": ["Triceps"]},
+            {"nombre": "Patada de triceps (kickback)", "equipo": "Mancuerna", "nivel": "Principiante", "musculos": ["Triceps"]},
+            {"nombre": "Press cerrado con barra", "equipo": "Barra + Banco", "nivel": "Intermedio", "musculos": ["Triceps", "Pecho"]},
+            {"nombre": "Fondos en banco (bench dips)", "equipo": "Banco", "nivel": "Principiante", "musculos": ["Triceps"]},
+            {"nombre": "Extension overhead con mancuerna", "equipo": "Mancuerna", "nivel": "Principiante", "musculos": ["Triceps"]},
+        ]
+    },
+    "Core / Abdomen": {
+        "Core": [
+            {"nombre": "Plancha frontal (plank)", "equipo": "Peso corporal", "nivel": "Principiante", "musculos": ["Recto abdominal", "Transverso"]},
+            {"nombre": "Plancha lateral", "equipo": "Peso corporal", "nivel": "Principiante", "musculos": ["Oblicuos"]},
+            {"nombre": "Crunch en maquina", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Recto abdominal"]},
+            {"nombre": "Crunch en polea alta", "equipo": "Polea", "nivel": "Intermedio", "musculos": ["Recto abdominal"]},
+            {"nombre": "Elevacion de piernas colgado", "equipo": "Barra fija", "nivel": "Intermedio", "musculos": ["Recto abdominal inferior"]},
+            {"nombre": "Elevacion de piernas en banco", "equipo": "Banco", "nivel": "Principiante", "musculos": ["Recto abdominal inferior"]},
+            {"nombre": "Ab wheel rollout", "equipo": "Rueda abdominal", "nivel": "Intermedio", "musculos": ["Recto abdominal", "Core"]},
+            {"nombre": "Pallof press", "equipo": "Polea / Banda", "nivel": "Intermedio", "musculos": ["Core anti-rotacion"]},
+            {"nombre": "Dead bug", "equipo": "Peso corporal", "nivel": "Principiante", "musculos": ["Core estabilizacion"]},
+        ]
+    },
+    "Pantorrillas": {
+        "Gemelos / Soleo": [
+            {"nombre": "Elevacion de pantorrillas de pie", "equipo": "Maquina / Smith", "nivel": "Principiante", "musculos": ["Gastrocnemio"]},
+            {"nombre": "Elevacion de pantorrillas sentado", "equipo": "Maquina", "nivel": "Principiante", "musculos": ["Soleo"]},
+            {"nombre": "Elevacion de pantorrillas en prensa", "equipo": "Prensa de pierna", "nivel": "Principiante", "musculos": ["Gastrocnemio"]},
+        ]
+    }
+}
+
+# Splits de entrenamiento sugeridos por frecuencia semanal
+SPLITS_ENTRENAMIENTO = {
+    2: {"nombre": "Full Body (2 dias)", "descripcion": "Cuerpo completo 2 veces por semana",
+        "dias": {
+            "Dia A - Full Body": ["Sentadilla / Dominante de Rodilla", "Empuje Horizontal", "Jalon Vertical", "Bisagra de Cadera / Dominante de Cadera", "Core / Abdomen"],
+            "Dia B - Full Body": ["Bisagra de Cadera / Dominante de Cadera", "Empuje Vertical", "Jalon Horizontal", "Sentadilla / Dominante de Rodilla", "Core / Abdomen"]
+        }},
+    3: {"nombre": "Full Body (3 dias)", "descripcion": "Cuerpo completo 3 veces con variacion",
+        "dias": {
+            "Dia A - Full Body (Fuerza)": ["Sentadilla / Dominante de Rodilla", "Empuje Horizontal", "Jalon Vertical", "Bisagra de Cadera / Dominante de Cadera", "Core / Abdomen"],
+            "Dia B - Full Body (Volumen)": ["Empuje Vertical", "Jalon Horizontal", "Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Brazos - Biceps", "Brazos - Triceps"],
+            "Dia C - Full Body (Hipertrofia)": ["Sentadilla / Dominante de Rodilla", "Empuje Horizontal", "Jalon Vertical", "Bisagra de Cadera / Dominante de Cadera", "Empuje Vertical", "Core / Abdomen"]
+        }},
+    4: {"nombre": "Upper/Lower (4 dias)", "descripcion": "Tren superior / tren inferior, 4 dias",
+        "dias": {
+            "Dia A - Tren Superior (Fuerza)": ["Empuje Horizontal", "Jalon Vertical", "Empuje Vertical", "Jalon Horizontal", "Brazos - Biceps", "Brazos - Triceps"],
+            "Dia B - Tren Inferior (Fuerza)": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Sentadilla / Dominante de Rodilla", "Pantorrillas", "Core / Abdomen"],
+            "Dia C - Tren Superior (Hipertrofia)": ["Empuje Horizontal", "Jalon Vertical", "Empuje Vertical", "Jalon Horizontal", "Brazos - Biceps", "Brazos - Triceps"],
+            "Dia D - Tren Inferior (Hipertrofia)": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Bisagra de Cadera / Dominante de Cadera", "Pantorrillas", "Core / Abdomen"]
+        }},
+    5: {"nombre": "Upper/Lower + PPL (5 dias)", "descripcion": "Upper-Lower + Push-Pull-Legs, 5 dias",
+        "dias": {
+            "Dia A - Tren Superior": ["Empuje Horizontal", "Jalon Vertical", "Empuje Vertical", "Jalon Horizontal", "Brazos - Biceps", "Brazos - Triceps"],
+            "Dia B - Tren Inferior": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Sentadilla / Dominante de Rodilla", "Pantorrillas", "Core / Abdomen"],
+            "Dia C - Push": ["Empuje Horizontal", "Empuje Horizontal", "Empuje Vertical", "Empuje Vertical", "Brazos - Triceps"],
+            "Dia D - Pull": ["Jalon Vertical", "Jalon Horizontal", "Jalon Vertical", "Jalon Horizontal", "Brazos - Biceps"],
+            "Dia E - Legs": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Pantorrillas", "Core / Abdomen"]
+        }},
+    6: {"nombre": "Push/Pull/Legs x2 (6 dias)", "descripcion": "PPL dos veces por semana",
+        "dias": {
+            "Dia A - Push (Fuerza)": ["Empuje Horizontal", "Empuje Horizontal", "Empuje Vertical", "Empuje Vertical", "Brazos - Triceps"],
+            "Dia B - Pull (Fuerza)": ["Jalon Vertical", "Jalon Horizontal", "Jalon Vertical", "Jalon Horizontal", "Brazos - Biceps"],
+            "Dia C - Legs (Fuerza)": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Sentadilla / Dominante de Rodilla", "Pantorrillas", "Core / Abdomen"],
+            "Dia D - Push (Hipertrofia)": ["Empuje Horizontal", "Empuje Horizontal", "Empuje Vertical", "Empuje Vertical", "Brazos - Triceps"],
+            "Dia E - Pull (Hipertrofia)": ["Jalon Vertical", "Jalon Horizontal", "Jalon Vertical", "Jalon Horizontal", "Brazos - Biceps"],
+            "Dia F - Legs (Hipertrofia)": ["Sentadilla / Dominante de Rodilla", "Bisagra de Cadera / Dominante de Cadera", "Bisagra de Cadera / Dominante de Cadera", "Pantorrillas", "Core / Abdomen"]
+        }}
+}
+
+# Guias de volumen por nivel (series por grupo muscular por semana)
+GUIAS_VOLUMEN = {
+    "Principiante": {"min_series": 10, "max_series": 14, "rpe": "6-7", "descripcion": "Volumen bajo-moderado, enfoque en tecnica"},
+    "Intermedio": {"min_series": 14, "max_series": 20, "rpe": "7-8", "descripcion": "Volumen moderado, progresion de cargas"},
+    "Avanzado": {"min_series": 18, "max_series": 26, "rpe": "8-9", "descripcion": "Volumen alto, tecnicas avanzadas de intensidad"}
+}
+
+# Opciones de equipo disponible
+OPCIONES_EQUIPO = [
+    "Barras (recta y Z)",
+    "Mancuernas",
+    "Maquinas de cables/poleas",
+    "Maquinas de placas (press, extension, curl, etc.)",
+    "Rack de sentadillas / Power rack",
+    "Banco plano e inclinado",
+    "Barra fija (dominadas)",
+    "Paralelas (fondos)",
+    "Kettlebells",
+    "Bandas de resistencia",
+    "Maquina Smith",
+    "Prensa de pierna (leg press)",
+    "Hack squat (maquina)",
+    "Solo peso corporal"
+]
+
+
+def filtrar_ejercicios_por_nivel(nivel):
+    """Filtra ejercicios disponibles segun nivel del usuario."""
+    jerarquia = {"Principiante": 0, "Intermedio": 1, "Avanzado": 2}
+    nivel_usuario = jerarquia.get(nivel, 0)
+    filtrado = {}
+    for patron, grupos in BIBLIOTECA_EJERCICIOS.items():
+        filtrado[patron] = {}
+        for grupo, ejercicios in grupos.items():
+            filtrado[patron][grupo] = [
+                ej for ej in ejercicios
+                if jerarquia.get(ej["nivel"], 0) <= nivel_usuario
+            ]
+    return filtrado
+
+
+def filtrar_ejercicios_por_equipo(ejercicios_dict, equipo_disponible):
+    """Filtra ejercicios segun equipo disponible del usuario."""
+    mapa_equipo = {
+        "Barras (recta y Z)": ["barra"],
+        "Mancuernas": ["mancuerna"],
+        "Maquinas de cables/poleas": ["polea"],
+        "Maquinas de placas (press, extension, curl, etc.)": ["maquina"],
+        "Rack de sentadillas / Power rack": ["rack"],
+        "Banco plano e inclinado": ["banco"],
+        "Barra fija (dominadas)": ["barra fija"],
+        "Paralelas (fondos)": ["paralelas"],
+        "Kettlebells": ["kettlebell"],
+        "Bandas de resistencia": ["banda"],
+        "Maquina Smith": ["smith"],
+        "Prensa de pierna (leg press)": ["prensa"],
+        "Hack squat (maquina)": ["hack"],
+        "Solo peso corporal": ["peso corporal"]
+    }
+    keywords = set()
+    for eq in equipo_disponible:
+        for kw in mapa_equipo.get(eq, []):
+            keywords.add(kw)
+    keywords.add("peso corporal")
+
+    filtrado = {}
+    for patron, grupos in ejercicios_dict.items():
+        filtrado[patron] = {}
+        for grupo, ejercicios in grupos.items():
+            filtrado[patron][grupo] = [
+                ej for ej in ejercicios
+                if any(kw in ej["equipo"].lower() for kw in keywords)
+            ]
+    return filtrado
+
+
+def calcular_distribucion_volumen(objetivo, nivel, musculos_prioritarios):
+    """Calcula series semanales por patron de movimiento."""
+    vol = GUIAS_VOLUMEN[nivel]
+    base = (vol["min_series"] + vol["max_series"]) // 2
+    dist = {
+        "Empuje Horizontal": base,
+        "Empuje Vertical": max(base - 2, vol["min_series"]),
+        "Jalon Horizontal": base,
+        "Jalon Vertical": max(base - 2, vol["min_series"]),
+        "Sentadilla / Dominante de Rodilla": base,
+        "Bisagra de Cadera / Dominante de Cadera": base,
+        "Brazos - Biceps": max(base - 4, 6),
+        "Brazos - Triceps": max(base - 4, 6),
+        "Core / Abdomen": max(base - 4, 6),
+        "Pantorrillas": max(base - 6, 4),
+    }
+    if objetivo == "Hipertrofia":
+        for k in dist:
+            dist[k] = min(dist[k] + 2, vol["max_series"])
+    elif objetivo == "Fuerza":
+        for k in dist:
+            dist[k] = max(dist[k] - 2, vol["min_series"])
+    mapa_musculo = {
+        "Pecho": ["Empuje Horizontal"], "Espalda": ["Jalon Horizontal", "Jalon Vertical"],
+        "Hombros": ["Empuje Vertical"], "Cuadriceps": ["Sentadilla / Dominante de Rodilla"],
+        "Isquiotibiales / Gluteos": ["Bisagra de Cadera / Dominante de Cadera"],
+        "Biceps": ["Brazos - Biceps"], "Triceps": ["Brazos - Triceps"],
+        "Core": ["Core / Abdomen"], "Pantorrillas": ["Pantorrillas"]
+    }
+    for musculo in musculos_prioritarios:
+        for p in mapa_musculo.get(musculo, []):
+            if p in dist:
+                dist[p] = min(dist[p] + 4, vol["max_series"] + 2)
+    return dist
+
+
+def determinar_esquema_reps(objetivo, nivel):
+    """Determina rangos de repeticiones y descansos segun objetivo."""
+    esquemas = {
+        "Fuerza": {"reps_compuesto": "3-6", "series_compuesto": "4-5", "reps_aislamiento": "6-10", "series_aislamiento": "3-4",
+                    "descanso_compuesto": "3-5 min", "descanso_aislamiento": "2-3 min",
+                    "rpe": "8-9" if nivel != "Principiante" else "7-8", "tempo": "2-0-1-1"},
+        "Hipertrofia": {"reps_compuesto": "8-12", "series_compuesto": "3-4", "reps_aislamiento": "10-15", "series_aislamiento": "3-4",
+                         "descanso_compuesto": "2-3 min", "descanso_aislamiento": "1-2 min",
+                         "rpe": "7-9" if nivel != "Principiante" else "6-8", "tempo": "3-1-1-0"},
+        "Resistencia muscular": {"reps_compuesto": "12-20", "series_compuesto": "3", "reps_aislamiento": "15-25", "series_aislamiento": "2-3",
+                                   "descanso_compuesto": "1-2 min", "descanso_aislamiento": "45-90 seg",
+                                   "rpe": "6-7", "tempo": "2-0-2-0"},
+        "Recomposicion": {"reps_compuesto": "6-10", "series_compuesto": "3-4", "reps_aislamiento": "10-15", "series_aislamiento": "3",
+                           "descanso_compuesto": "2-3 min", "descanso_aislamiento": "1.5-2 min",
+                           "rpe": "7-8", "tempo": "2-1-1-0"}
+    }
+    return esquemas.get(objetivo, esquemas["Hipertrofia"])
+
+
+def generar_reporte_entrenamiento(datos):
+    """Genera reporte completo de entrenamiento para el coach."""
+    esquema = datos["esquema_reps"]
+    reporte = f"""
+========================================
+DESIGNING YOUR TRAINING - REPORTE MUPAI
+========================================
+
+Fecha: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+Cliente: {datos['nombre']}
+Email: {datos.get('email', 'N/A')}
+
+========================================
+DATOS DEL CLIENTE
+========================================
+Edad: {datos['edad']} | Sexo: {datos['genero']}
+Peso: {datos['peso']} kg | Estatura: {datos['estatura']} cm
+
+========================================
+PERFIL DE ENTRENAMIENTO
+========================================
+Nivel: {datos['nivel']}
+Experiencia: {datos['experiencia']}
+Objetivo: {datos['objetivo']}
+Frecuencia: {datos['frecuencia']} dias/semana
+Duracion sesion: {datos['duracion_sesion']}
+Consistencia reciente: {datos['consistencia']}
+Rutina actual: {datos['rutina_actual']}
+
+========================================
+EQUIPO DISPONIBLE
+========================================
+Ubicacion: {datos['ubicacion']}
+{chr(10).join('- ' + eq for eq in datos['equipo'])}
+
+========================================
+MUSCULOS PRIORITARIOS
+========================================
+{chr(10).join('- ' + m for m in datos['prioridades']) if datos['prioridades'] else '- Sin prioridades especificas'}
+
+Puntos debiles: {', '.join(datos.get('puntos_debiles', [])) if datos.get('puntos_debiles') else 'No reportados'}
+
+========================================
+SPLIT SUGERIDO
+========================================
+{datos['split_nombre']}
+{datos['split_descripcion']}
+
+========================================
+VOLUMEN SEMANAL (series/grupo)
+========================================
+"""
+    for patron, series in datos["distribucion_volumen"].items():
+        reporte += f"- {patron}: {series} series/semana\n"
+
+    reporte += f"""
+========================================
+ESQUEMA DE REPETICIONES
+========================================
+Compuestos: {esquema['reps_compuesto']} reps x {esquema['series_compuesto']} series | Descanso: {esquema['descanso_compuesto']}
+Aislamiento: {esquema['reps_aislamiento']} reps x {esquema['series_aislamiento']} series | Descanso: {esquema['descanso_aislamiento']}
+RPE objetivo: {esquema['rpe']}
+Tempo: {esquema['tempo']} (excentrica-pausa-concentrica-pausa)
+
+========================================
+EJERCICIOS SELECCIONADOS
+========================================
+"""
+    if datos.get("ejercicios_seleccionados"):
+        for patron, ejercicios in datos["ejercicios_seleccionados"].items():
+            if ejercicios:
+                reporte += f"\n--- {patron} ---\n"
+                for ej in ejercicios:
+                    reporte += f"  - {ej}\n"
+    else:
+        reporte += "Pendiente de seleccion por el coach\n"
+
+    if datos.get("pruebas_funcionales"):
+        reporte += "\n========================================\nPRUEBAS FUNCIONALES\n========================================\n"
+        for nombre, valor in datos["pruebas_funcionales"].items():
+            if valor and valor > 0:
+                reporte += f"- {nombre}: {valor}\n"
+
+    reporte += f"""
+========================================
+LESIONES Y LIMITACIONES
+========================================
+{datos.get('lesiones', 'Sin lesiones reportadas')}
+
+========================================
+INFORMACION ADICIONAL
+========================================
+Cardio adicional: {datos.get('cardio', 'No')}
+Conoce deload: {datos.get('deload', 'No')}
+Conoce RPE: {datos.get('conoce_rpe', 'No')}
+Suplementos: {', '.join(datos.get('suplementos', [])) if datos.get('suplementos') else 'Ninguno'}
+Horas de sueno: {datos.get('sueno', 'No reportado')}
+
+Observaciones: {datos.get('observaciones', 'Sin observaciones')}
+
+========================================
+NOTAS PARA EL COACH
+========================================
+- Nivel: {datos['nivel']} - {GUIAS_VOLUMEN[datos['nivel']]['descripcion']}
+- RPE sugerido: {GUIAS_VOLUMEN[datos['nivel']]['rpe']}
+- Volumen semanal: {GUIAS_VOLUMEN[datos['nivel']]['min_series']}-{GUIAS_VOLUMEN[datos['nivel']]['max_series']} series/grupo
+- Ajustar seleccion de ejercicios segun limitaciones
+- Verificar tecnica antes de prescribir cargas
+========================================
+"""
+    return reporte
+
 
 # Configuración de la página
 st.set_page_config(
@@ -4030,8 +4449,513 @@ elif st.session_state.page == "designing_training":
     st.markdown("""
     <div class="section-header">
         <h2>DESIGNING YOUR TRAINING</h2>
+        <p style="color: #ccc; margin-top: 0.5rem;">Cuestionario para Diseno de Programa de Entrenamiento Personalizado</p>
     </div>
     """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); padding: 1.5rem; border-radius: 12px;
+                border-left: 5px solid #FFCC00; margin: 1rem 0; color: #fff;">
+        <h4 style="color: #FFCC00; margin: 0 0 0.5rem 0;">Instrucciones</h4>
+        <p style="margin: 0; color: #ccc;">Este cuestionario recopila la informacion necesaria para disenar tu programa de
+        entrenamiento personalizado. Completa cada seccion con honestidad. <strong style="color: #FFCC00;">Tiempo estimado: 10-15 minutos.</strong></p>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.form("designing_training_form"):
+
+        # --- SECCION 1: DATOS PERSONALES ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 1: Datos Personales</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_nombre = st.text_input("Nombre completo*", placeholder="Tu nombre completo", key="dt_nombre")
+            dt_email = st.text_input("Correo electronico*", placeholder="tu@email.com", key="dt_email")
+            dt_edad = st.number_input("Edad*", min_value=16, max_value=80, value=25, key="dt_edad")
+        with col2:
+            dt_genero = st.selectbox("Sexo*", ["Masculino", "Femenino"], key="dt_genero")
+            dt_peso = st.number_input("Peso (kg)*", min_value=40.0, max_value=200.0, value=70.0, step=0.1, key="dt_peso")
+            dt_estatura = st.number_input("Estatura (cm)*", min_value=140, max_value=220, value=170, key="dt_estatura")
+
+        # --- SECCION 2: EXPERIENCIA Y NIVEL ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 2: Experiencia y Nivel de Entrenamiento</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_experiencia = st.selectbox("Anos de experiencia en entrenamiento de fuerza*", [
+                "Menos de 6 meses", "6 meses - 1 ano", "1-2 anos",
+                "2-4 anos", "4-7 anos", "Mas de 7 anos"
+            ], key="dt_exp")
+
+            dt_nivel = st.selectbox("Nivel de entrenamiento*", [
+                "Principiante", "Intermedio", "Avanzado"
+            ], key="dt_nivel")
+
+            st.markdown("""
+            **Guia de niveles:**
+            - **Principiante:** <1 ano, tecnica limitada en ejercicios basicos
+            - **Intermedio:** 1-4 anos consistente, buena tecnica en compuestos
+            - **Avanzado:** >4 anos, dominio tecnico completo
+            """)
+
+        with col2:
+            dt_rutina_actual = st.selectbox("Rutina actual*", [
+                "No, entreno sin plan fijo",
+                "Si, rutina basica autodirigida",
+                "Si, programa con periodizacion simple",
+                "Si, programa avanzado con periodizacion"
+            ], key="dt_rutina")
+
+            dt_consistencia = st.selectbox("Consistencia ultimos 3 meses*", [
+                "No he entrenado",
+                "Esporadico (1-2 veces/semana inconsistente)",
+                "Regular (3+ veces/semana, con algunas faltas)",
+                "Muy consistente (entreno segun plan sin faltar)"
+            ], key="dt_consist")
+
+        # --- SECCION 3: OBJETIVO Y DISPONIBILIDAD ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 3: Objetivo y Disponibilidad</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_objetivo = st.selectbox("Objetivo principal de entrenamiento*", [
+                "Hipertrofia", "Fuerza", "Recomposicion corporal", "Resistencia muscular"
+            ], key="dt_obj")
+
+            st.markdown("""
+            - **Hipertrofia:** Maximo desarrollo de masa muscular
+            - **Fuerza:** Maximo desarrollo de fuerza (1RM)
+            - **Recomposicion:** Ganar musculo y perder grasa
+            - **Resistencia muscular:** Capacidad de trabajo muscular sostenido
+            """)
+
+            dt_frecuencia = st.number_input("Dias disponibles para entrenar por semana*",
+                                            min_value=2, max_value=6, value=4, key="dt_freq")
+
+        with col2:
+            dt_duracion = st.selectbox("Duracion disponible por sesion*", [
+                "45 minutos", "60 minutos", "75 minutos", "90 minutos", "120 minutos"
+            ], key="dt_dur")
+
+            dt_horario = st.selectbox("Horario preferido", [
+                "Manana (6-9 AM)", "Media manana (9-12 PM)",
+                "Tarde (12-3 PM)", "Tarde-noche (3-6 PM)",
+                "Noche (6-9 PM)", "Sin preferencia"
+            ], key="dt_horario")
+
+            dt_dias_especificos = st.multiselect(
+                "Dias especificos disponibles (opcional)",
+                ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"],
+                key="dt_dias"
+            )
+
+        # --- SECCION 4: EQUIPO DISPONIBLE ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 4: Equipo Disponible</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        dt_ubicacion = st.selectbox("Donde entrenas?*", [
+            "Gimnasio comercial completo",
+            "Gimnasio basico (equipo limitado)",
+            "Home gym / Gimnasio casero",
+            "Al aire libre / Calistenia",
+            "Muscle Up Gym"
+        ], key="dt_ubic")
+
+        equipo_default = OPCIONES_EQUIPO[:8] if dt_ubicacion in ["Gimnasio comercial completo", "Muscle Up Gym"] else []
+        dt_equipo = st.multiselect(
+            "Selecciona TODO el equipo disponible*",
+            OPCIONES_EQUIPO,
+            default=equipo_default,
+            key="dt_equipo"
+        )
+
+        # --- SECCION 5: PRIORIDADES MUSCULARES ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 5: Prioridades Musculares</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_prioridades = st.multiselect(
+                "Grupos musculares a PRIORIZAR (maximo 3)*",
+                ["Pecho", "Espalda", "Hombros", "Cuadriceps",
+                 "Isquiotibiales / Gluteos", "Biceps", "Triceps", "Core", "Pantorrillas"],
+                max_selections=3,
+                key="dt_prior"
+            )
+        with col2:
+            dt_debiles = st.multiselect(
+                "Puntos debiles percibidos (opcional)",
+                ["Pecho", "Espalda", "Hombros", "Cuadriceps",
+                 "Isquiotibiales / Gluteos", "Biceps", "Triceps", "Core", "Pantorrillas"],
+                key="dt_debil"
+            )
+
+        # --- SECCION 6: SELECCION DE EJERCICIOS ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 6: Seleccion de Ejercicios</h3>
+            <p style="color: #ccc; margin: 0.5rem 0 0 0;">Selecciona los ejercicios que conoces, dominas o deseas incluir.
+            Se filtran por tu nivel y equipo disponible. Consulta la
+            <strong style="color: #FFCC00;">Biblioteca de Ejercicios MUPAI (PDF)</strong> para detalles tecnicos.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Filtrar ejercicios
+        ejercicios_disponibles = filtrar_ejercicios_por_nivel(dt_nivel)
+        if dt_equipo:
+            ejercicios_disponibles = filtrar_ejercicios_por_equipo(ejercicios_disponibles, dt_equipo)
+
+        ejercicios_seleccionados = {}
+        for patron, grupos in ejercicios_disponibles.items():
+            with st.expander(f"{patron}", expanded=False):
+                for grupo, ejercicios in grupos.items():
+                    if ejercicios:
+                        nombres = [ej["nombre"] for ej in ejercicios]
+                        seleccion = st.multiselect(
+                            f"{grupo}",
+                            nombres,
+                            key=f"ej_{patron}_{grupo}"
+                        )
+                        if seleccion:
+                            if patron not in ejercicios_seleccionados:
+                                ejercicios_seleccionados[patron] = []
+                            ejercicios_seleccionados[patron].extend(seleccion)
+
+        # --- SECCION 7: PRUEBAS FUNCIONALES ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 7: Pruebas Funcionales (AMRAP / 1RM)</h3>
+            <p style="color: #ccc; margin: 0.5rem 0 0 0;">Si no puedes realizar el ejercicio o eres novato, coloca <strong style="color: #FFCC00;">0</strong>.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="background: #16213e; padding: 1rem; border-radius: 8px; margin: 0.5rem 0; color: #ccc;">
+            <strong style="color: #FFCC00;">Protocolo AMRAP:</strong> Calentamiento 5-10 min, luego maximas repeticiones con tecnica correcta. Detente cuando la tecnica se deteriore.
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_lagartijas = st.number_input("Lagartijas maximas en 1 serie", min_value=0, max_value=200, value=0, key="dt_lag")
+            dt_dominadas = st.number_input("Dominadas maximas en 1 serie", min_value=0, max_value=100, value=0, key="dt_dom")
+            dt_sentadillas_bw = st.number_input("Sentadillas BW maximas en 1 serie", min_value=0, max_value=200, value=0, key="dt_sqbw")
+        with col2:
+            dt_plancha = st.number_input("Plancha frontal (segundos maximos)", min_value=0, max_value=600, value=0, key="dt_plank")
+            dt_bench_1rm = st.number_input("Press banca 1RM estimado (kg) - Si lo conoces", min_value=0.0, max_value=300.0, value=0.0, step=2.5, key="dt_bench")
+            dt_squat_1rm = st.number_input("Sentadilla 1RM estimado (kg) - Si lo conoces", min_value=0.0, max_value=400.0, value=0.0, step=2.5, key="dt_sq1rm")
+
+        dt_dead_1rm = st.number_input("Peso muerto 1RM estimado (kg) - Si lo conoces", min_value=0.0, max_value=500.0, value=0.0, step=2.5, key="dt_dead")
+
+        dt_conoce_rpe = st.selectbox("Conoces la escala RPE?", [
+            "No, no la conozco", "La conozco pero no la uso", "Si, la uso regularmente"
+        ], key="dt_rpe")
+
+        # --- SECCION 8: LESIONES ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 8: Lesiones y Limitaciones</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_lesiones_actuales = st.text_area(
+                "Lesiones actuales (o escribe 'Ninguna')*",
+                placeholder="Ej: Dolor en hombro derecho, molestia en rodilla izquierda...",
+                key="dt_les_act"
+            )
+        with col2:
+            dt_lesiones_pasadas = st.text_area(
+                "Lesiones pasadas relevantes (o escribe 'Ninguna')",
+                placeholder="Ej: Operacion de menisco hace 2 anos...",
+                key="dt_les_pas"
+            )
+
+        dt_limitaciones = st.multiselect(
+            "Limitacion o dolor en alguno de estos movimientos?",
+            [
+                "Press por encima de la cabeza (overhead)",
+                "Sentadilla profunda",
+                "Peso muerto desde el suelo",
+                "Rotacion de hombro",
+                "Extension de rodilla completa",
+                "Flexion de cadera profunda",
+                "Dominadas / colgarse de barra",
+                "Ninguna limitacion"
+            ],
+            key="dt_limit"
+        )
+
+        # --- SECCION 9: PREFERENCIAS ADICIONALES ---
+        st.markdown("""
+        <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+            <h3 style="color: #FFCC00;">Seccion 9: Preferencias y Observaciones</h3>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            dt_cardio = st.selectbox("Realizas cardio adicional?", [
+                "No", "Si, 1-2 veces/semana (ligero)",
+                "Si, 3+ veces/semana",
+                "Si, hago deporte adicional (futbol, natacion, etc.)"
+            ], key="dt_cardio")
+
+            dt_deload = st.selectbox("Sabes que es un deload (semana de descarga)?", [
+                "No, no lo conozco", "Si, pero nunca los hago", "Si, los implemento regularmente"
+            ], key="dt_deload")
+
+        with col2:
+            dt_suplementos = st.multiselect("Suplementos actuales (opcional)", [
+                "Creatina", "Proteina en polvo (whey/caseina)",
+                "Cafeina/Pre-workout", "BCAA/EAA", "Multivitaminico",
+                "Omega-3", "Ninguno"
+            ], key="dt_supps")
+
+            dt_sueno = st.selectbox("Horas promedio de sueno por noche", [
+                "Menos de 5h", "5-6h", "6-7h", "7-8h", "8-9h", "Mas de 9h"
+            ], key="dt_sueno")
+
+        dt_observaciones = st.text_area(
+            "Observaciones adicionales para tu coach (opcional)",
+            placeholder="Alergias, medicamentos, horarios especiales, motivaciones...",
+            key="dt_obs"
+        )
+
+        dt_legal = st.checkbox(
+            "Acepto los terminos y condiciones y autorizo el procesamiento de mis datos para fines de diseno de programa de entrenamiento personalizado*",
+            key="dt_legal"
+        )
+
+        # --- SUBMIT ---
+        dt_submitted = st.form_submit_button(
+            "Generar Analisis y Diseno de Programa de Entrenamiento",
+            type="primary", use_container_width=True
+        )
+
+        if dt_submitted:
+            # Validaciones
+            if not dt_nombre:
+                st.error("El nombre completo es obligatorio")
+            elif not dt_email:
+                st.error("El correo electronico es obligatorio")
+            elif not dt_legal:
+                st.error("Debes aceptar los terminos y condiciones")
+            elif not dt_equipo:
+                st.error("Debes seleccionar al menos un tipo de equipo")
+            else:
+                # Calculos
+                duracion_min = int(dt_duracion.split()[0])
+                mapa_obj = {"Hipertrofia": "Hipertrofia", "Fuerza": "Fuerza",
+                            "Recomposicion corporal": "Recomposicion", "Resistencia muscular": "Resistencia muscular"}
+                objetivo_calc = mapa_obj.get(dt_objetivo, "Hipertrofia")
+
+                freq = dt_frecuencia
+                if freq in SPLITS_ENTRENAMIENTO:
+                    split_info = SPLITS_ENTRENAMIENTO[freq]
+                else:
+                    split_info = SPLITS_ENTRENAMIENTO[min(SPLITS_ENTRENAMIENTO.keys(), key=lambda x: abs(x - freq))]
+
+                distribucion_vol = calcular_distribucion_volumen(objetivo_calc, dt_nivel, dt_prioridades)
+                esquema_reps = determinar_esquema_reps(objetivo_calc, dt_nivel)
+
+                # Pruebas funcionales
+                pruebas = {}
+                if dt_lagartijas > 0: pruebas["Lagartijas maximas"] = dt_lagartijas
+                if dt_dominadas > 0: pruebas["Dominadas maximas"] = dt_dominadas
+                if dt_sentadillas_bw > 0: pruebas["Sentadillas BW maximas"] = dt_sentadillas_bw
+                if dt_plancha > 0: pruebas["Plancha (segundos)"] = dt_plancha
+                if dt_bench_1rm > 0: pruebas["Press banca 1RM (kg)"] = dt_bench_1rm
+                if dt_squat_1rm > 0: pruebas["Sentadilla 1RM (kg)"] = dt_squat_1rm
+                if dt_dead_1rm > 0: pruebas["Peso muerto 1RM (kg)"] = dt_dead_1rm
+
+                # Lesiones
+                lesiones_txt = ""
+                if dt_lesiones_actuales and dt_lesiones_actuales.strip().lower() != "ninguna":
+                    lesiones_txt += f"Actuales: {dt_lesiones_actuales}\n"
+                if dt_lesiones_pasadas and dt_lesiones_pasadas.strip().lower() != "ninguna":
+                    lesiones_txt += f"Pasadas: {dt_lesiones_pasadas}\n"
+                if dt_limitaciones and "Ninguna limitacion" not in dt_limitaciones:
+                    lesiones_txt += f"Limitaciones: {', '.join(dt_limitaciones)}"
+                if not lesiones_txt:
+                    lesiones_txt = "Sin lesiones o limitaciones reportadas"
+
+                datos_reporte = {
+                    "nombre": dt_nombre, "email": dt_email, "edad": dt_edad,
+                    "genero": dt_genero, "peso": dt_peso, "estatura": dt_estatura,
+                    "nivel": dt_nivel, "experiencia": dt_experiencia,
+                    "objetivo": objetivo_calc, "frecuencia": freq,
+                    "duracion_sesion": dt_duracion, "consistencia": dt_consistencia,
+                    "rutina_actual": dt_rutina_actual, "ubicacion": dt_ubicacion,
+                    "equipo": dt_equipo, "prioridades": dt_prioridades,
+                    "puntos_debiles": dt_debiles, "split_nombre": split_info["nombre"],
+                    "split_descripcion": split_info["descripcion"],
+                    "distribucion_volumen": distribucion_vol,
+                    "esquema_reps": esquema_reps,
+                    "ejercicios_seleccionados": ejercicios_seleccionados,
+                    "pruebas_funcionales": pruebas, "lesiones": lesiones_txt,
+                    "cardio": dt_cardio, "deload": dt_deload,
+                    "conoce_rpe": dt_conoce_rpe, "suplementos": dt_suplementos,
+                    "sueno": dt_sueno, "observaciones": dt_observaciones if dt_observaciones else "Sin observaciones"
+                }
+
+                # --- MOSTRAR RESULTADOS ---
+                st.markdown("---")
+                st.markdown("""
+                <div style="background: linear-gradient(135deg, #FFCC00 0%, #FFE066 50%, #FFA500 100%);
+                            padding: 2rem; border-radius: 15px; text-align: center; margin: 1rem 0; color: #000;">
+                    <h2>RESULTADOS - DESIGNING YOUR TRAINING</h2>
+                    <p>Analisis para diseno de programa personalizado</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Perfil
+                st.markdown("### Perfil de Entrenamiento")
+                col1, col2, col3, col4 = st.columns(4)
+                with col1: st.metric("Nivel", dt_nivel)
+                with col2: st.metric("Objetivo", objetivo_calc)
+                with col3: st.metric("Frecuencia", f"{freq} dias/sem")
+                with col4: st.metric("Sesion", dt_duracion)
+
+                # Split
+                st.markdown("### Split de Entrenamiento Recomendado")
+                st.markdown(f"""
+                <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 5px solid #FFCC00; margin: 1rem 0;">
+                    <h4 style="color: #FFCC00;">{split_info['nombre']}</h4>
+                    <p style="color: #ccc;">{split_info['descripcion']}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+                for dia_nombre, patrones in split_info["dias"].items():
+                    with st.expander(f"{dia_nombre}"):
+                        for p in patrones:
+                            st.write(f"- {p}")
+
+                # Volumen
+                st.markdown("### Volumen Semanal por Grupo Muscular")
+                vol_df = pd.DataFrame({
+                    "Patron de Movimiento": list(distribucion_vol.keys()),
+                    "Series/Semana": list(distribucion_vol.values())
+                })
+                st.dataframe(vol_df, use_container_width=True, hide_index=True)
+
+                # Esquema de reps
+                st.markdown("### Esquema de Repeticiones y Descanso")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.markdown(f"""
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00; margin: 0.5rem 0; color: #fff;">
+                        <h4 style="color: #FFCC00;">Ejercicios Compuestos</h4>
+                        <p><strong>Repeticiones:</strong> {esquema_reps['reps_compuesto']}</p>
+                        <p><strong>Series:</strong> {esquema_reps['series_compuesto']}</p>
+                        <p><strong>Descanso:</strong> {esquema_reps['descanso_compuesto']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+                with col2:
+                    st.markdown(f"""
+                    <div style="background: #1a1a2e; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #FFCC00; margin: 0.5rem 0; color: #fff;">
+                        <h4 style="color: #FFCC00;">Ejercicios de Aislamiento</h4>
+                        <p><strong>Repeticiones:</strong> {esquema_reps['reps_aislamiento']}</p>
+                        <p><strong>Series:</strong> {esquema_reps['series_aislamiento']}</p>
+                        <p><strong>Descanso:</strong> {esquema_reps['descanso_aislamiento']}</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                st.info(f"**RPE Objetivo:** {esquema_reps['rpe']} | **Tempo:** {esquema_reps['tempo']} (excentrica-pausa-concentrica-pausa)")
+
+                # Ejercicios seleccionados
+                if ejercicios_seleccionados:
+                    st.markdown("### Ejercicios Seleccionados")
+                    for patron, ejs in ejercicios_seleccionados.items():
+                        if ejs:
+                            st.markdown(f"**{patron}:**")
+                            for ej in ejs:
+                                st.write(f"  - {ej}")
+
+                # Pruebas funcionales
+                if pruebas:
+                    st.markdown("### Resultados de Pruebas Funcionales")
+                    cols_pruebas = st.columns(min(len(pruebas), 4))
+                    for i, (nombre_prueba, valor) in enumerate(pruebas.items()):
+                        with cols_pruebas[i % len(cols_pruebas)]:
+                            st.metric(nombre_prueba, valor)
+
+                # Advertencias
+                advertencias = []
+                if dt_nivel == "Principiante" and freq > 4:
+                    advertencias.append("Frecuencia alta para principiante. Considerar 3-4 dias.")
+                if dt_nivel == "Avanzado" and freq < 4:
+                    advertencias.append("Frecuencia baja para avanzado. Podrias beneficiarte de mas dias.")
+                if dt_limitaciones and "Ninguna limitacion" not in dt_limitaciones:
+                    advertencias.append(f"Limitaciones reportadas: {', '.join(dt_limitaciones)}. El coach ajustara ejercicios.")
+                if not pruebas:
+                    advertencias.append("Sin pruebas funcionales. Se recomienda realizarlas para prescripcion mas precisa.")
+
+                if advertencias:
+                    st.markdown("### Advertencias y Notas")
+                    for adv in advertencias:
+                        st.warning(adv)
+
+                # --- AREA DEL COACH ---
+                st.markdown("---")
+                st.markdown("### Area Exclusiva del Coach")
+                dt_coach_pw = st.text_input("Contrasena del Coach:", type="password", key="dt_coach_pw")
+
+                if dt_coach_pw == "MuPai2025":
+                    st.success("Coach MUPAI verificado")
+                    reporte = generar_reporte_entrenamiento(datos_reporte)
+                    st.text_area("Reporte Completo:", reporte, height=500)
+
+                    st.download_button(
+                        label="Descargar Reporte de Entrenamiento (TXT)",
+                        data=reporte,
+                        file_name=f"designing_training_{dt_nombre.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt",
+                        mime="text/plain"
+                    )
+
+                    json_data = json.dumps(datos_reporte, ensure_ascii=False, indent=2, default=str)
+                    st.download_button(
+                        label="Descargar Datos (JSON)",
+                        data=json_data,
+                        file_name=f"training_data_{dt_nombre.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+                        mime="application/json"
+                    )
+                elif dt_coach_pw:
+                    st.error("Acceso denegado.")
+
+                # Confirmacion al cliente
+                st.markdown("---")
+                st.success(f"""
+                **Cuestionario completado exitosamente!**
+
+                Estimado/a {dt_nombre}: Tu evaluacion para diseno de programa de entrenamiento ha sido procesada.
+
+                **Proximos pasos:**
+                1. Tu coach MUPAI revisara tus respuestas y pruebas funcionales
+                2. Se disenara un programa personalizado basado en tu nivel, objetivos y equipo
+                3. Recibiras tu programa en formato profesional (PDF)
+
+                **Tiempo de entrega:** 3-5 dias habiles
+                """)
 
 elif st.session_state.page == "about":
     st.markdown("""
