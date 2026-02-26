@@ -199,6 +199,106 @@ def corregir_grasa_omron_a_dexa(grasa_omron):
     grasa_redondeada = min(max(grasa_redondeada, 5), 40)
     return tabla.get(grasa_redondeada, grasa_omron)
 
+# ---------- REPORTE RESUMIDO (USER-SAFE) ----------
+def build_report_resumen(data):
+    """
+    Genera el reporte resumido para el usuario.
+    
+    Este reporte contiene ÚNICAMENTE los datos permitidos según la especificación:
+    - Datos del cliente (sin teléfono ni email por defecto)
+    - Antropometría y composición corporal básica
+    - NO incluye FFMI ni detalles técnicos
+    
+    Args:
+        data: Diccionario con los siguientes campos requeridos:
+            - nombre_completo: str
+            - edad: int
+            - sexo: str ('Hombre' o 'Mujer')
+            - fecha_evaluacion: str
+            - peso: float (kg)
+            - estatura: float (cm)
+            - imc: float
+            - grasa_medida: float (%)
+            - grasa_corregida: float (%)
+            - mlg: float (masa libre de grasa en kg)
+            - masa_grasa: float (kg)
+            - nivel_grasa: str (categoría)
+            
+            Campos opcionales:
+            - grasa_visceral: float o None
+            - porcentaje_masa_muscular: float o None
+            - edad_metabolica: int o None
+            - incluir_contacto: bool (default False)
+            - telefono: str
+            - email: str
+    
+    Returns:
+        str: Reporte resumido en formato de texto
+    """
+    # A) Datos del cliente
+    reporte = "=" * 60 + "\n"
+    reporte += "REPORTE RESUMIDO - EVALUACIÓN MUPAI\n"
+    reporte += "=" * 60 + "\n\n"
+    
+    reporte += "DATOS DEL CLIENTE\n"
+    reporte += "-" * 60 + "\n"
+    reporte += f"Nombre completo: {data['nombre_completo']}\n"
+    reporte += f"Edad: {data['edad']} años\n"
+    reporte += f"Sexo: {data['sexo']}\n"
+    reporte += f"Fecha de evaluación: {data['fecha_evaluacion']}\n"
+    
+    # Solo incluir contacto si está explícitamente activado
+    if data.get('incluir_contacto', False):
+        if 'telefono' in data and data['telefono']:
+            reporte += f"Teléfono: {data['telefono']}\n"
+        if 'email' in data and data['email']:
+            reporte += f"Email: {data['email']}\n"
+    
+    # B) Antropometría, composición corporal e índices metabólicos
+    reporte += "\n"
+    reporte += "ANTROPOMETRÍA, COMPOSICIÓN CORPORAL E ÍNDICES METABÓLICOS\n"
+    reporte += "-" * 60 + "\n"
+    
+    # Orden específico según requerimientos
+    reporte += f"1. Peso: {data['peso']:.1f} kg\n"
+    reporte += f"2. Estatura: {data['estatura']:.0f} cm\n"
+    reporte += f"3. IMC: {data['imc']:.1f} kg/m²\n"
+    reporte += f"4. % Grasa medida: {data['grasa_medida']:.1f}%\n"
+    reporte += f"5. % Grasa corregida (DEXA/4C): {data['grasa_corregida']:.1f}%\n"
+    
+    # Grasa visceral (N/D si no disponible)
+    grasa_visceral = data.get('grasa_visceral')
+    if grasa_visceral is not None:
+        reporte += f"6. Grasa visceral: {grasa_visceral:.1f}\n"
+    else:
+        reporte += "6. Grasa visceral: N/D\n"
+    
+    # % Masa muscular (N/D si no disponible)
+    porcentaje_masa_muscular = data.get('porcentaje_masa_muscular')
+    if porcentaje_masa_muscular is not None:
+        reporte += f"7. % Masa muscular: {porcentaje_masa_muscular:.1f}%\n"
+    else:
+        reporte += "7. % Masa muscular: N/D\n"
+    
+    reporte += f"8. Masa libre de grasa: {data['mlg']:.1f} kg\n"
+    reporte += f"9. Masa grasa: {data['masa_grasa']:.1f} kg\n"
+    
+    # Edad metabólica (N/D si no disponible)
+    edad_metabolica = data.get('edad_metabolica')
+    if edad_metabolica is not None:
+        reporte += f"10. Edad metabólica: {edad_metabolica} años\n"
+    else:
+        reporte += "10. Edad metabólica: N/D\n"
+    
+    reporte += f"11. Categoría de grasa corporal: {data['nivel_grasa']}\n"
+    
+    reporte += "\n" + "=" * 60 + "\n"
+    reporte += "NOTA: Este es un reporte resumido para el usuario.\n"
+    reporte += "El análisis técnico detallado es de uso interno.\n"
+    reporte += "=" * 60 + "\n"
+    
+    return reporte
+
 # ---------- APP PRINCIPAL ----------
 if authentication_status is False:
     st.error("Usuario o contraseña incorrectos")
@@ -234,6 +334,10 @@ elif authentication_status:
         estatura_m = estatura / 100
         mlg = peso * (1 - grasa_corregida / 100)
         ffmi = mlg / (estatura_m ** 2)
+        
+        # Cálculos adicionales para reporte resumido
+        imc = peso / (estatura_m ** 2)
+        masa_grasa = peso * (grasa_corregida / 100)
 
         # Clasificación % de grasa corporal
         if genero == "Hombre":
@@ -283,6 +387,30 @@ elif authentication_status:
             else:
                 nivel_ffmi = "Posible uso de anabólicos"
 
+        # Generar REPORTE RESUMIDO (para el usuario)
+        datos_resumen = {
+            'nombre_completo': nombre,
+            'edad': edad,
+            'sexo': genero,
+            'fecha_evaluacion': date.today().strftime('%Y-%m-%d'),
+            'peso': peso,
+            'estatura': estatura,
+            'imc': imc,
+            'grasa_medida': grasa_reportada,
+            'grasa_corregida': grasa_corregida,
+            'mlg': mlg,
+            'masa_grasa': masa_grasa,
+            'nivel_grasa': nivel_grasa,
+            'grasa_visceral': None,  # No disponible en este formulario
+            'porcentaje_masa_muscular': None,  # No disponible en este formulario
+            'edad_metabolica': None,  # No disponible en este formulario
+            'incluir_contacto': False,  # Por defecto no incluir contacto
+            'telefono': telefono,
+            'email': email_usuario
+        }
+        reporte_resumido = build_report_resumen(datos_resumen)
+        
+        # REPORTE COMPLETO (uso interno - sin cambios)
         usuario = {
             "Nombre": nombre,
             "Edad": f"{edad} años",
@@ -312,23 +440,13 @@ elif authentication_status:
             mime="application/pdf"
         )
 
-        # --- Mostrar resumen simplificado al usuario ---
+        # --- Mostrar REPORTE RESUMIDO al usuario (sin FFMI) ---
         st.markdown("## Resumen de tus resultados")
-        st.info(f"**Nombre:** {nombre}")
-        st.info(f"**Edad:** {edad} años")
-        st.info(f"**Género:** {genero}")
-        st.info(f"**Estatura:** {estatura} cm")
-        st.info(f"**Peso:** {peso} kg")
-        st.info(f"**% de grasa corporal reportado:** {grasa_reportada:.1f}% ({metodo_grasa})")
-        if metodo_grasa == "Omron HBF-516 (BIA)":
-            st.info(f"**% de grasa corporal corregido (DEXA):** {grasa_corregida:.1f}%")
-        st.success(f"**Clasificación de grasa corporal:** {nivel_grasa}")
-        st.success(f"**FFMI:** {ffmi:.2f} — {nivel_ffmi}")
-
-        st.markdown("### Tablas de referencia")
+        st.text_area("Reporte Resumido", reporte_resumido, height=400)
+        
+        st.markdown("### Tabla de referencia de % de grasa corporal")
         st.markdown(tabla_bf_txt)
-        st.markdown(tabla_ffmi_txt)
-        st.markdown("> Tu resumen profesional completo será revisado por tu entrenador.")
+        st.markdown("> Tu análisis técnico completo será revisado por tu entrenador.")
 
         # --- Enviar TODO por email a ti ---
         remitente = "administracion@muscleupgym.fitness"
